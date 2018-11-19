@@ -1,6 +1,7 @@
 import numpy as np
 
 from Rotate import Rotate
+from Ort import Ort_auf_Karte
 
 anzahl_orte = -1
 anzahl_strassen = 0
@@ -224,8 +225,10 @@ class Karte():
             anzahl_orte += 1
             if self.schild:
                 ortswert += 2
-            ort = "Ort_{}".format(anzahl_orte)
-            self.orte_karte.append((ort, self.orte, ortswert))
+            ortsname = "Ort_{}".format(anzahl_orte)
+
+            self.orte_karte.append(Ort_auf_Karte(ortsname, self.orte, ortswert))
+            #self.orte_karte.append((ort, self.orte, ortswert))
 
             #erstellt zwei Wiesen
 
@@ -241,8 +244,10 @@ class Karte():
             for pos, i in enumerate(self.orte):
                 #print("moin")
                 anzahl_orte += 1
-                ort = "Ort_{}".format(anzahl_orte)
-                self.orte_karte.append((ort, [self.orte[pos]], ortswert))
+                ortsname = "Ort_{}".format(anzahl_orte)
+
+                self.orte_karte.append(Ort_auf_Karte(ortsname, [self.orte[pos]], ortswert))
+                #self.orte_karte.append((ort, [self.orte[pos]], ortswert))
 
         for pos, i in enumerate(self.strassen):
 

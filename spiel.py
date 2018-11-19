@@ -78,7 +78,7 @@ cards_set = {(0, 0): Karte("S", "O", "S", "W"),(1, 1): Karte("W", "O", "O", "W",
 alle_orte = {"Ort_0": Ort((0, 0), [1]), "Ort_a": Ort((1, 1), [1,2])}
 
 
-display_spielbrett_dict(cards_set)
+#display_spielbrett_dict(cards_set)
 Karte_1 = Karte("O","W","W","O","W")
 #print("in spiel.py", Karte_1.orte_karte)
 choice_1 = ((1, 0), 0)
