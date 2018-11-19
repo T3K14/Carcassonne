@@ -80,7 +80,7 @@ alle_orte["Ort_0"].koordinaten_plus_oeffnungen.update({(1, 1): [2]})
 
 #print(alle_orte["Ort_0"].koordinaten_plus_oeffnungen)
 
-#display_spielbrett_dict(cards_set)
+display_spielbrett_dict(cards_set)
 Karte_1 = Karte("O","W","W","O","W")
 #print("in spiel.py", Karte_1.orte_karte)
 choice_1 = ((1, 0), 0)
