@@ -194,9 +194,11 @@ def update_orte(alle_orte, Karte, x, y):
 
     for ort in Karte.orte_karte: #kopie daher, da orte aus der liste geloescht und die verbliebenen neue werden
 
-        for kante in ort.kanten[:]:
+        liste = []
 
-            #print(kante)
+        for kante in ort.kanten[:]: # kopie, da die kanten an die was angrenzt geloescht werden und die uebrigen dann
+                                    # noch zum ort hinzugefuegt werden sollen
+
             if kante < 2:
                 nachbarkante = kante + 2
             else:
@@ -206,16 +208,33 @@ def update_orte(alle_orte, Karte, x, y):
             # auch noch die kanten passen
             for global_ort in alle_orte:
 
+                #dictionary2 = {}
+
                 # wenn nachbarkoordinaten mit Karte mit existierendem ort besetzt sind UND dieser Ort eine offene Kante
                 # hat, die an eine Kante des Ortes der neuen Karte grenzt
                 if koord_to_kante[nachbarkante] in alle_orte[global_ort].koordinaten_plus_oeffnungen and \
                 nachbarkante in alle_orte[global_ort].koordinaten_plus_oeffnungen[koord_to_kante[nachbarkante]]:
 
-                    if (ort, global_ort) in dictionary:
-                        dictionary[(ort, global_ort)].append((koord_to_kante[nachbarkante], nachbarkante))
+                    if ort not in dictionary:
 
+                        #print(ort, ort.kanten)
+
+                        dictionary.update({ort: {global_ort: [(koord_to_kante[nachbarkante], nachbarkante)]}})
+                        #dictionary[(ort, global_ort)].append((koord_to_kante[nachbarkante], nachbarkante))
+                    #if ort in dictionary:
+                        #dictionary
+                        #print(list(dictionary[ort]))
                     else:
-                        dictionary.update({(ort, global_ort): (koord_to_kante[nachbarkante], nachbarkante)})
+
+                        # wenn der globale Ort schon als Ort eingetragen wurde, welcher mit dem auf der Karte ww
+                        if global_ort in list(dictionary[ort]):
+                            dictionary[ort][global_ort].append((koord_to_kante[nachbarkante], nachbarkante))
+
+                        else:
+                            dictionary[ort].update({global_ort: [(koord_to_kante[nachbarkante], nachbarkante)]})
+
+                        #dictionary.update({(ort, global_ort): (koord_to_kante[nachbarkante], nachbarkante)})
+                        #dictionary.update({ort: (global_ort, [(koord_to_kante[nachbarkante], nachbarkante)])})
 
                     #print(dictionary)
                     # eingehen darauf, dass die hier betrachteten kanten des ortes auf der neu gelegten Karte jetzt
@@ -227,6 +246,17 @@ def update_orte(alle_orte, Karte, x, y):
                     #    Karte.orte_karte.remove(ort)
                     ### SPÄTER, da ich zuerst noch auf die verbleibenden kanten eingehen muss
     print(dictionary)
+    #print()
+    #print(list(dictionary))
+
+    #print(list(dictionary)[0])
+
+    ## kanten updaten, neue Ortsteile hinzufuegen und orte verbinden, falls notwendig
+
+    # wenn nur ein Ort beteiligt ist
+    if len(dictionary) == 1:
+        #print(alle_orte[list(dictionary)[0][1]].koordinaten_plus_oeffnungen[dictionary[list(dictionary)[0]]])
+        pass
 
     print("Ende alternativ --------------------------------------")
 

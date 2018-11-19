@@ -75,8 +75,10 @@ def play_random(Kartenliste):
 #play_random(card_list)
 
 cards_set = {(0, 0): Karte("S", "O", "S", "W"),(1, 1): Karte("W", "O", "O", "W","O")}
-alle_orte = {"Ort_0": Ort((0, 0), [1]), "Ort_a": Ort((1, 1), [1,2])}
+#alle_orte = {"Ort_0": Ort((0, 0), [1]), "Ort_a": Ort((1, 1), [1,2])}
+alle_orte["Ort_0"].koordinaten_plus_oeffnungen.update({(1, 1): [2]})
 
+#print(alle_orte["Ort_0"].koordinaten_plus_oeffnungen)
 
 #display_spielbrett_dict(cards_set)
 Karte_1 = Karte("O","W","W","O","W")
