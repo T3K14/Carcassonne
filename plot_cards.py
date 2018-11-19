@@ -27,7 +27,7 @@ def display_spielbrett_dict(cards_set):
         card = cards_set[info]
         i = (abs(y - y_max)) * x_sub + abs(x - x_min) + 1
         ax = bild.add_subplot(y_sub, x_sub, i)
-        #ax.title.set_text(str((x,y)))
+        ax.title.set_text(str((x,y)))
         ax.matshow(card.matrix, cmap=custom_cmap, vmin=0, vmax=4)
 
         plt.subplots_adjust(wspace=0, hspace=0)                 # 0, 0

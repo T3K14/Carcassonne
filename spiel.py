@@ -72,9 +72,23 @@ def play_random(Kartenliste):
             #random.shuffle(Kartenliste_in)
             continue
 
-play_random(card_list)
+#play_random(card_list)
 
-print(cards_set)
+cards_set = {(0, 0): Karte("S", "O", "S", "W"),(1, 1): Karte("W", "O", "O", "W","O")}
+alle_orte = {"Ort_0": Ort((0, 0), [1]), "Ort_a": Ort((1, 1), [1,2])}
+
+
 display_spielbrett_dict(cards_set)
+Karte_1 = Karte("O","W","W","O","W")
+#print("in spiel.py", Karte_1.orte_karte)
+choice_1 = ((1, 0), 0)
+cs, ak, uk, ao, ast, akl, aw = set_card(choice_1, Karte_1, possible_coordinates, unavailable_coordinates, cards_set, alle_orte, alle_strassen, alle_kloester, alle_wiesen)
+#
+
+#print(cards_set)
+print([(ort, alle_orte[ort].koordinaten_plus_oeffnungen) for ort in alle_orte])
+print(len(alle_orte))
+
+#display_spielbrett_dict(cards_set)
 
 #print(cards_set)
