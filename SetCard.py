@@ -217,6 +217,7 @@ def update_orte(alle_orte, Karte, x, y):
                     if ort not in dictionary:
 
                         dictionary.update({ort: {global_ort: [(koord_to_kante[nachbarkante], nachbarkante)]}})
+                        #dictionary.update({ort: {global_ort: {koord_to_kante[nachbarkante]: nachbarkante}}})
 
                     else:
 
@@ -224,9 +225,11 @@ def update_orte(alle_orte, Karte, x, y):
                         # hier nur neue wechselwirkungskoordinaten hinzugefuegt werden
                         if global_ort in list(dictionary[ort]):
                             dictionary[ort][global_ort].append((koord_to_kante[nachbarkante], nachbarkante))
+                            #dictionary[ort][global_ort].update({koord_to_kante[nachbarkante]: nachbarkante})
 
                         else:
                             dictionary[ort].update({global_ort: [(koord_to_kante[nachbarkante], nachbarkante)]})
+                            #dictionary[ort].update({global_ort: {koord_to_kante[nachbarkante]: nachbarkante}})
 
                     # eingehen darauf, dass die hier betrachteten kanten des ortes auf der neu gelegten Karte jetzt
                     # keine offenen mehr sein können
@@ -237,14 +240,51 @@ def update_orte(alle_orte, Karte, x, y):
                     #    Karte.orte_karte.remove(ort)
                     ### SPÄTER, da ich zuerst noch auf die verbleibenden kanten eingehen muss
     print(dictionary)
+    #print(dictionary.keys())
     #print(list(dictionary)[0])
 
     ## kanten updaten, neue Ortsteile hinzufuegen und orte verbinden, falls notwendig
 
-    # wenn nur ein Ort beteiligt ist
-    if len(dictionary) == 1:
-        pass
+    for ort in dictionary:
 
+        if len(dictionary[ort]) == 1:
+
+            # #### ghet vllt eleganter ohne nochmal ein for loop bemuehen zu muessen
+            for global_ort in dictionary[ort]:
+                # fkt, um die jetzt nicht mehr offenen kanten zu löschen
+                alle_orte[global_ort].update_kanten(dictionary[ort][global_ort])  # funktioniert
+
+                # fkt, um die noch offenen kanten dem ort hinzuzufuegen, mit dem interagiert wurde, falls nur ein glob. Ort beteiligt ist
+                alle_orte[global_ort].add_part(ort, x, y) #funktioniert
+
+        else:
+            hauptort = list(dictionary[ort])[0]
+            #print("aloa", alle_orte[hauptort].koordinaten_plus_oeffnungen)
+
+            # update aller Kanten
+            for global_ort in dictionary[ort]:
+                alle_orte[global_ort].update_kanten(dictionary[ort][global_ort])
+
+            # update hauptort normal
+            #alle_orte[hauptort].update_kanten(dictionary[ort][hauptort])
+            alle_orte[hauptort].add_part(ort, x, y)
+
+
+
+            # delete hauptort from dictionary[ort]
+            del dictionary[ort][hauptort]
+
+            alle_orte[hauptort].add_orte(dictionary[ort], alle_orte)
+
+
+
+
+
+
+
+
+    for i in alle_orte:
+        print(alle_orte[i].koordinaten_plus_oeffnungen)
     print("Ende alternativ --------------------------------------")
 
     # liste aller kanten der karte an denen sich ortsausgaenge befinden

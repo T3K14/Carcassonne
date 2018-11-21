@@ -75,13 +75,13 @@ def play_random(Kartenliste):
 #play_random(card_list)
 
 cards_set = {(0, 0): Karte("S", "O", "S", "W"),(1, 1): Karte("W", "O", "O", "W","O")}
-#alle_orte = {"Ort_0": Ort((0, 0), [1]), "Ort_a": Ort((1, 1), [1,2])}
-alle_orte["Ort_0"].koordinaten_plus_oeffnungen.update({(1, 1): [2]})
+alle_orte = {"Ort_0": Ort((0, 0), [1]), "Ort_a": Ort((1, 1), [1,2])}
+#alle_orte["Ort_0"].koordinaten_plus_oeffnungen.update({(1, 1): [2]})
 
 #print(alle_orte["Ort_0"].koordinaten_plus_oeffnungen)
 
-display_spielbrett_dict(cards_set)
-Karte_1 = Karte("O","W","W","O","W")
+#display_spielbrett_dict(cards_set)
+Karte_1 = Karte("O","W","W","O","O")
 #print("in spiel.py", Karte_1.orte_karte)
 choice_1 = ((1, 0), 0)
 cs, ak, uk, ao, ast, akl, aw = set_card(choice_1, Karte_1, possible_coordinates, unavailable_coordinates, cards_set, alle_orte, alle_strassen, alle_kloester, alle_wiesen)
