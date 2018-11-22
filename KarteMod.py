@@ -220,6 +220,14 @@ class Karte():
         dic = {0: [4, 5], 1: [5, 6], 2: [6, 7], 3: [7, 4]}
         dic2 = {(4, 5): 0, (5, 6): 1, (6, 7): 2, (7, 4): 3}
 
+        """ problem: einmal uebergebe ich direkt die liste der kanten (als self.orte), wobei die id erhlaten bleibt
+            und einmal erzeuge ich eine neue Liste, wodurch beim rotieren der ortsliste nicht mehr automatisch auch
+            alle kanten mitrotiert werden
+            
+            loesung jetzt: ich uebergebe die kanten, falls Mitte == "O" als kopie und schreibe noch code, der immer die
+            kanten individuell mitrotiert
+            """
+
         ortswert = 2
         if self.mitte == "O":
             anzahl_orte += 1
@@ -227,7 +235,8 @@ class Karte():
                 ortswert += 2
             ortsname = "Ort_{}".format(anzahl_orte)
 
-            self.orte_karte.append(Ort_auf_Karte(ortsname, self.orte, ortswert))
+            self.orte_karte.append(Ort_auf_Karte(ortsname, self.orte.copy(), ortswert))
+            #print("hallo", id(self.orte))
             #self.orte_karte.append((ort, self.orte, ortswert))
 
             #erstellt zwei Wiesen

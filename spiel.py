@@ -66,31 +66,40 @@ def play_random(Kartenliste):
                 alle_wiesen = set_card(choice, card, possible_coordinates, unavailable_coordinates, cards_set,\
                                       alle_orte, alle_strassen, alle_kloester, alle_wiesen)
             del Kartenliste_in[0]
+
+            print("\ngelegte Karte an ", choice[0], ":\n", card.matrix, "\n")
+
+            #print("\n")
+            for i in alle_orte:
+                print(i, alle_orte[i].koordinaten_plus_oeffnungen)
+            print("\nAnzahl aller Orte ist:", len(alle_orte), "\n")
+            #display_spielbrett_dict(cards_set)
+
         except IndexError:
             print(card.matrix)
             del Kartenliste_in[0]
             #random.shuffle(Kartenliste_in)
             continue
 
-#play_random(card_list)
+play_random(card_list)
 
-cards_set = {(0, 0): Karte("S", "O", "S", "W"),(1, 1): Karte("W", "O", "O", "W","O")}
-alle_orte = {"Ort_0": Ort((0, 0), [1]), "Ort_a": Ort((1, 1), [1,2])}
+#cards_set = {(0, 0): Karte("S", "O", "S", "W"),(1, 1): Karte("W", "O", "O", "W","O")}
+#alle_orte = {"Ort_0": Ort((0, 0), [1]), "Ort_a": Ort((1, 1), [1,2])}
 #alle_orte["Ort_0"].koordinaten_plus_oeffnungen.update({(1, 1): [2]})
 
 #print(alle_orte["Ort_0"].koordinaten_plus_oeffnungen)
 
-#display_spielbrett_dict(cards_set)
-Karte_1 = Karte("O","W","W","O","O")
-#print("in spiel.py", Karte_1.orte_karte)
-choice_1 = ((1, 0), 0)
-cs, ak, uk, ao, ast, akl, aw = set_card(choice_1, Karte_1, possible_coordinates, unavailable_coordinates, cards_set, alle_orte, alle_strassen, alle_kloester, alle_wiesen)
-#
+#Karte_1 = Karte("O","S","S","W")
+#choice_1 = ((-1, 0), 2)
+#cs, ak, uk, ao, ast, akl, aw = set_card(choice_1, Karte_1, possible_coordinates, unavailable_coordinates, cards_set, alle_orte, alle_strassen, alle_kloester, alle_wiesen)
 
-#print(cards_set)
-print([(ort, alle_orte[ort].koordinaten_plus_oeffnungen) for ort in alle_orte])
-print(len(alle_orte))
+#Karte_1 = Karte("O","O","S","O","O")
+#choice_1 = ((1, 0), 3)
+#cs, ak, uk, ao, ast, akl, aw = set_card(choice_1, Karte_1, possible_coordinates, unavailable_coordinates, cards_set, alle_orte, alle_strassen, alle_kloester, alle_wiesen)
 
-#display_spielbrett_dict(cards_set)
+
+#print([(ort, alle_orte[ort].koordinaten_plus_oeffnungen) for ort in alle_orte])
+
+display_spielbrett_dict(cards_set)
 
 #print(cards_set)
