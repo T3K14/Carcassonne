@@ -6,7 +6,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import time
 
-from rotate2 import rotate_card_left, rotate_card_right, rotate_matrix_left, rotate_matrix_right, rotate_list_right, rotateWiesenRight
 from Rotate import Rotate
 from KarteMod import Karte
 from KarteMod import Kartenliste
@@ -121,40 +120,91 @@ def display_spielbrett(cards_set):
         plt.yticks(np.array([]))
     plt.show()
 
-def set_card(coordinates, Karte, possible_coordinates, unavailable_coordinates, cards_set, alle_orte, strassen, kloester, wiesen):
+def set_card(coordinates, Karte, possible_coordinates, unavailable_coordinates, cards_set, orte, strassen, kloester, wiesen):
     """setzt karte an koordinaten (x,y) (coordinates) und updated cards_set, possible_coordiantes
      und unavailable_coordinates
 
      ausserdem werden Orte, Strassen, Wiesen und Kloester geupdated
      """
-    #print(Karte.matrix)
-    #print(Karte.info)
-    #print(id(Karte.orte), id(Karte.orte_karte[0].kanten))
 
     (x, y) = coordinates[0]  # koordinaten
     z = coordinates[1]  # anzahl an rechtsrotationen und entsprechende rotation
     for i in range(z):
-        Karte.info = rotate_card_right(Karte.info)
-        Karte.matrix = rotate_matrix_right(Karte.matrix)
-        rotate_list_right(Karte.orte)
-        #print("hier", Karte.orte)
-
-        # kanten einzeln drehen, da die orte.kanten nicht mehr auf das selbe objekt wie self.orte zeigen
-        for ort in Karte.orte_karte:
-            ort.kanten = rotate_list_right(ort.kanten)
-        #    print(ort.kanten)
-
-        Karte.strassen = rotate_list_right(Karte.strassen)
-        Karte.wiesenKarte = rotateWiesenRight(Karte.wiesenKarte)
-
-    #print(Karte.orte, Karte.orte_karte[0].kanten)
+        Karte.info = Rotate.rotate_card_right(Karte.info)
+        Karte.matrix = Rotate.rotate_matrix_right(Karte.matrix)
+        Karte.orte = Rotate.rotate_list_right(Karte.orte)
+        Karte.strassen = Rotate.rotate_list_right(Karte.strassen)
+        Karte.wiesenKarte = Rotate.rotateWiesenRight(Karte.wiesenKarte)
 
     #add card to cards_set
     cards_set.update({(x, y): Karte})  # ((x,y),Karte)
 
+    #liste aller kanten der karte an denen sich ortsausgaenge befinden
+    liste_kanten = [i for ort in Karte.orte_karte for i in ort.kanten]
+
+    zu_loeschende_orte = []
+    beteiligte_orte = []
+    counter = []
+
+    print("in setcard.py")
+    print(liste_kanten)
+    print("Orte auf Karte", Karte.orte_karte)
+    print(Karte.matrix)
+
+    # orte updaten
+    # betrachte jeden ort auf Karte
+    for ort in Karte.orte_karte:
+
+        #ueberpruefe, welche kanten der Karte zu diesem Ort gehoeren
+        for oeffnung in ort.kanten:
+
+            # print("hi", oeffnung)
+            if oeffnung < 2:
+                oe_to_check = oeffnung + 2
+            else:
+                oe_to_check = oeffnung - 2
+            print("oe_to_check:", oe_to_check)
+            # dictionary gibt koordinaten an, welche zu bestimmter kante ueberprueft werden muessen
+            dict = {0: (x, y - 1), 1: (x - 1, y), 2: (x, y + 1), 3: (x + 1, y)}
+
+            # ueberpruefe ob es orte o in alle_orte gibt, welche teile an den koordinaten zu dict haben und ob dafuer
+            # auch noch die koordinaten passen
+            for o in orte:
+                # wenn nachbarkoordinaten mit Karte mit existierendem ort besetzt sind UND deren ortskanten zu neuer
+                # karte mit denen dieser neuen Karte uebereinstimmen
+                if dict[oe_to_check] in orte[o].koordinaten_plus_oeffnungen and \
+                        oe_to_check in orte[o].koordinaten_plus_oeffnungen[dict[oe_to_check]]:
+
+                    # liste den beteiligten ort, der koordinate des ortsteil an dessen kante der an das neue teil anschliesst
+                    beteiligte_orte.append((o, dict[oe_to_check], oe_to_check))
+
+                    # falls der existierende ort an mehreren kanten beruehrt wird, soll er trotzdem nur einmal beim
+                    # updaten beruecksichtigt werden
+                    if o not in counter:
+                        counter.append(o)
+
+                    # die betrachtete kannt wird aus der liste aller kanten geloescht, dass sie spater nicht als offene
+                    # kante des geupdateten ortes eingetragen wird
+                    liste_kanten.remove(oeffnung)
+
+                    # ort wird geloescht, dass spater kein neuer ort damit erzeugt wird
+                    if ort not in zu_loeschende_orte:
+                        zu_loeschende_orte.append(ort)
+
+    for integrierter_ort in zu_loeschende_orte:
+        Karte.orte_karte.remove(integrierter_ort)
+
+    # Ortskanten auf Karte werden auf uebrig gebliebene offene kanten reduziert
+    for kartenort in Karte.orte_karte:
+        for kante in kartenort.kanten:
+            if kante in liste_kanten:
+                liste_kanten.remove(kante)
+
+    #print("hihihihihihih", beteiligte_orte)
 
     if len(Karte.orte) > 0:
-        update_orte(alle_orte, Karte, x, y)
+        update_orte(orte, liste_kanten, Karte, beteiligte_orte, coordinates[0], counter, ort.wert)
+
     if len(Karte.strassen) > 0:
         update_strasse(strassen, (x, y), Karte)
 
@@ -193,212 +243,55 @@ def set_card(coordinates, Karte, possible_coordinates, unavailable_coordinates, 
                 if (a, b) not in possible_coordinates and (a, b) not in unavailable_coordinates:
                     possible_coordinates.append((a, b))
     #print("ahoi",cards_set)
-    return cards_set, possible_coordinates, unavailable_coordinates, alle_orte, strassen, kloester, wiesen
+    return cards_set, possible_coordinates, unavailable_coordinates, orte, strassen, kloester, wiesen
 
-def update_orte(alle_orte, Karte, x, y):
+def update_orte(alle_orte, liste_kanten_, Karte_, beteiligte_orte_, koordinaten_, counter_, wert_):
+    ### alte Kanten loeschen
 
-    #print("Anfang alternativ ------------------------------------")
+    print("\n\n\n", alle_orte, liste_kanten_, Karte_.info, beteiligte_orte_, koordinaten_, counter_, wert_, sep="\n")
 
-    # dictionary gibt koordinaten von nachbarkarte an, welche zu bestimmter kante ueberprueft werden muessen
-    koord_to_kante = {0: (x, y - 1), 1: (x - 1, y), 2: (x, y + 1), 3: (x + 1, y)}
+    for beteiligter_ort in beteiligte_orte_:
+        print("beteiligter_ort", beteiligter_ort)
 
-    # dictionary enthält orte auf karte und zu jedem ein weiters dict mit bereits existierenden Orten, mit denen eine
-    # WW stattfindet und wo
-    dictionary = {}
+        #beteiligter_ort[1] ist die koordinaten vom beteiligten ort an dessen kante(n) (beteiligter_ort[2])
+        # der neue ort anschliesst
+        alle_orte[beteiligter_ort].update_kanten(beteiligter_ort[1], beteiligter_ort[2])
 
-    for ort in Karte.orte_karte[:]: #kopie daher, da orte aus der liste geloescht und die verbliebenen neue werden
+        #### alt
+        #alle_orte[beteiligter_ort[0]].koordinaten_plus_oeffnungen[beteiligter_ort[1]].remove(beteiligter_ort[2])
 
+    ### neue Orte erstellen
 
-        for kante in ort.kanten[:]: # kopie, da die kanten an die was angrenzt geloescht werden und die uebrigen dann
-                                    # noch zum ort hinzugefuegt werden sollen
+    for ort in Karte_.orte_karte:
+        alle_orte.update({ort[0]: Ort(koordinaten_, ort[1])})
 
-            if kante < 2:
-                nachbarkante = kante + 2
+    ### alte Orte updaten
+
+    #print("C", counter_)
+
+    if len(counter_) == 1:
+        alle_orte[counter_[0]].koordinaten_plus_oeffnungen.update({koordinaten_: liste_kanten_})
+        alle_orte[counter_[0]].wert += wert_
+
+    else:
+         if len(counter_) > 0:
+            if Karte_.mitte == "O":
+                hauptort = counter_[0]
+                counter_.remove(hauptort)
+                alle_orte[hauptort].koordinaten_plus_oeffnungen.update({koordinaten_: liste_kanten_})
+                alle_orte[hauptort].wert += wert_
+
+                for ort in counter_:
+                    alle_orte[hauptort].koordinaten_plus_oeffnungen.update(alle_orte[ort].koordinaten_plus_oeffnungen)
+                    alle_orte[hauptort].wert += alle_orte[ort].wert
+                    del alle_orte[ort]
+
             else:
-                nachbarkante = kante - 2
-
-            # ueberpruefe ob es orte o in alle_orte gibt, welche teile an den koordinaten zu dict haben und ob dafuer
-            # auch noch die kanten passen
-            for global_ort in alle_orte:
-
-                # wenn nachbarkoordinaten mit Karte mit existierendem ort besetzt sind UND dieser Ort eine offene Kante
-                # hat, die an eine Kante des Ortes der neuen Karte grenzt
-                if koord_to_kante[nachbarkante] in alle_orte[global_ort].koordinaten_plus_oeffnungen and \
-                nachbarkante in alle_orte[global_ort].koordinaten_plus_oeffnungen[koord_to_kante[nachbarkante]]:
-
-                    # falls der Ort auf der Karte noch nicht eingetragen ist
-                    if ort not in dictionary:
-
-                        dictionary.update({ort: {global_ort: [(koord_to_kante[nachbarkante], nachbarkante)]}})
-                        #dictionary.update({ort: {global_ort: {koord_to_kante[nachbarkante]: nachbarkante}}})
-
-                    else:
-
-                        # wenn der globale Ort schon als Ort eingetragen wurde, welcher mit dem auf der Karte ww, sollen
-                        # hier nur neue wechselwirkungskoordinaten hinzugefuegt werden
-                        if global_ort in list(dictionary[ort]):
-                            dictionary[ort][global_ort].append((koord_to_kante[nachbarkante], nachbarkante))
-                            #dictionary[ort][global_ort].update({koord_to_kante[nachbarkante]: nachbarkante})
-
-                        else:
-                            dictionary[ort].update({global_ort: [(koord_to_kante[nachbarkante], nachbarkante)]})
-                            #dictionary[ort].update({global_ort: {koord_to_kante[nachbarkante]: nachbarkante}})
-
-                    # eingehen darauf, dass die hier betrachteten kanten des ortes auf der neu gelegten Karte jetzt
-                    # keine offenen mehr sein können
-                    ort.kanten.remove(kante)
-                    if ort in Karte.orte_karte:
-                        Karte.orte_karte.remove(ort)
-
-                    # ort aus karte.orte_karte loeschen
-                    #if ort in Karte.orte_karte:
-                    #    Karte.orte_karte.remove(ort)
-                    ### SPÄTER, da ich zuerst noch auf die verbleibenden kanten eingehen muss
-    #print(dictionary)
-    #print(dictionary.keys())
-    #print(list(dictionary)[0])
-
-    ## kanten updaten, neue Ortsteile hinzufuegen und orte verbinden, falls notwendig
-
-    for ort in dictionary:
-
-        if len(dictionary[ort]) == 1:
-
-            # #### ghet vllt eleganter ohne nochmal ein for loop bemuehen zu muessen
-            for global_ort in dictionary[ort]:
-                # fkt, um die jetzt nicht mehr offenen kanten zu löschen
-                alle_orte[global_ort].update_kanten(dictionary[ort][global_ort])  # funktioniert
-
-                # fkt, um die noch offenen kanten dem ort hinzuzufuegen, mit dem interagiert wurde, falls nur ein glob. Ort beteiligt ist
-                alle_orte[global_ort].add_part(ort, x, y) #funktioniert
-
-        else:
-            hauptort = list(dictionary[ort])[0]
-            #print("aloa", alle_orte[hauptort].koordinaten_plus_oeffnungen)
-
-            # update aller Kanten
-            for global_ort in dictionary[ort]:
-                alle_orte[global_ort].update_kanten(dictionary[ort][global_ort])
-
-            # update hauptort normal
-            #alle_orte[hauptort].update_kanten(dictionary[ort][hauptort])
-            alle_orte[hauptort].add_part(ort, x, y)
-
-
-
-            # delete hauptort from dictionary[ort]
-            del dictionary[ort][hauptort]
-
-            alle_orte[hauptort].add_orte(dictionary[ort], alle_orte)
-
-    # erstelle neue Orte, die mit keinem globalen interagiert haben
-    for ort in Karte.orte_karte:
-        #print(ort.kanten)
-        alle_orte.update({ort.name: Ort((x, y), ort.kanten)})
-
-
-
-
-    #for i in alle_orte:
-        #print(alle_orte[i].koordinaten_plus_oeffnungen)
-    #print("Ende alternativ --------------------------------------")
-
-    # liste aller kanten der karte an denen sich ortsausgaenge befinden
-    #liste_kanten = [i for ort in Karte.orte_karte for i in ort.kanten]
-#
-    #zu_loeschende_orte = []
-    #beteiligte_orte = []
-    #counter = []
-#
-    ## orte updaten
-    ## betrachte jeden ort auf Karte
-    #for ort in Karte.orte_karte:
-#
-    #    # ueberpruefe die kanten der Karte zu diesem Ort
-    #    for oeffnung in ort.kanten:
-#
-    #        if oeffnung < 2:
-    #            oe_to_check = oeffnung + 2
-    #        else:
-    #            oe_to_check = oeffnung - 2
-    #        print("oe_to_check:", oe_to_check)
-    #        # dictionary gibt koordinaten an, welche zu bestimmter kante ueberprueft werden muessen
-    #        dict = {0: (x, y - 1), 1: (x - 1, y), 2: (x, y + 1), 3: (x + 1, y)}
-#
-    #        # ueberpruefe ob es orte o in alle_orte gibt, welche teile an den koordinaten zu dict haben und ob dafuer
-    #        # auch noch die kanten passen
-    #        for o in alle_orte:
-    #            # wenn nachbarkoordinaten mit Karte mit existierendem ort besetzt sind UND deren ortskanten zu neuer
-    #            # karte mit denen dieser neuen Karte uebereinstimmen
-    #            if dict[oe_to_check] in alle_orte[o].koordinaten_plus_oeffnungen and \
-    #                    oe_to_check in alle_orte[o].koordinaten_plus_oeffnungen[dict[oe_to_check]]:
-#
-    #                # liste den beteiligten ort, der koordinate des ortsteil an dessen kante der an das neue teil anschliesst
-    #                beteiligte_orte.append((o, dict[oe_to_check], oe_to_check))
-#
-    #                # falls der existierende ort an mehreren kanten beruehrt wird, soll er trotzdem nur einmal beim
-    #                # updaten beruecksichtigt werden
-    #                if o not in counter:
-    #                    counter.append(o)
-#
-    #                # die betrachtete kannt wird aus der liste aller kanten geloescht, dass sie spater nicht als offene
-    #                # kante des geupdateten ortes eingetragen wird
-    #                liste_kanten.remove(oeffnung)
-#
-    #                # ort wird geloescht, dass spater kein neuer ort damit erzeugt wird
-    #                if ort not in zu_loeschende_orte:
-    #                    zu_loeschende_orte.append(ort)
-#
-    #for integrierter_ort in zu_loeschende_orte:
-    #    Karte.orte_karte.remove(integrierter_ort)
-#
-    ## Ortskanten auf Karte werden auf uebrig gebliebene offene kanten reduziert
-    #for kartenort in Karte.orte_karte:
-    #    for kante in kartenort.kanten:
-    #        if kante in liste_kanten:
-    #            liste_kanten.remove(kante)
-#
-    #for beteiligter_ort in beteiligte_orte:
-    #    print("beteiligter_ort", beteiligter_ort)
-#
-    #    # beteiligter_ort[1] ist die koordinaten vom beteiligten ort an dessen kante(n) (beteiligter_ort[2])
-    #    # der neue ort anschliesst
-    #    alle_orte[beteiligter_ort[0]].update_kanten(beteiligter_ort[1], beteiligter_ort[2])
-#
-    #    #### alt
-    #    # alle_orte[beteiligter_ort[0]].koordinaten_plus_oeffnungen[beteiligter_ort[1]].remove(beteiligter_ort[2])
-#
-    #### neue Orte erstellen
-#
-    #for ort in Karte.orte_karte:
-    #    alle_orte.update({ort[0]: Ort(koordinaten, ort[1])})
-#
-    #### alte Orte updaten
-#
-    ## print("C", counter_)
-#
-    #if len(counter) == 1:
-    #    alle_orte[counter[0]].koordinaten_plus_oeffnungen.update({koordinaten: liste_kanten})
-    #    alle_orte[counter[0]].wert += wert
-#
-    #else:
-    #    if len(counter_) > 0:
-    #        if Karte_.mitte == "O":
-    #            hauptort = counter_[0]
-    #            counter_.remove(hauptort)
-    #            alle_orte[hauptort].koordinaten_plus_oeffnungen.update({koordinaten_: liste_kanten_})
-    #            alle_orte[hauptort].wert += wert_
-#
-    #            for ort in counter_:
-    #                alle_orte[hauptort].koordinaten_plus_oeffnungen.update(alle_orte[ort].koordinaten_plus_oeffnungen)
-    #                alle_orte[hauptort].wert += alle_orte[ort].wert
-    #                del alle_orte[ort]
-#
-    #        else:
-    #            for ort in counter_:
-    #                alle_orte[ort].koordinaten_plus_oeffnungen.update({koordinaten_: []})
-    #                alle_orte[ort].wert += wert_
+                for ort in counter_:
+                    alle_orte[ort].koordinaten_plus_oeffnungen.update({koordinaten_: []})
+                    alle_orte[ort].wert += wert_
     return alle_orte
+
 def update_strasse(liste_strassen, koordinaten_, Karte_):
 
     #print(Karte_.info, Karte_.strassen_karte)
