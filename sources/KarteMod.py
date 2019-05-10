@@ -9,7 +9,7 @@ anzahl_kloester = 0
 anzahlWiesen = 1
 ww = False
 
-class Karte():
+class Karte:
     """erstellt zu jeder eingabe von Infoliste passende Matrix der Karte"""  #####
 
 

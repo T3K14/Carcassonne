@@ -186,9 +186,8 @@ def set_card(coordinates, Karte, possible_coordinates, unavailable_coordinates, 
     #print("ahoi",cards_set)
     return cards_set, possible_coordinates, unavailable_coordinates, alle_orte, strassen, kloester, wiesen
 
-def update_orte(alle_orte, Karte, x, y):
 
-    #print("Anfang alternativ ------------------------------------")
+def update_orte(alle_orte, Karte, x, y):
 
     # dictionary gibt koordinaten von nachbarkarte an, welche zu bestimmter kante ueberprueft werden muessen
     koord_to_kante = {0: (x, y - 1), 1: (x - 1, y), 2: (x, y + 1), 3: (x + 1, y)}

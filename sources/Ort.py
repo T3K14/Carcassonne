@@ -10,7 +10,7 @@ class Ort:
         self.koordinaten_plus_oeffnungen = {koordinaten: kanten}
         self.wert = 2
 
-    def add_part(self,ort, x, y):
+    def add_part(self, ort, x, y):
         """ nimmt ortsteil, koordinaten des neuen teils und wo dieses teil den aktuellen ort beruehrt"""
 
         # muss checken, ob dadurch noch ein anderer ort eingegliedert wird
