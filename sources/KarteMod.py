@@ -164,6 +164,7 @@ class Karte:
                 # self.strassen = Rotate.rotate_list_right(self.strassen)
                 # self.orte = Rotate.rotate_list_right(self.orte)
             o = False
+
         if self.mitte == "K":
             self.matrix[3][3] = 3
 

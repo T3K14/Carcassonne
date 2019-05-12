@@ -9,16 +9,13 @@ def rotate_card_left(infoliste):
             info[i] = info[i+1]
     return(info)
 
+
 def rotate_card_right(infoliste):
-    info = []
-    for i, seite in enumerate(infoliste):
-        info.append(infoliste[i])
-    for i, seite in enumerate(info[:-1]):
-        if i == 0:
-            info[0] = infoliste[-2]
-        else:
-            info[i] = infoliste[i-1]
-    return(info)
+    """takes eg list ["O", "S", "S", "W"] and swaps elements according to a right rotation of the card"""
+    info = [infoliste[-1], 1, 2, 3]
+    for i in info[1:]:
+        info[i] = infoliste[i-1]
+    return info
 
 def rotate_matrix_right(matrix):
     m_neu = matrix.transpose()
