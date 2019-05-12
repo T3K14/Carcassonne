@@ -34,7 +34,7 @@ def rotate_matrix_right(matrix):
         row = m_neu[zeile]
         for i in range(3):
             row[i], row[-(i+1)] = row[-(i+1)], row[i]
-    return (m_neu)
+    return m_neu
 
 def rotate_matrix_left(matrix):
     m_neu = matrix.transpose()

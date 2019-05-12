@@ -1,7 +1,7 @@
 import numpy as np
 from Ort import Ort_auf_Karte
 #from strasse, etc
-from rotate2 import rotate_info_right, rotate_list_right
+from rotate2 import rotate_info_right, rotate_list_right, rotate_matrix_right
 
 class Card:
 
@@ -86,7 +86,7 @@ class Card:
                     self.matrix[0] = 1
                 else:
                     self.info = rotate_info_right(self.info)
-                    self.matrix = Rotate.rotate_matrix_right(self.matrix)
+                    self.matrix = rotate_matrix_right(self.matrix)
                     self.strassen_kanten = rotate_list_right(self.strassen_kanten)
                     self.orte_kanten = rotate_list_right(self.orte_kanten)
                     continue
@@ -102,7 +102,7 @@ class Card:
 
                         else:
                             self.info = rotate_info_right(self.info)
-                            self.matrix = Rotate.rotate_matrix_right(self.matrix)
+                            self.matrix = rotate_matrix_right(self.matrix)
                             self.strassen_kanten = rotate_list_right(self.strassen_kanten)
                             self.orte_kanten = rotate_list_right(self.orte_kanten)
                             continue
@@ -111,13 +111,13 @@ class Card:
                             self.matrix[0], self.matrix[:, 6], self.matrix[1][2:], self.matrix[:, 5][:-2] = 1, 1, 1, 1
                         else:
                             self.info = rotate_info_right(self.info)
-                            self.matrix = Rotate.rotate_matrix_right(self.matrix)
+                            self.matrix = rotate_matrix_right(self.matrix)
                             self.strassen_kanten = rotate_list_right(self.strassen_kanten)
                             self.orte_kanten = rotate_list_right(self.orte_kanten)
                             continue
                     else:
                         self.info = rotate_info_right(self.info)
-                        self.matrix = Rotate.rotate_matrix_right(self.matrix)
+                        self.matrix = rotate_matrix_right(self.matrix)
                         self.strassen_kanten = rotate_list_right(self.strassen_kanten)
                         self.orte_kanten = rotate_list_right(self.orte_kanten)
                         continue
@@ -127,7 +127,7 @@ class Card:
                             self.matrix[0], self.matrix[6] = 1, 1
                         else:
                             self.info = rotate_info_right(self.info)
-                            self.matrix = Rotate.rotate_matrix_right(self.matrix)
+                            self.matrix = rotate_matrix_right(self.matrix)
                             self.strassen_kanten = rotate_list_right(self.strassen_kanten)
                             self.orte_kanten = rotate_list_right(self.orte_kanten)
                             continue
@@ -136,13 +136,13 @@ class Card:
                             self.matrix[0], self.matrix[:, 6] = 1, 1
                         else:
                             self.info = rotate_info_right(self.info)
-                            self.matrix = Rotate.rotate_matrix_right(self.matrix)
+                            self.matrix = rotate_matrix_right(self.matrix)
                             self.strassen_kanten = rotate_list_right(self.strassen_kanten)
                             self.orte_kanten = rotate_list_right(self.orte_kanten)
                             continue
                     else:
                         self.info = rotate_info_right(self.info)
-                        self.matrix = Rotate.rotate_matrix_right(self.matrix)
+                        self.matrix = rotate_matrix_right(self.matrix)
                         self.strassen_kanten = rotate_list_right(self.strassen_kanten)
                         self.orte_kanten = rotate_list_right(self.orte_kanten)
                         continue
@@ -151,7 +151,7 @@ class Card:
                 for i in [0, 1, 2, 3]:
                     if self.info[0] == "O":
                         self.info = rotate_info_right(self.info)
-                        self.matrix = Rotate.rotate_matrix_right(self.matrix)
+                        self.matrix = rotate_matrix_right(self.matrix)
                         self.strassen_kanten = rotate_list_right(self.strassen_kanten)
                         self.orte_kanten = rotate_list_right(self.orte_kanten)
                         continue
@@ -178,7 +178,7 @@ class Card:
                         k = False
                     else:
                         self.info = rotate_info_right(self.info)
-                        self.matrix = Rotate.rotate_matrix_right(self.matrix)
+                        self.matrix = rotate_matrix_right(self.matrix)
                         self.strassen_kanten = rotate_list_right(self.strassen_kanten)
                         self.orte_kanten = rotate_list_right(self.orte_kanten)
                         continue
@@ -189,11 +189,11 @@ class Card:
         # dient dazu nach erstellen der karte, info und matrix auf ausgangsposition zu drehen
 
         while True:
-            if self.info == self.info_alt:
+            if self.info == info_old:
                 break
             else:
                 self.info = rotate_info_right(self.info)
-                self.matrix = Rotate.rotate_matrix_right(self.matrix)
+                self.matrix = rotate_matrix_right(self.matrix)
                 self.orte_kanten = rotate_list_right(self.orte_kanten)
                 self.strassen_kanten = rotate_list_right(self.strassen_kanten)
 
@@ -203,7 +203,20 @@ class Card:
                 self.wiesen.append(position)
 
     def rotate_right(self):
-        pass
+        self.info = rotate_info_right(self.info)
+        self.strassen_kanten = rotate_list_right(self.strassen_kanten)
+        self.orte_kanten = rotate_list_right(self.orte_kanten)
+        self.wiesen_kanten = rotate_list_right(self.wiesen_kanten)
+        self.matrix = rotate_matrix_right(self.matrix)
+
 
 if __name__ == "__main__":
-    k = Card("O", "W", "S", "S")
+    k = Card("O", "S", "S", "W")
+    print(k.matrix)
+    k.rotate_right()
+    print("\n", k.matrix)
+    k.rotate_right()
+    print("\n", k.matrix)
+    k.rotate_right()
+    print("\n", k.matrix)
+
