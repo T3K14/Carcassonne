@@ -1,7 +1,7 @@
 import numpy as np
 from Ort import Ort_auf_Karte
 #from strasse, etc
-from rotate2 import rotate_card_right
+from rotate2 import rotate_info_right, rotate_list_right
 
 class Card:
 
@@ -13,7 +13,7 @@ class Card:
 
         self.matrix = np.zeros((7, 7))
 
-        self.orts_kanten = []
+        self.orte_kanten = []
         self.strassen_kanten = []
         self.wiesen_kanten = []
 
@@ -23,12 +23,11 @@ class Card:
             if status == "S":
                 self.strassen_kanten.append(position)
             elif status == "O":
-                self.orts_kanten.append(position)
+                self.orte_kanten.append(position)
             else:
                 self.wiesen_kanten.append(position)
 
         self.create_matrix()
-
 
     def create_matrix(self):
         """einfach von frueher reinkopiert, muss echt noch optimiert werden"""
@@ -46,9 +45,10 @@ class Card:
                     if self.strassen_kanten[1] == 3:
                         self.matrix[:, 3][0:3], self.matrix[3][0:4] = 2, 2
                 else:
-                    self.info = rotate_card_right(self.info)
-                    self.strassen_kanten = Rotate.rotate_list_right(self.strassen_kanten)
-                    self.orte = Rotate.rotate_list_right(self.orte)
+                    self.info = rotate_info_right(self.info)
+                    self.strassen_kanten = rotate_list_right(self.strassen_kanten)
+                    self.orte_kanten = rotate_list_right(self.orte_kanten)
+                    self.wiesen_kanten = rotate_list_right(self.wiesen_kanten)
                     continue
 
             if len(self.strassen_kanten) == 3:
@@ -61,9 +61,9 @@ class Card:
                     if self.strassen_kanten[1] == 2:
                         self.matrix[:, 3], self.matrix[3][0:3] = 2, 2
                 else:
-                    self.info = Rotate.rotate_card_right(self.info)
-                    self.strassen_kanten = Rotate.rotate_list_right(self.strassen_kanten)
-                    self.orte = Rotate.rotate_list_right(self.orte)
+                    self.info = rotate_info_right(self.info)
+                    self.strassen_kanten = rotate_list_right(self.strassen_kanten)
+                    self.orte_kanten = rotate_list_right(self.orte_kanten)
                     continue
 
             if len(self.strassen_kanten) == 4:
@@ -76,24 +76,24 @@ class Card:
         o = True
         while o:
 
-            self.orte = sorted(self.orte)
+            self.orte_kanten = sorted(self.orte_kanten)
 
             # for position, status in enumerate(self.info[:-1]):
             #    if status == "O":
-            #        self.orte.append(position)
-            if len(self.orte) == 1:
-                if self.orte[0] == 0:
+            #        self.orte_kanten.append(position)
+            if len(self.orte_kanten) == 1:
+                if self.orte_kanten[0] == 0:
                     self.matrix[0] = 1
                 else:
-                    self.info = Rotate.rotate_card_right(self.info)
+                    self.info = rotate_info_right(self.info)
                     self.matrix = Rotate.rotate_matrix_right(self.matrix)
-                    self.strassen_kanten = Rotate.rotate_list_right(self.strassen_kanten)
-                    self.orte = Rotate.rotate_list_right(self.orte)
+                    self.strassen_kanten = rotate_list_right(self.strassen_kanten)
+                    self.orte_kanten = rotate_list_right(self.orte_kanten)
                     continue
-            if len(self.orte) == 2:
+            if len(self.orte_kanten) == 2:
                 if self.mitte == "O":
-                    if abs(self.orte[0] - self.orte[1]) == 2:  # O,W,O,W,O
-                        if self.orte[0] == 0:
+                    if abs(self.orte_kanten[0] - self.orte_kanten[1]) == 2:  # O,W,O,W,O
+                        if self.orte_kanten[0] == 0:
                             self.matrix = np.ones(self.matrix.shape)
                             self.matrix[:, 0][1:-1], self.matrix[:, 6][1:-1] = 0, 0
                             self.matrix[:, 1][1:-1], self.matrix[:, 5][1:-1] = 0, 0
@@ -101,59 +101,59 @@ class Card:
                             ww = True
 
                         else:
-                            self.info = Rotate.rotate_card_right(self.info)
+                            self.info = rotate_info_right(self.info)
                             self.matrix = Rotate.rotate_matrix_right(self.matrix)
-                            self.strassen_kanten = Rotate.rotate_list_right(self.strassen_kanten)
-                            self.orte = Rotate.rotate_list_right(self.orte)
+                            self.strassen_kanten = rotate_list_right(self.strassen_kanten)
+                            self.orte_kanten = rotate_list_right(self.orte_kanten)
                             continue
-                    elif self.orte[0] == 0:  # O,O,W,W,O
-                        if self.orte[1] == 1:
+                    elif self.orte_kanten[0] == 0:  # O,O,W,W,O
+                        if self.orte_kanten[1] == 1:
                             self.matrix[0], self.matrix[:, 6], self.matrix[1][2:], self.matrix[:, 5][:-2] = 1, 1, 1, 1
                         else:
-                            self.info = Rotate.rotate_card_right(self.info)
+                            self.info = rotate_info_right(self.info)
                             self.matrix = Rotate.rotate_matrix_right(self.matrix)
-                            self.strassen_kanten = Rotate.rotate_list_right(self.strassen_kanten)
-                            self.orte = Rotate.rotate_list_right(self.orte)
+                            self.strassen_kanten = rotate_list_right(self.strassen_kanten)
+                            self.orte_kanten = rotate_list_right(self.orte_kanten)
                             continue
                     else:
-                        self.info = Rotate.rotate_card_right(self.info)
+                        self.info = rotate_info_right(self.info)
                         self.matrix = Rotate.rotate_matrix_right(self.matrix)
-                        self.strassen_kanten = Rotate.rotate_list_right(self.strassen_kanten)
-                        self.orte = Rotate.rotate_list_right(self.orte)
+                        self.strassen_kanten = rotate_list_right(self.strassen_kanten)
+                        self.orte_kanten = rotate_list_right(self.orte_kanten)
                         continue
                 else:
-                    if abs(self.orte[0] - self.orte[1]) == 2:  # O,W,O,W,!=O
-                        if self.orte[0] == 0:
+                    if abs(self.orte_kanten[0] - self.orte_kanten[1]) == 2:  # O,W,O,W,!=O
+                        if self.orte_kanten[0] == 0:
                             self.matrix[0], self.matrix[6] = 1, 1
                         else:
-                            self.info = Rotate.rotate_card_right(self.info)
+                            self.info = rotate_info_right(self.info)
                             self.matrix = Rotate.rotate_matrix_right(self.matrix)
-                            self.strassen_kanten = Rotate.rotate_list_right(self.strassen_kanten)
-                            self.orte = Rotate.rotate_list_right(self.orte)
+                            self.strassen_kanten = rotate_list_right(self.strassen_kanten)
+                            self.orte_kanten = rotate_list_right(self.orte_kanten)
                             continue
-                    elif self.orte[0] == 0:
-                        if self.orte[1] == 1:
+                    elif self.orte_kanten[0] == 0:
+                        if self.orte_kanten[1] == 1:
                             self.matrix[0], self.matrix[:, 6] = 1, 1
                         else:
-                            self.info = Rotate.rotate_card_right(self.info)
+                            self.info = rotate_info_right(self.info)
                             self.matrix = Rotate.rotate_matrix_right(self.matrix)
-                            self.strassen_kanten = Rotate.rotate_list_right(self.strassen_kanten)
-                            self.orte = Rotate.rotate_list_right(self.orte)
+                            self.strassen_kanten = rotate_list_right(self.strassen_kanten)
+                            self.orte_kanten = rotate_list_right(self.orte_kanten)
                             continue
                     else:
-                        self.info = Rotate.rotate_card_right(self.info)
+                        self.info = rotate_info_right(self.info)
                         self.matrix = Rotate.rotate_matrix_right(self.matrix)
-                        self.strassen_kanten = Rotate.rotate_list_right(self.strassen_kanten)
-                        self.orte = Rotate.rotate_list_right(self.orte)
+                        self.strassen_kanten = rotate_list_right(self.strassen_kanten)
+                        self.orte_kanten = rotate_list_right(self.orte_kanten)
                         continue
-            if len(self.orte) == 3:
+            if len(self.orte_kanten) == 3:
                 # if "S" not in self.info[:-1]:
                 for i in [0, 1, 2, 3]:
                     if self.info[0] == "O":
-                        self.info = Rotate.rotate_card_right(self.info)
+                        self.info = rotate_info_right(self.info)
                         self.matrix = Rotate.rotate_matrix_right(self.matrix)
-                        self.strassen_kanten = Rotate.rotate_list_right(self.strassen_kanten)
-                        self.orte = Rotate.rotate_list_right(self.orte)
+                        self.strassen_kanten = rotate_list_right(self.strassen_kanten)
+                        self.orte_kanten = rotate_list_right(self.orte_kanten)
                         continue
                     elif self.info[0] != "O":
                         self.matrix = np.ones((7, 7))
@@ -161,10 +161,10 @@ class Card:
                         if "S" in self.info:
                             self.matrix[:, 3][:2] = 2
                         break
-            if len(self.orte) == 4:
+            if len(self.orte_kanten) == 4:
                 self.matrix = np.ones((7, 7))
-                # self.strassen_kanten = Rotate.rotate_list_right(self.strassen_kanten)
-                # self.orte = Rotate.rotate_list_right(self.orte)
+                # self.strassen_kanten = rotate_list_right(self.strassen_kanten)
+                # self.orte_kanten = rotate_list_right(self.orte_kanten)
             o = False
 
         if self.mitte == "K":
@@ -177,10 +177,10 @@ class Card:
                         self.matrix[:, 3][4:] = 2
                         k = False
                     else:
-                        self.info = Rotate.rotate_card_right(self.info)
+                        self.info = rotate_info_right(self.info)
                         self.matrix = Rotate.rotate_matrix_right(self.matrix)
-                        self.strassen_kanten = Rotate.rotate_list_right(self.strassen_kanten)
-                        self.orte = Rotate.rotate_list_right(self.orte)
+                        self.strassen_kanten = rotate_list_right(self.strassen_kanten)
+                        self.orte_kanten = rotate_list_right(self.orte_kanten)
                         continue
 
         if self.mitte == "G":
@@ -192,10 +192,10 @@ class Card:
             if self.info == self.info_alt:
                 break
             else:
-                self.info = Rotate.rotate_card_right(self.info)
+                self.info = rotate_info_right(self.info)
                 self.matrix = Rotate.rotate_matrix_right(self.matrix)
-                self.orte = Rotate.rotate_list_right(self.orte)
-                self.strassen_kanten = Rotate.rotate_list_right(self.strassen_kanten)
+                self.orte_kanten = rotate_list_right(self.orte_kanten)
+                self.strassen_kanten = rotate_list_right(self.strassen_kanten)
 
         self.wiesen = []
         for position, status in enumerate(self.info[:-1]):

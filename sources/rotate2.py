@@ -10,12 +10,23 @@ def rotate_card_left(infoliste):
     return(info)
 
 
-def rotate_card_right(infoliste):
+def rotate_info_right(infoliste):
     """takes eg list ["O", "S", "S", "W"] and swaps elements according to a right rotation of the card"""
     info = [infoliste[-1], 1, 2, 3]
     for i in info[1:]:
         info[i] = infoliste[i-1]
     return info
+
+
+def rotate_list_right(s_o_list):
+    """takes strassen or orts or wiesenkantenlist and changes edges according to a right rotation"""
+    for pos, i in enumerate(s_o_list):
+        if i == 3:
+            s_o_list[pos] = 0
+        else:
+            s_o_list[pos] = i + 1
+    return s_o_list
+
 
 def rotate_matrix_right(matrix):
     m_neu = matrix.transpose()
@@ -33,13 +44,7 @@ def rotate_matrix_left(matrix):
             column[i], column[-(i+1)] = column[-(i+1)], column[i]
     return (m_neu)
 
-def rotate_list_right(s_o_list):
-    for pos, i in enumerate(s_o_list):
-        if i == 3:
-            s_o_list[pos] = 0
-        else:
-            s_o_list[pos] = i + 1
-    return s_o_list
+
 
 def rotateWiesenRight(liste):
     for wiese in liste[:]:
@@ -52,9 +57,7 @@ def rotateWiesenRight(liste):
 
 if __name__ == "__main__":
 
-    list = [0]
-    list2 = list
+    s = [1, 2]
+    inf = ["O", "S", "S", "W"]
 
-    rotate_list_right(list)
-
-    print(list, list2)
+    rotate_lists_right(s)
