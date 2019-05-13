@@ -1,18 +1,28 @@
-import numpy as np
-a = np.array([[1,0,0,0,0,0,1],
-                            [1,0,0,0,0,0,1],
-                            [1,0,0,0,0,0,1],
-                            [1,1,1,1,1,1,1],
-                            [1,1,1,1,1,1,1],
-                            [1,0,0,0,0,0,1],
-                            [1,0,0,0,0,0,1]])
+import time
 
-b = np.array([[1,0,0,0,0,0,1],
-                            [1,0,0,0,0,0,1],
-                            [1,0,0,0,0,0,1],
-                            [1,1,1,1,1,1,1],
-                            [1,1,1,1,1,1,1],
-                            [1,0,0,0,0,0,1],
-                            [1,0,0,0,0,0,1]])
-c = a == b
-print((a == b).all())
+def f(tuple):
+    x, y = tuple[0], tuple[1]
+
+    for i in range(10):
+        a, b = x, y
+
+def f2(tuple):
+    for i in range(10):
+        a, b = tuple[0], tuple[1]
+
+"""
+uple = (1, 2)
+t = time.time()
+f(uple)
+
+print(time.time()- t)
+t = time.time()
+f2(uple)
+
+print(time.time()- t)"""
+
+a = "kloster_1"
+
+print("kloster" in a)
+if "kloster" in None:
+    print("j")

@@ -148,7 +148,6 @@ def set_card(coordinates, Karte, possible_coordinates, unavailable_coordinates, 
         update_orte(alle_orte, Karte, x, y)
     if len(Karte.strassen) > 0:
         update_strasse(strassen, (x, y), Karte)
-
     if len(Karte.wiesenKarte) > 0:
         updateWiesen(wiesen, (x, y), Karte, cards_set)
 

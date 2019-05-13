@@ -10,11 +10,11 @@ class Spiel:
     def __init__(self, card_list):
         self.cards_left = card_list
 
-        # list of coordinates already blocked
-        self.unavailable_coordinates = [(0, 0)]
-
         # dict of cards beeing laid and their coordinates
         self.cards_set = {(0, 0): Karte("S", "O", "S", "W")}
+
+        # list of coordinates already blocked
+        self.unavailable_coordinates = [(0, 0)]
 
         # possible next coordinates
         self.possible_coordinates = [(0, 1), (1, 0), (0, -1), (-1, 0)]
@@ -28,16 +28,51 @@ class Spiel:
         """from drawing the next card randomly"""
         pass
 
-    def make_action(self):
+    def make_action(self, card, koordinates, rotations, meeple_position=None):
         """for setting a card and placing a meeple"""
 
-        possible_actions = []
+        # if action_is_valid() muss im Spielprogramm dann davor!!!!!!
+
+        # entprechend der Rotationen Karte drehen
+        for i in range(rotations):
+            card.rotate_right()
+
+        # cards_st updaten
+        self.cards_set.update({(koordinates[0], koordinates[1]): Karte})
+
+        # wenn auf Karte Orte, Strassen oder Wiesen sind, muessen globale Aequivalente geupdatet werden
+        if len(card.orte) > 0:
+            self.update_all_orte(card, koordinates[0], koordinates[1], meeple_position)
+        if len(card.strassen) > 0:
+            self.update_all_strassen(card, koordinates[0], koordinates[1], meeple_position)
+        if len(card.wiesenKarte) > 0:
+            self.update_all_wiesen(card, koordinates[0], koordinates[1], meeple_position)
+
+        # kloester muessen moeglicherweise immer geupdatet werden, da sie von der Anzahl an Umgebungskarten abhaengen
+        self.update_all_kloester(card, koordinates[0], koordinates[1], meeple_position)
+
+        # possible_coordinates und unavailable coordinates updaten
+        self.unavailable_coordinates.append((koordinates[0], koordinates[1]))
+
+        for i, (v, w) in enumerate(self.possible_coordinates):
+            if (koordinates[0], koordinates[1]) == (v, w):
+                del self.possible_coordinates[i]
+
+                # neue possible coordinates hinzufuegen
+                for (a, b) in [(koordinates[0], koordinates[1] - 1), (koordinates[0], koordinates[1] + 1), (koordinates[0] - 1, koordinates[1]), (koordinates[0] + 1, koordinates[1])]:
+                    if (a, b) not in self.possible_coordinates and (a, b) not in self.unavailable_coordinates:
+                        self.possible_coordinates.append((a, b))
+
+    def update_all_orte(self, card, x, y, meeple_position):
         pass
 
-    def update_board(self):
-        """for updating all lists after making an action
+    def update_all_strassen(self, card, x, y, meeple_position):
+        pass
 
-        VIELLEICHT IN MAKE_ACTION EINBAUEN"""
+    def update_all_wiesen(self, card, x, y, meeple_position):
+        pass
+
+    def update_all_kloester(self, card, x, y, meeple_position):
         pass
 
     def final_evaluate(self):

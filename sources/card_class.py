@@ -212,6 +212,9 @@ class Card:
         self.wiesen_kanten = rotate_list_right(self.wiesen_kanten)
         self.matrix = rotate_matrix_right(self.matrix)
 
+        # auch noch fuer orte, strassen, wiesen auf karte die kanten rotieren
+
+
     def create_orte(self, name):
         pass
 
