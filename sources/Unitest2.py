@@ -1,4 +1,5 @@
 import unittest
+import numpy as np
 
 import rotate2
 from card_class import Card
@@ -13,6 +14,23 @@ class RoatationTest(unittest.TestCase):
 
     def test_rotate_matrix_right(self):
         k = Card("W", "O", "W", "O", "O")
+        k.rotate_right()
+
+        self.assertTrue((k.matrix == np.array([[1, 1, 1, 1, 1, 1, 1],
+                                               [0, 0, 1, 1, 1, 0, 0],
+                                               [0, 0, 1, 1, 1, 0, 0],
+                                               [0, 0, 1, 1, 1, 0, 0],
+                                               [0, 0, 1, 1, 1, 0, 0],
+                                               [0, 0, 1, 1, 1, 0, 0],
+                                               [1, 1, 1, 1, 1, 1, 1]])).all(), msg="{}".format(k.matrix))
+        k.rotate_right()
+        self.assertTrue((k.matrix == np.array([[1, 0, 0, 0, 0, 0, 1],
+                                               [1, 0, 0, 0, 0, 0, 1],
+                                               [1, 1, 1, 1, 1, 1, 1],
+                                               [1, 1, 1, 1, 1, 1, 1],
+                                               [1, 1, 1, 1, 1, 1, 1],
+                                               [1, 0, 0, 0, 0, 0, 1],
+                                               [1, 0, 0, 0, 0, 0, 1]])).all(), msg="{}".format(k.matrix))
 
 
 if __name__ == "__main__":

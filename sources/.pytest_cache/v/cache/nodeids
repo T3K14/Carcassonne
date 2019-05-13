@@ -1,3 +1,4 @@
 [
-  "Unittest.py::CardTest::testGeneration"
+  "Unittest.py::CardTest::testGeneration",
+  "Unittest.py::CardTest::test_matrix_creation"
 ]

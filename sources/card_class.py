@@ -18,6 +18,9 @@ class Card:
         self.wiesen_kanten = []
 
         self.kloster = False
+        self.orte = []
+        self.strassen = []
+        self.wiesen = []
 
         for position, status in enumerate(self.info):
             if status == "S":
@@ -30,7 +33,7 @@ class Card:
         self.create_matrix()
 
     def create_matrix(self):
-        """einfach von frueher reinkopiert, muss echt noch optimiert werden"""
+        """einfach von frueher reinkopiert, kann gegebenenfalls optimiert werden"""
         info_old = self.info[:]
 
         s = True
@@ -209,6 +212,21 @@ class Card:
         self.wiesen_kanten = rotate_list_right(self.wiesen_kanten)
         self.matrix = rotate_matrix_right(self.matrix)
 
+    def create_orte(self, name):
+        pass
+
+
+
+def create_kartenliste():
+    anzahl_orte = -1
+    anzahl_strassen = 0
+    anzahl_kloester = 0
+    anzahlWiesen = 1
+    ww = False
+
+    ortswert = 2
+
+    pass
 
 if __name__ == "__main__":
     k = Card("O", "S", "S", "W")
