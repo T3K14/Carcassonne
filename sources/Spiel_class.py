@@ -32,6 +32,7 @@ class Spiel:
         """for setting a card and placing a meeple"""
 
         # if action_is_valid() muss im Spielprogramm dann davor!!!!!!
+        # fuer human spieler: if "action" in possible actions
 
         # entprechend der Rotationen Karte drehen
         for i in range(rotations):
@@ -64,6 +65,11 @@ class Spiel:
                         self.possible_coordinates.append((a, b))
 
     def update_all_orte(self, card, x, y, meeple_position):
+
+        ### finde für jeden Ort auf Karte alle globale Orte, die mit diesem Ort wechselwirken und wie sie wechselwirken
+
+        ### update alle Orte, inklusive Meeples
+
         pass
 
     def update_all_strassen(self, card, x, y, meeple_position):
