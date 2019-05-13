@@ -55,6 +55,19 @@ def rotateWiesenRight(liste):
                 wiese[1][pos] += 1
     return liste
 
+def rotate_card_right(infoliste):
+    """noch fuer rueckwaertskompatibilitaet drin"""
+    info = []
+    for i, seite in enumerate(infoliste):
+        info.append(infoliste[i])
+    for i, seite in enumerate(info[:-1]):
+        if i == 0:
+            info[0] = infoliste[-2]
+        else:
+            info[i] = infoliste[i-1]
+    return(info)
+
+
 if __name__ == "__main__":
 
     s = [1, 2]
