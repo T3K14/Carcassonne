@@ -218,7 +218,8 @@ class Card:
     def create_orte(self, name):
         pass
 
-
+    def delete_ort(self):
+        pass
 
 def create_kartenliste():
     anzahl_orte = -1
