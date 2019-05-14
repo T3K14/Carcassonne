@@ -65,8 +65,8 @@ class possible_actionsTest(unittest.TestCase):
         goal = [(0, -1, 0), (0, -1, 1), (2, 1, 1), (2, 1, 2), (1, 0, 2)]
         # self.assertEqual(calculate_possible_actions(Karte("S", "O", "O", "S", "O"), possible_coordinates, cards_set), [(0, -1, 0), (0, -1, 1), (2, 1, 1), (2, 1, 2), (1, 0, 2)])
         self.assertEqual(len(goal), len(calculate_possible_actions(k, possible_coordinates, cards_set)))
-        for a in calculate_possible_actions(Karte("S", "O", "O", "S", "O"), possible_coordinates, cards_set):
-            self.assertIn(a, goal)
+
+        self.assertEqual(sorted(goal), sorted(calculate_possible_actions(Karte("S", "O", "O", "S", "O"), possible_coordinates, cards_set)))
 
 
 
