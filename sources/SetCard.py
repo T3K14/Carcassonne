@@ -82,7 +82,15 @@ def check_card_to_possible_coordinates(Karte, possible_coordinates, cards_set):
                                 possible_anlegemoeglichkeiten.append(((x, y), z))
 
                 card.info = Rotate.rotate_card_right(card.info)
+
+
+
+
+
     return possible_anlegemoeglichkeiten
+
+
+
 
 
 #kommt spaeter raus
