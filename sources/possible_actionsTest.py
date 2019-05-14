@@ -1,6 +1,6 @@
 import unittest
 from KarteMod import Karte
-from rotate2 import rotate_info_right
+from Rotate import Rotate
 
 def calculate_possible_actions(card, possible_coordinates, cards_set):
         """checkt, ob und wie karte an jede freie stelle gelegt werden kann,
@@ -36,13 +36,16 @@ def calculate_possible_actions(card, possible_coordinates, cards_set):
                 # wenn pro Rotation nach allen Ueberpruefungen immer noch True, dann hinzufuegen
                 b = True
                 for n in nachbar_karten:
-                    b = b and info[n[0]] == n[1]
+                    if b:
+                        b = b and info[n[0]] == n[1]
+                    else:
+                        break
 
                 if b:
                     possible_actions.append((x, y, i))
 
                 # eins weiter rotieren
-                info = rotate_info_right(info)
+                info = Rotate.rotate_card_right(info)
 
         # jetzt Meeples
         #if player.meeples > 0:
@@ -57,8 +60,13 @@ class possible_actionsTest(unittest.TestCase):
         cards_set = {(0, 0): Karte("S", "O", "S", "W"), (1, 1): Karte("W", "O", "O", "W","O")}
         possible_coordinates = [(0, 1), (1, 0), (0, -1), (-1, 0), (1, 2), (2, 1)]
 
-        self.assertEqual(calculate_possible_actions(Karte("S", "O", "O", "S", "O"), possible_coordinates, cards_set), [(0, -1, 0), (0, -1, 1), (2, 1, 1), (2, 1, 2), (1, 0, 2)])
+        k = Karte("S", "O", "O", "S", "O")
 
+        goal = [(0, -1, 0), (0, -1, 1), (2, 1, 1), (2, 1, 2), (1, 0, 2)]
+        # self.assertEqual(calculate_possible_actions(Karte("S", "O", "O", "S", "O"), possible_coordinates, cards_set), [(0, -1, 0), (0, -1, 1), (2, 1, 1), (2, 1, 2), (1, 0, 2)])
+        self.assertEqual(len(goal), len(calculate_possible_actions(k, possible_coordinates, cards_set)))
+        for a in calculate_possible_actions(Karte("S", "O", "O", "S", "O"), possible_coordinates, cards_set):
+            self.assertIn(a, goal)
 
 
 

@@ -65,7 +65,10 @@ class Spiel:
                 # wenn pro Rotation nach allen Ueberpruefungen immer noch True, dann hinzufuegen
                 b = True
                 for n in nachbar_karten:
-                    b = b and info[n[0]] == n[1]
+                    if b:
+                        b = b and info[n[0]] == n[1]
+                    else:
+                        break
 
                 if b:
                     possible_actions.append((x, y, i))
