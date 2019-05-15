@@ -1,7 +1,4 @@
-import matplotlib.pyplot as plt
-import numpy as np
-from KarteMod import Karte
+a = {0: 2, 1: 3, 2: 0, 3: 1}
 
-a = Karte("S", "O", "O", "S", "O")
-
-print(a.matrix)
+for c in a.items():
+    print(c)

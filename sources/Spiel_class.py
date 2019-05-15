@@ -1,6 +1,6 @@
 from KarteMod import Karte
 
-from Ort import Ort
+from Ort import Ort, Ort_auf_Karte
 from Strasse import Strasse
 from Kloster import Kloster
 from Wiese import Wiese
@@ -27,9 +27,34 @@ class Spiel:
         self.alle_kloester = {}
         self.alle_wiesen = {"Wiese_0": Wiese((0, 0), [4, 7]), "Wiese_1": Wiese((0, 0), [5, 6])}
 
+        # hilfsdictionaries
+        self.d = {0: 2, 1: 3, 2: 0, 3: 1}
+
+
+
     def draw_card(self):
         """from drawing the next card randomly"""
         pass
+
+    def meeple_check(self, x, y, z, landschaftsart_liste, nachbar_karten, buchstabe, actions, card):
+        """checkt"""
+
+        d2 = {0: (x, y +1 ), 1: (x + 1, y), 2: (x, y - 1), 3: (x - 1, y)}
+        # d3 = {'O': Ort_auf_Karte}#: Strasse_auf_Karte, 'W': Wiese_auf_Karte}
+
+        # durchsuche alle landschaften in liste nach dem Typ der dort liegt und checke, ob er angrenzt, ob der schon besetzt ist, falls nicht
+        # append mit dieser moeglichkeit
+
+        # fuer alle nachbar_karten suche ich die landschaft die angrenzt
+        for rel_pos in nachbar_karten:
+            if nachbar_karten[rel_pos][0] == buchstabe:
+                for landschaft in landschaftsart_liste:
+                    # wenn die landschaft angrenzt und (and) Kante uebereinstimmt
+                    if d2[rel_pos] in landschaft.koordinaten_plus_oeffnungen and self.d[rel_pos] in landschaft.koordinaten_plus_oeffnungen[d2[rel_pos]]:
+                        if landschaft.besitzer is not None:
+                            continue
+                        else:
+                            actions.append(x, y, z, nachbar_karten[rel_pos][1])
 
     def calculate_possible_actions(self, card, player):
         """checkt, ob und wie karte an jede freie stelle gelegt werden kann,
@@ -42,20 +67,37 @@ class Spiel:
         # ich will hier nicht wirklich was an der Karte rotieren, nur um zu schauen, wo was passt
         info = card.info[:]
 
-        d = {0: 2, 1: 3, 2: 0, 3: 1}
-
         for x, y in self.possible_coordinates:
 
             # zuerst alle nachbarkarten finden und speichern wo sie relatativ zu eigener Karte liegen
             # das sollte woanders gemacht werden, da man sonst fuer jede neu gezogene Karte immer wieder die umgebung
             # untersucht, obwohl man das schon x mal davor gemacht hat
             nachbar_koordinaten = [(x, y + 1), (x + 1, y), (x, y - 1), (x - 1, y)]
-            nachbar_karten = []
+            nachbar_karten = {}
 
             for relative_pos, nkoo in enumerate(nachbar_koordinaten):
                 for koord_von_karte in self.cards_set:
                     if koord_von_karte == nkoo:
-                        nachbar_karten.append((relative_pos, self.cards_set[koord_von_karte].info[d[relative_pos]]))
+
+                        # art der Landschaft, die oberhalb der Kante relative_pos liegt
+                        buchstabe = self.cards_set[koord_von_karte].info[self.d[relative_pos]]
+
+                        name = None
+                        # name von landschaft finden, welche in dem fall auf der Karte betroffen waere
+                        if buchstabe == 'O':
+                            for o in card.orte:
+                                if relative_pos in o.kanten:
+                                    name = o.name
+
+                        elif buchstabe == 'S':
+                            for s in card.strassen:
+                                if relative_pos in s.kanten:
+                                    name = s.name
+                        else:
+                            #wiese
+                            pass
+
+                        nachbar_karten.update({relative_pos: (buchstabe, name)})
 
                         # nicht 100 pro sicher, aber da dann schon karte an nkoo gefunden wurde, kann da ja keine weitere mehr sein
                         continue
@@ -66,19 +108,54 @@ class Spiel:
                 b = True
                 for n in nachbar_karten:
                     if b:
-                        b = b and info[n[0]] == n[1]
+                        b = b and info[n] == nachbar_karten[n][0]
                     else:
                         break
 
                 if b:
-                    possible_actions.append((x, y, i))
+
+                    # jetzt Meeples
+                    m = None
+
+                    if player.meeples > 0:
+
+                        # falls beliebig viele ort angrenzen
+                        if 'O' in nachbar_karten.values():
+
+                            # durchsuche alle orte nach dem der dort liegt und checke, ob der schon besetzt ist, falls nicht
+                            # append mit dieser moeglichkeit
+                            pass
+                        else:
+                            # fuer alle Orte auf der Karte appende actions mit diesem als meepleauswahl
+                            pass
+
+                        # falls bel viele strassen angrenzen
+                        if 'S' in nachbar_karten.values():
+
+                            # durchsuche alle strassen nach der die dort ist unf schau, ob die schon besetzt ist, wenn nicht
+                            # appende mit dieser moeglichkeit
+                            pass
+                        else:
+                            # fuer alle strassen auf der Karte das wie oben
+                            pass
+
+                        # falls beliebig viele strassen angrenzen
+                        if 'W' in nachbar_karten.values():
+
+                            # durchsuche alle wiesen nach der die dort ist unf schau, ob die schon besetzt ist, wenn nicht
+                            # appende mit dieser moeglichkeit
+                            pass
+                        else:
+                            # fuer alle wiesen auf Karte das wie oben
+                            pass
+                    else:
+
+                        possible_actions.append((x, y, i, m))
 
                 # eins weiter rotieren
                 info = rotate_info_right(info)
 
-        # jetzt Meeples
-        if player.meeples > 0:
-            pass
+
 
         return possible_actions
 

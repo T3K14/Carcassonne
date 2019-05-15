@@ -9,4 +9,4 @@ class Wiese():
     def setWiese(cardsSet, alleOrte):#, alleStrassen):
         #print(cardsSet, "\n",  alleOrte)
 
-        None
+        pass
