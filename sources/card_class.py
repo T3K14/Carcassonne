@@ -221,7 +221,26 @@ class Card:
     def delete_ort(self):
         pass
 
-def create_kartenliste():
+
+Karteninfos = ["4WWWWK", "2WWSWK", "OOOOOT", "3SOSW", "5OWWW", "2WOWOOT", "OWOWO", "3WOWO", "2WOOW", "3OSSW", "3SOWS",
+               "3SOSSG", "2OWWOOT", "3OWWOO", "2OSSOOT", "3OSSOO", "OOWOOT", "3OOWOO", "2OOSOOT", "OOSOO", "8SWSW",
+               "9WWSS", "4WSSSG", "SSSSG"]
+
+Karteninfos_neu = []
+Kartenliste = []
+
+for card in Karteninfos:
+    i = list(card)
+    try:
+        if int(i[0]) in range(10):
+            for z in range(int(i[0])):
+                Karteninfos_neu.append(card[1:])
+    except ValueError:
+        Karteninfos_neu.append(card)
+
+def create_kartenliste(karteninfos):
+
+
     anzahl_orte = -1
     anzahl_strassen = 0
     anzahl_kloester = 0
@@ -230,7 +249,22 @@ def create_kartenliste():
 
     ortswert = 2
 
-    pass
+    for info in karteninfos:
+        i = list(info)
+
+        if len(i) == 4:
+            a, b, c, d, m, schild = i[0], i[1], i[2], i[3], None, False
+        elif len(i) == 5:
+            a, b, c, d, m, schild = i[0], i[1], i[2], i[3], i[4], False
+        else:
+            a, b, c, d, m, schild = i[0], i[1], i[2], i[3], i[4], True
+
+        k = Card(a, b, c, d, m, schild)
+        
+
+        Kartenliste.append(k))
+
+Kartenliste
 
 if __name__ == "__main__":
     k = Card("O", "S", "S", "W")

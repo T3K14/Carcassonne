@@ -36,7 +36,7 @@ class Spiel:
         """from drawing the next card randomly"""
         pass
 
-    def meeple_check(self, x, y, z, landschaftsart_liste, nachbar_karten, buchstabe, actions, card):
+    def meeple_check(self, x, y, z, landschaftsart_liste, nachbar_karten, buchstabe, actions):
         """checkt"""
 
         d2 = {0: (x, y +1 ), 1: (x + 1, y), 2: (x, y - 1), 3: (x - 1, y)}
@@ -124,20 +124,22 @@ class Spiel:
 
                             # durchsuche alle orte nach dem der dort liegt und checke, ob der schon besetzt ist, falls nicht
                             # append mit dieser moeglichkeit
-                            pass
+                            self.meeple_check(x, y, i, self.alle_orte, nachbar_karten, 'O', possible_actions)
                         else:
                             # fuer alle Orte auf der Karte appende actions mit diesem als meepleauswahl
-                            pass
+                            for o in card.orte:
+                                possible_actions.append((x, y, i, o.name))
 
                         # falls bel viele strassen angrenzen
                         if 'S' in nachbar_karten.values():
 
                             # durchsuche alle strassen nach der die dort ist unf schau, ob die schon besetzt ist, wenn nicht
                             # appende mit dieser moeglichkeit
-                            pass
+                            self.meeple_check(x, y, i, self.alle_strassen, nachbar_karten, 'S', possible_actions)
                         else:
                             # fuer alle strassen auf der Karte das wie oben
-                            pass
+                            for s in card.strassen:
+                                possible_actions.append((x, y, i, s.name))
 
                         # falls beliebig viele strassen angrenzen
                         if 'W' in nachbar_karten.values():
