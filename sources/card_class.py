@@ -214,9 +214,17 @@ class Card:
 
         # auch noch fuer orte, strassen, wiesen auf karte die kanten rotieren
 
+    def create_orte(self):
+        if self.mitte == 'O':
+            if self.schild:
+                ortswert = 4
+                self.orte.append(Ort_auf_Karte(self.orte_kanten, ortswert))
+            else:
+                self.orte.append(Ort_auf_Karte(self.orte_kanten))
 
-    def create_orte(self, name):
-        pass
+        else:
+            for k in self.orte_kanten:
+                self.orte.append(Ort_auf_Karte([k]))
 
     def delete_ort(self):
         pass
@@ -227,7 +235,6 @@ Karteninfos = ["4WWWWK", "2WWSWK", "OOOOOT", "3SOSW", "5OWWW", "2WOWOOT", "OWOWO
                "9WWSS", "4WSSSG", "SSSSG"]
 
 Karteninfos_neu = []
-Kartenliste = []
 
 for card in Karteninfos:
     i = list(card)
@@ -238,8 +245,10 @@ for card in Karteninfos:
     except ValueError:
         Karteninfos_neu.append(card)
 
+# hoffentlich bald useless, da Karten bei erstellung selbst wissen sollen, welche landschaften sise auf sich haben
 def create_kartenliste(karteninfos):
 
+    l = []
 
     anzahl_orte = -1
     anzahl_strassen = 0
@@ -260,19 +269,45 @@ def create_kartenliste(karteninfos):
             a, b, c, d, m, schild = i[0], i[1], i[2], i[3], i[4], True
 
         k = Card(a, b, c, d, m, schild)
-        
 
-        Kartenliste.append(k))
+        if k.mitte == "O":
+            anzahl_orte += 1
+            if k.schild:
+                ortswert += 2
+            ortsname = "Ort_{}".format(anzahl_orte)
 
-Kartenliste
+            k.orte.append(Ort_auf_Karte(ortsname, k.orte_kanten.copy(), ortswert))
+
+
+            #erstellt zwei Wiesen
+
+            if ww:
+
+                #for w in k.wiesen_kanten:
+                #    anzahlWiesen += 1
+                #    wiese = "Wiese_{}".format(anzahlWiesen)
+                #    k.wiesenKarte.append((wiese, dic[w]))
+                pass
+        else:
+            for pos, i in enumerate(k.orte_kanten):
+                anzahl_orte += 1
+                ortsname = "Ort_{}".format(anzahl_orte)
+
+                k.orte.append(Ort_auf_Karte(ortsname, [k.orte_kanten[pos]], ortswert))
+
+        l.append(k)
+
+    return l
+
+Kartenliste = create_kartenliste(Karteninfos_neu)
 
 if __name__ == "__main__":
-    k = Card("O", "S", "S", "W")
-    print(k.matrix)
-    k.rotate_right()
-    print("\n", k.matrix)
-    k.rotate_right()
-    print("\n", k.matrix)
-    k.rotate_right()
-    print("\n", k.matrix)
+    ka = Card("O", "S", "S", "W")
+    print(ka.matrix)
+    ka.rotate_right()
+    print("\n", ka.matrix)
+    ka.rotate_right()
+    print("\n", ka.matrix)
+    ka.rotate_right()
+    print("\n", ka.matrix)
 

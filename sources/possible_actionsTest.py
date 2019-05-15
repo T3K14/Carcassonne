@@ -1,14 +1,10 @@
 import unittest
 
-# fuer card_list
-import KarteMod
-
 import card_class
-from Spiel_class import Spiel
+import Spiel_class
 from Player_Class import Player
 
-spiel = Spiel(KarteMod.Kartenliste)
-
+spiel = Spiel_class.Spiel(card_class.Kartenliste)
 
 class possible_actionsTest(unittest.TestCase):
 
