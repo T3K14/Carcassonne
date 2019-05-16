@@ -39,6 +39,15 @@ class PossibleActionsTest(unittest.TestCase):
             print(tup)
             self.assertTrue(tup in goal)
 
+    def test_2(self):
+        spiel = Spiel_class.Spiel(card_class.Kartenliste)
+        card0 = card_class.card("S", "O", "S", "W")
+        card1 = card_class.card("S", "S", "W", "W")
+        card2 = card_class.card("O", "O", "O", "O", "O", True)
+        card3 = card_class.card("W", "O", "O", "W")
+        card4 = card_class.card("W", "O", "W", "O")
+
+        card_new = card_class.card("O", "S", "S", "O", "O", True)
 
 if __name__ == "__main__":
     unittest.main()
