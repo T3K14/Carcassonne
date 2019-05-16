@@ -1,5 +1,7 @@
 import unittest
 
+from Ort import Ort
+from Strasse import Strasse
 import card_class
 import Spiel_class
 from Player_Class import Player
@@ -11,12 +13,24 @@ class PossibleActionsTest(unittest.TestCase):
 
     def test_1(self):
         spiel = Spiel_class.Spiel(card_class.Kartenliste)
-        spiel.cards_set = {(0, 0): card_class.Card("S", "O", "S", "W"), (1, 1): card_class.Card("W", "O", "O", "W", "O")}
+
+        # startvorgaben
+        card0 = card_class.Card("S", "O", "S", "W")
+        card1 = card_class.Card("W", "O", "O", "W", "O")
+        strasse0 = Strasse((0, 0), [0, 2])
+        ort0 = Ort((0, 0), [1])
+        ort1 = Ort((1, 1), [1, 2])
+        card0.kanten = {0: strasse0, 1: ort0, 2: strasse0, 3: None}
+        card1.kanten = {0: None, 1: ort1, 2: ort1, 3: None}
+        spiel.alle_orte = [ort0, ort1]
+        spiel.alle_strassen = [strasse0]
+
+        spiel.cards_set = {(0, 0): card0, (1, 1): card1}
         spiel.possible_coordinates = [(0, 1), (1, 0), (0, -1), (-1, 0), (1, 2), (2, 1)]
 
         k = card_class.Card("S", "O", "O", "S", "O")
 
-        goal = [(0, -1, 0), (0, -1, 1), (2, 1, 1), (2, 1, 2), (1, 0, 2)]
+        # goal = [(0, -1, 0), (0, -1, 1), (2, 1, 1), (2, 1, 2), (1, 0, 2)]
         # self.assertEqual(calculate_possible_actions(Karte("S", "O", "O", "S", "O"), possible_coordinates, cards_set), [(0, -1, 0), (0, -1, 1), (2, 1, 1), (2, 1, 2), (1, 0, 2)])
         self.assertEqual(len(goal), len(spiel.calculate_possible_actions(k, Player(0))))
 

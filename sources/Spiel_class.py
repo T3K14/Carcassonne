@@ -6,7 +6,7 @@ from Kloster import Kloster
 from Wiese import Wiese
 
 from copy import deepcopy
-from rotate2 import rotate_info_right
+from rotate2 import rotate_info_right, rotate_kanten_dict_right
 
 
 class Spiel:
@@ -41,10 +41,10 @@ class Spiel:
         """from drawing the next card randomly"""
         pass
 
-    def meeple_check(self, x, y, z, landschaftsart_liste, nachbar_karten, buchstabe, actions):
-        """checkt"""
+    def meeple_check2(self, x, y, z, landschaftsart_liste, nachbar_karten, buchstabe, actions):
+        """berechnet zu geg. Rotation an geg Koordinaten zu gegebenem Landschaftstyp (buchstabe, zB. 'O') wo ich auf der Karte ein meeple setzen kann"""
 
-        d2 = {0: (x, y +1 ), 1: (x + 1, y), 2: (x, y - 1), 3: (x - 1, y)}
+        d2 = {0: (x, y + 1), 1: (x + 1, y), 2: (x, y - 1), 3: (x - 1, y)}
         # d3 = {'O': Ort_auf_Karte}#: Strasse_auf_Karte, 'W': Wiese_auf_Karte}
 
         # durchsuche alle landschaften in liste nach dem Typ der dort liegt und checke, ob er angrenzt, ob der schon besetzt ist, falls nicht
@@ -60,6 +60,22 @@ class Spiel:
                             continue
                         else:
                             actions.append(x, y, z, nachbar_karten[rel_pos][1])
+
+
+    def meeple_check(self,x, y, nachbar_karten, kanten_dict):
+        """berechnet zu geg. Rotation an geg Koordinaten zu gegebenem Landschaftstyp (buchstabe, zB. 'O') wo ich auf der Karte ein meeple setzen kann"""
+
+        output = []
+        #d = {'O': self.alle_orte, 'S': self.alle_strassen}
+        d2 = {0: (x, y + 1), 1: (x + 1, y), 2: (x, y - 1), 3: (x - 1, y)}
+
+        for kante in nachbar_karten:
+            if self.cards_set[(x, y)].kanten[self.d[kante]].besitzer is not None:
+
+                # appende die entprechende Landschaft auf der Karte
+                output.append(kanten_dict[kante])
+
+        return output
 
     def calculate_possible_actions(self, card, player):
         """checkt, ob und wie karte an jede freie stelle gelegt werden kann,
@@ -109,6 +125,8 @@ class Spiel:
 
             for i in range(4):
 
+                kanten_dict = card.kanten.copy()
+
                 # wenn pro Rotation nach allen Ueberpruefungen immer noch True, dann hinzufuegen
                 b = True
                 for n in nachbar_karten:
@@ -129,11 +147,20 @@ class Spiel:
 
                             # durchsuche alle orte nach dem der dort liegt und checke, ob der schon besetzt ist, falls nicht
                             # append mit dieser moeglichkeit
-                            self.meeple_check(x, y, i, self.alle_orte, nachbar_karten, 'O', possible_actions)
+                            self.meeple_check(x, y, nachbar_karten, kanten_dict)
                         else:
                             # fuer alle Orte auf der Karte appende actions mit diesem als meepleauswahl
                             for o in card.orte:
                                 possible_actions.append((x, y, i, o))
+
+
+
+
+
+
+
+
+
 
                         # falls bel viele strassen angrenzen
                         if 'S' in nachbar_karten.values():
@@ -160,6 +187,7 @@ class Spiel:
 
                 # eins weiter rotieren
                 info = rotate_info_right(info)
+                kanten_dict = rotate_kanten_dict_right(kanten_dict)
 
 
 

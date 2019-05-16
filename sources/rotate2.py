@@ -68,6 +68,16 @@ def rotate_card_right(infoliste):
     return(info)
 
 
+def rotate_kanten_dict_right(dic):
+    d = {}
+    for i in dic:
+        if i == 0:
+            d.update({i: dic[3]})
+        else:
+            d.update({i: dic[i-1]})
+
+    return d
+
 if __name__ == "__main__":
 
     s = [1, 0]
