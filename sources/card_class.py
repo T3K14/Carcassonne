@@ -1,5 +1,6 @@
 import numpy as np
 from Ort import Ort_auf_Karte
+from Strasse import StasseAufKarte
 #from strasse, etc
 from rotate2 import rotate_info_right, rotate_list_right, rotate_matrix_right
 
@@ -22,6 +23,8 @@ class Card:
         self.strassen = []
         self.wiesen = []
 
+        self.kanten = {0: None, 1: None, 2: None, 3: None}
+
         for position, status in enumerate(self.info):
             if status == "S":
                 self.strassen_kanten.append(position)
@@ -31,6 +34,10 @@ class Card:
                 self.wiesen_kanten.append(position)
 
         self.create_matrix()
+        self.create_orte()
+        self.create_strassen()
+        self.initialize_kanten()
+
 
     def create_matrix(self):
         """einfach von frueher reinkopiert, kann gegebenenfalls optimiert werden"""
@@ -213,22 +220,46 @@ class Card:
         self.matrix = rotate_matrix_right(self.matrix)
 
         # auch noch fuer orte, strassen, wiesen auf karte die kanten rotieren
+        for o in self.orte:
+            o.kanten = rotate_list_right(o.kanten)
+        for s in self.strassen:
+            s.kanten = rotate_list_right(s.kanten)
 
     def create_orte(self):
+        """um alle Orte auf der Karte zu erstellen"""
         if self.mitte == 'O':
             if self.schild:
                 ortswert = 4
                 self.orte.append(Ort_auf_Karte(self.orte_kanten, ortswert))
             else:
-                self.orte.append(Ort_auf_Karte(self.orte_kanten))
+                self.orte.append(Ort_auf_Karte(self.orte_kanten, 2))
 
         else:
             for k in self.orte_kanten:
                 self.orte.append(Ort_auf_Karte([k]))
 
+    def create_strassen(self):
+        """um alle Strassen auf der Karte zu erstellen"""
+
+        if len(self.strassen_kanten) < 3:
+            self.strassen.append(StasseAufKarte(self.strassen_kanten))
+        else:
+            for k in self.strassen_kanten:
+                self.strassen.append(StasseAufKarte([k]))
+
     def delete_ort(self):
         pass
 
+    def update_kanten(self):
+        pass
+
+    def initialize_kanten(self):
+        for ort in self.orte:
+            for k in ort.kanten:
+                self.kanten[k] = ort
+        for strasse in self.strassen:
+            for k in strasse.kanten:
+                self.kanten[k] = strasse
 
 Karteninfos = ["4WWWWK", "2WWSWK", "OOOOOT", "3SOSW", "5OWWW", "2WOWOOT", "OWOWO", "3WOWO", "2WOOW", "3OSSW", "3SOWS",
                "3SOSSG", "2OWWOOT", "3OWWOO", "2OSSOOT", "3OSSOO", "OOWOOT", "3OOWOO", "2OOSOOT", "OOSOO", "8SWSW",
@@ -250,14 +281,6 @@ def create_kartenliste(karteninfos):
 
     l = []
 
-    anzahl_orte = -1
-    anzahl_strassen = 0
-    anzahl_kloester = 0
-    anzahlWiesen = 1
-    ww = False
-
-    ortswert = 2
-
     for info in karteninfos:
         i = list(info)
 
@@ -269,32 +292,6 @@ def create_kartenliste(karteninfos):
             a, b, c, d, m, schild = i[0], i[1], i[2], i[3], i[4], True
 
         k = Card(a, b, c, d, m, schild)
-
-        if k.mitte == "O":
-            anzahl_orte += 1
-            if k.schild:
-                ortswert += 2
-            ortsname = "Ort_{}".format(anzahl_orte)
-
-            k.orte.append(Ort_auf_Karte(ortsname, k.orte_kanten.copy(), ortswert))
-
-
-            #erstellt zwei Wiesen
-
-            if ww:
-
-                #for w in k.wiesen_kanten:
-                #    anzahlWiesen += 1
-                #    wiese = "Wiese_{}".format(anzahlWiesen)
-                #    k.wiesenKarte.append((wiese, dic[w]))
-                pass
-        else:
-            for pos, i in enumerate(k.orte_kanten):
-                anzahl_orte += 1
-                ortsname = "Ort_{}".format(anzahl_orte)
-
-                k.orte.append(Ort_auf_Karte(ortsname, [k.orte_kanten[pos]], ortswert))
-
         l.append(k)
 
     return l

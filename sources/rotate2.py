@@ -70,7 +70,7 @@ def rotate_card_right(infoliste):
 
 if __name__ == "__main__":
 
-    s = [1, 2]
+    s = [1, 0]
     inf = ["O", "S", "S", "W"]
 
-    rotate_lists_right(s)
+    print(rotate_list_right(s))

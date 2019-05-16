@@ -1,4 +1,4 @@
-from KarteMod import Karte
+from card_class import Card as Karte
 
 from Ort import Ort, Ort_auf_Karte
 from Strasse import Strasse
@@ -15,6 +15,11 @@ class Spiel:
 
         # dict of cards beeing laid and their coordinates
         self.cards_set = {(0, 0): Karte("S", "O", "S", "W")}
+        # cards_seT initializen
+        strasse0 = Strasse((0, 0), [0, 2])
+
+        # NONE steht hier noch fuer Wiese
+        self.cards_set[(0, 0)].kanten = {0: strasse0, 1: Ort((0, 0), [1]), 2: strasse0, 3: None}
 
         # list of coordinates already blocked
         self.unavailable_coordinates = [(0, 0)]
@@ -79,25 +84,25 @@ class Spiel:
                 for koord_von_karte in self.cards_set:
                     if koord_von_karte == nkoo:
 
-                        # art der Landschaft, die oberhalb der Kante relative_pos liegt
+                        # art der Landschaft, die neben der Kante relative_pos liegt
                         buchstabe = self.cards_set[koord_von_karte].info[self.d[relative_pos]]
+#
+                        #landschaft = None
+                        ## name von landschaft finden, welche in dem fall auf der Karte betroffen waere
+                        #if buchstabe == 'O':
+                        #    for o in card.orte:
+                        #        if relative_pos in o.kanten:
+                        #            landschaft = o
+#
+                        #elif buchstabe == 'S':
+                        #    for s in card.strassen:
+                        #        if relative_pos in s.kanten:
+                        #            landschaft = s
+                        #else:
+                        #    #wiese
+                        #    pass
 
-                        name = None
-                        # name von landschaft finden, welche in dem fall auf der Karte betroffen waere
-                        if buchstabe == 'O':
-                            for o in card.orte:
-                                if relative_pos in o.kanten:
-                                    name = o.name
-
-                        elif buchstabe == 'S':
-                            for s in card.strassen:
-                                if relative_pos in s.kanten:
-                                    name = s.name
-                        else:
-                            #wiese
-                            pass
-
-                        nachbar_karten.update({relative_pos: (buchstabe, name)})
+                        nachbar_karten.update({relative_pos: buchstabe})
 
                         # nicht 100 pro sicher, aber da dann schon karte an nkoo gefunden wurde, kann da ja keine weitere mehr sein
                         continue
@@ -108,7 +113,7 @@ class Spiel:
                 b = True
                 for n in nachbar_karten:
                     if b:
-                        b = b and info[n] == nachbar_karten[n][0]
+                        b = b and info[n] == nachbar_karten[n]
                     else:
                         break
 
@@ -128,7 +133,7 @@ class Spiel:
                         else:
                             # fuer alle Orte auf der Karte appende actions mit diesem als meepleauswahl
                             for o in card.orte:
-                                possible_actions.append((x, y, i, o.name))
+                                possible_actions.append((x, y, i, o))
 
                         # falls bel viele strassen angrenzen
                         if 'S' in nachbar_karten.values():
@@ -139,8 +144,7 @@ class Spiel:
                         else:
                             # fuer alle strassen auf der Karte das wie oben
                             for s in card.strassen:
-                                possible_actions.append((x, y, i, s.name))
-
+                                possible_actions.append((x, y, i, s))
                         # falls beliebig viele strassen angrenzen
                         if 'W' in nachbar_karten.values():
 
@@ -172,9 +176,6 @@ class Spiel:
         for i in range(rotations):
             card.rotate_right()
 
-        # cards_st updaten
-        self.cards_set.update({(koordinates[0], koordinates[1]): Karte})
-
         # wenn auf Karte Orte, Strassen oder Wiesen sind, muessen globale Aequivalente geupdatet werden
         if len(card.orte) > 0:
             self.update_all_orte(card, koordinates[0], koordinates[1], meeple_position)
@@ -185,6 +186,13 @@ class Spiel:
 
         # kloester muessen moeglicherweise immer geupdatet werden, da sie von der Anzahl an Umgebungskarten abhaengen
         self.update_all_kloester(card, koordinates[0], koordinates[1], meeple_position)
+
+        # cards_set updaten
+        self.cards_set.update({(koordinates[0], koordinates[1]): Karte})
+
+        # damit jede Karte weiß zu welchen landschaften ihre Kanten gehoeren
+        # MUSS EIGENTLIch in die update_all_funktionen
+        card.update_kanten()
 
         # possible_coordinates und unavailable coordinates updaten
         self.unavailable_coordinates.append((koordinates[0], koordinates[1]))
