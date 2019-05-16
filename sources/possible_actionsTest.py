@@ -7,8 +7,6 @@ import Spiel_class
 from Player_Class import Player
 
 
-
-
 class PossibleActionsTest(unittest.TestCase):
 
     def test_1(self):
@@ -30,11 +28,16 @@ class PossibleActionsTest(unittest.TestCase):
 
         k = card_class.Card("S", "O", "O", "S", "O")
 
-        # goal = [(0, -1, 0), (0, -1, 1), (2, 1, 1), (2, 1, 2), (1, 0, 2)]
-        # self.assertEqual(calculate_possible_actions(Karte("S", "O", "O", "S", "O"), possible_coordinates, cards_set), [(0, -1, 0), (0, -1, 1), (2, 1, 1), (2, 1, 2), (1, 0, 2)])
-        self.assertEqual(len(goal), len(spiel.calculate_possible_actions(k, Player(0))))
+        goal = [(0, -1, 0, k.strassen[0]), (0, -1, 0, k.orte[0]), (0, -1, 1, k.strassen[0]),
+                (0, -1, 1, k.orte[0]), (2, 1, 1, k.strassen[0]), (2, 1, 1, k.orte[0]),
+                (2, 1, 2, k.strassen[0]), (2, 1, 2, k.orte[0]), (1, 0, 2, k.orte[0]),
+                (1, 0, 2, k.strassen[0])]
 
-        self.assertEqual(sorted(goal), sorted(spiel.calculate_possible_actions(card_class.Card("S", "O", "O", "S", "O"), Player(0))))
+        self.assertEqual(len(goal), len(spiel.calculate_possible_actions(k, Player(1))))
+
+        for tup in spiel.calculate_possible_actions(k, Player(1)):
+            print(tup)
+            self.assertTrue(tup in goal)
 
 
 if __name__ == "__main__":

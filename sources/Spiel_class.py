@@ -70,10 +70,11 @@ class Spiel:
         d2 = {0: (x, y + 1), 1: (x + 1, y), 2: (x, y - 1), 3: (x - 1, y)}
 
         for kante in nachbar_karten:
-            if self.cards_set[(x, y)].kanten[self.d[kante]].besitzer is not None:
+            if d2[kante] in self.cards_set and self.cards_set[d2[kante]].kanten[self.d[kante]].besitzer is None:
 
                 # appende die entprechende Landschaft auf der Karte
-                output.append(kanten_dict[kante])
+                if kanten_dict[kante] not in output:
+                    output.append(kanten_dict[kante])
 
         return output
 
@@ -123,9 +124,9 @@ class Spiel:
                         # nicht 100 pro sicher, aber da dann schon karte an nkoo gefunden wurde, kann da ja keine weitere mehr sein
                         continue
 
+            kanten_dict = card.kanten.copy()
             for i in range(4):
 
-                kanten_dict = card.kanten.copy()
 
                 # wenn pro Rotation nach allen Ueberpruefungen immer noch True, dann hinzufuegen
                 b = True
@@ -147,32 +148,24 @@ class Spiel:
 
                             # durchsuche alle orte nach dem der dort liegt und checke, ob der schon besetzt ist, falls nicht
                             # append mit dieser moeglichkeit
-                            self.meeple_check(x, y, nachbar_karten, kanten_dict)
+                            for o in self.meeple_check(x, y, nachbar_karten, kanten_dict):
+                                possible_actions.append((x, y, i, o))
                         else:
                             # fuer alle Orte auf der Karte appende actions mit diesem als meepleauswahl
                             for o in card.orte:
                                 possible_actions.append((x, y, i, o))
 
-
-
-
-
-
-
-
-
-
-                        # falls bel viele strassen angrenzen
                         if 'S' in nachbar_karten.values():
 
-                            # durchsuche alle strassen nach der die dort ist unf schau, ob die schon besetzt ist, wenn nicht
-                            # appende mit dieser moeglichkeit
-                            self.meeple_check(x, y, i, self.alle_strassen, nachbar_karten, 'S', possible_actions)
+                            # durchsuche alle orte nach dem der dort liegt und checke, ob der schon besetzt ist, falls nicht
+                            # append mit dieser moeglichkeit
+                            for s in self.meeple_check(x, y, nachbar_karten, kanten_dict):
+                                possible_actions.append((x, y, i, s))
                         else:
-                            # fuer alle strassen auf der Karte das wie oben
+                            # fuer alle Orte auf der Karte appende actions mit diesem als meepleauswahl
                             for s in card.strassen:
                                 possible_actions.append((x, y, i, s))
-                        # falls beliebig viele strassen angrenzen
+
                         if 'W' in nachbar_karten.values():
 
                             # durchsuche alle wiesen nach der die dort ist unf schau, ob die schon besetzt ist, wenn nicht

@@ -10,6 +10,7 @@ class Ort:
         self.wert = 2
         self.besitzer = None
         self.fertig = False
+        self.name = None # zum debuggen
 
     def add_part(self, ort, x, y):
         """ nimmt ortsteil, koordinaten des neuen teils und wo dieses teil den aktuellen ort beruehrt"""
