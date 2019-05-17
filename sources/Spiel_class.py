@@ -35,38 +35,14 @@ class Spiel:
         # hilfsdictionaries
         self.d = {0: 2, 1: 3, 2: 0, 3: 1}
 
-
-
     def draw_card(self):
         """from drawing the next card randomly"""
         pass
-
-    def meeple_check2(self, x, y, z, landschaftsart_liste, nachbar_karten, buchstabe, actions):
-        """berechnet zu geg. Rotation an geg Koordinaten zu gegebenem Landschaftstyp (buchstabe, zB. 'O') wo ich auf der Karte ein meeple setzen kann"""
-
-        d2 = {0: (x, y + 1), 1: (x + 1, y), 2: (x, y - 1), 3: (x - 1, y)}
-        # d3 = {'O': Ort_auf_Karte}#: Strasse_auf_Karte, 'W': Wiese_auf_Karte}
-
-        # durchsuche alle landschaften in liste nach dem Typ der dort liegt und checke, ob er angrenzt, ob der schon besetzt ist, falls nicht
-        # append mit dieser moeglichkeit
-
-        # fuer alle nachbar_karten suche ich die landschaft die angrenzt
-        for rel_pos in nachbar_karten:
-            if nachbar_karten[rel_pos][0] == buchstabe:
-                for landschaft in landschaftsart_liste:
-                    # wenn die landschaft angrenzt und (and) Kante uebereinstimmt
-                    if d2[rel_pos] in landschaft.koordinaten_plus_oeffnungen and self.d[rel_pos] in landschaft.koordinaten_plus_oeffnungen[d2[rel_pos]]:
-                        if landschaft.besitzer is not None:
-                            continue
-                        else:
-                            actions.append(x, y, z, nachbar_karten[rel_pos][1])
-
 
     def meeple_check(self,x, y, nachbar_karten, kanten_dict):
         """berechnet zu geg. Rotation an geg Koordinaten zu gegebenem Landschaftstyp (buchstabe, zB. 'O') wo ich auf der Karte ein meeple setzen kann"""
 
         output = []
-        #d = {'O': self.alle_orte, 'S': self.alle_strassen}
         d2 = {0: (x, y + 1), 1: (x + 1, y), 2: (x, y - 1), 3: (x - 1, y)}
 
         for kante in nachbar_karten:
@@ -102,31 +78,15 @@ class Spiel:
                     if koord_von_karte == nkoo:
 
                         # art der Landschaft, die neben der Kante relative_pos liegt
-                        buchstabe = self.cards_set[koord_von_karte].info[self.d[relative_pos]]
-#
-                        #landschaft = None
-                        ## name von landschaft finden, welche in dem fall auf der Karte betroffen waere
-                        #if buchstabe == 'O':
-                        #    for o in card.orte:
-                        #        if relative_pos in o.kanten:
-                        #            landschaft = o
-#
-                        #elif buchstabe == 'S':
-                        #    for s in card.strassen:
-                        #        if relative_pos in s.kanten:
-                        #            landschaft = s
-                        #else:
-                        #    #wiese
-                        #    pass
-
-                        nachbar_karten.update({relative_pos: buchstabe})
+                        # buchstabe = self.cards_set[koord_von_karte].info[self.d[relative_pos]]
+                        # das selbe nur direkt schon als argument eingegeben
+                        nachbar_karten.update({relative_pos: self.cards_set[koord_von_karte].info[self.d[relative_pos]]})
 
                         # nicht 100 pro sicher, aber da dann schon karte an nkoo gefunden wurde, kann da ja keine weitere mehr sein
                         continue
 
             kanten_dict = card.kanten.copy()
             for i in range(4):
-
 
                 # wenn pro Rotation nach allen Ueberpruefungen immer noch True, dann hinzufuegen
                 b = True
@@ -174,9 +134,9 @@ class Spiel:
                         else:
                             # fuer alle wiesen auf Karte das wie oben
                             pass
-                    else:
+                    # else:
 
-                        possible_actions.append((x, y, i, m))
+                    possible_actions.append((x, y, i, m))
 
                 # eins weiter rotieren
                 info = rotate_info_right(info)
@@ -227,7 +187,7 @@ class Spiel:
                     if (a, b) not in self.possible_coordinates and (a, b) not in self.unavailable_coordinates:
                         self.possible_coordinates.append((a, b))
 
-    def update_all_orte(self, card, x, y, meeple_position):
+    def update_all_landschaften(self, card, x, y, meeple_position):
 
         ### finde für jeden Ort auf Karte alle globale Orte, die mit diesem Ort wechselwirken und wie sie wechselwirken
 
