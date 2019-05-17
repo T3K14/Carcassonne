@@ -159,9 +159,9 @@ class Spiel:
 
         # wenn auf Karte Orte, Strassen oder Wiesen sind, muessen globale Aequivalente geupdatet werden
         if len(card.orte) > 0:
-            self.update_all_orte(card, koordinates[0], koordinates[1], meeple_position)
+            self.update_all_landschaften(card, koordinates[0], koordinates[1], meeple_position, 'O')
         if len(card.strassen) > 0:
-            self.update_all_strassen(card, koordinates[0], koordinates[1], meeple_position)
+            self.update_all_landschaften(card, koordinates[0], koordinates[1], meeple_position, 'S')
         if len(card.wiesenKarte) > 0:
             self.update_all_wiesen(card, koordinates[0], koordinates[1], meeple_position)
 
@@ -187,16 +187,25 @@ class Spiel:
                     if (a, b) not in self.possible_coordinates and (a, b) not in self.unavailable_coordinates:
                         self.possible_coordinates.append((a, b))
 
-    def update_all_landschaften(self, card, x, y, meeple_position):
+    def update_all_landschaften(self, card, x, y, meeple_position, buchstabe):
 
-        ### finde für jeden Ort auf Karte alle globale Orte, die mit diesem Ort wechselwirken und wie sie wechselwirken
+        d2 = {0: (x, y + 1), 1: (x + 1, y), 2: (x, y - 1), 3: (x - 1, y)}
+        d3 = {'O': card.orte, 'S': card.strassen}
 
-        ### update alle Orte, inklusive Meeples
+        ww = {}
 
-        pass
+        ### update alle Landschaften, inklusive Meeples
 
-    def update_all_strassen(self, card, x, y, meeple_position):
-        pass
+        for landschaft in d3[buchstabe][:]:
+            for kante in landschaft.kanten[:]:
+                if landschaft not in ww:
+                    ww.update({landschaft: {self.cards_set[d2[kante]].kanten[self.d[kante]]: kante}})
+                else:
+                    ww[landschaft].update({self.cards_set[d2[kante]].kanten[self.d[kante]]: kante})
+
+
+        for landschaft in ww:
+            pass
 
     def update_all_wiesen(self, card, x, y, meeple_position):
         pass
