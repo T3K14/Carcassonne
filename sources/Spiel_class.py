@@ -27,8 +27,8 @@ class Spiel:
         # possible next coordinates
         self.possible_coordinates = [(0, 1), (1, 0), (0, -1), (-1, 0)]
 
-        self.alle_orte = {"Ort_0": Ort((0, 0), [1])}
-        self.alle_strassen = {"Strasse_0": Strasse((0, 0), [0, 2])}
+        self.alle_orte = [Ort((0, 0), [1])]
+        self.alle_strassen = [Strasse((0, 0), [0, 2])]
         self.alle_kloester = {}
         self.alle_wiesen = {"Wiese_0": Wiese((0, 0), [4, 7]), "Wiese_1": Wiese((0, 0), [5, 6])}
 
@@ -146,8 +146,7 @@ class Spiel:
 
         return possible_actions
 
-
-    def make_action(self, card, koordinates, rotations, meeple_position=None):
+    def make_action(self, card, koordinates, rotations, player, meeple_position=None):
         """for setting a card and placing a meeple"""
 
         # if action_is_valid() muss im Spielprogramm dann davor!!!!!!
@@ -159,9 +158,9 @@ class Spiel:
 
         # wenn auf Karte Orte, Strassen oder Wiesen sind, muessen globale Aequivalente geupdatet werden
         if len(card.orte) > 0:
-            self.update_all_landschaften(card, koordinates[0], koordinates[1], meeple_position, 'O')
+            self.update_all_landschaften(card, koordinates[0], koordinates[1], meeple_position, 'O', player)
         if len(card.strassen) > 0:
-            self.update_all_landschaften(card, koordinates[0], koordinates[1], meeple_position, 'S')
+            self.update_all_landschaften(card, koordinates[0], koordinates[1], meeple_position, 'S', player)
         if len(card.wiesenKarte) > 0:
             self.update_all_wiesen(card, koordinates[0], koordinates[1], meeple_position)
 
@@ -187,7 +186,7 @@ class Spiel:
                     if (a, b) not in self.possible_coordinates and (a, b) not in self.unavailable_coordinates:
                         self.possible_coordinates.append((a, b))
 
-    def update_all_landschaften(self, card, x, y, meeple_position, buchstabe):
+    def update_all_landschaften(self, card, x, y, meeple_position, buchstabe, player):
 
         d2 = {0: (x, y + 1), 1: (x + 1, y), 2: (x, y - 1), 3: (x - 1, y)}
         d3 = {'O': card.orte, 'S': card.strassen}
@@ -198,14 +197,39 @@ class Spiel:
 
         for landschaft in d3[buchstabe][:]:
             for kante in landschaft.kanten[:]:
-                if landschaft not in ww:
-                    ww.update({landschaft: {self.cards_set[d2[kante]].kanten[self.d[kante]]: kante}})
-                else:
-                    ww[landschaft].update({self.cards_set[d2[kante]].kanten[self.d[kante]]: kante})
 
+                # nach richtiger ausrichtung muss ich ja nicht mehr ueberpruefen, da das calculate_possible_actions schon gemacht hat
+                if d2[kante] in self.cards_set:
+                    if landschaft not in ww:
+                        ww.update({landschaft: {self.cards_set[d2[kante]].kanten[self.d[kante]]: [kante]}})
+                    else:
+                        # wenn die globale_landschaft schon als ww-ls zu ls eingetragen wurde
+                        if self.cards_set[d2[kante]].kanten[self.d[kante]] in ww[landschaft]:
+                            ww[landschaft][self.cards_set[d2[kante]].kanten[self.d[kante]]].append(kante)
+                        else:
+                            ww[landschaft].update({self.cards_set[d2[kante]].kanten[self.d[kante]]: [kante]})
+
+                    # eingehen darauf, dass die hier betrachteten kanten des ortes auf der neu gelegten Karte jetzt
+                    # keine offenen mehr sein können
+                    landschaft.kanten.remove(kante)
+                    if landschaft in d3[buchstabe]:
+                        d3[buchstabe].remove(landschaft)
+
+                    # card.kanten updaten
+                    card.kanten[kante] = self.cards_set[d2[kante]].kanten[self.d[kante]]
 
         for landschaft in ww:
             pass
+
+        for landschaft in d3[buchstabe]:
+            if landschaft not in ww:
+                if meeple_position != landschaft:
+                    self.alle_orte.append(Ort((x, y), landschaft.kanten))
+                else:
+                    self.alle_orte.append(Ort((x, y), landschaft.kanten, player))
+
+
+
 
     def update_all_wiesen(self, card, x, y, meeple_position):
         pass

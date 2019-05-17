@@ -1,5 +1,6 @@
 import Spiel_class
 import card_class
+import Player_Class
 import unittest
 
 class MakeActionTest(unittest.TestCase):
@@ -12,7 +13,7 @@ class MakeActionTest(unittest.TestCase):
         # alle strassen nach Zug
         goal2 = []
 
-        spiel.make_action(card_class.Card("O", "S", 'S', 'O', 'O'), (1, 0), 0, None)
+        spiel.make_action(card_class.Card("O", "S", 'S', 'O', 'O'), (1, 0), 0, Player_Class.Player(1), None)
 
         self.assertEqual(len(goal), len(spiel.alle_orte))
         self.assertEqual(len(goal2), len(spiel.alle_strassen))
