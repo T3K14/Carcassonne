@@ -2,6 +2,8 @@ import Spiel_class
 import card_class
 import Player_Class
 import unittest
+from Strasse import Strasse
+from Ort import Ort
 
 class MakeActionTest(unittest.TestCase):
 
@@ -9,14 +11,16 @@ class MakeActionTest(unittest.TestCase):
         spiel = Spiel_class.Spiel(card_class.Kartenliste)
 
         # alle_orte nach Zug
-        goal = []
+        goal = [spiel.alle_orte[0]]
         # alle strassen nach Zug
-        goal2 = []
+        goal2 = [spiel.alle_strassen[0], Strasse((1, 0), [1, 2])]
 
-        spiel.make_action(card_class.Card("O", "S", 'S', 'O', 'O'), (1, 0), 0, Player_Class.Player(1), None)
+        k = card_class.Card("O", "S", 'S', 'O', 'O')
+        spiel.make_action(k, (1, 0), 0, Player_Class.Player(1), None)
 
-        self.assertEqual(len(goal), len(spiel.alle_orte))
-        self.assertEqual(len(goal2), len(spiel.alle_strassen))
+        self.assertEqual(len(spiel.alle_orte), len(goal))
+        #self.assertEqual(len(goal2), len(spiel.alle_strassen))
+        self.assertEqual(sorted(k.kanten), sorted({0: spiel.cards_set[(0, 0)].kanten[1], 1: k.kanten[1], 2: k.kanten[2], 3: spiel.cards_set[(0, 0)].kanten[1]}))
 
         for o in spiel.alle_orte:
             self.assertTrue(o in goal)

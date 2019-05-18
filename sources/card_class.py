@@ -250,8 +250,10 @@ class Card:
     def delete_ort(self):
         pass
 
-    def update_kanten(self):
-        pass
+    def update_kanten(self, landschaft, globale_landschaft):
+        for l in self.kanten:
+            if self.kanten[l] == landschaft:
+                self.kanten[l] = globale_landschaft
 
     def initialize_kanten(self):
         for ort in self.orte:

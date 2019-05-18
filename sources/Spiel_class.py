@@ -159,10 +159,10 @@ class Spiel:
         # wenn auf Karte Orte, Strassen oder Wiesen sind, muessen globale Aequivalente geupdatet werden
         if len(card.orte) > 0:
             self.update_all_landschaften(card, koordinates[0], koordinates[1], meeple_position, 'O', player)
-        if len(card.strassen) > 0:
-            self.update_all_landschaften(card, koordinates[0], koordinates[1], meeple_position, 'S', player)
-        if len(card.wiesenKarte) > 0:
-            self.update_all_wiesen(card, koordinates[0], koordinates[1], meeple_position)
+        # if len(card.strassen) > 0:
+        #    self.update_all_landschaften(card, koordinates[0], koordinates[1], meeple_position, 'S', player)
+        #if len(card.wiesenKarte) > 0:
+        #    self.update_all_wiesen(card, koordinates[0], koordinates[1], meeple_position)
 
         # kloester muessen moeglicherweise immer geupdatet werden, da sie von der Anzahl an Umgebungskarten abhaengen
         self.update_all_kloester(card, koordinates[0], koordinates[1], meeple_position)
@@ -172,7 +172,7 @@ class Spiel:
 
         # damit jede Karte weiß zu welchen landschaften ihre Kanten gehoeren
         # MUSS EIGENTLIch in die update_all_funktionen
-        card.update_kanten()
+        #card.update_kanten()
 
         # possible_coordinates und unavailable coordinates updaten
         self.unavailable_coordinates.append((koordinates[0], koordinates[1]))
@@ -201,13 +201,13 @@ class Spiel:
                 # nach richtiger ausrichtung muss ich ja nicht mehr ueberpruefen, da das calculate_possible_actions schon gemacht hat
                 if d2[kante] in self.cards_set:
                     if landschaft not in ww:
-                        ww.update({landschaft: {self.cards_set[d2[kante]].kanten[self.d[kante]]: [kante]}})
+                        ww.update({landschaft: {self.cards_set[d2[kante]].kanten[self.d[kante]]: (d2[kante], [self.d[kante]])}})
                     else:
                         # wenn die globale_landschaft schon als ww-ls zu ls eingetragen wurde
                         if self.cards_set[d2[kante]].kanten[self.d[kante]] in ww[landschaft]:
-                            ww[landschaft][self.cards_set[d2[kante]].kanten[self.d[kante]]].append(kante)
+                            ww[landschaft][self.cards_set[d2[kante]].kanten[self.d[kante]]][1].append(self.d[kante])
                         else:
-                            ww[landschaft].update({self.cards_set[d2[kante]].kanten[self.d[kante]]: [kante]})
+                            ww[landschaft].update({self.cards_set[d2[kante]].kanten[self.d[kante]]: (d2[kante], [self.d[kante]])})
 
                     # eingehen darauf, dass die hier betrachteten kanten des ortes auf der neu gelegten Karte jetzt
                     # keine offenen mehr sein können
@@ -216,17 +216,39 @@ class Spiel:
                         d3[buchstabe].remove(landschaft)
 
                     # card.kanten updaten
-                    card.kanten[kante] = self.cards_set[d2[kante]].kanten[self.d[kante]]
+
+                    # card.kanten[kante] = self.cards_set[d2[kante]].kanten[self.d[kante]]
 
         for landschaft in ww:
-            pass
+            hauptort = list(ww)[0]
+            for global_landschaft in ww[landschaft]:
+
+                if len(ww[landschaft]) == 1:
+
+                        global_landschaft.update_kanten(ww[landschaft][global_landschaft])
+                        global_landschaft.add_part((x, y), landschaft)
+                        card.update_kanten(landschaft, global_landschaft)
+
+                        if landschaft == meeple_position:
+                            global_landschaft.update_besitzer()
+
+                else:
+                    global_landschaft.update_kanten()
+                    if global_landschaft != hauptort:
+
+                        hauptort.add_ort()
+                    else:
+                        hauptort.add_part()
+
+                    if landschaft.besitzer is not None:
+                        hauptort.update_besitzer()
 
         for landschaft in d3[buchstabe]:
             if landschaft not in ww:
                 if meeple_position != landschaft:
-                    self.alle_orte.append(Ort((x, y), landschaft.kanten))
+                    d3[buchstabe].append(Ort((x, y), landschaft.kanten_plus_oeffnungen[(x, y)]))
                 else:
-                    self.alle_orte.append(Ort((x, y), landschaft.kanten, player))
+                    d3[buchstabe].append(Ort((x, y), landschaft.kanten_plus_oeffnungen[(x, y)], player))
 
 
 

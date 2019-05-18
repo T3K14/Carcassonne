@@ -1,5 +1,5 @@
 a = {0: "A", 1: "B", 2: "C", 3: "D"}
-
+a = sorted(a)
 b = a.copy()
 
 b[3] = 4
@@ -33,3 +33,9 @@ card_new = Card("O", "S", "S", "O", "O", True)
 
 print(card4.matrix)
 print(card_new.matrix)
+
+from Ort import Ort
+
+a = Ort((1, 1), 1)
+b = Ort((1, 1), 1)
+print(a == b)
