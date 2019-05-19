@@ -47,12 +47,14 @@ class MakeActionTest(unittest.TestCase):
         spiel.make_action(k2, (1, 1), 2, player2, k2.orte[0])
 
         k3 = card_class.Card('W', 'S', 'S', 'S', 'G')
-        spiel.make_action(k3, (0, -1), 1, player1, None)
+        spiel.make_action(k3, (0, -1), 3, player1, None)
 
         k4 = card_class.Card('O', 'S', 'S', 'O', 'O', True)
         spiel.make_action(k4, (1, -1), 1, player2, k4.strassen[0])
 
-        print(k4.matrix)
+        k5 = card_class.Card('O', 'O', 'O', 'O', 'O', True)
+        spiel.make_action(k5, (1, 0), 1, player1, None)
+
 
 if __name__ == '__main__':
     unittest.main()

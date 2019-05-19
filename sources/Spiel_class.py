@@ -221,7 +221,7 @@ class Spiel:
                     # card.kanten[kante] = self.cards_set[d2[kante]].kanten[self.d[kante]]
 
         for landschaft in ww:
-            hauptort = list(ww)[0]
+            hauptlandschaft = list(ww[landschaft])[0]
             for global_landschaft in ww[landschaft]:
 
                 if len(ww[landschaft]) == 1:
@@ -234,15 +234,18 @@ class Spiel:
                             global_landschaft.besitzer = player
 
                 else:
-                    global_landschaft.update_kanten()
-                    if global_landschaft != hauptort:
+                    global_landschaft.update_kanten(ww[landschaft][global_landschaft])
+                    if global_landschaft != hauptlandschaft:
 
-                        hauptort.add_ort()
+                        if buchstabe == 'O':
+                            hauptlandschaft.add_global(global_landschaft, self.alle_orte)
+                        else:
+                            hauptlandschaft.add_global(global_landschaft, self.alle_strassen)
                     else:
-                        hauptort.add_part()
+                        hauptlandschaft.add_part((x, y), landschaft)
 
-                    if landschaft.besitzer is not None:
-                        hauptort.update_besitzer()
+                    if landschaft == meeple_position:
+                        hauptlandschaft.besitzer = player
 
         for landschaft in d3[buchstabe]:
             # if landschaft not in ww:

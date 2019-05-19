@@ -24,12 +24,12 @@ class Ort:
         self.koordinaten_plus_oeffnungen.update({(koordinaten[0], koordinaten[1]): ort.kanten})
         self.wert += ort.wert
 
-    def add_orte(self, dictionary, alle_orte):
+    def add_global(self, global_ort, alle_orte):
         """ fuegt sich selbst die orte in dictionary bei und loescht diese aus alle orte"""
 
-        for ort in dictionary:
-            self.koordinaten_plus_oeffnungen.update(alle_orte[ort].koordinaten_plus_oeffnungen)
-            del alle_orte[ort]
+        self.koordinaten_plus_oeffnungen.update(global_ort.koordinaten_plus_oeffnungen)
+        self.wert += global_ort.wert
+        alle_orte.remove(global_ort)
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__

@@ -23,12 +23,12 @@ class Strasse():
         self.koordinaten_plus_oeffnungen.update({(koordinaten[0], koordinaten[1]): strasse.kanten})
         self.wert += strasse.wert
 
-    def add_orte(self, dictionary, alle_strassen):
+    def add_global(self, global_strasse, alle_strassen):
         """ fuegt sich selbst die orte in dictionary bei und loescht diese aus alle orte"""
 
-        for ort in dictionary:
-            self.koordinaten_plus_oeffnungen.update(alle_strassen[ort].koordinaten_plus_oeffnungen)
-            del alle_strassen[ort]
+        self.koordinaten_plus_oeffnungen.update(global_strasse.koordinaten_plus_oeffnungen)
+        self.wert += global_strasse.wert
+        alle_strassen.remove(global_strasse)
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__

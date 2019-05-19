@@ -221,20 +221,19 @@ class Card:
         self.kanten = rotate_kanten_dict_right(self.kanten)
 
         # auch noch fuer orte, strassen, wiesen auf karte die kanten rotieren
-        # MUSS ICHNICHT, DA DIE AUF DIE SELBEN OBJEKTE ZEIGEN NDDAHER MITROTIERT WERDEN
-        #for o in self.orte:
-        #    o.kanten = rotate_list_right(o.kanten)
-        #for s in self.strassen:
-        #    s.kanten = rotate_list_right(s.kanten)
+        for o in self.orte:
+            o.kanten = rotate_list_right(o.kanten)
+        for s in self.strassen:
+            s.kanten = rotate_list_right(s.kanten)
 
     def create_orte(self):
         """um alle Orte auf der Karte zu erstellen"""
         if self.mitte == 'O':
             if self.schild:
                 ortswert = 4
-                self.orte.append(Ort_auf_Karte(self.orte_kanten, ortswert))
+                self.orte.append(Ort_auf_Karte(self.orte_kanten[:], ortswert))
             else:
-                self.orte.append(Ort_auf_Karte(self.orte_kanten, 2))
+                self.orte.append(Ort_auf_Karte(self.orte_kanten[:], 2))
 
         else:
             for k in self.orte_kanten:
@@ -243,8 +242,8 @@ class Card:
     def create_strassen(self):
         """um alle Strassen auf der Karte zu erstellen"""
 
-        if len(self.strassen_kanten) < 3:
-            self.strassen.append(StasseAufKarte(self.strassen_kanten))
+        if 0 < len(self.strassen_kanten) < 3:
+            self.strassen.append(StasseAufKarte(self.strassen_kanten[:]))
         else:
             for k in self.strassen_kanten:
                 self.strassen.append(StasseAufKarte([k]))
