@@ -80,7 +80,7 @@ def rotate_kanten_dict_right(dic):
 
 if __name__ == "__main__":
 
-    s = [1, 0]
+    s = [1, 2]
     inf = ["O", "S", "S", "W"]
 
     print(rotate_list_right(s))

@@ -39,3 +39,6 @@ from Ort import Ort
 a = Ort((1, 1), 1)
 b = Ort((1, 1), 1)
 print(a == b)
+
+a = 1
+print(a[0])

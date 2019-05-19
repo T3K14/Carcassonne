@@ -159,8 +159,8 @@ class Spiel:
         # wenn auf Karte Orte, Strassen oder Wiesen sind, muessen globale Aequivalente geupdatet werden
         if len(card.orte) > 0:
             self.update_all_landschaften(card, koordinates[0], koordinates[1], meeple_position, 'O', player)
-        # if len(card.strassen) > 0:
-        #    self.update_all_landschaften(card, koordinates[0], koordinates[1], meeple_position, 'S', player)
+        if len(card.strassen) > 0:
+            self.update_all_landschaften(card, koordinates[0], koordinates[1], meeple_position, 'S', player)
         #if len(card.wiesenKarte) > 0:
         #    self.update_all_wiesen(card, koordinates[0], koordinates[1], meeple_position)
 
@@ -230,7 +230,7 @@ class Spiel:
                         card.update_kanten(landschaft, global_landschaft)
 
                         if landschaft == meeple_position:
-                            global_landschaft.update_besitzer()
+                            global_landschaft.besitzer = player
 
                 else:
                     global_landschaft.update_kanten()
@@ -244,11 +244,20 @@ class Spiel:
                         hauptort.update_besitzer()
 
         for landschaft in d3[buchstabe]:
-            if landschaft not in ww:
-                if meeple_position != landschaft:
-                    d3[buchstabe].append(Ort((x, y), landschaft.kanten_plus_oeffnungen[(x, y)]))
-                else:
-                    d3[buchstabe].append(Ort((x, y), landschaft.kanten_plus_oeffnungen[(x, y)], player))
+            # if landschaft not in ww:
+
+            # create neue landschaft:
+            if buchstabe == 'O':
+                new_landschaft = Ort((x, y), landschaft.kanten)
+                self.alle_orte.append(new_landschaft)
+            else:
+                new_landschaft = Strasse((x, y), landschaft.kanten)
+                self.alle_strassen.append(new_landschaft)
+
+            card.update_kanten(landschaft, new_landschaft)
+
+            if meeple_position != landschaft:
+                new_landschaft.besitzer = player
 
 
 

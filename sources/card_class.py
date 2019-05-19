@@ -2,7 +2,7 @@ import numpy as np
 from Ort import Ort_auf_Karte
 from Strasse import StasseAufKarte
 #from strasse, etc
-from rotate2 import rotate_info_right, rotate_list_right, rotate_matrix_right
+from rotate2 import rotate_info_right, rotate_list_right, rotate_matrix_right, rotate_kanten_dict_right
 
 class Card:
 
@@ -218,12 +218,14 @@ class Card:
         self.orte_kanten = rotate_list_right(self.orte_kanten)
         self.wiesen_kanten = rotate_list_right(self.wiesen_kanten)
         self.matrix = rotate_matrix_right(self.matrix)
+        self.kanten = rotate_kanten_dict_right(self.kanten)
 
         # auch noch fuer orte, strassen, wiesen auf karte die kanten rotieren
-        for o in self.orte:
-            o.kanten = rotate_list_right(o.kanten)
-        for s in self.strassen:
-            s.kanten = rotate_list_right(s.kanten)
+        # MUSS ICHNICHT, DA DIE AUF DIE SELBEN OBJEKTE ZEIGEN NDDAHER MITROTIERT WERDEN
+        #for o in self.orte:
+        #    o.kanten = rotate_list_right(o.kanten)
+        #for s in self.strassen:
+        #    s.kanten = rotate_list_right(s.kanten)
 
     def create_orte(self):
         """um alle Orte auf der Karte zu erstellen"""
