@@ -17,9 +17,10 @@ class Spiel:
         self.cards_set = {(0, 0): Karte("S", "O", "S", "W")}
         # cards_seT initializen
         strasse0 = Strasse((0, 0), [0, 2])
+        ort0 = Ort((0, 0), [1])
 
         # NONE steht hier noch fuer Wiese
-        self.cards_set[(0, 0)].kanten = {0: strasse0, 1: Ort((0, 0), [1]), 2: strasse0, 3: None}
+        self.cards_set[(0, 0)].kanten = {0: strasse0, 1: ort0, 2: strasse0, 3: None}
 
         # list of coordinates already blocked
         self.unavailable_coordinates = [(0, 0)]
@@ -27,8 +28,8 @@ class Spiel:
         # possible next coordinates
         self.possible_coordinates = [(0, 1), (1, 0), (0, -1), (-1, 0)]
 
-        self.alle_orte = [Ort((0, 0), [1])]
-        self.alle_strassen = [Strasse((0, 0), [0, 2])]
+        self.alle_orte = [ort0]
+        self.alle_strassen = [strasse0]
         self.alle_kloester = {}
         self.alle_wiesen = {"Wiese_0": Wiese((0, 0), [4, 7]), "Wiese_1": Wiese((0, 0), [5, 6])}
 
@@ -168,7 +169,7 @@ class Spiel:
         self.update_all_kloester(card, koordinates[0], koordinates[1], meeple_position)
 
         # cards_set updaten
-        self.cards_set.update({(koordinates[0], koordinates[1]): Karte})
+        self.cards_set.update({(koordinates[0], koordinates[1]): card})
 
         # damit jede Karte weiß zu welchen landschaften ihre Kanten gehoeren
         # MUSS EIGENTLIch in die update_all_funktionen
@@ -256,7 +257,7 @@ class Spiel:
 
             card.update_kanten(landschaft, new_landschaft)
 
-            if meeple_position != landschaft:
+            if meeple_position == landschaft:
                 new_landschaft.besitzer = player
 
 

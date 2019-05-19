@@ -41,6 +41,8 @@ class MakeActionTest(unittest.TestCase):
         k1 = card_class.Card('O', 'W', 'S', 'S')
         spiel.make_action(k1, (0, 1), 0, player1, k1.strassen[0])
 
+        self.assertEqual(len(spiel.alle_strassen), 1)
+
         k2 = card_class.Card('O', 'W', 'W', 'O', 'O')
         spiel.make_action(k2, (1, 1), 2, player2, k2.orte[0])
 
@@ -50,7 +52,7 @@ class MakeActionTest(unittest.TestCase):
         k4 = card_class.Card('O', 'S', 'S', 'O', 'O', True)
         spiel.make_action(k4, (1, -1), 1, player2, k4.strassen[0])
 
-        print(k3.matrix)
+        print(k4.matrix)
 
 if __name__ == '__main__':
     unittest.main()

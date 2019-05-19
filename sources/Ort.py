@@ -5,9 +5,9 @@ class Ort_auf_Karte:
 
 
 class Ort:
-    def __init__(self, koordinaten, kanten, meeple = False):
+    def __init__(self, koordinaten, kanten, meeple = False, wert=2):
         self.koordinaten_plus_oeffnungen = {koordinaten: kanten}
-        self.wert = 2
+        self.wert = wert
         self.besitzer = None
         self.fertig = False
         self.name = None # zum debuggen
