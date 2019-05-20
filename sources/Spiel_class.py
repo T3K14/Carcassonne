@@ -18,6 +18,8 @@ class Spiel:
         # cards_seT initializen
         strasse0 = Strasse((0, 0), [0, 2])
         ort0 = Ort((0, 0), [1])
+        wiese0 = Wiese((0, 0), [5, 6])
+        wiese1 = Wiese((0, 0), [4, 7])
 
         # NONE steht hier noch fuer Wiese
         self.cards_set[(0, 0)].kanten = {0: strasse0, 1: ort0, 2: strasse0, 3: None}
@@ -31,7 +33,7 @@ class Spiel:
         self.alle_orte = [ort0]
         self.alle_strassen = [strasse0]
         self.alle_kloester = {}
-        self.alle_wiesen = {"Wiese_0": Wiese((0, 0), [4, 7]), "Wiese_1": Wiese((0, 0), [5, 6])}
+        self.alle_wiesen = [wiese0, wiese1]
 
         # hilfsdictionaries
         self.d = {0: 2, 1: 3, 2: 0, 3: 1}
@@ -150,11 +152,10 @@ class Spiel:
     def make_action(self, card, koordinates, rotations, player, meeple_position=None):
         """for setting a card and placing a meeple"""
 
+        # if action_is_valid() muss im Spielprogramm dann davor!!!!!!
+
         if meeple_position is not None:
             player.meeples -= 1
-
-        # if action_is_valid() muss im Spielprogramm dann davor!!!!!!
-        # fuer human spieler: if "action" in possible actions
 
         # entprechend der Rotationen Karte drehen
         for i in range(rotations):
@@ -173,10 +174,6 @@ class Spiel:
 
         # cards_set updaten
         self.cards_set.update({(koordinates[0], koordinates[1]): card})
-
-        # damit jede Karte weiß zu welchen landschaften ihre Kanten gehoeren
-        # MUSS EIGENTLIch in die update_all_funktionen
-        #card.update_kanten()
 
         # possible_coordinates und unavailable coordinates updaten
         self.unavailable_coordinates.append((koordinates[0], koordinates[1]))
@@ -219,23 +216,21 @@ class Spiel:
                     if landschaft in d3[buchstabe]:
                         d3[buchstabe].remove(landschaft)
 
-                    # card.kanten updaten
-
-                    # card.kanten[kante] = self.cards_set[d2[kante]].kanten[self.d[kante]]
-
+        # fuer alle landschaften auf der karte, die wechselwirken berechne WW mit globalen Landschaften
         for landschaft in ww:
             hauptlandschaft = list(ww[landschaft])[0]
             for global_landschaft in ww[landschaft]:
 
+                # wenn die landschaft nur mit einer globalen wechselwirkt
                 if len(ww[landschaft]) == 1:
 
                         global_landschaft.update_kanten(ww[landschaft][global_landschaft])
                         global_landschaft.add_part((x, y), landschaft)
-                        #card.update_kanten(landschaft, global_landschaft)
 
                         if landschaft == meeple_position:
                             global_landschaft.besitzer = player
 
+                # sonst arbeite mit der hauptlandschaft
                 else:
                     global_landschaft.update_kanten(ww[landschaft][global_landschaft])
 
@@ -253,9 +248,8 @@ class Spiel:
                         hauptlandschaft.besitzer = player
             card.update_kanten(landschaft, hauptlandschaft)
 
+        # kreiere neue landschaften fuer die auf der karte, die nicht wechselwirken
         for landschaft in d3[buchstabe]:
-            # if landschaft not in ww:
-
             # create neue landschaft:
             if buchstabe == 'O':
                 new_landschaft = Ort((x, y), landschaft.kanten)
@@ -269,7 +263,15 @@ class Spiel:
             if meeple_position == landschaft:
                 new_landschaft.besitzer = player
 
-    def update_all_wiesen(self, card, x, y, meeple_position):
+    def update_all_wiesen(self, card, x, y, meeple_position, player):
+
+        # fuer jede wiese auf der karte finde alle interaktionen mit globalen wiesen
+
+            # loesche alle wiesen die interagieren
+
+        # rechne die ww so aus, dass danach alles global upgedatet ist
+
+        # erstelle neue Wiesen fuer solche die nicht wechselwirken
         pass
 
     def update_all_kloester(self, card, x, y, meeple_position):

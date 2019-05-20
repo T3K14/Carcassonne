@@ -1,6 +1,7 @@
 import numpy as np
 from Ort import Ort_auf_Karte
 from Strasse import StasseAufKarte
+from Wiese import WieseAufKarte
 #from strasse, etc
 from rotate2 import rotate_info_right, rotate_list_right, rotate_matrix_right, rotate_kanten_dict_right
 
@@ -36,6 +37,7 @@ class Card:
         self.create_matrix()
         self.create_orte()
         self.create_strassen()
+        self.create_wiesen()
         self.initialize_kanten()
 
 
@@ -207,10 +209,10 @@ class Card:
                 self.orte_kanten = rotate_list_right(self.orte_kanten)
                 self.strassen_kanten = rotate_list_right(self.strassen_kanten)
 
-        self.wiesen = []
-        for position, status in enumerate(self.info[:-1]):
-            if status == "W":
-                self.wiesen.append(position)
+        #self.wiesen = []
+        #for position, status in enumerate(self.info[:-1]):
+        #    if status == "W":
+        #        self.wiesen.append(position)
 
     def rotate_right(self):
         self.info = rotate_info_right(self.info)
@@ -230,8 +232,7 @@ class Card:
         """um alle Orte auf der Karte zu erstellen"""
         if self.mitte == 'O':
             if self.schild:
-                ortswert = 4
-                self.orte.append(Ort_auf_Karte(self.orte_kanten[:], ortswert))
+                self.orte.append(Ort_auf_Karte(self.orte_kanten[:], 4))
             else:
                 self.orte.append(Ort_auf_Karte(self.orte_kanten[:], 2))
 
@@ -248,8 +249,53 @@ class Card:
             for k in self.strassen_kanten:
                 self.strassen.append(StasseAufKarte([k]))
 
-    def delete_ort(self):
-        pass
+    def create_wiesen(self):
+
+        # fuer strassen
+        d = {(0, 2): [[5, 6], [4, 7]], (1, 2): [[4, 5, 7], [6]], (0, 3): [[5, 6, 7], [4]], (2, 3): [[4, 5, 6], [7]],
+             (1, 3): [[4, 5], [6, 7]], (0, 1): [[4, 6, 7], [5]]}
+        # fuer oooso
+        d2 = {0: [[4], [5]], 1: [[5], [6]], 2: [[6], [7]], 3: [[4], [7]]}
+        # fuer wiesenkanten
+        d3 = {0: [4, 5], 1: [5, 6], 2: [6, 7], 3: [4, 7]}
+        #fuer oowwo
+        d4 = {(0, 1): [4, 5, 6], (1, 2): [5, 6, 7], (2, 3): [4, 6, 7], (0, 3): [4, 5, 7]}
+        # fuer drei strassenkarten
+        d5 = {(0, 1, 2): [[5], [6], [4, 7]], (1, 2, 3): [[4, 5], [6], [7]], (0, 2, 3): [[4], [5, 6], [7]],
+              (0, 1, 3): [[4], [5], [6, 7]]}
+        if len(self.orte_kanten) != 4:
+
+            if self.mitte == 'O':
+                # wenn auf Karte Strassen sind
+                if len(self.strassen_kanten) == 2:
+                    for l in d[tuple(sorted(self.strassen_kanten))]:
+                        self.wiesen.append(l)
+                elif len(self.strassen_kanten) == 1:
+                    for l in d2[self.strassen_kanten[0]]:
+                        self.wiesen.append(l)
+
+                # 2 ortskanten
+                elif len(self.orte_kanten) == 2:
+                    if self.orte_kanten in [[0, 2], [1, 3]]:
+                        for w in self.wiesen_kanten:
+                            self.wiesen.append(WieseAufKarte(d3[w]))
+                    else:
+                        self.wiesen.append(WieseAufKarte(d4[tuple(sorted(self.wiesen_kanten))]))
+                # sonst
+                else:
+                    self.wiesen.append(WieseAufKarte(self.wiesen_kanten))
+            elif len(self.strassen_kanten) >= 2:
+                if len(self.strassen_kanten) == 2:
+                    for i in d[tuple(sorted(self.strassen_kanten))]:
+                        self.wiesen.append(WieseAufKarte(i))
+                elif len(self.strassen_kanten) == 3:
+                    for i in d5[tuple(sorted(self.strassen_kanten))]:
+                        self.wiesen.append(i)
+                else:
+                    for i in range(4, 8):
+                        self.wiesen.append(WieseAufKarte([i]))
+            else:
+                self.wiesen.append(WieseAufKarte([4, 5, 6, 7]))
 
     def update_kanten(self, landschaft, globale_landschaft):
         for l in self.kanten:
@@ -264,9 +310,11 @@ class Card:
             for k in strasse.kanten:
                 self.kanten[k] = strasse
 
-Karteninfos = ["4WWWWK", "2WWSWK", "OOOOOT", "3SOSW", "5OWWW", "2WOWOOT", "OWOWO", "3WOWO", "2WOOW", "3OSSW", "3SOWS",
-               "3SOSSG", "2OWWOOT", "3OWWOO", "2OSSOOT", "3OSSOO", "OOWOOT", "3OOWOO", "2OOSOOT", "OOSOO", "8SWSW",
-               "9WWSS", "4WSSSG", "SSSSG"]
+
+Karteninfos = ["4WWWWK", "2WWSWK", "OOOOOT", "3SOSW", "5OWWW", "2WOWOOT",
+               "OWOWO", "3WOWO", "2WOOW", "3OSSW", "3SOWS","3SOSSG",
+               "2OWWOOT", "3OWWOO", "2OSSOOT", "3OSSOO", "OOWOOT", "3OOWOO",
+               "2OOSOOT", "OOSOO", "8SWSW", "9WWSS", "4WSSSG", "SSSSG"]
 
 Karteninfos_neu = []
 
@@ -279,7 +327,7 @@ for card in Karteninfos:
     except ValueError:
         Karteninfos_neu.append(card)
 
-# hoffentlich bald useless, da Karten bei erstellung selbst wissen sollen, welche landschaften sise auf sich haben
+
 def create_kartenliste(karteninfos):
 
     l = []
