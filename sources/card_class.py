@@ -3,7 +3,7 @@ from Ort import Ort_auf_Karte
 from Strasse import StasseAufKarte
 from Wiese import WieseAufKarte
 #from strasse, etc
-from rotate2 import rotate_info_right, rotate_list_right, rotate_matrix_right, rotate_kanten_dict_right
+from rotate2 import rotate_info_right, rotate_list_right, rotate_matrix_right, rotate_kanten_dict_right, rotate_wiesen_right
 
 class Card:
 
@@ -227,6 +227,9 @@ class Card:
             o.kanten = rotate_list_right(o.kanten)
         for s in self.strassen:
             s.kanten = rotate_list_right(s.kanten)
+        for w in self.wiesen:
+            w.ecken = rotate_wiesen_right(w.ecken)
+
 
     def create_orte(self):
         """um alle Orte auf der Karte zu erstellen"""
@@ -263,16 +266,18 @@ class Card:
         # fuer drei strassenkarten
         d5 = {(0, 1, 2): [[5], [6], [4, 7]], (1, 2, 3): [[4, 5], [6], [7]], (0, 2, 3): [[4], [5, 6], [7]],
               (0, 1, 3): [[4], [5], [6, 7]]}
+        # fuer oosso
+        d6 = {(1, 2): [[5, 7], [6]], (0, 3): [[5, 7], [4]], (2, 3): [[4, 6], [7]], (0, 1): [[4, 6], [5]]}
         if len(self.orte_kanten) != 4:
 
             if self.mitte == 'O':
                 # wenn auf Karte Strassen sind
                 if len(self.strassen_kanten) == 2:
-                    for l in d[tuple(sorted(self.strassen_kanten))]:
-                        self.wiesen.append(l)
+                    for l in d6[tuple(sorted(self.strassen_kanten))]:
+                        self.wiesen.append(WieseAufKarte(l))
                 elif len(self.strassen_kanten) == 1:
                     for l in d2[self.strassen_kanten[0]]:
-                        self.wiesen.append(l)
+                        self.wiesen.append(WieseAufKarte(l))
 
                 # 2 ortskanten
                 elif len(self.orte_kanten) == 2:
@@ -290,7 +295,7 @@ class Card:
                         self.wiesen.append(WieseAufKarte(i))
                 elif len(self.strassen_kanten) == 3:
                     for i in d5[tuple(sorted(self.strassen_kanten))]:
-                        self.wiesen.append(i)
+                        self.wiesen.append(WieseAufKarte(i))
                 else:
                     for i in range(4, 8):
                         self.wiesen.append(WieseAufKarte([i]))

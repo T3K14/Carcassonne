@@ -28,6 +28,15 @@ def rotate_list_right(s_o_list):
     return s_o_list
 
 
+def rotate_wiesen_right(wiesenliste):
+    for pos, i in enumerate(wiesenliste):
+        if i == 7:
+            wiesenliste[pos] = 4
+        else:
+            wiesenliste[pos] = i + 1
+    return wiesenliste
+
+
 def rotate_matrix_right(matrix):
     m_neu = matrix.transpose()
     for zeile in range(7):
