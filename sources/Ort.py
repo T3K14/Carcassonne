@@ -29,7 +29,20 @@ class Ort:
 
         self.koordinaten_plus_oeffnungen.update(global_ort.koordinaten_plus_oeffnungen)
         self.wert += global_ort.wert
+        self.besitzer = global_ort.besitzer
+        self.fertig = self.check_if_fertig()
+        if self.fertig:
+            self.besitzer.punkt += self.wert
+            self.besitzer.meeples += 1
         alle_orte.remove(global_ort)
+
+    def check_if_fertig(self):
+        t = True
+        for koordinaten in self.koordinaten_plus_oeffnungen:
+            # wenn es an den koords noch offene kanten gibt
+            if self.koordinaten_plus_oeffnungen[koordinaten]:
+                t = False
+        return t
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__

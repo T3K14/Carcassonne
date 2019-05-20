@@ -150,6 +150,9 @@ class Spiel:
     def make_action(self, card, koordinates, rotations, player, meeple_position=None):
         """for setting a card and placing a meeple"""
 
+        if meeple_position is not None:
+            player.meeples -= 1
+
         # if action_is_valid() muss im Spielprogramm dann davor!!!!!!
         # fuer human spieler: if "action" in possible actions
 
@@ -236,10 +239,7 @@ class Spiel:
                 else:
                     global_landschaft.update_kanten(ww[landschaft][global_landschaft])
 
-
                     if global_landschaft != hauptlandschaft:
-                        #b = self.cards_set[ww[landschaft][global_landschaft][0]]
-                        #b.update_kanten(global_landschaft, hauptlandschaft)
                         self.cards_set[ww[landschaft][global_landschaft][0]].update_kanten(global_landschaft, hauptlandschaft)
 
                         if buchstabe == 'O':

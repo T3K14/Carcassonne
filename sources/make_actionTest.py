@@ -42,20 +42,33 @@ class MakeActionTest(unittest.TestCase):
         spiel.make_action(k1, (0, 1), 0, player1, k1.strassen[0])
 
         self.assertEqual(len(spiel.alle_strassen), 1)
+        self.assertEqual(len(spiel.alle_orte), 2)
 
         k2 = card_class.Card('O', 'W', 'W', 'O', 'O')
         spiel.make_action(k2, (1, 1), 2, player2, k2.orte[0])
 
+        self.assertEqual(len(spiel.alle_strassen), 1)
+        self.assertEqual(len(spiel.alle_orte), 3)
+
         k3 = card_class.Card('W', 'S', 'S', 'S', 'G')
         spiel.make_action(k3, (0, -1), 3, player1, None)
 
+        self.assertEqual(len(spiel.alle_strassen), 3)
+        self.assertEqual(len(spiel.alle_orte), 3)
+
         k4 = card_class.Card('O', 'S', 'S', 'O', 'O', True)
-        spiel.make_action(k4, (1, -1), 1, player2, k4.strassen[0])
+        spiel.make_action(k4, (1, -1), 1, player2, None)
+
+        self.assertEqual(len(spiel.alle_strassen), 3)
+        self.assertEqual(len(spiel.alle_orte), 4)
 
         k5 = card_class.Card('O', 'O', 'O', 'O', 'O', True)
         spiel.make_action(k5, (1, 0), 1, player1, None)
 
-        print("end")
+        self.assertEqual(len(spiel.alle_strassen), 3)
+        self.assertEqual(len(spiel.alle_orte), 2)
+
+
 
 
 if __name__ == '__main__':
