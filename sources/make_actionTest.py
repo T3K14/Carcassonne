@@ -55,6 +55,8 @@ class MakeActionTest(unittest.TestCase):
         k5 = card_class.Card('O', 'O', 'O', 'O', 'O', True)
         spiel.make_action(k5, (1, 0), 1, player1, None)
 
+        print("end")
+
 
 if __name__ == '__main__':
     unittest.main()

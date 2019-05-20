@@ -228,14 +228,19 @@ class Spiel:
 
                         global_landschaft.update_kanten(ww[landschaft][global_landschaft])
                         global_landschaft.add_part((x, y), landschaft)
-                        card.update_kanten(landschaft, global_landschaft)
+                        #card.update_kanten(landschaft, global_landschaft)
 
                         if landschaft == meeple_position:
                             global_landschaft.besitzer = player
 
                 else:
                     global_landschaft.update_kanten(ww[landschaft][global_landschaft])
+
+
                     if global_landschaft != hauptlandschaft:
+                        #b = self.cards_set[ww[landschaft][global_landschaft][0]]
+                        #b.update_kanten(global_landschaft, hauptlandschaft)
+                        self.cards_set[ww[landschaft][global_landschaft][0]].update_kanten(global_landschaft, hauptlandschaft)
 
                         if buchstabe == 'O':
                             hauptlandschaft.add_global(global_landschaft, self.alle_orte)
@@ -246,6 +251,7 @@ class Spiel:
 
                     if landschaft == meeple_position:
                         hauptlandschaft.besitzer = player
+            card.update_kanten(landschaft, hauptlandschaft)
 
         for landschaft in d3[buchstabe]:
             # if landschaft not in ww:
@@ -262,9 +268,6 @@ class Spiel:
 
             if meeple_position == landschaft:
                 new_landschaft.besitzer = player
-
-
-
 
     def update_all_wiesen(self, card, x, y, meeple_position):
         pass

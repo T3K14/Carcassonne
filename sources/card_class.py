@@ -253,7 +253,7 @@ class Card:
 
     def update_kanten(self, landschaft, globale_landschaft):
         for l in self.kanten:
-            if self.kanten[l] == landschaft:
+            if self.kanten[l] is not None and landschaft == self.kanten[l]:
                 self.kanten[l] = globale_landschaft
 
     def initialize_kanten(self):

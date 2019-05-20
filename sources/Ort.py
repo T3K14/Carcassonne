@@ -35,5 +35,6 @@ class Ort:
         return self.__dict__ == other.__dict__
 
     def __hash__(self):
+        a = hash(repr(self))
         return hash(repr(self))
 
