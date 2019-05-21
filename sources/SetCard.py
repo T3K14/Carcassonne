@@ -501,27 +501,17 @@ def updateWiesen(liste_wiesen, koordinates_, Karte_,cards_set):
 
     for wiese in Karte_.wiesenKarte[:]:
         bw = []
-        #print(Karte_.matrix)
-        #print("h",wiese)
+
         for ecke in wiese[1]:
-            #print("ecke", ecke)
             for w in liste_wiesen:
-                #print("alo", cards_set)
-                #bw = []
-                #print("hier", dic[ecke][0][0])
-                #print("hui",liste_wiesen[w].teile)
-                #if dic[ecke][0][0] in liste_wiesen[w].teile and dicOU[ecke] in liste_wiesen[w].teile[dic[ecke][0][0]]:
-                #    print("alo", cards_set)
+
 
 
                 if dic[ecke][0][0] in liste_wiesen[w].teile and dicOU[ecke] in liste_wiesen[w].teile[dic[ecke][0][0]]\
                 and cards_set[dic[ecke][0][0]].info[dic[ecke][0][1]] != "O":
                     if w not in bw:
-                    #if (liste_wiesen[w], wiese[1], liste_wiesen[w].teile[dic[ecke][0][0]]) not in angrenzendeWiesen:
 
-                        #angrenzendeWiesen.append((w, liste_wiesen[w], wiese[1], wiese[0]))
                         bw.append(w)
-
 
                         if wiese in Karte_.wiesenKarte:
                             Karte_.wiesenKarte.remove(wiese)
@@ -529,9 +519,7 @@ def updateWiesen(liste_wiesen, koordinates_, Karte_,cards_set):
 
                 if dic[ecke][1][0] in liste_wiesen[w].teile and dicRL[ecke] in liste_wiesen[w].teile[dic[ecke][1][0]]\
                 and cards_set[dic[ecke][1][0]].info[dic[ecke][1][1]] != "O":
-                    #if (liste_wiesen[w], wiese[1], liste_wiesen[w].teile[dic[ecke][1][0]]) not in angrenzendeWiesen:
                     if w not in bw:
-                        #angrenzendeWiesen.append((w, liste_wiesen[w], wiese[1], wiese[0]))
                         bw.append(w)
                         if wiese in Karte_.wiesenKarte:
                             Karte_.wiesenKarte.remove(wiese)

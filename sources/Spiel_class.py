@@ -23,6 +23,7 @@ class Spiel:
 
         # NONE steht hier noch fuer Wiese
         self.cards_set[(0, 0)].kanten = {0: strasse0, 1: ort0, 2: strasse0, 3: None}
+        self.cards_set[(0, 0)].ecken = {4: wiese1, 5: wiese0, 6: wiese0, 7: wiese1}
 
         # list of coordinates already blocked
         self.unavailable_coordinates = [(0, 0)]
@@ -37,6 +38,10 @@ class Spiel:
 
         # hilfsdictionaries
         self.d = {0: 2, 1: 3, 2: 0, 3: 1}
+        # kanten fuer ecken bei wiesen
+        self.d2 = {4: [0, 3], 5: [0, 1], 6: [1, 2], 7: [2, 3]}
+        # ecken von nachbarkarten nach ecke und kante auf aktueller karte
+        self.d3 = {(4, 0): 7, (4, 3): 5, (5, 0): 6, (5, 1): 4, (6, 1): 7, (6, 2): 5, (7, 2): 4, (7, 3): 6}
 
     def draw_card(self):
         """from drawing the next card randomly"""
@@ -150,7 +155,8 @@ class Spiel:
         return possible_actions
 
     def make_action(self, card, koordinates, rotations, player, meeple_position=None):
-        """for setting a card and placing a meeple"""
+        """for setting a card and placing a meeple, geht davon aus, dass die action auch legitim ist (sollte ja
+        vorher gechekt werden)"""
 
         # if action_is_valid() muss im Spielprogramm dann davor!!!!!!
 
@@ -166,8 +172,8 @@ class Spiel:
             self.update_all_landschaften(card, koordinates[0], koordinates[1], meeple_position, 'O', player)
         if len(card.strassen) > 0:
             self.update_all_landschaften(card, koordinates[0], koordinates[1], meeple_position, 'S', player)
-        #if len(card.wiesenKarte) > 0:
-        #    self.update_all_wiesen(card, koordinates[0], koordinates[1], meeple_position)
+        if len(card.wiesen) > 0:            # nur bei ooooo nicht
+            self.update_all_wiesen(card, koordinates[0], koordinates[1], meeple_position, player)
 
         # kloester muessen moeglicherweise immer geupdatet werden, da sie von der Anzahl an Umgebungskarten abhaengen
         self.update_all_kloester(card, koordinates[0], koordinates[1], meeple_position)
@@ -232,6 +238,7 @@ class Spiel:
 
                 # sonst arbeite mit der hauptlandschaft
                 else:
+                    # passt kanten von der landschaft an
                     global_landschaft.update_kanten(ww[landschaft][global_landschaft])
 
                     if global_landschaft != hauptlandschaft:
@@ -243,6 +250,7 @@ class Spiel:
                             hauptlandschaft.add_global(global_landschaft, self.alle_strassen)
                     else:
                         hauptlandschaft.add_part((x, y), landschaft)
+
 
                     if landschaft == meeple_position:
                         hauptlandschaft.besitzer = player
@@ -265,14 +273,62 @@ class Spiel:
 
     def update_all_wiesen(self, card, x, y, meeple_position, player):
 
-        # fuer jede wiese auf der karte finde alle interaktionen mit globalen wiesen
+        d2 = {(4, 0): (x, y + 1), (5, 1): (x + 1, y), (6, 2): (x, y - 1), (7, 3): (x - 1, y),
+              (5, 0): (x, y + 1), (6, 1): (x + 1, y), (7, 2): (x, y - 1), (4, 3): (x - 1, y)}
+        ww = {}
 
-            # loesche alle wiesen die interagieren
+        # fuer jede wiese auf der karte
+        for wiese in card.wiesen:
+            for ecke in wiese.ecken:
+                for kante in self.d2[ecke]:
+                    # wenn an der Kante Wiese oder Strasse ist
+                    if card.info[kante] in ('W', 'S'):
+                        if d2[(ecke, kante)] in self.cards_set:
+                            if wiese not in ww:
+                                #ww.update({wiese: [self.cards_set[d2[(ecke, kante)]].ecken[self.d3[(ecke, kante)]]]})
+                                ww.update({wiese: [(self.cards_set[d2[(ecke, kante)]].ecken[self.d3[(ecke, kante)]], d2[(ecke, kante)])]})
+
+                            else:
+                                # wenn die globale wiese schon als ww eingetregen ist
+                                #if self.cards_set[d2[(ecke, kante)]].ecken[self.d3[(ecke, kante)]]:
+                                if (self.cards_set[d2[(ecke, kante)]].ecken[self.d3[(ecke, kante)]], d2[(ecke, kante)]) in ww[wiese]:
+                                    continue
+                                else:
+                                    #ww[wiese].append(self.cards_set[d2[(ecke, kante)]].ecken[self.d3[(ecke, kante)]])
+                                    ww[wiese].append((self.cards_set[d2[(ecke, kante)]].ecken[self.d3[(ecke, kante)]], d2[(ecke, kante)]))
+
 
         # rechne die ww so aus, dass danach alles global upgedatet ist
+        for wiese_auf_karte in ww:
+            hauptwiese = list(ww[wiese_auf_karte])[0]
+            for global_wiese, koo in ww[wiese_auf_karte]:
+
+                # wenn die wiese nur mit einer globalen wiese wechselwirkt
+                if len(ww[wiese_auf_karte]) == 1:
+                    global_wiese.add_part((x, y), wiese_auf_karte)
+
+                else:
+                    # hauptwiese kommt zum einsatz
+                    if global_wiese != hauptwiese:
+                        hauptwiese.add_global(global_wiese, self.alle_wiesen)
+                        self.cards_set[koo].update_ecken(global_wiese, hauptwiese)
+                    else:
+                        hauptwiese.add_part((x, y), wiese_auf_karte)
+
+                if meeple_position == wiese_auf_karte:
+                    hauptwiese.besizter = player
+
+                card.update_ecken(wiese_auf_karte, global_wiese)
+
 
         # erstelle neue Wiesen fuer solche die nicht wechselwirken
-        pass
+        for w in card.wiesen:
+            if w not in ww:
+                neue_wiese = Wiese((x, y), w.ecken)
+                if meeple_position == w:
+                    w.besitzer = player
+                self.alle_wiesen.append(neue_wiese)
+                card.update_ecken(w, neue_wiese)
 
     def update_all_kloester(self, card, x, y, meeple_position):
         pass

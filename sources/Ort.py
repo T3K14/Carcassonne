@@ -29,6 +29,7 @@ class Ort:
 
         self.koordinaten_plus_oeffnungen.update(global_ort.koordinaten_plus_oeffnungen)
         self.wert += global_ort.wert
+        #meh
         self.besitzer = global_ort.besitzer
         self.fertig = self.check_if_fertig()
         if self.fertig:

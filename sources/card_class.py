@@ -3,7 +3,7 @@ from Ort import Ort_auf_Karte
 from Strasse import StasseAufKarte
 from Wiese import WieseAufKarte
 #from strasse, etc
-from rotate2 import rotate_info_right, rotate_list_right, rotate_matrix_right, rotate_kanten_dict_right, rotate_wiesen_right
+from rotate2 import rotate_info_right, rotate_list_right, rotate_matrix_right, rotate_kanten_dict_right, rotate_wiesen_right, rotate_ecken_dict_right
 
 class Card:
 
@@ -25,6 +25,7 @@ class Card:
         self.wiesen = []
 
         self.kanten = {0: None, 1: None, 2: None, 3: None}
+        self.ecken = {4: None, 5: None, 6: None, 7: None}
 
         for position, status in enumerate(self.info):
             if status == "S":
@@ -221,6 +222,7 @@ class Card:
         self.wiesen_kanten = rotate_list_right(self.wiesen_kanten)
         self.matrix = rotate_matrix_right(self.matrix)
         self.kanten = rotate_kanten_dict_right(self.kanten)
+        self.ecken = rotate_ecken_dict_right(self.ecken)
 
         # auch noch fuer orte, strassen, wiesen auf karte die kanten rotieren
         for o in self.orte:
@@ -307,6 +309,11 @@ class Card:
             if self.kanten[l] is not None and landschaft == self.kanten[l]:
                 self.kanten[l] = globale_landschaft
 
+    def update_ecken(self, wiese, globale_wiese):
+        for e in self.ecken:
+            if self.ecken[e] is not None and wiese == self.ecken[e]:
+                self.ecken[e] = globale_wiese
+
     def initialize_kanten(self):
         for ort in self.orte:
             for k in ort.kanten:
@@ -314,6 +321,9 @@ class Card:
         for strasse in self.strassen:
             for k in strasse.kanten:
                 self.kanten[k] = strasse
+        for wiese in self.wiesen:
+            for e in wiese.ecken:
+                self.ecken[e] = wiese
 
 
 Karteninfos = ["4WWWWK", "2WWSWK", "OOOOOT", "3SOSW", "5OWWW", "2WOWOOT",

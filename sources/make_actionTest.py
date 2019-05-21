@@ -70,44 +70,6 @@ class MakeActionTest(unittest.TestCase):
         self.assertEqual(len(spiel.alle_strassen), 3)
         self.assertEqual(len(spiel.alle_orte), 2)
 
-    def test_3_wiesen(self):
-        spiel = Spiel_class.Spiel(card_class.Kartenliste)
-        player1 = Player_Class.Player(1)
-        player2 = Player_Class.Player(2)
-
-        k1 = card_class.Card('O', 'W', 'S', 'S')
-        spiel.make_action(k1, (0, 1), 0, player1, k1.strassen[0])
-
-        self.assertEqual(len(spiel.alle_strassen), 1)
-        self.assertEqual(len(spiel.alle_orte), 2)
-        self.assertEqual(player1.meeples, 6)
-
-        k2 = card_class.Card('O', 'W', 'W', 'O', 'O')
-        spiel.make_action(k2, (1, 1), 2, player2, k2.orte[0])
-        print(k2.matrix)
-
-        self.assertEqual(len(spiel.alle_strassen), 1)
-        self.assertEqual(len(spiel.alle_orte), 3)
-        self.assertEqual(player2.meeples, 6)
-
-        k3 = card_class.Card('W', 'S', 'S', 'S', 'G')
-        spiel.make_action(k3, (0, -1), 3, player1, None)
-
-        self.assertEqual(len(spiel.alle_strassen), 3)
-        self.assertEqual(len(spiel.alle_orte), 3)
-
-        k4 = card_class.Card('O', 'S', 'S', 'O', 'O', True)
-        spiel.make_action(k4, (1, -1), 1, player2, None)
-
-        self.assertEqual(len(spiel.alle_strassen), 3)
-        self.assertEqual(len(spiel.alle_orte), 4)
-
-        k5 = card_class.Card('O', 'O', 'O', 'O', 'O', True)
-        spiel.make_action(k5, (1, 0), 1, player1, None)
-
-        self.assertEqual(len(spiel.alle_strassen), 3)
-        self.assertEqual(len(spiel.alle_orte), 2)
-
 
 if __name__ == '__main__':
     unittest.main()

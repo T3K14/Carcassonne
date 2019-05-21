@@ -87,6 +87,16 @@ def rotate_kanten_dict_right(dic):
 
     return d
 
+
+def rotate_ecken_dict_right(dic):
+    d = {}
+    for i in dic:
+        if i == 4:
+            d.update({i: dic[7]})
+        else:
+            d.update({i: dic[i-1]})
+    return d
+
 if __name__ == "__main__":
 
     s = [1, 2]
