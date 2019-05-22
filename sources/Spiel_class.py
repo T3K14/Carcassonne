@@ -33,7 +33,7 @@ class Spiel:
 
         self.alle_orte = [ort0]
         self.alle_strassen = [strasse0]
-        self.alle_kloester = {}
+        self.alle_kloester = []
         self.alle_wiesen = [wiese0, wiese1]
 
         # hilfsdictionaries
@@ -330,8 +330,16 @@ class Spiel:
                 self.alle_wiesen.append(neue_wiese)
                 card.update_ecken(w, neue_wiese)
 
-    def update_all_kloester(self, card, x, y, meeple_position):
-        pass
+    def update_all_kloester(self, card, x, y, meeple_position, player):
+        if card.mitte == 'K' and meeple_position == 'K':
+            self.alle_kloester.append(Kloster((x, y), player))
+        else:
+            for kloster in self.alle_kloester[:]:
+                if (x, y) in kloster.umgebungs_koordinaten:
+                    kloster.counter += 1
+                    kloster.check_if_fertig()
+                    if kloster.fertig:
+                        self.alle_kloester.remove(kloster)
 
     def final_evaluate(self):
         """for counting if the game is finished to declare the winning player"""
@@ -339,7 +347,4 @@ class Spiel:
 
 
 if __name__ == "__main__":
-    c = Karte("O", "W", "S", "S")
-    print(c.orte)
-    print(isinstance(c, Karte))
     pass

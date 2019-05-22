@@ -28,7 +28,10 @@ class Strasse():
 
         self.koordinaten_plus_oeffnungen.update(global_strasse.koordinaten_plus_oeffnungen)
         self.wert += global_strasse.wert
-        self.besitzer = global_strasse.besitzer
+
+        if self.besitzer is None:
+            self.besitzer = global_strasse.besitzer
+
         self.fertig = self.check_if_fertig()
         if self.fertig:
             self.besitzer.punkt += self.wert

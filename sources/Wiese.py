@@ -14,8 +14,9 @@ class Wiese:
 
     def add_global(self, global_wiese, alle_wiesen):
         self.alle_teile.update(global_wiese.alle_teile)
-        #meh
-        self.besitzer = global_wiese.besitzer
+
+        if self.besitzer is None:
+            self.besitzer = global_wiese.besitzer
         alle_wiesen.remove(global_wiese)
 
     def __eq__(self, other):
