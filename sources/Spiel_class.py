@@ -1,6 +1,6 @@
 from card_class import Card as Karte
 
-from Ort import Ort, Ort_auf_Karte
+from Ort import Ort
 from Strasse import Strasse
 from Kloster import Kloster
 from Wiese import Wiese
@@ -47,8 +47,8 @@ class Spiel:
         """from drawing the next card randomly"""
         pass
 
-    def meeple_check(self,x, y, nachbar_karten, kanten_dict):
-        """berechnet zu geg. Rotation an geg Koordinaten zu gegebenem Landschaftstyp (buchstabe, zB. 'O') wo ich auf der Karte ein meeple setzen kann"""
+    def meeple_check(self, x, y, nachbar_karten, kanten_dict):
+        """berechnet zu geg. Rotation an geg Koordinaten zu gegebenem Landschaftstyp (buchstabe, zB. 'O') wo ich auf der Karte ein meeple setzen kann (Strassen und Orte)"""
 
         output = []
         d2 = {0: (x, y + 1), 1: (x + 1, y), 2: (x, y - 1), 3: (x - 1, y)}
@@ -61,6 +61,19 @@ class Spiel:
                     output.append(kanten_dict[kante])
 
         return output
+
+    def find_wiesen(self, x, y, card):
+        o = []
+        d = {(4, 0): (x, y + 1), (5, 1): (x + 1, y), (6, 2): (x, y - 1), (7, 3): (x - 1, y),
+              (5, 0): (x, y + 1), (6, 1): (x + 1, y), (7, 2): (x, y - 1), (4, 3): (x - 1, y)}
+        for wiese_auf_karte in card.wiesen:
+            for ecke in wiese_auf_karte.ecken:
+                for kante in self.d2[ecke]:
+                    if card.info[kante] in ('W', 'S'):
+                        if d[(ecke, kante)] in self.cards_set:
+                            if self.cards_set[d[(ecke, kante)]].ecken[self.d3[(ecke, kante)]].besitzer is not None:
+                                o.append(wiese_auf_karte)
+        return o
 
     def calculate_possible_actions(self, card, player):
         """checkt, ob und wie karte an jede freie stelle gelegt werden kann,
@@ -103,14 +116,10 @@ class Spiel:
                         b = b and info[n] == nachbar_karten[n]
                     else:
                         break
-
+                # hinzufuegen?
                 if b:
-
                     # jetzt Meeples
-                    m = None
-
                     if player.meeples > 0:
-
                         # falls beliebig viele ort angrenzen
                         if 'O' in nachbar_karten.values():
 
@@ -134,17 +143,15 @@ class Spiel:
                             for s in card.strassen:
                                 possible_actions.append((x, y, i, s))
 
-                        if 'W' in nachbar_karten.values():
+                        # TESTEN
+                        if len(card.wiesen) > 0:
+                            for wiese_auf_karte in self.find_wiesen(x, y, card):
+                                possible_actions.append((x, y, i, wiese_auf_karte))
 
-                            # durchsuche alle wiesen nach der die dort ist unf schau, ob die schon besetzt ist, wenn nicht
-                            # appende mit dieser moeglichkeit
-                            pass
-                        else:
-                            # fuer alle wiesen auf Karte das wie oben
-                            pass
-                    # else:
+                        if card.mitte == 'K':
+                            possible_actions.append((x, y, i, 'K'))
 
-                    possible_actions.append((x, y, i, m))
+                    possible_actions.append((x, y, i, None))
 
                 # eins weiter rotieren
                 info = rotate_info_right(info)
@@ -176,7 +183,7 @@ class Spiel:
             self.update_all_wiesen(card, koordinates[0], koordinates[1], meeple_position, player)
 
         # kloester muessen moeglicherweise immer geupdatet werden, da sie von der Anzahl an Umgebungskarten abhaengen
-        self.update_all_kloester(card, koordinates[0], koordinates[1], meeple_position)
+        self.update_all_kloester(card, koordinates[0], koordinates[1], meeple_position, player)
 
         # cards_set updaten
         self.cards_set.update({(koordinates[0], koordinates[1]): card})
@@ -343,8 +350,30 @@ class Spiel:
 
     def final_evaluate(self):
         """for counting if the game is finished to declare the winning player"""
-        pass
 
+        for k in self.alle_kloester:
+            k.besitzer.punkte += k.counter
+        for s in self.alle_strassen:
+            if s.besitzer:
+                s.besitzer.punkte += s.wert
+        for o in self.alle_orte:
+            if o.besitzer:
+                o.besitzer.punkte += o.wert / 2
+        for w in self.alle_wiesen:
+            if w.besitzer:
+                # damit spaeter nicht jeder ort mehrmals ueberprueft wird
+                o = []
+
+                # alle ww orte appenden
+                for koords in w.alle_teile:
+                    for ecke in w.alle_teile[koords]:
+                        for kante in self.d2[ecke]:
+                            if isinstance(self.cards_set[koords].kanten[kante], Ort) and self.cards_set[koords].kanten[kante] not in o:
+                                o.append(self.cards_set[koords].kanten[kante])
+                # fuer jeden fertigen ort 3 punkte
+                for ort in o:
+                    if ort.fertig:
+                        ort.besitzer.punkte += 3
 
 if __name__ == "__main__":
     pass
