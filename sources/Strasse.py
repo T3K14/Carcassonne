@@ -1,7 +1,8 @@
 class StasseAufKarte:
-    def __init__(self, kanten):
+    def __init__(self, kanten, name):
         self.kanten = kanten
         self.wert = 1
+        self.name = name
 
 class Strasse():
     def __init__(self, koordinaten, kanten, meeple = False):

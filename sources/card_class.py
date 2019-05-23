@@ -234,27 +234,30 @@ class Card:
 
     def create_orte(self):
         """um alle Orte auf der Karte zu erstellen"""
+        z = 1
         if self.mitte == 'O':
             if self.schild:
-                self.orte.append(Ort_auf_Karte(self.orte_kanten[:], 4))
+                self.orte.append(Ort_auf_Karte(self.orte_kanten[:], z, 4))
             else:
-                self.orte.append(Ort_auf_Karte(self.orte_kanten[:], 2))
+                self.orte.append(Ort_auf_Karte(self.orte_kanten[:], z, 2))
 
         else:
             for k in self.orte_kanten:
-                self.orte.append(Ort_auf_Karte([k]))
+                self.orte.append(Ort_auf_Karte([k], z))
+                z += 1
 
     def create_strassen(self):
         """um alle Strassen auf der Karte zu erstellen"""
-
+        z = 1
         if 0 < len(self.strassen_kanten) < 3:
-            self.strassen.append(StasseAufKarte(self.strassen_kanten[:]))
+            self.strassen.append(StasseAufKarte(self.strassen_kanten[:], z))
         else:
             for k in self.strassen_kanten:
-                self.strassen.append(StasseAufKarte([k]))
+                self.strassen.append(StasseAufKarte([k], z))
+                z += 1
 
     def create_wiesen(self):
-
+        z = 1
         # fuer strassen
         d = {(0, 2): [[5, 6], [4, 7]], (1, 2): [[4, 5, 7], [6]], (0, 3): [[5, 6, 7], [4]], (2, 3): [[4, 5, 6], [7]],
              (1, 3): [[4, 5], [6, 7]], (0, 1): [[4, 6, 7], [5]]}
@@ -275,33 +278,42 @@ class Card:
                 # wenn auf Karte Strassen sind
                 if len(self.strassen_kanten) == 2:
                     for l in d6[tuple(sorted(self.strassen_kanten))]:
-                        self.wiesen.append(WieseAufKarte(l))
+                        self.wiesen.append(WieseAufKarte(l, z))
+                        z += 1
                 elif len(self.strassen_kanten) == 1:
                     for l in d2[self.strassen_kanten[0]]:
-                        self.wiesen.append(WieseAufKarte(l))
+                        self.wiesen.append(WieseAufKarte(l, z))
+                        z += 1
 
                 # 2 ortskanten
                 elif len(self.orte_kanten) == 2:
                     if self.orte_kanten in [[0, 2], [1, 3]]:
                         for w in self.wiesen_kanten:
-                            self.wiesen.append(WieseAufKarte(d3[w]))
+                            self.wiesen.append(WieseAufKarte(d3[w], z))
+                            z += 1
                     else:
-                        self.wiesen.append(WieseAufKarte(d4[tuple(sorted(self.wiesen_kanten))]))
+                        self.wiesen.append(WieseAufKarte(d4[tuple(sorted(self.wiesen_kanten))], z))
+                        z += 1
                 # sonst
                 else:
-                    self.wiesen.append(WieseAufKarte(self.wiesen_kanten))
+                    self.wiesen.append(WieseAufKarte(self.wiesen_kanten, z))
+                    z += 1
             elif len(self.strassen_kanten) >= 2:
                 if len(self.strassen_kanten) == 2:
                     for i in d[tuple(sorted(self.strassen_kanten))]:
-                        self.wiesen.append(WieseAufKarte(i))
+                        self.wiesen.append(WieseAufKarte(i, z))
+                        z += 1
                 elif len(self.strassen_kanten) == 3:
                     for i in d5[tuple(sorted(self.strassen_kanten))]:
-                        self.wiesen.append(WieseAufKarte(i))
+                        self.wiesen.append(WieseAufKarte(i, z))
+                        z += 1
                 else:
                     for i in range(4, 8):
-                        self.wiesen.append(WieseAufKarte([i]))
+                        self.wiesen.append(WieseAufKarte([i], z))
+                        z += 1
             else:
-                self.wiesen.append(WieseAufKarte([4, 5, 6, 7]))
+                self.wiesen.append(WieseAufKarte([4, 5, 6, 7], z))
+                z += 1
 
     def update_kanten(self, landschaft, globale_landschaft):
         for l in self.kanten:

@@ -1,7 +1,8 @@
 class Ort_auf_Karte:
-    def __init__(self, kanten, wert=2):
+    def __init__(self, kanten, name, wert=2):
         self.kanten = kanten
         self.wert = wert
+        self.name = name
 
 
 class Ort:

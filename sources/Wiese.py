@@ -1,7 +1,7 @@
 class WieseAufKarte:
-    def __init__(self, ecken):
+    def __init__(self, ecken, name):
         self.ecken = ecken
-
+        self.name = name
 
 class Wiese:
     def __init__(self, koordinates, ecken):

@@ -1,9 +1,11 @@
 from card_class import Card as Karte
-
+from random import choice
 from Ort import Ort
 from Strasse import Strasse
 from Kloster import Kloster
 from Wiese import Wiese
+from Player_Class import Player
+from plot_cards import display_spielbrett_dict, draw_card
 
 from copy import deepcopy
 from rotate2 import rotate_info_right, rotate_kanten_dict_right
@@ -44,8 +46,10 @@ class Spiel:
         self.d3 = {(4, 0): 7, (4, 3): 5, (5, 0): 6, (5, 1): 4, (6, 1): 7, (6, 2): 5, (7, 2): 4, (7, 3): 6}
 
     def draw_card(self):
-        """from drawing the next card randomly"""
-        pass
+        auswahl = choice(self.cards_left)
+        self.cards_left.remove(auswahl)
+        return auswahl
+
 
     def meeple_check(self, x, y, nachbar_kanten, kanten_dict):
         """berechnet zu geg. Rotation an geg Koordinaten zu gegebenem Landschaftstyp (buchstabe, zB. 'O') wo ich auf der Karte ein meeple setzen kann (Strassen und Orte)"""
@@ -396,5 +400,52 @@ class Spiel:
                     if ort.fertig:
                         ort.besitzer.punkte += 3
 
+    def player_vs_player(self):
+        player1 = Player(1)
+        player2 = Player(2)
+
+        turn = player1
+        d = {player1: player2, player2: player1}
+
+        while len(self.cards_left) > 0:
+            display_spielbrett_dict(self.cards_set)
+            auswahl = self.draw_card()
+            print('Deine Karte ist [{0}, {1}, {2}, {3}, {4}, {5}]'.format(auswahl.info[0], auswahl.info[1], auswahl.info[2], auswahl.info[3], auswahl.mitte, auswahl.schild))
+            draw_card(auswahl)
+            print('Sie enthält folgende moegliche Meeplepositionen:')
+            print('Orte:')
+            for o in auswahl.orte:
+                print(o.name, o.kanten)
+            print('Strassen:')
+            for s in auswahl.strassen:
+                print(s.name, s.kanten)
+            print('Wiesen:')
+            for w in auswahl.wiesen:
+                print(w.name, w.ecken)
+
+            pos_anl = self.calculate_possible_actions(auswahl, turn)
+
+            inp = input('Bitte gib deine Aktion an:')
+
+            # wenn es anlegestellen gibt
+            if pos_anl:
+
+                inp = input('Bitte gib deine Aktion an:')
+                while inp not in pos_anl:
+                    inp = input('Bitte gib deine Aktion an:')
+
+                self.make_action(auswahl, inp[0], inp[1], turn, inp[2])
+
+            else:
+                turn = d[turn]
+                continue
+
+
+
+
+
 if __name__ == "__main__":
-    pass
+
+    from card_class import Kartenliste
+    spiel = Spiel(Kartenliste)
+    spiel.player_vs_player()
