@@ -408,6 +408,7 @@ class Spiel:
         d = {player1: player2, player2: player1}
 
         while len(self.cards_left) > 0:
+            print("\nplayer1:", player1.punkte, " punkte\nplayer2:", player2.punkte, "punkte")
             display_spielbrett_dict(self.cards_set)
             auswahl = self.draw_card()
             print('Deine Karte ist [{0}, {1}, {2}, {3}, {4}, {5}]'.format(auswahl.info[0], auswahl.info[1], auswahl.info[2], auswahl.info[3], auswahl.mitte, auswahl.schild))
@@ -425,16 +426,40 @@ class Spiel:
 
             pos_anl = self.calculate_possible_actions(auswahl, turn)
 
-            inp = input('Bitte gib deine Aktion an:')
-
             # wenn es anlegestellen gibt
             if pos_anl:
 
                 inp = input('Bitte gib deine Aktion an:')
-                while inp not in pos_anl:
-                    inp = input('Bitte gib deine Aktion an:')
+                inp_split = inp.split(' ')
+                if inp_split[3][0] == 'o':
+                    o = [a for a in auswahl.orte if a.name == int(inp_split[3][1])]
+                    action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), o[0])
+                elif inp_split[3][0] == 's':
+                    s = [a for a in auswahl.strassen if a.name == int(inp_split[3][1])]
+                    action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), s[0])
+                elif inp_split[3][0] == 'w':
+                    w = [a for a in auswahl.wiesen if a.name == int(inp_split[3][1])]
+                    action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), w[0])
+                else:
+                    action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), None)
 
-                self.make_action(auswahl, inp[0], inp[1], turn, inp[2])
+                while action not in pos_anl:
+                    print("illegaler Move")
+                    inp = input('Bitte gib deine Aktion an:')
+                    inp_split = inp.split(' ')
+                    if inp_split[3][0] == 'o':
+                        o = [a for a in auswahl.orte if a.name == int(inp_split[3][1])]
+                        action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), o[0])
+                    elif inp_split[3][0] == 's':
+                        s = [a for a in auswahl.strassen if a.name == int(inp_split[3][1])]
+                        action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), s[0])
+                    elif inp_split[3][0] == 'w':
+                        w = [a for a in auswahl.wiesen if a.name == int(inp_split[3][1])]
+                        action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), w[0])
+                    else:
+                        action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), None)
+
+                self.make_action(auswahl, (action[0], action[1]), action[2], turn, action[3])
 
             else:
                 turn = d[turn]

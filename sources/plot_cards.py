@@ -39,12 +39,11 @@ def display_spielbrett_dict(cards_set):
 def draw_card(card):
     from matplotlib.colors import ListedColormap
     custom_cmap = ListedColormap(['green', 'brown', 'white', 'blue', 'k'])
-
-    plt.matshow(card.matrix, cmap=custom_cmap, vmin=0, vmax=4)
+    plt.matshow(card.matrix, 0, cmap=custom_cmap, vmin=0, vmax=4)
 
     plt.title('Deine Karte')
-    plt.xticks(np.array([]))
-    plt.yticks(np.array([]))
+    plt.xticks(np.array([100]))
+    plt.yticks(np.array([100]))
     plt.show()
 
 def display_spielbrett(cards_set):#, choice_list):
