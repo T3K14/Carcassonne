@@ -19,7 +19,6 @@ class Card:
         self.strassen_kanten = []
         self.wiesen_kanten = []
 
-        self.kloster = False
         self.orte = []
         self.strassen = []
         self.wiesen = []

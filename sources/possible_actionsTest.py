@@ -32,9 +32,12 @@ class PossibleActionsTest(unittest.TestCase):
         goal = [(0, -1, 0, k.strassen[0]), (0, -1, 0, k.orte[0]), (0, -1, 1, k.strassen[0]),
                 (0, -1, 1, k.orte[0]), (2, 1, 1, k.strassen[0]), (2, 1, 1, k.orte[0]),
                 (2, 1, 2, k.strassen[0]), (2, 1, 2, k.orte[0]), (1, 0, 2, k.orte[0]),
-                (1, 0, 2, k.strassen[0]), (0, -1, 0, None), (0, -1, 1, None), (1, 0, 2, None), (2, 1, 1, None), (2, 1, 2, None)]
+                (1, 0, 2, k.strassen[0]), (0, -1, 0, None), (0, -1, 1, None), (1, 0, 2, None), (2, 1, 1, None), (2, 1, 2, None),
+                ]
 
-        self.assertEqual(len(goal), len(spiel.calculate_possible_actions(k, Player(1))))
+        player1 = Player(1)
+        pos_act = spiel.calculate_possible_actions(k, player1)
+        self.assertEqual(25, len(pos_act))
 
         for tup in spiel.calculate_possible_actions(k, Player(1)):
             print(tup)

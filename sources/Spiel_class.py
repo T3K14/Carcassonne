@@ -62,20 +62,25 @@ class Spiel:
 
         return output
 
-    def find_angrenzende_wiesen(self, x, y, card):
+    def find_angrenzende_wiesen(self, x, y, info, wiese_auf_karte):
+        """finde zu einer Wiese_auf_karte alle angrenzenden globalen wiesen und returne liste von diesen"""
         o = []
         d = {(4, 0): (x, y + 1), (5, 1): (x + 1, y), (6, 2): (x, y - 1), (7, 3): (x - 1, y),
               (5, 0): (x, y + 1), (6, 1): (x + 1, y), (7, 2): (x, y - 1), (4, 3): (x - 1, y)}
-        for wiese_auf_karte in card.wiesen:
-            for ecke in wiese_auf_karte.ecken:
-                for kante in self.d2[ecke]:
-                    if card.info[kante] in ('W', 'S'):
-                        if d[(ecke, kante)] in self.cards_set:
-                            o.append(self.cards_set[d[(ecke, kante)]].ecken[self.d3[(ecke, kante)]])
+        for ecke in wiese_auf_karte.ecken:
+            for kante in self.d2[ecke]:
+                if info[kante] in ('W', 'S'):
+                    if d[(ecke, kante)] in self.cards_set:
+                        o.append(self.cards_set[d[(ecke, kante)]].ecken[self.d3[(ecke, kante)]])
         return o
 
     def calculate_possible_actions(self, card, player):
-        """checkt, ob und wie karte an jede freie stelle gelegt werden kann,
+        """
+        :param card:
+        :param player:
+        :return:
+
+        checkt, ob und wie karte an jede freie stelle gelegt werden kann,
         returned liste mit tupel bestehend aus moeglicher anlegestelle und anzahl von rotationen die dafür noetig sind
 
         fuer jede theoretisch freien koordinaten werden aktuell noch die Nachbarkanten ermittelt, um zu schauen, ob dort angelegt werden kann
@@ -112,6 +117,7 @@ class Spiel:
                         # nicht 100 pro sicher, aber da dann schon karte an nkoo gefunden wurde, kann da ja keine weitere mehr sein
                         continue
 
+            # ecken_dict = card.ecken.copy()
             kanten_dict = card.kanten.copy()
             for i in range(4):
 
@@ -151,7 +157,7 @@ class Spiel:
 
                         # TESTEN
                         for wiese_auf_karte in card.wiesen:
-                            besitzer = [0 for x in self.find_angrenzende_wiesen(x, y, card) if x.besitzer is not None]
+                            besitzer = [0 for x in self.find_angrenzende_wiesen(x, y, info, wiese_auf_karte) if x.besitzer is not None]
                             if not besitzer:
                                 possible_actions.append((x, y, i, wiese_auf_karte))
 
@@ -314,7 +320,7 @@ class Spiel:
 
         # rechne die ww so aus, dass danach alles global upgedatet ist
         for wiese_auf_karte in ww:
-            hauptwiese = list(ww[wiese_auf_karte])[0]
+            hauptwiese = list(ww[wiese_auf_karte])[0][0]
             for global_wiese, koo in ww[wiese_auf_karte]:
 
                 # wenn die wiese nur mit einer globalen wiese wechselwirkt
@@ -346,7 +352,15 @@ class Spiel:
 
     def update_all_kloester(self, card, x, y, meeple_position, player):
         if card.mitte == 'K' and meeple_position == 'K':
-            self.alle_kloester.append(Kloster((x, y), player))
+            new_kloster = Kloster((x, y), player)
+            for k in new_kloster.umgebungs_koordinaten:
+                if k in self.cards_set:
+                    new_kloster.counter += 1
+            # wenn das kloster nach Erstellung noch nicht fertig ist
+            new_kloster.check_if_fertig()
+            if not new_kloster.fertig:
+                self.alle_kloester.append(new_kloster)
+
         else:
             for kloster in self.alle_kloester[:]:
                 if (x, y) in kloster.umgebungs_koordinaten:
