@@ -1,11 +1,7 @@
-a = {0: "A", 1: "B", 2: "C", 3: "D"}
-a = sorted(a)
-b = a.copy()
+from Ort import Ort
+a = Ort((1, 2), [2])
+a.besitzer = 1
+l = [a, Ort((3, 4), [1, 2])]
 
-b[3] = 4
-
-print(a)
-
-
-for i in range(4,8):
-    print(i)
+b = [x.besitzer for x in l if x.besitzer is not None]
+print(b)

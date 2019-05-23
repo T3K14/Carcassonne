@@ -1,4 +1,4 @@
 [
-  "make_actionTest.py::MakeActionTest::test_1",
-  "make_actionTest.py::MakeActionTest::test_2"
+  "possible_actionsTest.py::PossibleActionsTest::test_1",
+  "possible_actionsTest.py::PossibleActionsTest::test_2"
 ]

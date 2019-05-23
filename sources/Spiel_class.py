@@ -47,13 +47,13 @@ class Spiel:
         """from drawing the next card randomly"""
         pass
 
-    def meeple_check(self, x, y, nachbar_karten, kanten_dict):
+    def meeple_check(self, x, y, nachbar_kanten, kanten_dict):
         """berechnet zu geg. Rotation an geg Koordinaten zu gegebenem Landschaftstyp (buchstabe, zB. 'O') wo ich auf der Karte ein meeple setzen kann (Strassen und Orte)"""
 
         output = []
         d2 = {0: (x, y + 1), 1: (x + 1, y), 2: (x, y - 1), 3: (x - 1, y)}
 
-        for kante in nachbar_karten:
+        for kante in nachbar_kanten:
             if d2[kante] in self.cards_set and self.cards_set[d2[kante]].kanten[self.d[kante]].besitzer is None:
 
                 # appende die entprechende Landschaft auf der Karte
@@ -62,7 +62,7 @@ class Spiel:
 
         return output
 
-    def find_wiesen(self, x, y, card):
+    def find_angrenzende_wiesen(self, x, y, card):
         o = []
         d = {(4, 0): (x, y + 1), (5, 1): (x + 1, y), (6, 2): (x, y - 1), (7, 3): (x - 1, y),
               (5, 0): (x, y + 1), (6, 1): (x + 1, y), (7, 2): (x, y - 1), (4, 3): (x - 1, y)}
@@ -71,15 +71,21 @@ class Spiel:
                 for kante in self.d2[ecke]:
                     if card.info[kante] in ('W', 'S'):
                         if d[(ecke, kante)] in self.cards_set:
-                            if self.cards_set[d[(ecke, kante)]].ecken[self.d3[(ecke, kante)]].besitzer is not None:
-                                o.append(wiese_auf_karte)
+                            o.append(self.cards_set[d[(ecke, kante)]].ecken[self.d3[(ecke, kante)]])
         return o
 
     def calculate_possible_actions(self, card, player):
         """checkt, ob und wie karte an jede freie stelle gelegt werden kann,
-            returned liste mit tupel bestehend aus moeglicher anlegestelle und anzahl von rotationen die dafür noetig sind
-            nimmt eine Karte an, sowie liste möglicher anlegestellen und dictionary von gelegten Karten
-            """
+        returned liste mit tupel bestehend aus moeglicher anlegestelle und anzahl von rotationen die dafür noetig sind
+
+        fuer jede theoretisch freien koordinaten werden aktuell noch die Nachbarkanten ermittelt, um zu schauen, ob dort angelegt werden kann
+
+        nun wird fuer jede rotation ermittelt, ob die gezogene Karte zu diesen Kanten passt
+
+        dann werden alle angrenzenden landschaften nach besitzern gecheckt
+
+
+        """
 
         possible_actions = []
 
@@ -144,8 +150,9 @@ class Spiel:
                                 possible_actions.append((x, y, i, s))
 
                         # TESTEN
-                        if len(card.wiesen) > 0:
-                            for wiese_auf_karte in self.find_wiesen(x, y, card):
+                        for wiese_auf_karte in card.wiesen:
+                            besitzer = [0 for x in self.find_angrenzende_wiesen(x, y, card) if x.besitzer is not None]
+                            if not besitzer:
                                 possible_actions.append((x, y, i, wiese_auf_karte))
 
                         if card.mitte == 'K':
