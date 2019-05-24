@@ -3,6 +3,7 @@ import card_class
 import Player_Class
 import unittest
 from Strasse import Strasse
+import plot_cards
 from Ort import Ort
 
 class MakeActionTest(unittest.TestCase):
@@ -70,6 +71,29 @@ class MakeActionTest(unittest.TestCase):
         self.assertEqual(len(spiel.alle_strassen), 3)
         self.assertEqual(len(spiel.alle_orte), 2)
 
+    def test_3(self):
+        spiel = Spiel_class.Spiel(card_class.Kartenliste)
+        player1 = Player_Class.Player(1)
+        player2 = Player_Class.Player(2)
+
+        k1 = card_class.Card('O', 'W', 'W', 'W')
+        spiel.make_action(k1, (1, 0), 3, player1, k1.orte[0])
+
+        self.assertEqual(player1.punkte, 4)
+        self.assertEqual(player1.meeples, 7)
+
+    def test_4(self):
+        spiel = Spiel_class.Spiel(card_class.Kartenliste)
+        player1 = Player_Class.Player(1)
+        player2 = Player_Class.Player(2)
+
+        k1 = card_class.Card('O', 'W', 'W', 'O', 'O', True)
+        #plot_cards.draw_card(k1)
+        spiel.make_action(k1, (1, 0), 0, player1, k1.orte[0])
+
+        k2 = card_class.Card('O', 'O', 'W', 'O', 'O')
+        #plot_cards.draw_card(k2)
+        spiel.make_action(k2, (2, 0), 1, player2, k2.orte[0])
 
 if __name__ == '__main__':
     unittest.main()

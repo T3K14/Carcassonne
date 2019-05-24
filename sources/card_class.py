@@ -296,7 +296,7 @@ class Card:
                         z += 1
                 # sonst
                 else:
-                    self.wiesen.append(WieseAufKarte(self.wiesen_kanten, z))
+                    self.wiesen.append(WieseAufKarte(d3[self.wiesen_kanten[0]], z))
                     z += 1
             elif len(self.strassen_kanten) >= 2:
                 if len(self.strassen_kanten) == 2:

@@ -254,11 +254,13 @@ class Spiel:
                 # wenn die landschaft nur mit einer globalen wechselwirkt
                 if len(ww[landschaft]) == 1:
 
+                        if landschaft == meeple_position:
+                            global_landschaft.besitzer = player
+
                         global_landschaft.update_kanten(ww[landschaft][global_landschaft])
                         global_landschaft.add_part((x, y), landschaft)
 
-                        if landschaft == meeple_position:
-                            global_landschaft.besitzer = player
+
 
                 # sonst arbeite mit der hauptlandschaft
                 else:

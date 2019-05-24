@@ -24,6 +24,10 @@ class Ort:
 
         self.koordinaten_plus_oeffnungen.update({(koordinaten[0], koordinaten[1]): ort.kanten})
         self.wert += ort.wert
+        self.fertig = self.check_if_fertig()
+        if self.fertig:
+            self.besitzer.punkte += self.wert
+            self.besitzer.meeples += 1
 
     def add_global(self, global_ort, alle_orte):
         """ fuegt sich selbst die orte in dictionary bei und loescht diese aus alle orte"""
@@ -34,7 +38,7 @@ class Ort:
             self.besitzer = global_ort.besitzer
         self.fertig = self.check_if_fertig()
         if self.fertig:
-            self.besitzer.punkt += self.wert
+            self.besitzer.punkte += self.wert
             self.besitzer.meeples += 1
         alle_orte.remove(global_ort)
 
