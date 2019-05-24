@@ -27,8 +27,12 @@ class Ort:
         self.wert += ort.wert
         self.fertig = self.check_if_fertig()
         if self.fertig:
-            self.besitzer.punkte += self.wert
-            self.besitzer.meeples += 1
+            if self.besitzer is not None:
+                self.besitzer.punkte += self.wert
+
+            # jeder spieler erhalet sein emeeples zurueck
+            for pl in self.meeples:
+                pl.meeples += self.meeples[pl]
 
     def add_global(self, global_ort, alle_orte):
         """ fuegt sich selbst die orte in dictionary bei und loescht diese aus alle orte"""
@@ -42,8 +46,8 @@ class Ort:
                 self.meeples[pl] += global_ort.meeples[pl]
             else:
                 self.meeples.update({pl: global_ort.meeples[pl]})
-
-        self.update_besitzer()
+        if len(global_ort.meeples) > 0:
+            self.update_besitzer()
 
         self.fertig = self.check_if_fertig()
         if self.fertig:

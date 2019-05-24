@@ -4,7 +4,8 @@ class StasseAufKarte:
         self.wert = 1
         self.name = name
 
-class Strasse():
+
+class Strasse:
     def __init__(self, koordinaten, kanten, meeple = False):
         self.koordinaten_plus_oeffnungen = {koordinaten: kanten}
         self.wert = 1
@@ -24,6 +25,13 @@ class Strasse():
 
         self.koordinaten_plus_oeffnungen.update({(koordinaten[0], koordinaten[1]): strasse.kanten})
         self.wert += strasse.wert
+        self.fertig = self.check_if_fertig()
+        if self.fertig:
+            self.besitzer.punkte += self.wert
+
+            # jeder spieler erhalet sein emeeples zurueck
+            for pl in self.meeples:
+                pl.meeples += self.meeples[pl]
 
     def add_global(self, global_strasse, alle_strassen):
         """ fuegt sich selbst die orte in dictionary bei und loescht diese aus alle orte"""
@@ -31,13 +39,25 @@ class Strasse():
         self.koordinaten_plus_oeffnungen.update(global_strasse.koordinaten_plus_oeffnungen)
         self.wert += global_strasse.wert
 
-        if self.besitzer is None:
-            self.besitzer = global_strasse.besitzer
+        # update meeples:
+        for pl in global_strasse.meeples:
+            if pl in self.meeples:
+                self.meeples[pl] += global_strasse.meeples[pl]
+            else:
+                self.meeples.update({pl: global_strasse.meeples[pl]})
+        if len(global_strasse.meeples) > 0:
+            self.update_besitzer()
 
         self.fertig = self.check_if_fertig()
         if self.fertig:
-            self.besitzer.punkt += self.wert
-            self.besitzer.meeples += 1
+            if self.besitzer is not None:
+                self.besitzer.punkte += self.wert
+
+            # jeder spieler erhalet sein emeeples zurueck
+            for pl in self.meeples:
+                pl.meeples += self.meeples[pl]
+
+        # den hinzugefuegten ort loeschen
         alle_strassen.remove(global_strasse)
 
     def check_if_fertig(self):
@@ -47,6 +67,25 @@ class Strasse():
             if self.koordinaten_plus_oeffnungen[koordinaten]:
                 t = False
         return t
+
+    def update_meeples(self, player):
+        """ nimmt player an, welcher ein meeple auf diese landschaft setzt"""
+
+        # wenn dieser spieler schon meeple in ort hat
+        if player in self.meeples:
+            self.meeples[player] += 1
+        else:
+            self.meeples.update({player: 1})
+
+    def update_besitzer(self):
+
+        max_meeple_count = max(self.meeples.values())
+        players_with_max_count = [pl for pl in self.meeples if self.meeples[pl] == max_meeple_count]
+
+        if len(players_with_max_count) != 1:
+            self.besitzer = None
+        else:
+            self.besitzer = players_with_max_count[0]
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__

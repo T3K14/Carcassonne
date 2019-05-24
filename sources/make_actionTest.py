@@ -3,7 +3,7 @@ import card_class
 import Player_Class
 import unittest
 from Strasse import Strasse
-import plot_cards
+from plot_cards import display_spielbrett_dict, draw_card
 from Ort import Ort
 
 class MakeActionTest(unittest.TestCase):
@@ -65,6 +65,8 @@ class MakeActionTest(unittest.TestCase):
         self.assertEqual(len(spiel.alle_strassen), 3)
         self.assertEqual(len(spiel.alle_orte), 4)
 
+        #display_spielbrett_dict(spiel.cards_set)
+
         k5 = card_class.Card('O', 'O', 'O', 'O', 'O', True)
         spiel.make_action(k5, (1, 0), 1, player1, None)
 
@@ -108,6 +110,7 @@ class MakeActionTest(unittest.TestCase):
         k4 = card_class.Card('O', 'W', 'W', 'O', 'O')
         spiel.make_action(k4, (2, 1), 3, player2)
 
+        #plot_cards.display_spielbrett_dict(spiel.cards_set)
         print('end')
 
 if __name__ == '__main__':

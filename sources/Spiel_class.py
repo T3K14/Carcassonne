@@ -290,19 +290,22 @@ class Spiel:
             # create neue landschaft:
             if buchstabe == 'O':
                 new_landschaft = Ort((x, y), landschaft.kanten)
-                new_landschaft.update_meeples(player)
-                new_landschaft.update_besitzer()
+
+                if meeple_position == landschaft:
+                    new_landschaft.update_meeples(player)
+                    new_landschaft.update_besitzer()
                 self.alle_orte.append(new_landschaft)
             else:
                 new_landschaft = Strasse((x, y), landschaft.kanten)
+                if meeple_position == landschaft:
+                    new_landschaft.update_meeples(player)
+                    new_landschaft.update_besitzer()
                 self.alle_strassen.append(new_landschaft)
-                new_landschaft.update_meeples(player)
-                new_landschaft.update_besitzer()
 
             card.update_kanten(landschaft, new_landschaft)
 
-            if meeple_position == landschaft:
-                new_landschaft.besitzer = player
+           # if meeple_position == landschaft:
+           #     new_landschaft.besitzer = player
 
     def update_all_wiesen(self, card, x, y, meeple_position, player):
 
@@ -338,18 +341,29 @@ class Spiel:
 
                 # wenn die wiese nur mit einer globalen wiese wechselwirkt
                 if len(ww[wiese_auf_karte]) == 1:
+                    # wenn euf das Teil das gesetzt wird ein meeple auf die wiese gesetzt wird
+                    if wiese_auf_karte == meeple_position:
+                        global_wiese.update_meeples(player)
+                        global_wiese.update_besitzer()
+
                     global_wiese.add_part((x, y), wiese_auf_karte)
 
                 else:
                     # hauptwiese kommt zum einsatz
                     if global_wiese != hauptwiese:
+
+
+
                         hauptwiese.add_global(global_wiese, self.alle_wiesen)
                         self.cards_set[koo].update_ecken(global_wiese, hauptwiese)
                     else:
+
+
+
                         hauptwiese.add_part((x, y), wiese_auf_karte)
 
-                if meeple_position == wiese_auf_karte:
-                    hauptwiese.besizter = player
+                #if meeple_position == wiese_auf_karte:
+                #    hauptwiese.besizter = player
 
                 card.update_ecken(wiese_auf_karte, global_wiese)
 
@@ -388,11 +402,11 @@ class Spiel:
         for k in self.alle_kloester:
             k.besitzer.punkte += k.counter
         for s in self.alle_strassen:
-            if s.besitzer:
+            if s.besitzer and not s.fertig:
                 s.besitzer.punkte += s.wert
         for o in self.alle_orte:
-            if o.besitzer:
-                o.besitzer.punkte += o.wert / 2
+            if o.besitzer and not o.fertig:
+                o.besitzer.punkte += int(o.wert / 2)
         for w in self.alle_wiesen:
             if w.besitzer:
                 # damit spaeter nicht jeder ort mehrmals ueberprueft wird
@@ -474,7 +488,7 @@ class Spiel:
                 turn = d[turn]
                 continue
 
-
+            turn = d[turn]
 
 
 
