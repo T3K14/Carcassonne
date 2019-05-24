@@ -11,6 +11,7 @@ class Strasse():
         self.besitzer = None
         self.fertig = False
         self.name = None  # zum debuggen
+        self.meeples = {}
 
     def update_kanten(self, koordinaten_kanten):
         """ nimmt liste mit koordinaten und kanten an, die an den koordinaten geloescht werden sollen"""

@@ -91,9 +91,24 @@ class MakeActionTest(unittest.TestCase):
         #plot_cards.draw_card(k1)
         spiel.make_action(k1, (1, 0), 0, player1, k1.orte[0])
 
+        self.assertEqual(spiel.alle_orte[0].besitzer, player1)
+        self.assertEqual(len(spiel.alle_orte[0].meeples), 1)
+
         k2 = card_class.Card('O', 'O', 'W', 'O', 'O')
         #plot_cards.draw_card(k2)
         spiel.make_action(k2, (2, 0), 1, player2, k2.orte[0])
+
+        self.assertEqual(spiel.alle_orte[-1].besitzer, player2)
+        self.assertEqual(len(spiel.alle_orte[-1].meeples), 1)
+
+
+        k3 = card_class.Card('O', 'W', 'W', 'O', 'O')
+        spiel.make_action(k3, (1, 1), 2, player1)
+
+        k4 = card_class.Card('O', 'W', 'W', 'O', 'O')
+        spiel.make_action(k4, (2, 1), 3, player2)
+
+        print('end')
 
 if __name__ == '__main__':
     unittest.main()

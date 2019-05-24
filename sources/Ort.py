@@ -12,6 +12,7 @@ class Ort:
         self.besitzer = None
         self.fertig = False
         self.name = None # zum debuggen
+        self.meeples = {}
 
     def update_kanten(self, koordinaten_kanten):
         """ nimmt liste mit koordinaten und kanten an, die an den koordinaten geloescht werden sollen"""
@@ -34,12 +35,25 @@ class Ort:
 
         self.koordinaten_plus_oeffnungen.update(global_ort.koordinaten_plus_oeffnungen)
         self.wert += global_ort.wert
-        if self.besitzer is None:
-            self.besitzer = global_ort.besitzer
+
+        # update meeples:
+        for pl in global_ort.meeples:
+            if pl in self.meeples:
+                self.meeples[pl] += global_ort.meeples[pl]
+            else:
+                self.meeples.update({pl: global_ort.meeples[pl]})
+
+        self.update_besitzer()
+
         self.fertig = self.check_if_fertig()
         if self.fertig:
             self.besitzer.punkte += self.wert
-            self.besitzer.meeples += 1
+
+            # jeder spieler erhalet sein emeeples zurueck
+            for pl in self.meeples:
+                pl.meeples += self.meeples[pl]
+
+        # den hinzugefuegten ort loeschen
         alle_orte.remove(global_ort)
 
     def check_if_fertig(self):
@@ -49,6 +63,25 @@ class Ort:
             if self.koordinaten_plus_oeffnungen[koordinaten]:
                 t = False
         return t
+
+    def update_meeples(self, player):
+        """ nimmt player an, welcher ein meeple auf diese landschaft setzt"""
+
+        # wenn dieser spieler schon meeple in ort hat
+        if player in self.meeples:
+            self.meeples[player] += 1
+        else:
+            self.meeples.update({player: 1})
+    def update_besitzer(self):
+
+
+        max_meeple_count = max(self.meeples.values())
+        players_with_max_count = [pl for pl in self.meeples if self.meeples[pl] == max_meeple_count]
+
+        if len(players_with_max_count) != 1:
+            self.besitzer = None
+        else:
+            self.besitzer = players_with_max_count[0]
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__

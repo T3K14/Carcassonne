@@ -1,4 +1,6 @@
 [
-  "klosterTest.py::KlosterTest::test_1",
-  "klosterTest.py::KlosterTest::test_2"
+  "make_actionTest.py::MakeActionTest::test_1",
+  "make_actionTest.py::MakeActionTest::test_2",
+  "make_actionTest.py::MakeActionTest::test_3",
+  "make_actionTest.py::MakeActionTest::test_4"
 ]

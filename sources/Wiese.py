@@ -8,6 +8,7 @@ class Wiese:
         self.wert = 0
         self.alle_teile = {koordinates: ecken}
         self.besitzer = None
+        self.meeples = {}
 
     def add_part(self, koords, wiese_auf_karte):
         self.alle_teile.update({(koords[0], koords[1]): wiese_auf_karte.ecken})

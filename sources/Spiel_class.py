@@ -255,11 +255,12 @@ class Spiel:
                 if len(ww[landschaft]) == 1:
 
                         if landschaft == meeple_position:
-                            global_landschaft.besitzer = player
+                            global_landschaft.update_meeples(player)
+                            global_landschaft.update_besitzer()
+                            #global_landschaft.besitzer = player
 
                         global_landschaft.update_kanten(ww[landschaft][global_landschaft])
                         global_landschaft.add_part((x, y), landschaft)
-
 
 
                 # sonst arbeite mit der hauptlandschaft
@@ -279,7 +280,9 @@ class Spiel:
 
 
                     if landschaft == meeple_position:
-                        hauptlandschaft.besitzer = player
+                        hauptlandschaft.update_meeples(player)
+                        hauptlandschaft.update_besitzer()
+
             card.update_kanten(landschaft, hauptlandschaft)
 
         # kreiere neue landschaften fuer die auf der karte, die nicht wechselwirken
@@ -287,10 +290,14 @@ class Spiel:
             # create neue landschaft:
             if buchstabe == 'O':
                 new_landschaft = Ort((x, y), landschaft.kanten)
+                new_landschaft.update_meeples(player)
+                new_landschaft.update_besitzer()
                 self.alle_orte.append(new_landschaft)
             else:
                 new_landschaft = Strasse((x, y), landschaft.kanten)
                 self.alle_strassen.append(new_landschaft)
+                new_landschaft.update_meeples(player)
+                new_landschaft.update_besitzer()
 
             card.update_kanten(landschaft, new_landschaft)
 
