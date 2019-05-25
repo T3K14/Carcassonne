@@ -289,7 +289,7 @@ class Spiel:
         for landschaft in d3[buchstabe]:
             # create neue landschaft:
             if buchstabe == 'O':
-                new_landschaft = Ort((x, y), landschaft.kanten)
+                new_landschaft = Ort((x, y), landschaft.kanten, landschaft.wert)
 
                 if meeple_position == landschaft:
                     new_landschaft.update_meeples(player)
@@ -416,12 +416,13 @@ class Spiel:
                 for koords in w.alle_teile:
                     for ecke in w.alle_teile[koords]:
                         for kante in self.d2[ecke]:
+                            # wenn an der kante auf der Karte ein Ortsteil ist und dieser Ort noch nicht beruecksichtigt wurde
                             if isinstance(self.cards_set[koords].kanten[kante], Ort) and self.cards_set[koords].kanten[kante] not in o:
                                 o.append(self.cards_set[koords].kanten[kante])
                 # fuer jeden fertigen ort 3 punkte
                 for ort in o:
                     if ort.fertig:
-                        ort.besitzer.punkte += 3
+                        w.besitzer.punkte += 3
 
     def player_vs_player(self):
         player1 = Player(1)
