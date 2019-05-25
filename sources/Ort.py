@@ -29,6 +29,9 @@ class Ort:
         if self.fertig:
             if self.besitzer is not None:
                 self.besitzer.punkte += self.wert
+            elif len(self.meeples) > 0:
+                for pl in self.meeples:
+                    pl.punkte += self.wert
 
             # jeder spieler erhalet sein emeeples zurueck
             for pl in self.meeples:
@@ -51,7 +54,11 @@ class Ort:
 
         self.fertig = self.check_if_fertig()
         if self.fertig:
-            self.besitzer.punkte += self.wert
+            if self.besitzer is not None:
+                self.besitzer.punkte += self.wert
+            elif len(self.meeples) > 0:
+                for pl in self.meeples:
+                    pl.punkte += self.wert
 
             # jeder spieler erhalet sein emeeples zurueck
             for pl in self.meeples:

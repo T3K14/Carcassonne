@@ -27,7 +27,11 @@ class Strasse:
         self.wert += strasse.wert
         self.fertig = self.check_if_fertig()
         if self.fertig:
-            self.besitzer.punkte += self.wert
+            if self.besitzer is not None:
+                self.besitzer.punkte += self.wert
+            elif len(self.meeples) > 0:
+                for pl in self.meeples:
+                    pl.punkte += self.wert
 
             # jeder spieler erhalet sein emeeples zurueck
             for pl in self.meeples:
@@ -52,6 +56,9 @@ class Strasse:
         if self.fertig:
             if self.besitzer is not None:
                 self.besitzer.punkte += self.wert
+            elif len(self.meeples) > 0:
+                for pl in self.meeples:
+                    pl.punkte += self.wert
 
             # jeder spieler erhalet sein emeeples zurueck
             for pl in self.meeples:
@@ -86,6 +93,8 @@ class Strasse:
             self.besitzer = None
         else:
             self.besitzer = players_with_max_count[0]
+
+    def evaluate(self):
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__

@@ -415,7 +415,7 @@ class Spiel:
             if o.besitzer and not o.fertig:
                 o.besitzer.punkte += int(o.wert / 2)
         for w in self.alle_wiesen:
-            if w.besitzer:
+            if len(w.meeples) > 0:
                 # damit spaeter nicht jeder ort mehrmals ueberprueft wird
                 o = []
 
@@ -429,7 +429,12 @@ class Spiel:
                 # fuer jeden fertigen ort 3 punkte
                 for ort in o:
                     if ort.fertig:
-                        w.besitzer.punkte += 3
+                        if w.besitzer is not None:
+                            w.besitzer.punkte += 3
+                        else:
+                            for pl in ort.meeples:
+                                pl.punkte += 3
+
 
     def player_vs_player(self):
         player1 = Player(1)

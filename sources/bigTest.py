@@ -420,5 +420,53 @@ class BigTest(unittest.TestCase):
         self.assertEqual(player1.punkte, 4)
         self.assertEqual(player2.punkte, 0)
 
+        k11 = Card('W', 'O', 'W', 'O', 'O', True)
+        spiel.make_action(k11, (-2, 3), 0, player1)
+
+        self.assertEqual(len(spiel.cards_set), 12)
+
+        self.assertEqual(len(spiel.alle_strassen), 7)
+        self.assertEqual(len(spiel.alle_orte), 5)
+        self.assertEqual(len(spiel.alle_wiesen), 9)
+        self.assertEqual(len(spiel.alle_kloester), 1)
+
+        self.assertEqual(player1.meeples, 3)
+        self.assertEqual(player2.meeples, 4)
+        self.assertEqual(player1.punkte, 4)
+        self.assertEqual(player2.punkte, 0)
+
+        k12 = Card('W', 'W', 'S', 'S')
+        spiel.make_action(k12, (2, -1), 1, player2)
+
+        #display_spielbrett_dict(spiel.cards_set)
+
+        self.assertEqual(len(spiel.cards_set), 13)
+
+        self.assertEqual(len(spiel.alle_strassen), 6)
+        self.assertEqual(len(spiel.alle_orte), 5)
+        self.assertEqual(len(spiel.alle_wiesen), 8)
+        self.assertEqual(len(spiel.alle_kloester), 1)
+
+        self.assertEqual(player1.meeples, 4)
+       # self.assertEqual(player2.meeples, 5)
+        self.assertEqual(player1.punkte, 11)
+        self.assertEqual(player2.punkte, 7)
+
+
+        #k12 = Card('S', 'O', 'S', 'S', 'G')
+        #spiel.make_action(k12, (2, -1), 2, player2, k12.orte[0])
+
+        #self.assertEqual(len(spiel.cards_set), 13)
+
+        #self.assertEqual(len(spiel.alle_strassen), 8)
+        #self.assertEqual(len(spiel.alle_orte), 5)
+        #self.assertEqual(len(spiel.alle_wiesen), 8)
+        #self.assertEqual(len(spiel.alle_kloester), 1)
+
+        #self.assertEqual(player1.meeples, 4)
+        #self.assertEqual(player2.meeples, 4)
+        #self.assertEqual(player1.punkte, 6)
+        #self.assertEqual(player2.punkte, 6)
+
 if __name__ == '__main__':
     unittest.main()
