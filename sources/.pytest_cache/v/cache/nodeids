@@ -1,6 +1,5 @@
 [
-  "make_actionTest.py::MakeActionTest::test_1",
-  "make_actionTest.py::MakeActionTest::test_2",
-  "make_actionTest.py::MakeActionTest::test_3",
-  "make_actionTest.py::MakeActionTest::test_4"
+  "bigTest.py::BigTest::test1",
+  "bigTest.py::BigTest::test2",
+  "bigTest.py::BigTest::test3"
 ]

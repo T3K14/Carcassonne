@@ -1,4 +1,4 @@
-d = {'a': 1, 'b': 3, 'c': 2, 'd': 3}
+d = {'a': {'a1': 3, 'a2': 4}, 'b': {'b1': 5, 'b2': 6}}
 
-print(d.items())
-p = max(d, key=lambda k: d[k])
+for key in d:
+    print(d[key])

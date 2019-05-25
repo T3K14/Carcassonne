@@ -41,7 +41,7 @@ def draw_card(card):
     custom_cmap = ListedColormap(['green', 'brown', 'white', 'blue', 'k'])
     plt.matshow(card.matrix, 0, cmap=custom_cmap, vmin=0, vmax=4)
 
-    plt.title('Deine Karte')
+    plt.title('Deine Karte, Schild:{}'.format(card.schild))
     plt.xticks(np.array([100]))
     plt.yticks(np.array([100]))
     plt.show()

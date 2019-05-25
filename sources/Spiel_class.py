@@ -269,7 +269,13 @@ class Spiel:
                     global_landschaft.update_kanten(ww[landschaft][global_landschaft])
 
                     if global_landschaft != hauptlandschaft:
-                        self.cards_set[ww[landschaft][global_landschaft][0]].update_kanten(global_landschaft, hauptlandschaft)
+
+                        # HIER AUCH FUER ALLE Beteiligten karten die kanten updaten, nicht nur fuer die neue
+
+                        for koos in global_landschaft.koordinaten_plus_oeffnungen:
+                            self.cards_set[koos].update_kanten(global_landschaft, hauptlandschaft)
+
+                            #self.cards_set[ww[landschaft][global_landschaft][0]].update_kanten(global_landschaft, hauptlandschaft)
 
                         if buchstabe == 'O':
                             hauptlandschaft.add_global(global_landschaft, self.alle_orte)
@@ -327,7 +333,7 @@ class Spiel:
                             else:
                                 # wenn die globale wiese schon als ww eingetregen ist
                                 #if self.cards_set[d2[(ecke, kante)]].ecken[self.d3[(ecke, kante)]]:
-                                if (self.cards_set[d2[(ecke, kante)]].ecken[self.d3[(ecke, kante)]], d2[(ecke, kante)]) in ww[wiese]:
+                                if self.cards_set[d2[(ecke, kante)]].ecken[self.d3[(ecke, kante)]] in [w[0] for w in ww[wiese]]:
                                     continue
                                 else:
                                     #ww[wiese].append(self.cards_set[d2[(ecke, kante)]].ecken[self.d3[(ecke, kante)]])
@@ -355,7 +361,8 @@ class Spiel:
 
 
                         hauptwiese.add_global(global_wiese, self.alle_wiesen)
-                        self.cards_set[koo].update_ecken(global_wiese, hauptwiese)
+                        for koos in global_wiese.alle_teile:
+                            self.cards_set[koos].update_ecken(global_wiese, hauptwiese)
                     else:
 
 
@@ -365,7 +372,7 @@ class Spiel:
                 #if meeple_position == wiese_auf_karte:
                 #    hauptwiese.besizter = player
 
-                card.update_ecken(wiese_auf_karte, global_wiese)
+            card.update_ecken(wiese_auf_karte, hauptwiese)
 
 
         # erstelle neue Wiesen fuer solche die nicht wechselwirken
@@ -497,4 +504,5 @@ if __name__ == "__main__":
 
     from card_class import Kartenliste
     spiel = Spiel(Kartenliste)
-    spiel.player_vs_player()
+    #spiel.player_vs_player()
+    draw_card(spiel.draw_card())
