@@ -9,7 +9,7 @@ from plot_cards import display_spielbrett_dict, draw_card
 
 from copy import deepcopy
 from rotate2 import rotate_info_right, rotate_kanten_dict_right
-
+import random
 
 class Spiel:
     def __init__(self, card_list):
@@ -58,7 +58,7 @@ class Spiel:
         d2 = {0: (x, y + 1), 1: (x + 1, y), 2: (x, y - 1), 3: (x - 1, y)}
 
         for kante in nachbar_kanten:
-            if d2[kante] in self.cards_set and self.cards_set[d2[kante]].kanten[self.d[kante]].besitzer is None:
+            if nachbar_kanten[kante] is not 'W' and d2[kante] in self.cards_set and self.cards_set[d2[kante]].kanten[self.d[kante]].besitzer is None:
 
                 # appende die entprechende Landschaft auf der Karte
                 if kanten_dict[kante] not in output:
@@ -509,6 +509,31 @@ class Spiel:
 
             turn = d[turn]
 
+    def play_random1v1(self, player1, player2):
+        d = {player1: player2, player2: player1}
+        turn_player = player1
+
+        while len(self.cards_left) > 0:
+            card = self.draw_card()
+            #draw_card(card)
+            pos = self.calculate_possible_actions(card, turn_player)
+            action = random.choice(pos)
+
+            self.make_action(card, (action[0], action[1]), action[2], turn_player, action[3])
+            #display_spielbrett_dict(self.cards_set)
+
+            turn_player = d[turn_player]
+
+        self.final_evaluate()
+        #display_spielbrett_dict(self.cards_set)
+
+        #unentschieden:
+        if player1.punkte == player2.punkte:
+            return 0
+        else:
+            # ansonsten returne den gewinner
+            return max(list(d), key=lambda x: x.punkte)
+
 
 
 if __name__ == "__main__":
@@ -516,4 +541,5 @@ if __name__ == "__main__":
     from card_class import Kartenliste
     spiel = Spiel(Kartenliste)
     #spiel.player_vs_player()
-    draw_card(spiel.draw_card())
+    #draw_card(spiel.draw_card())
+    spiel.play_random1v1(Player(1), Player(2))

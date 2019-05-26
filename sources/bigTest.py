@@ -437,38 +437,53 @@ class BigTest(unittest.TestCase):
         self.assertEqual(player1.punkte, 4)
         self.assertEqual(player2.punkte, 0)
 
-        k12 = Card('W', 'W', 'S', 'S')
-        spiel.make_action(k12, (2, -1), 1, player2)
-
-        #display_spielbrett_dict(spiel.cards_set)
+        k12 = Card('O', 'W', 'W', 'O', 'O')
+        spiel.make_action(k12, (-1, 0), 0, player2)
 
         self.assertEqual(len(spiel.cards_set), 13)
 
-        self.assertEqual(len(spiel.alle_strassen), 6)
+        self.assertEqual(len(spiel.alle_strassen), 7)
         self.assertEqual(len(spiel.alle_orte), 5)
         self.assertEqual(len(spiel.alle_wiesen), 8)
         self.assertEqual(len(spiel.alle_kloester), 1)
 
+        self.assertEqual(player1.meeples, 3)
+        self.assertEqual(player2.meeples, 4)
+        self.assertEqual(player1.punkte, 4)
+        self.assertEqual(player2.punkte, 0)
+
+        k13 = Card('W', 'W', 'S', 'S')
+        spiel.make_action(k13, (2, -1), 1, player1)
+
+        #display_spielbrett_dict(spiel.cards_set)
+
+        self.assertEqual(len(spiel.cards_set), 14)
+
+        self.assertEqual(len(spiel.alle_strassen), 6)
+        self.assertEqual(len(spiel.alle_orte), 5)
+        self.assertEqual(len(spiel.alle_wiesen), 7)
+        self.assertEqual(len(spiel.alle_kloester), 1)
+
         self.assertEqual(player1.meeples, 4)
-       # self.assertEqual(player2.meeples, 5)
+        self.assertEqual(player2.meeples, 5)
         self.assertEqual(player1.punkte, 11)
         self.assertEqual(player2.punkte, 7)
 
+        k14 = Card('S', 'W', 'S', 'W')
+        spiel.make_action(k14, (3, 0), 1, player2, k14.strassen[0])
 
-        #k12 = Card('S', 'O', 'S', 'S', 'G')
-        #spiel.make_action(k12, (2, -1), 2, player2, k12.orte[0])
+        self.assertEqual(len(spiel.cards_set), 15)
 
-        #self.assertEqual(len(spiel.cards_set), 13)
+        self.assertEqual(len(spiel.alle_strassen), 6)
+        self.assertEqual(len(spiel.alle_orte), 5)
+        self.assertEqual(len(spiel.alle_wiesen), 7)
+        self.assertEqual(len(spiel.alle_kloester), 1)
 
-        #self.assertEqual(len(spiel.alle_strassen), 8)
-        #self.assertEqual(len(spiel.alle_orte), 5)
-        #self.assertEqual(len(spiel.alle_wiesen), 8)
-        #self.assertEqual(len(spiel.alle_kloester), 1)
+        self.assertEqual(player1.meeples, 4)
+        self.assertEqual(player2.meeples, 4)
+        self.assertEqual(player1.punkte, 11)
+        self.assertEqual(player2.punkte, 7)
 
-        #self.assertEqual(player1.meeples, 4)
-        #self.assertEqual(player2.meeples, 4)
-        #self.assertEqual(player1.punkte, 6)
-        #self.assertEqual(player2.punkte, 6)
 
 if __name__ == '__main__':
     unittest.main()
