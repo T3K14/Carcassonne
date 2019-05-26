@@ -107,6 +107,8 @@ class BigTest(unittest.TestCase):
         self.assertEqual(player2.meeples, 5)
         self.assertEqual(player1.punkte, 0)
 
+        #display_spielbrett_dict(spiel.cards_set)
+
         k8 = Card('O', 'W', 'W', 'W')
         spiel.make_action(k8, (1, -1), 0, player2)
 

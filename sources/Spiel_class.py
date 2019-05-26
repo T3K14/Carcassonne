@@ -221,6 +221,7 @@ class Spiel:
 
         d2 = {0: (x, y + 1), 1: (x + 1, y), 2: (x, y - 1), 3: (x - 1, y)}
         d3 = {'O': card.orte, 'S': card.strassen}
+        d4 = {'O': self.alle_orte, 'S': self.alle_strassen}
 
         ww = {}
 
@@ -284,12 +285,17 @@ class Spiel:
                     else:
                         hauptlandschaft.add_part((x, y), landschaft)
 
-
                     if landschaft == meeple_position:
                         hauptlandschaft.update_meeples(player)
                         hauptlandschaft.update_besitzer()
 
             card.update_kanten(landschaft, hauptlandschaft)
+
+        # fuer alle globalen landschaften checke, ob die fertig sind und wenn ja werte korrekt aus
+        glob_lands = [gl for lak in ww for gl in ww[lak] if gl in d4[buchstabe]]
+        for global_land in glob_lands:
+            global_land.check_if_fertig()
+            global_land.evaluate()
 
         # kreiere neue landschaften fuer die auf der karte, die nicht wechselwirken
         for landschaft in d3[buchstabe]:

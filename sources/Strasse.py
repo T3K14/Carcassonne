@@ -25,17 +25,6 @@ class Strasse:
 
         self.koordinaten_plus_oeffnungen.update({(koordinaten[0], koordinaten[1]): strasse.kanten})
         self.wert += strasse.wert
-        self.fertig = self.check_if_fertig()
-        if self.fertig:
-            if self.besitzer is not None:
-                self.besitzer.punkte += self.wert
-            elif len(self.meeples) > 0:
-                for pl in self.meeples:
-                    pl.punkte += self.wert
-
-            # jeder spieler erhalet sein emeeples zurueck
-            for pl in self.meeples:
-                pl.meeples += self.meeples[pl]
 
     def add_global(self, global_strasse, alle_strassen):
         """ fuegt sich selbst die orte in dictionary bei und loescht diese aus alle orte"""
@@ -52,18 +41,6 @@ class Strasse:
         if len(global_strasse.meeples) > 0:
             self.update_besitzer()
 
-        self.fertig = self.check_if_fertig()
-        if self.fertig:
-            if self.besitzer is not None:
-                self.besitzer.punkte += self.wert
-            elif len(self.meeples) > 0:
-                for pl in self.meeples:
-                    pl.punkte += self.wert
-
-            # jeder spieler erhalet sein emeeples zurueck
-            for pl in self.meeples:
-                pl.meeples += self.meeples[pl]
-
         # den hinzugefuegten ort loeschen
         alle_strassen.remove(global_strasse)
 
@@ -73,7 +50,7 @@ class Strasse:
             # wenn es an den koords noch offene kanten gibt
             if self.koordinaten_plus_oeffnungen[koordinaten]:
                 t = False
-        return t
+        self.fertig = t
 
     def update_meeples(self, player):
         """ nimmt player an, welcher ein meeple auf diese landschaft setzt"""
@@ -95,6 +72,21 @@ class Strasse:
             self.besitzer = players_with_max_count[0]
 
     def evaluate(self):
+        """um nachdem geupdated wurde, ob die landschaft fertig ist, falls dem so ist alles richtig aufzuloesen"""
+        if self.fertig:
+
+            # Punktevergabe
+
+            # wenn es einen eindeutigen Besitzer gibt
+            if self.besitzer is not None:
+                self.besitzer.punkte += self.wert
+            elif len(self.meeples) > 0:
+                for pl in self.meeples:
+                    pl.punkte += self.wert
+
+            # Meeplerueckgabe
+            for pl in self.meeples:
+                pl.meeples += self.meeples[pl]
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
