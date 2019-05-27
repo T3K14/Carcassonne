@@ -7,11 +7,12 @@ import card_class
 import Spiel_class
 from Player_Class import Player
 
+Kartenliste = []
 
 class PossibleActionsTest(unittest.TestCase):
 
     def test_1(self):
-        spiel = Spiel_class.Spiel(card_class.Kartenliste)
+        spiel = Spiel_class.Spiel(Kartenliste)
 
         # startvorgaben
         card1 = card_class.Card("W", "O", "O", "W", "O")
@@ -44,7 +45,7 @@ class PossibleActionsTest(unittest.TestCase):
             self.assertTrue(tup in goal)
 
     def test_2(self):
-        spiel = Spiel_class.Spiel(card_class.Kartenliste)
+        spiel = Spiel_class.Spiel(Kartenliste)
         card0 = card_class.Card("S", "O", "S", "W")
         card1 = card_class.Card("S", "S", "W", "W")
         card2 = card_class.Card("O", "O", "O", "O", "O", True)

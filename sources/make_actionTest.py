@@ -6,10 +6,12 @@ from Strasse import Strasse
 from plot_cards import display_spielbrett_dict, draw_card
 from Ort import Ort
 
+Kartenliste = []
+
 class MakeActionTest(unittest.TestCase):
 
     def test_1(self):
-        spiel = Spiel_class.Spiel(card_class.Kartenliste)
+        spiel = Spiel_class.Spiel(Kartenliste)
 
         # alle_orte nach Zug
         goal = [spiel.alle_orte[0]]
@@ -35,7 +37,7 @@ class MakeActionTest(unittest.TestCase):
             self.assertTrue(a)
 
     def test_2(self):
-        spiel = Spiel_class.Spiel(card_class.Kartenliste)
+        spiel = Spiel_class.Spiel(Kartenliste)
         player1 = Player_Class.Player(1)
         player2 = Player_Class.Player(2)
 
@@ -74,7 +76,7 @@ class MakeActionTest(unittest.TestCase):
         self.assertEqual(len(spiel.alle_orte), 2)
 
     def test_3(self):
-        spiel = Spiel_class.Spiel(card_class.Kartenliste)
+        spiel = Spiel_class.Spiel(Kartenliste)
         player1 = Player_Class.Player(1)
         player2 = Player_Class.Player(2)
 
@@ -85,7 +87,7 @@ class MakeActionTest(unittest.TestCase):
         self.assertEqual(player1.meeples, 7)
 
     def test_4(self):
-        spiel = Spiel_class.Spiel(card_class.Kartenliste)
+        spiel = Spiel_class.Spiel(Kartenliste)
         player1 = Player_Class.Player(1)
         player2 = Player_Class.Player(2)
 
