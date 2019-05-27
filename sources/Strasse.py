@@ -17,8 +17,10 @@ class Strasse:
     def update_kanten(self, koordinaten_kanten):
         """ nimmt liste mit koordinaten und kanten an, die an den koordinaten geloescht werden sollen"""
 
-        for kante in koordinaten_kanten[1]:
-            self.koordinaten_plus_oeffnungen[koordinaten_kanten[0]].remove(kante)
+        #for kante in koordinaten_kanten[1]:
+        #    self.koordinaten_plus_oeffnungen[koordinaten_kanten[0]].remove(kante)
+        for koordinaten, kante in koordinaten_kanten:
+            self.koordinaten_plus_oeffnungen[koordinaten].remove(kante)
 
     def add_part(self, koordinaten, strasse):
         """ nimmt ortsteil, koordinaten des neuen teils und wo dieses teil den aktuellen ort beruehrt"""

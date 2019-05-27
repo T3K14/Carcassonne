@@ -1,5 +1,6 @@
 [
   "bigTest.py::BigTest::test1",
   "bigTest.py::BigTest::test2",
-  "bigTest.py::BigTest::test3"
+  "bigTest.py::BigTest::test3",
+  "bigTest.py::BigTest::test4"
 ]

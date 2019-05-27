@@ -1,11 +1,14 @@
 import unittest
 import Spiel_class
-from card_class import Card, Kartenliste
+from card_class import Card
 import Player_Class
 from plot_cards import display_spielbrett_dict, draw_card
 
+Kartenliste = []
 
 class BigTest(unittest.TestCase):
+
+
 
     def test1(self):
         spiel = Spiel_class.Spiel(Kartenliste)
@@ -483,6 +486,23 @@ class BigTest(unittest.TestCase):
         self.assertEqual(player2.meeples, 4)
         self.assertEqual(player1.punkte, 11)
         self.assertEqual(player2.punkte, 7)
+
+    def test4(self):
+        spiel = Spiel_class.Spiel(Kartenliste)
+        player1 = Player_Class.Player(1)
+        player2 = Player_Class.Player(2)
+
+        k1 = Card('O', 'O', 'W', 'O', 'O')
+        spiel.make_action(k1, (1, 0), 2, player1)
+
+        k2 = Card('O', 'S', 'S', 'O', 'O')
+        spiel.make_action(k2, (1, -1), 1, player2)
+
+        k3 = Card('O', 'W', 'W', 'O', 'O')
+        spiel.make_action(k3, (2, -1), 0, player1)
+
+        k4 = Card('O', 'O', 'O', 'O', 'O')
+        spiel.make_action(k4, (2, 0), 0, player2)
 
 
 if __name__ == '__main__':

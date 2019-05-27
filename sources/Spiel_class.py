@@ -10,6 +10,7 @@ from plot_cards import display_spielbrett_dict, draw_card
 from copy import deepcopy
 from rotate2 import rotate_info_right, rotate_kanten_dict_right
 import random
+from copy import deepcopy
 
 class Spiel:
     def __init__(self, card_list):
@@ -233,13 +234,13 @@ class Spiel:
                 # nach richtiger ausrichtung muss ich ja nicht mehr ueberpruefen, da das calculate_possible_actions schon gemacht hat
                 if d2[kante] in self.cards_set:
                     if landschaft not in ww:
-                        ww.update({landschaft: {self.cards_set[d2[kante]].kanten[self.d[kante]]: (d2[kante], [self.d[kante]])}})
+                        ww.update({landschaft: {self.cards_set[d2[kante]].kanten[self.d[kante]]: [(d2[kante], self.d[kante])]}})
                     else:
                         # wenn die globale_landschaft schon als ww-ls zu ls eingetragen wurde
                         if self.cards_set[d2[kante]].kanten[self.d[kante]] in ww[landschaft]:
-                            ww[landschaft][self.cards_set[d2[kante]].kanten[self.d[kante]]][1].append(self.d[kante])
+                            ww[landschaft][self.cards_set[d2[kante]].kanten[self.d[kante]]].append((d2[kante], self.d[kante]))
                         else:
-                            ww[landschaft].update({self.cards_set[d2[kante]].kanten[self.d[kante]]: (d2[kante], [self.d[kante]])})
+                            ww[landschaft].update({self.cards_set[d2[kante]].kanten[self.d[kante]]: [(d2[kante], self.d[kante])]})
 
                     # eingehen darauf, dass die hier betrachteten kanten des ortes auf der neu gelegten Karte jetzt
                     # keine offenen mehr sein können
@@ -247,6 +248,7 @@ class Spiel:
                     if landschaft in d3[buchstabe]:
                         d3[buchstabe].remove(landschaft)
 
+        # print("ww fertig")
         # fuer alle landschaften auf der karte, die wechselwirken berechne WW mit globalen Landschaften
         for landschaft in ww:
             hauptlandschaft = list(ww[landschaft])[0]
@@ -368,7 +370,8 @@ class Spiel:
 
                         hauptwiese.add_global(global_wiese, self.alle_wiesen)
                         for koos in global_wiese.alle_teile:
-                            self.cards_set[koos].update_ecken(global_wiese, hauptwiese)
+                            if koos in self.cards_set:
+                                self.cards_set[koos].update_ecken(global_wiese, hauptwiese)
                     else:
 
 
@@ -517,7 +520,13 @@ class Spiel:
             card = self.draw_card()
             #draw_card(card)
             pos = self.calculate_possible_actions(card, turn_player)
-            action = random.choice(pos)
+            if len(pos) > 0:
+                action = random.choice(pos)
+
+            # keine moegliche anlegestelle
+            else:
+                continue
+
 
             self.make_action(card, (action[0], action[1]), action[2], turn_player, action[3])
             #display_spielbrett_dict(self.cards_set)
@@ -538,8 +547,27 @@ class Spiel:
 
 if __name__ == "__main__":
 
-    from card_class import Kartenliste
-    spiel = Spiel(Kartenliste)
+    from card_class import create_kartenliste
+
+    karteninfoliste = ['WWWWK', 'WWWWK', 'WWWWK', 'WWWWK', 'WWSWK', 'WWSWK', 'OOOOOT', 'SOSW', 'SOSW', 'SOSW', 'OWWW',
+                       'OWWW', 'OWWW', 'OWWW', 'OWWW', 'WOWOOT', 'WOWOOT', 'OWOWO', 'WOWO', 'WOWO', 'WOWO', 'WOOW',
+                       'WOOW', 'OSSW', 'OSSW', 'OSSW', 'SOWS', 'SOWS', 'SOWS', 'SOSSG', 'SOSSG', 'SOSSG', 'OWWOOT',
+                       'OWWOOT', 'OWWOO', 'OWWOO', 'OWWOO', 'OSSOOT', 'OSSOOT', 'OSSOO', 'OSSOO', 'OSSOO', 'OOWOOT',
+                       'OOWOO', 'OOWOO', 'OOWOO', 'OOSOOT', 'OOSOOT', 'OOSOO', 'SWSW', 'SWSW', 'SWSW', 'SWSW', 'SWSW',
+                       'SWSW', 'SWSW', 'SWSW', 'WWSS', 'WWSS', 'WWSS', 'WWSS', 'WWSS', 'WWSS', 'WWSS', 'WWSS', 'WWSS',
+                       'WSSSG', 'WSSSG', 'WSSSG', 'WSSSG', 'SSSSG']
+
+    kartenliste = create_kartenliste(karteninfoliste)
+
+    c = 1
+    while True:
+        print("Spiel{}".format(c))
+        privateliste = deepcopy(kartenliste)
+        print(privateliste)
+
+        spiel = Spiel(privateliste)
     #spiel.player_vs_player()
     #draw_card(spiel.draw_card())
-    spiel.play_random1v1(Player(1), Player(2))
+
+        spiel.play_random1v1(Player(1), Player(2))
+        c += 1

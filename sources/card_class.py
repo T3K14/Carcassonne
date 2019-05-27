@@ -5,6 +5,8 @@ from Wiese import WieseAufKarte
 #from strasse, etc
 from rotate2 import rotate_info_right, rotate_list_right, rotate_matrix_right, rotate_kanten_dict_right, rotate_wiesen_right, rotate_ecken_dict_right
 
+import random
+
 class Card:
 
     def __init__(self, o, r, u, l, m=None, schild=False):
@@ -353,6 +355,7 @@ for card in Karteninfos:
     except ValueError:
         Karteninfos_neu.append(card)
 
+print(Karteninfos_neu)
 
 def create_kartenliste(karteninfos):
 
@@ -370,10 +373,10 @@ def create_kartenliste(karteninfos):
 
         k = Card(a, b, c, d, m, schild)
         l.append(k)
-
+        random.shuffle(l)
     return l
 
-Kartenliste = create_kartenliste(Karteninfos_neu)
+#Kartenliste = create_kartenliste(Karteninfos_neu)
 
 if __name__ == "__main__":
     ka = Card("O", "S", "S", "W")
