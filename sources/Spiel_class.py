@@ -559,6 +559,10 @@ if __name__ == "__main__":
 
     kartenliste = create_kartenliste(karteninfoliste)
 
+    c1 = 0
+    c2 = 0
+    c3 = 0
+
     c = 1
     while True:
         print("Spiel{}".format(c))
@@ -569,5 +573,23 @@ if __name__ == "__main__":
     #spiel.player_vs_player()
     #draw_card(spiel.draw_card())
 
-        spiel.play_random1v1(Player(1), Player(2))
+        pl1 = Player(1)
+        pl2 = Player(2)
+
+        spiel.play_random1v1(pl1, pl2)
+
+        if pl1.punkte != pl2.punkte:
+            winner = max((pl1, pl2), key=lambda x: x.punkte)
+        else:
+            winner = 0
+
+        if winner == pl1:
+            c1 += 1
+        elif winner == pl2:
+            c2 += 1
+        else:
+            c3 += 1
+
         c += 1
+
+        print("Gewinne 1: {}, Gewinne 2: {}, Unentschieden: {}".format(c1, c2, c3))

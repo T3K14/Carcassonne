@@ -26,7 +26,9 @@ class Wiese:
         if len(global_wiese.meeples) > 0:
             self.update_besitzer()
 
-        alle_wiesen.remove(global_wiese)
+        # gilt nur nicht, wenn das Kloster mit strasse involviert ist
+        if global_wiese in alle_wiesen:
+            alle_wiesen.remove(global_wiese)
 
     def update_meeples(self, player):
         """ nimmt player an, welcher ein meeple auf diese landschaft setzt"""
