@@ -14,3 +14,14 @@ d2 = {p1: p2, p2: p1}
 
 winner = max(list(d2), key=lambda x: x.punkte)
 print(winner.punkte)
+
+
+#spiel = Spiel(card_list, start=True)
+
+import numpy
+
+a = numpy.array([1, 2, 3])
+print(a)
+
+b = [1, 2, 3]
+print(b.__len__())

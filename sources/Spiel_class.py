@@ -7,12 +7,18 @@ from Wiese import Wiese
 from Player_Class import Player
 from plot_cards import display_spielbrett_dict, draw_card
 
-from copy import deepcopy
 from rotate2 import rotate_info_right, rotate_kanten_dict_right
 import random
 from copy import deepcopy
 
 class Spiel:
+
+    #def __init__(self, card_list, cards_set=None, unavailable_coords=None, possible_coords=None, alle_orte=None,
+    #             alle_strassen=None, alle_wiesen=None, alle_kloester=None, start=False):
+
+    #    if cards_set==None:
+    #        self.cards_set = []
+
     def __init__(self, card_list):
         self.cards_left = card_list
 
@@ -512,7 +518,14 @@ class Spiel:
 
             turn = d[turn]
 
+
     def play_random1v1(self, player1, player2):
+        """
+
+        :param player1: spieler der zuerst seinen Zug macht
+        :param player2:
+        :return: Spieler, der am Ende gewonnen hat
+        """
         d = {player1: player2, player2: player1}
         turn_player = player1
 
@@ -570,6 +583,7 @@ if __name__ == "__main__":
         print(privateliste)
 
         spiel = Spiel(privateliste)
+        #spiel2 = deepcopy(spiel)
     #spiel.player_vs_player()
     #draw_card(spiel.draw_card())
 

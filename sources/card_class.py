@@ -338,24 +338,13 @@ class Card:
             for e in wiese.ecken:
                 self.ecken[e] = wiese
 
-
-Karteninfos = ["4WWWWK", "2WWSWK", "OOOOOT", "3SOSW", "5OWWW", "2WOWOOT",
-               "OWOWO", "3WOWO", "2WOOW", "3OSSW", "3SOWS","3SOSSG",
-               "2OWWOOT", "3OWWOO", "2OSSOOT", "3OSSOO", "OOWOOT", "3OOWOO",
-               "2OOSOOT", "OOSOO", "8SWSW", "9WWSS", "4WSSSG", "SSSSG"]
-
-Karteninfos_neu = []
-
-for card in Karteninfos:
-    i = list(card)
-    try:
-        if int(i[0]) in range(10):
-            for z in range(int(i[0])):
-                Karteninfos_neu.append(card[1:])
-    except ValueError:
-        Karteninfos_neu.append(card)
-
-print(Karteninfos_neu)
+karteninfoliste = ['WWWWK', 'WWWWK', 'WWWWK', 'WWWWK', 'WWSWK', 'WWSWK', 'OOOOOT', 'SOSW', 'SOSW', 'SOSW', 'OWWW',
+                       'OWWW', 'OWWW', 'OWWW', 'OWWW', 'WOWOOT', 'WOWOOT', 'OWOWO', 'WOWO', 'WOWO', 'WOWO', 'WOOW',
+                       'WOOW', 'OSSW', 'OSSW', 'OSSW', 'SOWS', 'SOWS', 'SOWS', 'SOSSG', 'SOSSG', 'SOSSG', 'OWWOOT',
+                       'OWWOOT', 'OWWOO', 'OWWOO', 'OWWOO', 'OSSOOT', 'OSSOOT', 'OSSOO', 'OSSOO', 'OSSOO', 'OOWOOT',
+                       'OOWOO', 'OOWOO', 'OOWOO', 'OOSOOT', 'OOSOOT', 'OOSOO', 'SWSW', 'SWSW', 'SWSW', 'SWSW', 'SWSW',
+                       'SWSW', 'SWSW', 'SWSW', 'WWSS', 'WWSS', 'WWSS', 'WWSS', 'WWSS', 'WWSS', 'WWSS', 'WWSS', 'WWSS',
+                       'WSSSG', 'WSSSG', 'WSSSG', 'WSSSG', 'SSSSG']
 
 def create_kartenliste(karteninfos):
 
