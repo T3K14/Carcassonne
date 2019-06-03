@@ -6,6 +6,8 @@ from Wiese import Wiese
 import card_class
 import Spiel_class
 from Player_Class import Player
+from card_class import Card
+from plot_cards import display_spielbrett_dict, draw_card
 
 Kartenliste = []
 
@@ -28,13 +30,18 @@ class PossibleActionsTest(unittest.TestCase):
 
         spiel.possible_coordinates = [(0, 1), (1, 0), (0, -1), (-1, 0), (1, 2), (2, 1)]
 
+        #display_spielbrett_dict(spiel.cards_set)
+
         k = card_class.Card("S", "O", "O", "S", "O")
+        #draw_card(k)
 
         goal = [(0, -1, 0, k.strassen[0]), (0, -1, 0, k.orte[0]), (0, -1, 1, k.strassen[0]),
                 (0, -1, 1, k.orte[0]), (2, 1, 1, k.strassen[0]), (2, 1, 1, k.orte[0]),
                 (2, 1, 2, k.strassen[0]), (2, 1, 2, k.orte[0]), (1, 0, 2, k.orte[0]),
                 (1, 0, 2, k.strassen[0]), (0, -1, 0, None), (0, -1, 1, None), (1, 0, 2, None), (2, 1, 1, None), (2, 1, 2, None),
-                ]
+                (1, 0, 2, k.wiesen[0]), (1, 0, 2, k.wiesen[1]), (2, 1, 1, k.wiesen[0]), (2, 1, 1, k.wiesen[1]),
+                (2, 1, 2, k.wiesen[0]), (2, 1, 2, k.wiesen[1]), (0, -1, 0, k.wiesen[0]), (0, -1, 0, k.wiesen[1]),
+                (0, -1, 1, k.wiesen[0]), (0, -1, 1, k.wiesen[1])]
 
         player1 = Player(1)
         pos_act = spiel.calculate_possible_actions(k, player1)
@@ -72,6 +79,34 @@ class PossibleActionsTest(unittest.TestCase):
 
         goal = [(1, -1, 1, k.strassen[0]), (1, -1, 1, k.orte[0], (1, -1, 1, None)), (3, 0, 0, None),
                 (3, 0, 0, k.strassen[0]), (3, 0, 3, None), (3, 0, 3, k.strassen[0])]
+
+    def test3(self):
+
+        spiel = Spiel_class.Spiel(Kartenliste)
+        player1 = Player(1)
+        player2 = Player(2)
+
+        k1 = Card('O', 'O', 'S', 'O', 'O', True)
+        spiel.make_action(k1, (1, 0), 0, player2, k1.orte[0])
+
+        k2 = Card('O', 'W', 'W', 'O', 'O')
+        spiel.make_action(k2, (1, 1), 2, player1, k2.wiesen[0])
+
+        k3 = Card('W', 'W', 'W', 'W', 'K')
+        pos = spiel.calculate_possible_actions(k3, player2)
+
+        goal = [(-1, 0, 0, k3.wiesen[0]), (-1, 0, 0, None), (-1, 0, 0, 'K'),
+                (-1, 0, 1, k3.wiesen[0]), (-1, 0, 1, None), (-1, 0, 1, 'K'),
+                (-1, 0, 2, None), (-1, 0, 2, 'K'), (-1, 0, 2, k3.wiesen[0]),
+                (-1, 0, 3, None), (-1, 0, 3, 'K'), (-1, 0, 3, k3.wiesen[0]),
+                (1, 2, 0, None), (1, 2, 0, 'K'),# (1, 2, 0, k3.wiesen[0]),
+                (1, 2, 1, None), (1, 2, 1, 'K'),# (1, 2, 1, k3.wiesen[0]),
+                (1, 2, 2, None), (1, 2, 2, 'K'),# (1, 2, 2, k3.wiesen[0]),
+                (1, 2, 3, None), (1, 2, 3, 'K')]# (1, 2, 3, k3.wiesen[0])]
+
+        self.assertEqual(len(pos), len(goal))
+        for tup in pos:
+            self.assertTrue(tup in goal)
 
 if __name__ == "__main__":
     unittest.main()

@@ -504,6 +504,32 @@ class BigTest(unittest.TestCase):
         k4 = Card('O', 'O', 'O', 'O', 'O')
         spiel.make_action(k4, (2, 0), 0, player2)
 
+    def test5(self):
+        spiel = Spiel_class.Spiel(Kartenliste)
+        player1 = Player_Class.Player(1)
+        player2 = Player_Class.Player(2)
+
+        k1 = Card('W', 'O', 'W', 'O')
+        spiel.make_action(k1, (-1, 0), 1, player1)
+
+        self.assertEqual(len(spiel.alle_orte), 3)
+
+    def test6(self):
+        spiel = Spiel_class.Spiel(Kartenliste)
+        player1 = Player_Class.Player(1)
+        player2 = Player_Class.Player(2)
+
+        k1 = Card('S', 'O', 'S', 'S', 'G')
+        spiel.make_action(k1, (0, -1), 0, player2)
+
+        k2 = Card('S', 'O', 'S', 'W')
+        spiel.make_action(k2, (0, 1), 2, player1)
+
+        k3 = Card('O', 'W', 'W', 'O', 'O')
+        spiel.make_action(k3, (2, 0), 1, player2)
+
+        k4 = Card('O', 'O', 'S', 'O', 'O', True)
+        spiel.calculate_possible_actions(k4, player1)
 
 if __name__ == '__main__':
     unittest.main()

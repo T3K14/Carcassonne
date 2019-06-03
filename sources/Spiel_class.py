@@ -395,7 +395,8 @@ class Spiel:
             if w not in ww:
                 neue_wiese = Wiese((x, y), w.ecken)
                 if meeple_position == w:
-                    w.besitzer = player
+                    neue_wiese.update_meeples(player)
+                    neue_wiese.update_besitzer()
                 self.alle_wiesen.append(neue_wiese)
                 card.update_ecken(w, neue_wiese)
 
