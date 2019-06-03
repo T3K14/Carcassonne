@@ -4,6 +4,10 @@ from card_class import create_kartenliste, karteninfoliste, Card
 from copy import deepcopy
 from plot_cards import draw_card, display_spielbrett_dict
 
+from Wiese import WieseAufKarte
+from Strasse import StasseAufKarte
+from Ort import Ort_auf_Karte
+
 import sys
 import numpy as np
 
@@ -22,19 +26,6 @@ class Node:
             result = self.wins / self.visits + c * np.sqrt(np.log(nr_simulations / self.visits))
             return result
 
-def get_best_child_via_ucb1():
-
-        # start time replacement
-        t = 0
-        t_end = 3000
-
-        # loop as long as time is left:
-        while t < t_end:
-            pass
-
-
-        return 1
-
 def player_vs_ucb(kartenliste=None):
 
     player1 = Player(1)
@@ -42,6 +33,8 @@ def player_vs_ucb(kartenliste=None):
 
     player1.meeples = 3
     player2.meeples = 3
+
+    player1.punkte = 3
 
     d = {player1: player2, player2: player1}
 
@@ -51,27 +44,32 @@ def player_vs_ucb(kartenliste=None):
         spiel = Spiel(kartenliste)
 
     #select startspieler
-    current_player = player2
+    current_player = player1
 
 
 
     #####
-    k1 = Card('O', 'W', 'W', 'O', 'O')
-    spiel.make_action(k1, (1, 0), 0, player1, k1.orte[0])
+    #k1 = Card('O', 'W', 'W', 'O', 'O')
+    #spiel.make_action(k1, (1, 0), 0, player1, k1.orte[0])
+
+    #k2 = Card('O', 'W', 'W', 'O', 'O')
+    #spiel.make_action(k2, (1, 0), 0, player1)
     #####
 
 
     game_is_running = True
     while game_is_running:
 
+        print('player1 hat {} Punkte, player2 hat {} Punkte.'.format(player1.punkte, player2.punkte))
+
         # display spielbrett
         display_spielbrett_dict(spiel.cards_set)
 
         current_card = spiel.draw_card()
-        print('Alle moeglichen actions:')
-        print(spiel.calculate_possible_actions(current_card, current_player))
+        #print('Alle moeglichen actions:')
+        #print(spiel.calculate_possible_actions(current_card, current_player))
 
-        print('Die nachste Karte ist [{0}, {1}, {2}, {3}, {4}, {5}]'.format(current_card.info[0], current_card.info[1], current_card.info[2], current_card.info[3], current_card.mitte, current_card.schild))
+        print('\nDie nachste Karte ist [{0}, {1}, {2}, {3}, {4}, {5}]'.format(current_card.info[0], current_card.info[1], current_card.info[2], current_card.info[3], current_card.mitte, current_card.schild))
 
         draw_card(current_card)
         print('Sie enthält folgende moegliche Meeplepositionen:')
@@ -148,8 +146,51 @@ def player_vs_ucb(kartenliste=None):
                     spiel_copy = deepcopy(spiel)
                     current_card_copy = deepcopy(current_card)
 
+                    #player zurueckaendern:
+                    """die spieler, die beim kopieren vom Spiel veraendert wurden werden hier wieder zurueckgesetzt"""
+                    l = [spiel_copy.alle_orte, spiel_copy.alle_wiesen, spiel_copy.alle_strassen]
+                    for landart in l:
+                        for instance in landart:
+                            if instance.meeples:
+
+                                new_d = {current_player: 0, d[current_player]: 0}
+                                for player in instance.meeples:
+                                    for global_player in new_d:
+                                        if global_player.nummer == player.nummer:
+                                            new_d[global_player] = instance.meeples[player]
+                                instance.meeples = new_d
+                                instance.update_besitzer()
+
+                    # spieler von kloestern zuruecksetzen
+                    for global_kloster in spiel.alle_kloester:
+                        for kloster in spiel_copy.alle_kloester:
+                            if kloster.umgebungs_koordinaten == global_kloster.umgebungs_koordinaten:
+                                kloster.besitzer = global_kloster.besitzer
+
+                    #current_card_copy = deepcopy(current_card)
+
                     current_node = max(child_nodes, key=lambda nod: nod.calculate_UCB1_value(t))
-                    spiel_copy.make_action(current_card_copy, (current_node.action[0], current_node.action[1]), current_node.action[2], current_player, current_node.action[3])
+
+                    meeple_pos = 'K'
+
+
+                    if isinstance(current_node.action[3], Ort_auf_Karte):
+                        for ort in current_card_copy.orte:
+                            if ort.name == current_node.action[3].name:
+                                meeple_pos = ort
+                                break
+                    elif isinstance(current_node.action[3], StasseAufKarte):
+                        for strasse in current_card_copy.strassen:
+                            if strasse.name == current_node.action[3].name:
+                                meeple_pos = strasse
+                                break
+                    elif isinstance(current_node.action[3], WieseAufKarte):
+                        for wiese in current_card_copy.wiesen:
+                            if wiese.name == current_node.action[3].name:
+                                meeple_pos = wiese
+                                break
+
+                    spiel_copy.make_action(current_card_copy, (current_node.action[0], current_node.action[1]), current_node.action[2], current_player, meeple_pos)
 
                     # play random
                     winner = spiel_copy.play_random1v1(d[current_player], current_player)
@@ -166,6 +207,10 @@ def player_vs_ucb(kartenliste=None):
 
                     d[current_player].meeples = other_player_stats[0]
                     d[current_player].punkte = other_player_stats[1]
+
+                    # erste Karte nach dem Spiel wieder resetten
+                    #current_card.ecken, current_card.kanten, current_card.orte, current_card.orte_kanten,\
+                    #current_card.strassen, current_card.strassen_kanten, current_card.wiesen, current_card.wiesen_kanten = card_stats[0], card_stats[1], card_stats[2], card_stats[3], card_stats[4], card_stats[5], card_stats[6], card_stats[7]
 
                     t += 1
 
@@ -195,11 +240,12 @@ def player_vs_ucb(kartenliste=None):
     print("Spielende: Player1 hat {} Punkte, Player2 hat {} Punkte.".format(player1.punkte, player2.punkte))
 
 if __name__ == '__main__':
-    #player_vs_ucb([Card('O', 'W', 'W', 'O', 'O'), Card('O', 'W', 'W', 'W'), Card('W', 'W', 'W', 'W', 'K'),
-    #               Card('S', 'O', 'S', 'W'), Card('W', 'W', 'S', 'S'), Card('O', 'W', 'O', 'W', 'O'),
-    #               Card('W', 'O', 'W', 'O'), Card('O', 'O', 'S', 'O', 'O', True), Card('O', 'W', 'W', 'O', 'O'),
-    #               Card('S', 'O', 'S', 'S', 'G')])
-    #player_vs_ucb([Card('W', 'O', 'W', 'O'), Card('')])
-    #player_vs_ucb([Card('W', 'W','W','W','K')])
+    player_vs_ucb([Card('O', 'W', 'W', 'O', 'O'), Card('O', 'W', 'W', 'W'), Card('W', 'W', 'W', 'W', 'K'),
+                   Card('S', 'O', 'S', 'W'), Card('W', 'W', 'S', 'S'), Card('O', 'W', 'O', 'W', 'O'),
+                   Card('W', 'O', 'W', 'O'), Card('O', 'O', 'S', 'O', 'O', True), Card('O', 'W', 'W', 'O', 'O'),
+                   Card('S', 'O', 'S', 'S', 'G')])
+    player_vs_ucb([Card('W', 'O', 'W', 'O'), Card('')])
+    player_vs_ucb([Card('W', 'W','W','W','K')])
 
-    player_vs_ucb([Card('O', 'W', 'W', 'W')])#, Card('O', 'W', 'W', 'O', 'O')])
+    #player_vs_ucb([Card('O', 'W', 'W', 'W'), Card('O', 'W', 'W', 'O', 'O')])
+    #player_vs_ucb([Card('W', 'O', 'W', 'O')])

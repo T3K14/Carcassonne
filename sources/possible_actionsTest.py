@@ -108,5 +108,31 @@ class PossibleActionsTest(unittest.TestCase):
         for tup in pos:
             self.assertTrue(tup in goal)
 
+    def test4(self):
+        spiel = Spiel_class.Spiel(Kartenliste)
+        player1 = Player(1)
+        player2 = Player(2)
+
+        k2 = Card('O', 'W', 'W', 'O', 'O')
+        spiel.make_action(k2, (1, 0), 0, player1)
+
+        k3 = Card('W', 'O', 'W', 'O')
+        pos = spiel.calculate_possible_actions(k3, player2)
+
+        self.assertEqual(len(pos), 32)
+
+    def test5(self):
+        spiel = Spiel_class.Spiel(Kartenliste)
+        player1 = Player(1)
+        player2 = Player(2)
+
+        k2 = Card('O', 'W', 'W', 'O', 'O')
+        spiel.make_action(k2, (1, 0), 0, player1, k2.orte[0])
+
+        k3 = Card('W', 'O', 'W', 'O')
+        pos = spiel.calculate_possible_actions(k3, player2)
+
+        self.assertEqual(len(pos), 30)
+
 if __name__ == "__main__":
     unittest.main()

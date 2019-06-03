@@ -59,8 +59,26 @@ class Spiel:
 
 
     def meeple_check(self, x, y, nachbar_kanten, kanten_dict):
-        """berechnet zu geg. Rotation an geg Koordinaten zu gegebenem Landschaftstyp (buchstabe, zB. 'O') wo ich auf der Karte ein meeple setzen kann (Strassen und Orte)"""
+        """berechnet zu bel. rotierter Karte an geg Koordinaten zu gegebenem Landschaftstyp (buchstabe, zB. 'O')
+         wo ich auf der Karte ein meeple setzen kann (Strassen und Orte)
 
+        :param x: die koordinaten an denen gecheckt werden soll
+        :param y:
+
+        :param nachbar_kanten: ein dict der Form {2: 'O'} das angibt welcher Landschaftstyp an welche Kante
+                                der aktuellen Karte angrenzt. Hier: An die Kante 2 der Karte grenzt ein Ort an
+                                Dabei ist zu sagen, dass das unabhaengig von der Karte passiert. Das dict gibt an,
+                                welche Landschaftstypen an den Kanten der leeren Stelle an den Koordinaten x, y
+                                angrenzen
+
+        :param kanten_dict: ein dict der Form {0: <Ort.Ort_auf_Karte object at 0x7fd3ef25e0b8>,
+                                                1: None, 2: <Ort.Ort_auf_Karte object at 0x7fd3ef25e080>, 3: None}
+        Es ist das kanten dict der Karte zur aktuellen Rotation:
+        An Kante 0 der Karte liegt der OaK 0x7fd... etc
+
+        :return: gibt Liste mit Landschaften auf der Karte zurueck, auf die in Abhaengigkeit mit anderen Landschaften
+        des selben Typs noch Meeples gesetzt werden koennen
+        """
         output = []
         d2 = {0: (x, y + 1), 1: (x + 1, y), 2: (x, y - 1), 3: (x - 1, y)}
 
@@ -72,6 +90,39 @@ class Spiel:
                     output.append(kanten_dict[kante])
 
         return output
+
+    def meeple_check2(self, x, y, nachbar_kanten, kanten_dict):
+        """berechnet zu bel. rotierter Karte an geg Koordinaten zu gegebenem Landschaftstyp (buchstabe, zB. 'O')
+         wo ich auf der Karte ein meeple setzen kann (Strassen und Orte)
+
+        :param x: die koordinaten an denen gecheckt werden soll
+        :param y:
+
+        :param nachbar_kanten: ein dict der Form {2: 'O'} das angibt welcher Landschaftstyp an welche Kante
+                                der aktuellen Karte angrenzt. Hier: An die Kante 2 der Karte grenzt ein Ort an
+                                Dabei ist zu sagen, dass das unabhaengig von der Karte passiert. Das dict gibt an,
+                                welche Landschaftstypen an den Kanten der leeren Stelle an den Koordinaten x, y
+                                angrenzen
+
+        :param kanten_dict: ein dict der Form {0: <Ort.Ort_auf_Karte object at 0x7fd3ef25e0b8>,
+                                                1: None, 2: <Ort.Ort_auf_Karte object at 0x7fd3ef25e080>, 3: None}
+        Es ist das kanten dict der Karte zur aktuellen Rotation:
+        An Kante 0 der Karte liegt der OaK 0x7fd... etc
+
+        :return: gibt Liste mit Landschaften auf der Karte zurueck, auf die in Abhaengigkeit mit anderen Landschaften
+        des selben Typs keine Meeples gesetzt werden koennen"""
+
+        forbidden_landschaften = []
+        d2 = {0: (x, y + 1), 1: (x + 1, y), 2: (x, y - 1), 3: (x - 1, y)}
+
+        for kante in nachbar_kanten:
+            if nachbar_kanten[kante] is not 'W' and d2[kante] in self.cards_set and self.cards_set[d2[kante]].kanten[self.d[kante]].besitzer is not None:
+
+                # appende die entprechende Landschaft auf der Karte
+                if kanten_dict[kante] not in forbidden_landschaften:
+                    forbidden_landschaften.append(kanten_dict[kante])
+
+        return forbidden_landschaften
 
     def find_angrenzende_wiesen(self, x, y, info, wiese_auf_karte):
         """finde zu einer Wiese_auf_karte alle angrenzenden globalen wiesen und returne liste von diesen"""
@@ -148,8 +199,14 @@ class Spiel:
 
                             # durchsuche alle orte nach dem der dort liegt und checke, ob der schon besetzt ist, falls nicht
                             # append mit dieser moeglichkeit
-                            for o in self.meeple_check(x, y, nachbar_karten, kanten_dict):
-                                possible_actions.append((x, y, i, o))
+                            for o in card.orte:
+                                if o not in self.meeple_check2(x, y, nachbar_karten, kanten_dict):
+                                    possible_actions.append((x, y, i, o))
+
+                            # fuer alle orte, die nicht wechselwirken, aber noch auf der Karte sind:
+
+
+
                         else:
                             # fuer alle Orte auf der Karte appende actions mit diesem als meepleauswahl
                             for o in card.orte:
@@ -159,8 +216,9 @@ class Spiel:
 
                             # durchsuche alle orte nach dem der dort liegt und checke, ob der schon besetzt ist, falls nicht
                             # append mit dieser moeglichkeit
-                            for s in self.meeple_check(x, y, nachbar_karten, kanten_dict):
-                                possible_actions.append((x, y, i, s))
+                            for s in card.strassen:
+                                if s not in  self.meeple_check2(x, y, nachbar_karten, kanten_dict):
+                                    possible_actions.append((x, y, i, s))
                         else:
                             # fuer alle Orte auf der Karte appende actions mit diesem als meepleauswahl
                             for s in card.strassen:
