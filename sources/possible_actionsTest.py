@@ -134,5 +134,120 @@ class PossibleActionsTest(unittest.TestCase):
 
         self.assertEqual(len(pos), 30)
 
+    def test6(self):
+        spiel = Spiel_class.Spiel(Kartenliste)
+        player1 = Player(1)
+        player2 = Player(2)
+
+        k1 = Card('W', 'W', 'S', 'S')
+        spiel.make_action(k1, (0, 1), 3, player1)
+
+        k2 = Card('O', 'S', 'S', 'O', 'O')
+        spiel.make_action(k2, (1, 1), 1, player2)
+
+        #display_spielbrett_dict(spiel.cards_set)
+        k3 = Card('O', 'O', 'S', 'O', 'O', True)
+        pos = spiel.calculate_possible_actions(k3, player1)
+
+        self.assertEqual(len(pos), 40)
+
+    def test7(self):
+        spiel = Spiel_class.Spiel(Kartenliste)
+        player1 = Player(1)
+        player2 = Player(2)
+
+        k1 = Card('S', 'W', 'S', 'W')
+        pos1 = spiel.calculate_possible_actions(k1, player1)
+
+        self.assertEqual(len(pos1), 24)
+        spiel.make_action(k1, (0, 1), 0, player1, k1.strassen[0])
+
+        k2 = Card('O', 'W', 'W', 'O', 'O')
+        pos2 = spiel.calculate_possible_actions(k2, player2)
+
+        self.assertEqual(len(pos2), 24)
+        spiel.make_action(k2, (1, 0), 0, player2, k2.orte[0])
+
+        #display_spielbrett_dict(spiel.cards_set)
+
+        k3 = Card('W', 'W', 'S', 'S')
+        pos3 = spiel.calculate_possible_actions(k3, player1)
+
+        self.assertEqual(len(pos3), 44)
+        spiel.make_action(k3, (0, 2), 3, player1)
+
+        k4 = Card('O', 'S', 'S', 'W')
+        pos4 = spiel.calculate_possible_actions(k4, player2)
+
+        self.assertEqual(len(pos4), 46)
+        spiel.make_action(k4, (1, 2), 2, player2)
+
+        k4 = Card('W', 'O', 'W', 'O')
+        pos5 = spiel.calculate_possible_actions(k4, player1)
+
+        self.assertEqual(len(pos5), 62)
+
+    def test8(self):
+        """fast der gleiche wie test7, nur mit meeple mehr in vorletzem Zug"""
+        spiel = Spiel_class.Spiel(Kartenliste)
+        player1 = Player(1)
+        player2 = Player(2)
+
+        k1 = Card('S', 'W', 'S', 'W')
+        pos1 = spiel.calculate_possible_actions(k1, player1)
+
+        self.assertEqual(len(pos1), 24)
+        spiel.make_action(k1, (0, 1), 0, player1, k1.strassen[0])
+
+        k2 = Card('O', 'W', 'W', 'O', 'O')
+        pos2 = spiel.calculate_possible_actions(k2, player2)
+
+        self.assertEqual(len(pos2), 24)
+        spiel.make_action(k2, (1, 0), 0, player2, k2.orte[0])
+
+        #display_spielbrett_dict(spiel.cards_set)
+
+        k3 = Card('W', 'W', 'S', 'S')
+        pos3 = spiel.calculate_possible_actions(k3, player1)
+
+        self.assertEqual(len(pos3), 44)
+        spiel.make_action(k3, (0, 2), 3, player1)
+
+        k4 = Card('O', 'S', 'S', 'W')
+        pos4 = spiel.calculate_possible_actions(k4, player2)
+
+        self.assertEqual(len(pos4), 46)
+        spiel.make_action(k4, (1, 2), 2, player2, k4.orte[0])
+
+        k5= Card('W', 'O', 'W', 'O')
+        pos5 = spiel.calculate_possible_actions(k5, player1)
+
+        self.assertEqual(len(pos5), 60)
+
+    def test9(self):
+        spiel = Spiel_class.Spiel(Kartenliste)
+        player1 = Player(1)
+        player2 = Player(2)
+
+        k1 = Card('W', 'W', 'S', 'S')
+        pos1 = spiel.calculate_possible_actions(k1, player1)
+
+        self.assertEqual(len(pos1), 24)
+        spiel.make_action(k1, (0, 1), 3, player1)
+
+        k2 = Card('S', 'O', 'S', 'W')
+        pos2 = spiel.calculate_possible_actions(k2, player2)
+
+        self.assertEqual(len(pos2), 40)
+        wiese = [w for w in k2.wiesen if w.ecken == [5, 6]][0]
+
+        spiel.make_action(k2, (1, 1), 1, player1, wiese)
+
+        k3 = Card('O', 'O', 'S', 'O', 'O', True)
+        pos3 = spiel.calculate_possible_actions(k3, player1)
+
+        self.assertEqual(len(pos3), 18)
+
+
 if __name__ == "__main__":
     unittest.main()

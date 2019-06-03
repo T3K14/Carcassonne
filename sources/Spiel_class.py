@@ -7,7 +7,7 @@ from Wiese import Wiese
 from Player_Class import Player
 from plot_cards import display_spielbrett_dict, draw_card
 
-from rotate2 import rotate_info_right, rotate_kanten_dict_right
+from rotate2 import rotate_info_right, rotate_kanten_dict_right, rotate_ecken_dict_right
 import random
 from copy import deepcopy
 
@@ -57,7 +57,7 @@ class Spiel:
         self.cards_left.remove(auswahl)
         return auswahl
 
-
+    #obsolet
     def meeple_check(self, x, y, nachbar_kanten, kanten_dict):
         """berechnet zu bel. rotierter Karte an geg Koordinaten zu gegebenem Landschaftstyp (buchstabe, zB. 'O')
          wo ich auf der Karte ein meeple setzen kann (Strassen und Orte)
@@ -124,6 +124,7 @@ class Spiel:
 
         return forbidden_landschaften
 
+    # obsolet
     def find_angrenzende_wiesen(self, x, y, info, wiese_auf_karte):
         """finde zu einer Wiese_auf_karte alle angrenzenden globalen wiesen und returne liste von diesen"""
         o = []
@@ -135,6 +136,37 @@ class Spiel:
                     if d[(ecke, kante)] in self.cards_set:
                         o.append(self.cards_set[d[(ecke, kante)]].ecken[self.d3[(ecke, kante)]])
         return o
+
+    def meeple_check_wiesen(self, x, y, rotations, info, card):
+        """
+
+        :param x:
+        :param y:
+        :param rotations:
+        :param card:
+        :return: soll fuer die Karte bei der Anzahl von i rechts-Rotationen ausgeben, welche Wiesen nicht besetzt werden duerfen
+        """
+        d = {(4, 0): (x, y + 1), (5, 1): (x + 1, y), (6, 2): (x, y - 1), (7, 3): (x - 1, y),
+             (5, 0): (x, y + 1), (6, 1): (x + 1, y), (7, 2): (x, y - 1), (4, 3): (x - 1, y)}
+
+        forbidden = []
+
+        ecken = card.ecken.copy()
+        for i in range(rotations):
+            ecken = rotate_ecken_dict_right(ecken)
+
+        for ecke in ecken:
+            # wenn die wak zu der die Ecke gehoert noch nicht als verboten gesetzt wurde
+            if ecken[ecke] not in forbidden:
+                #schau mir beide Kanten zu der Ecke an
+                for kante in self.d2[ecke]:
+                    if info[kante] in ('W', 'S'):
+                        if d[(ecke, kante)] in self.cards_set:
+                            if self.cards_set[d[(ecke, kante)]].ecken[self.d3[(ecke, kante)]].besitzer is not None:
+                                forbidden.append(ecken[ecke])
+
+        return forbidden
+
 
     def calculate_possible_actions(self, card, player):
         """
@@ -217,7 +249,8 @@ class Spiel:
                             # durchsuche alle orte nach dem der dort liegt und checke, ob der schon besetzt ist, falls nicht
                             # append mit dieser moeglichkeit
                             for s in card.strassen:
-                                if s not in  self.meeple_check2(x, y, nachbar_karten, kanten_dict):
+                                forbidden = self.meeple_check2(x, y, nachbar_karten, kanten_dict)
+                                if s not in forbidden:
                                     possible_actions.append((x, y, i, s))
                         else:
                             # fuer alle Orte auf der Karte appende actions mit diesem als meepleauswahl
@@ -225,10 +258,15 @@ class Spiel:
                                 possible_actions.append((x, y, i, s))
 
                         # TESTEN
-                        for wiese_auf_karte in card.wiesen:
-                            besitzer = [0 for x in self.find_angrenzende_wiesen(x, y, info, wiese_auf_karte) if x.besitzer is not None]
-                            if not besitzer:
-                                possible_actions.append((x, y, i, wiese_auf_karte))
+                        #for wiese_auf_karte in card.wiesen:
+                        #    besitzer = [0 for x in self.find_angrenzende_wiesen(x, y, info, wiese_auf_karte) if x.besitzer is not None]
+                        #    if not besitzer:
+                        #        possible_actions.append((x, y, i, wiese_auf_karte))
+
+                        forbidden_wiesen = self.meeple_check_wiesen(x, y, i, info, card)
+                        for wiese in card.wiesen:
+                            if wiese not in forbidden_wiesen:
+                                possible_actions.append((x, y, i, wiese))
 
                         if card.mitte == 'K':
                             possible_actions.append((x, y, i, 'K'))

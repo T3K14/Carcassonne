@@ -34,7 +34,7 @@ def player_vs_ucb(kartenliste=None):
     player1.meeples = 3
     player2.meeples = 3
 
-    player1.punkte = 3
+    #player1.punkte = 3
 
     d = {player1: player2, player2: player1}
 
@@ -44,7 +44,7 @@ def player_vs_ucb(kartenliste=None):
         spiel = Spiel(kartenliste)
 
     #select startspieler
-    current_player = player1
+    current_player = player2
 
 
 
@@ -90,24 +90,11 @@ def player_vs_ucb(kartenliste=None):
             if current_player.art == 'human':
                  #gib move ein
                     inp = input('Bitte gib deine Aktion an:')
-                    inp_split = inp.split(' ')
-                    if inp_split[3][0] == 'o':
-                        o = [a for a in current_card.orte if a.name == int(inp_split[3][1])]
-                        action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), o[0])
-                    elif inp_split[3][0] == 's':
-                        s = [a for a in current_card.strassen if a.name == int(inp_split[3][1])]
-                        action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), s[0])
-                    elif inp_split[3][0] == 'w':
-                        w = [a for a in current_card.wiesen if a.name == int(inp_split[3][1])]
-                        action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), w[0])
-                    else:
-                        action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), None)
 
-                    #falls move unguelig:
-                    while action not in pos:
-                        print("illegaler Move")
-                        inp = input('Bitte gib deine Aktion an:')
-                        inp_split = inp.split(' ')
+                    inp_split = inp.split(' ')
+                    ungueltig = True
+                    action = None
+                    try:
                         if inp_split[3][0] == 'o':
                             o = [a for a in current_card.orte if a.name == int(inp_split[3][1])]
                             action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), o[0])
@@ -117,8 +104,39 @@ def player_vs_ucb(kartenliste=None):
                         elif inp_split[3][0] == 'w':
                             w = [a for a in current_card.wiesen if a.name == int(inp_split[3][1])]
                             action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), w[0])
+                        elif inp_split[3][0] == 'k':
+                            action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), 'K')
                         else:
                             action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), None)
+                    except IndexError:
+                        pass
+
+                    #falls move unguelig:
+                    if action in pos:
+                        ungueltig = False
+                    while ungueltig:
+                        print("illegaler Move")
+                        inp = input('Bitte gib deine Aktion an:')
+                        inp_split = inp.split(' ')
+                        try:
+                            if inp_split[3][0] == 'o':
+                                o = [a for a in current_card.orte if a.name == int(inp_split[3][1])]
+                                action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), o[0])
+                            elif inp_split[3][0] == 's':
+                                s = [a for a in current_card.strassen if a.name == int(inp_split[3][1])]
+                                action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), s[0])
+                            elif inp_split[3][0] == 'w':
+                                w = [a for a in current_card.wiesen if a.name == int(inp_split[3][1])]
+                                action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), w[0])
+                            elif inp_split[3][0] == 'k':
+                                action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), 'K')
+                            else:
+                                action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), None)
+                        except IndexError:
+                            pass
+                        if action in pos:
+                            ungueltig = False
+
 
                     spiel.make_action(current_card, (action[0], action[1]), action[2], current_player, action[3])
 
@@ -134,7 +152,7 @@ def player_vs_ucb(kartenliste=None):
                 child_nodes = [Node(action) for action in pos]
 
                 t = 0
-                t_end = 1600
+                t_end = 5000
 
                 # player stats in real game
                 current_player_stats = (current_player.meeples, current_player.punkte)
@@ -237,6 +255,7 @@ def player_vs_ucb(kartenliste=None):
         else:
             continue
 
+    spiel.final_evaluate()
     print("Spielende: Player1 hat {} Punkte, Player2 hat {} Punkte.".format(player1.punkte, player2.punkte))
 
 if __name__ == '__main__':
@@ -244,8 +263,8 @@ if __name__ == '__main__':
                    Card('S', 'O', 'S', 'W'), Card('W', 'W', 'S', 'S'), Card('O', 'W', 'O', 'W', 'O'),
                    Card('W', 'O', 'W', 'O'), Card('O', 'O', 'S', 'O', 'O', True), Card('O', 'W', 'W', 'O', 'O'),
                    Card('S', 'O', 'S', 'S', 'G')])
-    player_vs_ucb([Card('W', 'O', 'W', 'O'), Card('')])
-    player_vs_ucb([Card('W', 'W','W','W','K')])
+    #player_vs_ucb([Card('W', 'O', 'W', 'O'), Card('')])
+    #player_vs_ucb([Card('W', 'W','W','W','K')])
 
     #player_vs_ucb([Card('O', 'W', 'W', 'W'), Card('O', 'W', 'W', 'O', 'O')])
     #player_vs_ucb([Card('W', 'O', 'W', 'O')])
