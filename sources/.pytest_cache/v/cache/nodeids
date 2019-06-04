@@ -1,6 +1,4 @@
 [
-  "possible_actionsTest.py::PossibleActionsTest::test3",
-  "possible_actionsTest.py::PossibleActionsTest::test4",
-  "possible_actionsTest.py::PossibleActionsTest::test_1",
-  "possible_actionsTest.py::PossibleActionsTest::test_2"
+  "Unittest.py::CardTest::testGeneration",
+  "Unittest.py::CardTest::test_matrix_creation"
 ]

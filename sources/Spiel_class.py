@@ -544,7 +544,7 @@ class Spiel:
                         if w.besitzer is not None:
                             w.besitzer.punkte += 3
                         else:
-                            for pl in ort.meeples:
+                            for pl in w.meeples:
                                 pl.punkte += 3
 
 

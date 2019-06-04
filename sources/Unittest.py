@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from KarteMod import Karte
+from card_class import Card as Karte
 
 
 class CardTest(unittest.TestCase):

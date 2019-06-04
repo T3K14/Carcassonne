@@ -1,9 +1,11 @@
 import unittest
 from Spiel_class import Spiel
-from card_class import Card, Kartenliste
+from card_class import Card, create_kartenliste, karteninfoliste
 from Player_Class import Player
 import plot_cards
 
+
+Kartenliste = create_kartenliste(karteninfoliste)
 class KlosterTest(unittest.TestCase):
 
     def test_1(self):
