@@ -3,6 +3,9 @@ class WieseAufKarte:
         self.ecken = ecken
         self.name = name
 
+        # fuer mcts-spielkopie ww
+        self.id = 'w'
+
 
 class Wiese:
     def __init__(self, koordinates, ecken):

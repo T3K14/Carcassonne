@@ -4,6 +4,9 @@ class StasseAufKarte:
         self.wert = 1
         self.name = name
 
+        # fuer mcts-spielkopie ww
+        self.id = 's'
+
 
 class Strasse:
     def __init__(self, koordinaten, kanten, wert=1):

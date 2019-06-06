@@ -7,6 +7,10 @@ class Kloster():
                   (koords[0] + 1, koords[1]), (koords[0] + 1, koords[1] - 1), (koords[0], koords[1] - 1),
                   (koords[0] - 1, koords[1] - 1), (koords[0] - 1, koords[1])]
 
+        # fuer mcts-spielkopie ww
+        self.id = 'k'
+        self.name = 1
+
 
     def check_if_fertig(self):
         if self.counter == 9:

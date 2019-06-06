@@ -4,6 +4,9 @@ class Ort_auf_Karte:
         self.wert = wert
         self.name = name
 
+        # fuer mcts-spielkopie ww
+        self.id = 'o'
+
 
 class Ort:
     def __init__(self, koordinaten, kanten, wert=2):

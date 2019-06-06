@@ -59,9 +59,9 @@ class Spiel:
         self.cards_left.remove(auswahl)
         return auswahl
 
-    def draw_first_card_from_stack(self):
-        """returned den ersten Eintrag der Kartenliste und entfernt die Karte aus der Liste"""
-        return self.cards_left.pop(0)
+    #def draw_first_card_from_stack(self):
+    #    """returned den ersten Eintrag der Kartenliste und entfernt die Karte aus der Liste"""
+    #    return self.cards_left.pop(0)
 
     #obsolet
     def meeple_check(self, x, y, nachbar_kanten, kanten_dict):
@@ -288,7 +288,15 @@ class Spiel:
         return possible_actions
 
     def make_action(self, card, koordinates, rotations, player, meeple_position=None):
-        """for setting a card and placing a meeple, geht davon aus, dass die action auch legitim ist (sollte ja
+        """
+
+        :param card: Karte, die gespielt werden soll
+        :param koordinates: tuple (x, y)
+        :param rotations: anzahl an rechtsrotationen zum Karte legen
+        :param player: Spieler, der diese Aktion spielt
+        :param meeple_position: Landschaft auf der ein Meeple pletziert werden soll, standard=None, also keine Meeple-Platzierung
+        :return:
+        for setting a card and placing a meeple, geht davon aus, dass die action auch legitim ist (sollte ja
         vorher gechekt werden)"""
 
         # if action_is_valid() muss im Spielprogramm dann davor!!!!!!

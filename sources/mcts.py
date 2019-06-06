@@ -1,7 +1,7 @@
 from copy import deepcopy
 import random
 
-from mcts2 import MCTS, Node, State
+from mcts2 import MCTS, Node
 from Spiel_class import Spiel
 from card_class import Card, karteninfoliste, create_kartenliste, determinized_karteninfoliste
 
@@ -23,24 +23,19 @@ def player_vs_uct():
 
     d = {player1: player2, player2: player1}
 
-    spiel = Spiel(determinized_karteninfoliste)
+    spiel = Spiel(create_kartenliste(determinized_karteninfoliste))
 
     #select startspieler
-    startspieler = player2
-    current_player = startspieler
+    current_player = player2
 
     mcts = MCTS((player1, player2), spiel.play_random1v1, spiel.calculate_possible_actions)
-    mcts.root = Node(State(True, 'startboard'), startspieler)
-
-    # todo wie mache ich hier weiter, was ist ein State?   Entweder einfach ein Spiel objekt zu einem bestimmten
-    # Zeitpunkt, oder ne Liste mit allen wichtigen Listen
-
+    mcts.root = Node(True, None, current_player)
 
     game_is_running = True
     while game_is_running:
 
         display_spielbrett_dict(spiel.cards_set)
-        current_card = spiel.draw_first_card_from_stack()
+        current_card = spiel.cards_left[0]
 
         print('Die nachste Karte ist [{0}, {1}, {2}, {3}, {4}, {5}]'.format(current_card.info[0], current_card.info[1], current_card.info[2], current_card.info[3], current_card.mitte, current_card.schild))
         draw_card(current_card)
@@ -116,6 +111,15 @@ def player_vs_uct():
                     spiel.make_action(current_card, (action[0], action[1]), action[2], current_player, action[3])
 
                     # root anpassen
+                    for child in mcts.root.children:
+                        # wenn die action von der child-node der gespielten entspricht
+                        landschafts_name = 1 if inp_split[3][0] == 'k' else action[3].name
+                        if child.action == ((action[0], action[1]), action[2], inp_split[3][0], landschafts_name):  ###
+                            mcts.root = child
+                            break
+
+                    #gesetzte Karte loeschen
+                    del spiel.cards_left[0]
 
                     #spieler wechseln
                     current_player = d[current_player]
@@ -123,7 +127,18 @@ def player_vs_uct():
             else:
                 # AI-PLayer
                 mcts.root = mcts.find_next_move(spiel)
-                spiel.make_action()
+
+                # l_a_K auf die gespielt werden soll
+                if mcts.root.action[2] == 'k':
+                    landschaft = 'K'
+                else:
+                    l_dict = {'o': current_card.orte, 's': current_card.strassen, 'w': current_card.wiesen}
+                    landschaft = [l for l in l_dict[mcts.root.action[2]] if l.name == mcts.root.action[3]][0]
+
+                spiel.make_action(current_card, mcts.root.action[0], mcts.root.action[1], current_player, landschaft)   #######################################
+
+                # gesetzte Karte loeschen
+                del spiel.cards_left[0]
 
                 # spieler wechseln
                 current_player = d[current_player]
