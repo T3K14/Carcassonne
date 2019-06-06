@@ -31,8 +31,8 @@ def player_vs_ucb(kartenliste=None):
     player1 = Player(1)
     player2 = Player(2, 'ai')
 
-    player1.meeples = 3
-    player2.meeples = 3
+    #player1.meeples = 3
+    #player2.meeples = 3
 
     #player1.punkte = 3
 
@@ -108,7 +108,7 @@ def player_vs_ucb(kartenliste=None):
                             action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), 'K')
                         else:
                             action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), None)
-                    except IndexError:
+                    except IndexError or ValueError:
                         pass
 
                     #falls move unguelig:
@@ -132,7 +132,7 @@ def player_vs_ucb(kartenliste=None):
                                 action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), 'K')
                             else:
                                 action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), None)
-                        except IndexError:
+                        except IndexError or ValueError:
                             pass
                         if action in pos:
                             ungueltig = False
@@ -190,7 +190,6 @@ def player_vs_ucb(kartenliste=None):
                     current_node = max(child_nodes, key=lambda nod: nod.calculate_UCB1_value(t))
 
                     meeple_pos = 'K'
-
 
                     if isinstance(current_node.action[3], Ort_auf_Karte):
                         for ort in current_card_copy.orte:
@@ -259,12 +258,14 @@ def player_vs_ucb(kartenliste=None):
     print("Spielende: Player1 hat {} Punkte, Player2 hat {} Punkte.".format(player1.punkte, player2.punkte))
 
 if __name__ == '__main__':
-    player_vs_ucb([Card('O', 'W', 'W', 'O', 'O'), Card('O', 'W', 'W', 'W'), Card('W', 'W', 'W', 'W', 'K'),
-                   Card('S', 'O', 'S', 'W'), Card('W', 'W', 'S', 'S'), Card('O', 'W', 'O', 'W', 'O'),
-                   Card('W', 'O', 'W', 'O'), Card('O', 'O', 'S', 'O', 'O', True), Card('O', 'W', 'W', 'O', 'O'),
-                   Card('S', 'O', 'S', 'S', 'G')])
+    #player_vs_ucb([Card('O', 'W', 'W', 'O', 'O'), Card('O', 'W', 'W', 'W'), Card('W', 'W', 'W', 'W', 'K'),
+    #               Card('S', 'O', 'S', 'W'), Card('W', 'W', 'S', 'S'), Card('O', 'W', 'O', 'W', 'O'),
+    #               Card('W', 'O', 'W', 'O'), Card('O', 'O', 'S', 'O', 'O', True), Card('O', 'W', 'W', 'O', 'O'),
+    #               Card('S', 'O', 'S', 'S', 'G')])
     #player_vs_ucb([Card('W', 'O', 'W', 'O'), Card('')])
     #player_vs_ucb([Card('W', 'W','W','W','K')])
 
     #player_vs_ucb([Card('O', 'W', 'W', 'W'), Card('O', 'W', 'W', 'O', 'O')])
     #player_vs_ucb([Card('W', 'O', 'W', 'O')])
+
+    player_vs_ucb(create_kartenliste(karteninfoliste))

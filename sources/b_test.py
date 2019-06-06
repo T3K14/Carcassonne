@@ -25,3 +25,13 @@ print(a)
 
 b = [1, 2, 3]
 print(b.__len__())
+
+c = {None: 1, None: 4}
+print(c[None])
+
+from Wiese import WieseAufKarte
+
+a = WieseAufKarte([1], 2)
+b = type(a)
+print(b)
+print(type(a))

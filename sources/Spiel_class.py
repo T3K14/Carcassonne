@@ -19,8 +19,10 @@ class Spiel:
     #    if cards_set==None:
     #        self.cards_set = []
 
-    def __init__(self, card_list):
+    def __init__(self, card_list, player1=None, player2=None):
         self.cards_left = card_list
+
+        self.next_player = {player1: player2, player2: player1}
 
         # dict of cards beeing laid and their coordinates
         self.cards_set = {(0, 0): Karte("S", "O", "S", "W")}
@@ -56,6 +58,10 @@ class Spiel:
         auswahl = choice(self.cards_left)
         self.cards_left.remove(auswahl)
         return auswahl
+
+    def draw_first_card_from_stack(self):
+        """returned den ersten Eintrag der Kartenliste und entfernt die Karte aus der Liste"""
+        return self.cards_left.pop(0)
 
     #obsolet
     def meeple_check(self, x, y, nachbar_kanten, kanten_dict):

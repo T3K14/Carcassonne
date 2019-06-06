@@ -3,7 +3,7 @@ import random
 
 from mcts2 import MCTS, Node, State
 from Spiel_class import Spiel
-from card_class import Card, karteninfoliste, create_kartenliste
+from card_class import Card, karteninfoliste, create_kartenliste, determinized_karteninfoliste
 
 from Ort import Ort
 from Strasse import Strasse
@@ -23,7 +23,7 @@ def player_vs_uct():
 
     d = {player1: player2, player2: player1}
 
-    spiel = Spiel(create_kartenliste(karteninfoliste))
+    spiel = Spiel(determinized_karteninfoliste)
 
     #select startspieler
     startspieler = player2
@@ -35,13 +35,12 @@ def player_vs_uct():
     # todo wie mache ich hier weiter, was ist ein State?   Entweder einfach ein Spiel objekt zu einem bestimmten
     # Zeitpunkt, oder ne Liste mit allen wichtigen Listen
 
-    
 
     game_is_running = True
     while game_is_running:
 
         display_spielbrett_dict(spiel.cards_set)
-        current_card = spiel.draw_card()
+        current_card = spiel.draw_first_card_from_stack()
 
         print('Die nachste Karte ist [{0}, {1}, {2}, {3}, {4}, {5}]'.format(current_card.info[0], current_card.info[1], current_card.info[2], current_card.info[3], current_card.mitte, current_card.schild))
         draw_card(current_card)
@@ -68,23 +67,10 @@ def player_vs_uct():
                     #gib move ein
                     inp = input('Bitte gib deine Aktion an:')
                     inp_split = inp.split(' ')
-                    if inp_split[3][0] == 'o':
-                        o = [a for a in current_card.orte if a.name == int(inp_split[3][1])]
-                        action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), o[0])
-                    elif inp_split[3][0] == 's':
-                        s = [a for a in current_card.strassen if a.name == int(inp_split[3][1])]
-                        action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), s[0])
-                    elif inp_split[3][0] == 'w':
-                        w = [a for a in current_card.wiesen if a.name == int(inp_split[3][1])]
-                        action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), w[0])
-                    else:
-                        action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), None)
 
-                    #falls move unguelig:
-                    while action not in pos:
-                        print("illegaler Move")
-                        inp = input('Bitte gib deine Aktion an:')
-                        inp_split = inp.split(' ')
+                    ungueltig = True
+                    action = None
+                    try:
                         if inp_split[3][0] == 'o':
                             o = [a for a in current_card.orte if a.name == int(inp_split[3][1])]
                             action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), o[0])
@@ -94,10 +80,42 @@ def player_vs_uct():
                         elif inp_split[3][0] == 'w':
                             w = [a for a in current_card.wiesen if a.name == int(inp_split[3][1])]
                             action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), w[0])
+                        elif inp_split[3][0] == 'k':
+                            action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), 'K')
                         else:
                             action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), None)
+                    except IndexError or ValueError:
+                        pass
+
+                    # falls move unguelig:
+                    if action in pos:
+                        ungueltig = False
+                    while ungueltig:
+                        print("illegaler Move")
+                        inp = input('Bitte gib deine Aktion an:')
+                        inp_split = inp.split(' ')
+                        try:
+                            if inp_split[3][0] == 'o':
+                                o = [a for a in current_card.orte if a.name == int(inp_split[3][1])]
+                                action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), o[0])
+                            elif inp_split[3][0] == 's':
+                                s = [a for a in current_card.strassen if a.name == int(inp_split[3][1])]
+                                action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), s[0])
+                            elif inp_split[3][0] == 'w':
+                                w = [a for a in current_card.wiesen if a.name == int(inp_split[3][1])]
+                                action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), w[0])
+                            elif inp_split[3][0] == 'k':
+                                action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), 'K')
+                            else:
+                                action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), None)
+                        except IndexError or ValueError:
+                            pass
+                        if action in pos:
+                            ungueltig = False
 
                     spiel.make_action(current_card, (action[0], action[1]), action[2], current_player, action[3])
+
+                    # root anpassen
 
                     #spieler wechseln
                     current_player = d[current_player]

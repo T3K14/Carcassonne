@@ -346,6 +346,16 @@ karteninfoliste = ['WWWWK', 'WWWWK', 'WWWWK', 'WWWWK', 'WWSWK', 'WWSWK', 'OOOOOT
                        'SWSW', 'SWSW', 'SWSW', 'WWSS', 'WWSS', 'WWSS', 'WWSS', 'WWSS', 'WWSS', 'WWSS', 'WWSS', 'WWSS',
                        'WSSSG', 'WSSSG', 'WSSSG', 'WSSSG', 'SSSSG']
 
+determinized_karteninfoliste = ['SOWS', 'WWSS', 'SOSSG', 'OSSW', 'OOSOOT', 'WWSWK', 'OSSW', 'WWSS', 'SWSW', 'WOWOOT',
+                                'SOSSG', 'OOWOO', 'WOOW', 'SWSW', 'WOWOOT', 'WOWO', 'OWWOO', 'WWSS', 'WWWWK', 'OOSOO',
+                                'OOWOO', 'WWSS', 'SOSW', 'OWWW', 'OOOOOT', 'OWOWO', 'SOWS', 'WOWO', 'OSSOO', 'OOWOO',
+                                'OSSOOT', 'OWWW', 'WSSSG', 'OSSOO', 'OWWW', 'SWSW', 'OWWW', 'OWWOOT', 'WWSWK', 'SWSW',
+                                'SSSSG', 'OWWOO', 'SWSW', 'OOSOOT', 'WWWWK', 'SOSW', 'SOSW', 'WWSS', 'SOSSG', 'WSSSG',
+                                'SWSW', 'WWWWK', 'OSSOOT', 'WOWO', 'WWSS', 'WWSS', 'WOOW', 'OOWOOT', 'SOWS', 'OWWOO',
+                                'OSSW', 'WWWWK', 'OWWW', 'OWWOOT', 'WWSS', 'SWSW', 'OSSOO', 'WSSSG', 'WSSSG', 'SWSW',
+                                                                                                              'WWSS']
+
+
 def create_kartenliste(karteninfos):
 
     l = []
@@ -376,4 +386,20 @@ if __name__ == "__main__":
     print("\n", ka.matrix)
     ka.rotate_right()
     print("\n", ka.matrix)
+
+    random.shuffle(karteninfoliste)
+    print(karteninfoliste)
+
+    import plot_cards
+    for c in determinized_karteninfoliste:
+        i = list(c)
+
+        if len(i) == 4:
+            a, b, c, d, m, schild = i[0], i[1], i[2], i[3], None, False
+        elif len(i) == 5:
+            a, b, c, d, m, schild = i[0], i[1], i[2], i[3], i[4], False
+        else:
+            a, b, c, d, m, schild = i[0], i[1], i[2], i[3], i[4], True
+
+        plot_cards.draw_card(Card(a, b, c, d, m, schild))
 

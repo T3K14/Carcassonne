@@ -5,6 +5,7 @@ import unittest
 from Strasse import Strasse
 from plot_cards import display_spielbrett_dict, draw_card
 from Ort import Ort
+from card_class import Card
 
 Kartenliste = []
 
@@ -114,6 +115,23 @@ class MakeActionTest(unittest.TestCase):
 
         #plot_cards.display_spielbrett_dict(spiel.cards_set)
         print('end')
+
+    def test4(self):
+        spiel = Spiel_class.Spiel(Kartenliste)
+        player1 = Player_Class.Player(1)
+        player2 = Player_Class.Player(2)
+
+        k1 = Card('W', 'W', 'W', 'W', 'K')
+        spiel.make_action(k1, (-1, 0), 0, player2, 'K')
+
+        k2 = Card('O', 'W', 'W', 'W')
+        spiel.make_action(k2, (-2, 0), 0, player1)
+
+        k3 = Card('W', 'O', 'W', 'O')
+        spiel.make_action(k3, (-2, 1), 3, player2, k3.wiesen[0])
+
+        self.assertEqual(player1.punkte, 0)
+        self.assertEqual(player2.punkte, 0)
 
 if __name__ == '__main__':
     unittest.main()
