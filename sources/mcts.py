@@ -3,7 +3,7 @@ import random
 
 from mcts2 import MCTS, Node
 from Spiel_class import Spiel
-from card_class import Card, karteninfoliste, create_kartenliste, determinized_karteninfoliste
+from card_class import Card, karteninfoliste, create_kartenliste, determinized_karteninfoliste, determinized_short_karteninfoliste
 
 from Ort import Ort
 from Strasse import Strasse
@@ -23,16 +23,18 @@ def player_vs_uct():
 
     d = {player1: player2, player2: player1}
 
-    spiel = Spiel(create_kartenliste(determinized_karteninfoliste))
+    spiel = Spiel(create_kartenliste(determinized_short_karteninfoliste, False), player1, player2)
 
     #select startspieler
     current_player = player2
 
     mcts = MCTS((player1, player2), spiel.play_random1v1, spiel.calculate_possible_actions)
-    mcts.root = Node(True, None, current_player)
+    mcts.root = Node(True, None, current_player.nummer)
 
     game_is_running = True
     while game_is_running:
+
+        print('\n\nNEUER ZUG: Aktuell hat player1 {} Punkte und player2 {} Punkte.\n'.format(player1.punkte, player2.punkte))
 
         display_spielbrett_dict(spiel.cards_set)
         current_card = spiel.cards_left[0]
@@ -129,13 +131,24 @@ def player_vs_uct():
                 mcts.root = mcts.find_next_move(spiel)
 
                 # l_a_K auf die gespielt werden soll
-                if mcts.root.action[2] == 'k':
+                if mcts.root.action[2] is None:
+                    landschaft = None
+                elif mcts.root.action[2] == 'k':
                     landschaft = 'K'
                 else:
                     l_dict = {'o': current_card.orte, 's': current_card.strassen, 'w': current_card.wiesen}
                     landschaft = [l for l in l_dict[mcts.root.action[2]] if l.name == mcts.root.action[3]][0]
 
                 spiel.make_action(current_card, mcts.root.action[0], mcts.root.action[1], current_player, landschaft)   #######################################
+
+                if mcts.root.action[2] is not None:
+                    #action_ausgabe = 'K' if mcts.root.action[2] == 'k' else mcts.root.action[2]
+                    print("\nDie AI setzt einen Meeple auf {}{}.".format(mcts.root.action[2], mcts.root.action[3]))
+                else:
+                    print("\nDie AI setzt keinen Maaple.")
+
+                print("Die AI setzt die Karte an {} und rotiert sie {} mal".format(mcts.root.action[0], mcts.root.action[1]))
+
 
                 # gesetzte Karte loeschen
                 del spiel.cards_left[0]
@@ -145,6 +158,9 @@ def player_vs_uct():
 
         else:
             continue
+
+    spiel.final_evaluate()
+    print("\nSpielende: Player1 hat {} Punkte, Player2 hat {} Punkte.".format(player1.punkte, player2.punkte))
 
 if __name__ == '__main__':
     player_vs_uct()

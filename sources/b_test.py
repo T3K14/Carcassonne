@@ -35,3 +35,8 @@ a = WieseAufKarte([1], 2)
 b = type(a)
 print(b)
 print(type(a))
+
+liste = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+a = filter(lambda x: x/2 in (1,2,3,4,5,6), liste)
+print(list(a))

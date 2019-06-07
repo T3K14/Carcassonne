@@ -354,9 +354,9 @@ determinized_karteninfoliste = ['SOWS', 'WWSS', 'SOSSG', 'OSSW', 'OOSOOT', 'WWSW
                                 'SWSW', 'WWWWK', 'OSSOOT', 'WOWO', 'WWSS', 'WWSS', 'WOOW', 'OOWOOT', 'SOWS', 'OWWOO',
                                 'OSSW', 'WWWWK', 'OWWW', 'OWWOOT', 'WWSS', 'SWSW', 'OSSOO', 'WSSSG', 'WSSSG', 'SWSW',
                                                                                                               'WWSS']
+determinized_short_karteninfoliste = ['SOWS', 'WWSS', 'SOSSG', 'OSSW', 'OOSOOT']
 
-
-def create_kartenliste(karteninfos):
+def create_kartenliste(karteninfos, shuffle=True):
 
     l = []
 
@@ -372,7 +372,8 @@ def create_kartenliste(karteninfos):
 
         k = Card(a, b, c, d, m, schild)
         l.append(k)
-        random.shuffle(l)
+        if shuffle:
+            random.shuffle(l)
     return l
 
 #Kartenliste = create_kartenliste(Karteninfos_neu)

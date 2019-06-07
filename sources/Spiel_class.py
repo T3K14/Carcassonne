@@ -22,7 +22,8 @@ class Spiel:
     def __init__(self, card_list, player1=None, player2=None):
         self.cards_left = card_list
 
-        self.next_player = {player1: player2, player2: player1}
+       # self.next_player = {player1: player2, player2: player1}
+        self.player_to_playernumber = {1: player1, 2: player2}
 
         # dict of cards beeing laid and their coordinates
         self.cards_set = {(0, 0): Karte("S", "O", "S", "W")}
