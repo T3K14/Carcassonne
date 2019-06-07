@@ -21,6 +21,8 @@ def player_vs_uct():
     player1 = Player(1)
     player2 = Player(2, 'ai')
 
+    player1.punkte = 3
+
     d = {player1: player2, player2: player1}
 
     spiel = Spiel(create_kartenliste(determinized_short_karteninfoliste, False), player1, player2)
@@ -123,6 +125,8 @@ def player_vs_uct():
                     #gesetzte Karte loeschen
                     del spiel.cards_left[0]
 
+                    if len(spiel.cards_left) == 0:
+                        game_is_running = False
                     #spieler wechseln
                     current_player = d[current_player]
 
@@ -152,6 +156,9 @@ def player_vs_uct():
 
                 # gesetzte Karte loeschen
                 del spiel.cards_left[0]
+
+                if len(spiel.cards_left) == 0:
+                    game_is_running = False
 
                 # spieler wechseln
                 current_player = d[current_player]
