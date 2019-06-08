@@ -1,2 +1,2 @@
 # Carcassonne
-a version of carcassonne that hopefully will be played by an AI someday [in progress]
+A version of the board game Carcassonne with an UCB1-AI and a HOP-UCT-AI (in progress).
