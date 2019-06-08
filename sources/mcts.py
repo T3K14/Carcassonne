@@ -21,14 +21,14 @@ def player_vs_uct():
     player1 = Player(1)
     player2 = Player(2, 'ai')
 
-    player1.punkte = 3
+    #player1.punkte = 3
 
     d = {player1: player2, player2: player1}
 
     spiel = Spiel(create_kartenliste(determinized_short_karteninfoliste, False), player1, player2)
 
     #select startspieler
-    current_player = player2
+    current_player = player1
 
     mcts = MCTS((player1, player2), spiel.play_random1v1, spiel.calculate_possible_actions)
     mcts.root = Node(True, None, current_player.nummer)
@@ -115,12 +115,18 @@ def player_vs_uct():
                     spiel.make_action(current_card, (action[0], action[1]), action[2], current_player, action[3])
 
                     # root anpassen
-                    for child in mcts.root.children:
-                        # wenn die action von der child-node der gespielten entspricht
+                    if mcts.root.children:
+                        for child in mcts.root.children:
+                            # wenn die action von der child-node der gespielten entspricht
+                            landschafts_name = 1 if inp_split[3][0] == 'k' else action[3].name
+                            if child.action == ((action[0], action[1]), action[2], inp_split[3][0], landschafts_name):  ###
+                                mcts.root = child
+                                break
+                    else:
+                        #another player made the first move of the game
                         landschafts_name = 1 if inp_split[3][0] == 'k' else action[3].name
-                        if child.action == ((action[0], action[1]), action[2], inp_split[3][0], landschafts_name):  ###
-                            mcts.root = child
-                            break
+                        p_num = 1 if current_player.nummer == 2 else 2
+                        mcts.root = Node(True, ((action[0], action[1]), action[2], inp_split[3][0], landschafts_name), p_num, mcts.root)
 
                     #gesetzte Karte loeschen
                     del spiel.cards_left[0]
