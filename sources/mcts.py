@@ -16,7 +16,11 @@ from plot_cards import display_spielbrett_dict, draw_card
 
 from rotate2 import rotate_info_right, rotate_kanten_dict_right
 
-def uct_vs_uct():
+def uct_vs_uct(counter):
+
+    logfile = open('../log/logfile{}'.format(counter), 'w+')
+    logfile.write('NEUES SPIEL')
+
     player1 = Player(1)
     player2 = Player(2, 'ai')
 
@@ -39,25 +43,29 @@ def uct_vs_uct():
     game_is_running = True
     while game_is_running:
 
-        print('\n\nNEUER ZUG: Aktuell hat player1 {} Punkte und player2 {} Punkte.\n'.format(player1.punkte,
+        logfile.write("\n\n\nNEUER ZUG: Player{} ist am Zug\n".format(current_player.nummer))
+        logfile.write('Aktuell hat player1 {} Punkte und player2 {} Punkte.\n'.format(player1.punkte,
                                                                                              player2.punkte))
         #display_spielbrett_dict(spiel.cards_set)
         current_card = spiel.cards_left[0]
 
-        print('Die nachste Karte ist [{0}, {1}, {2}, {3}, {4}, {5}]'.format(current_card.info[0], current_card.info[1],
+        print('\nDie nachste Karte ist [{0}, {1}, {2}, {3}, {4}, {5}]'.format(current_card.info[0], current_card.info[1],
+                                                                            current_card.info[2], current_card.info[3],
+                                                                            current_card.mitte, current_card.schild))
+        logfile.write('\nDie nachste Karte ist [{0}, {1}, {2}, {3}, {4}, {5}]'.format(current_card.info[0], current_card.info[1],
                                                                             current_card.info[2], current_card.info[3],
                                                                             current_card.mitte, current_card.schild))
         #draw_card(current_card)
-        print('Sie enthält folgende moegliche Meeplepositionen:')
-        print('Orte:')
+        logfile.write('\nSie enthält folgende moegliche Meeplepositionen:')
+        logfile.write('\nOrte: ')
         for o in current_card.orte:
-            print(o.name, o.kanten)
-        print('Strassen:')
+            logfile.write("{}: {}  ".format(o.name, o.kanten))
+        logfile.write('\nStrassen: ')
         for s in current_card.strassen:
-            print(s.name, s.kanten)
-        print('Wiesen:')
+            logfile.write("{}: {}  ".format(s.name, s.kanten))
+        logfile.write('\nWiesen: ')
         for w in current_card.wiesen:
-            print(w.name, w.ecken)
+            logfile.write("{}: {}  ".format(w.name, w.ecken))
 
         pos = spiel.calculate_possible_actions(current_card, current_player)
 
@@ -65,7 +73,7 @@ def uct_vs_uct():
         # eine Anlegemoeglichkeit, wenn es fuer den anderen auch eine gibt)
         if pos:
             if current_player.nummer == 1:
-                print('Player1 ist am Zug')
+                #logfile.write('\nPlayer1 ist am Zug')
 
                 mcts.root = mcts.find_next_move(spiel)
 
@@ -83,13 +91,13 @@ def uct_vs_uct():
 
                 if mcts.root.action[2] is not None:
                     # action_ausgabe = 'K' if mcts.root.action[2] == 'k' else mcts.root.action[2]
-                    print("\nDie AI setzt einen Meeple auf {}{}.".format(mcts.root.action[2], mcts.root.action[3]))
+                    logfile.write("\n\nDie AI setzt einen Meeple auf {}{}.".format(mcts.root.action[2], mcts.root.action[3]))
                 elif mcts.root.action[2] == 'k':
-                    print("\nDie AI setzt einem Meeple auf das Kloster.")
+                    logfile.write("\nDie AI setzt einem Meeple auf das Kloster.")
                 else:
-                    print("\nDie AI setzt keinen Meeple.")
+                    logfile.write("\nDie AI setzt keinen Meeple.")
 
-                print("Die AI setzt die Karte an {} und rotiert sie {} mal".format(mcts.root.action[0],
+                logfile.write("\nDie AI setzt die Karte an {} und rotiert sie {} mal".format(mcts.root.action[0],
                                                                                    mcts.root.action[1]))
 
                 # gesetzte Karte loeschen
@@ -103,7 +111,7 @@ def uct_vs_uct():
 
             else:
                 # player2
-                print('Player2 ist am Zug')
+                #logfile.write('Player2 ist am Zug')
 
                 mcts.root = mcts.find_next_move(spiel)
 
@@ -121,13 +129,13 @@ def uct_vs_uct():
 
                 if mcts.root.action[2] is not None:
                     # action_ausgabe = 'K' if mcts.root.action[2] == 'k' else mcts.root.action[2]
-                    print("\nDie AI setzt einen Meeple auf {}{}.".format(mcts.root.action[2], mcts.root.action[3]))
+                    logfile.write("\n\nDie AI setzt einen Meeple auf {}{}.".format(mcts.root.action[2], mcts.root.action[3]))
                 elif mcts.root.action[2] == 'k':
-                    print("\nDie AI setzt einem Meeple auf das Kloster.")
+                    logfile.write("\nDie AI setzt einem Meeple auf das Kloster.")
                 else:
-                    print("\nDie AI setzt keinen Meeple.")
+                    logfile.write("\nDie AI setzt keinen Meeple.")
 
-                print("Die AI setzt die Karte an {} und rotiert sie {} mal".format(mcts.root.action[0],
+                logfile.write("Die AI setzt die Karte an {} und rotiert sie {} mal".format(mcts.root.action[0],
                                                                                    mcts.root.action[1]))
 
                 # gesetzte Karte loeschen
@@ -143,7 +151,8 @@ def uct_vs_uct():
             continue
 
     spiel.final_evaluate()
-    print("\nSpielende: Player1 hat {} Punkte, Player2 hat {} Punkte.".format(player1.punkte, player2.punkte))
+    logfile.write("\nSpielende: Player1 hat {} Punkte, Player2 hat {} Punkte.".format(player1.punkte, player2.punkte))
+    logfile.close()
 
 def player_vs_uct():
 
@@ -323,8 +332,9 @@ def player_vs_uct():
 
 if __name__ == '__main__':
     #player_vs_uct()
-
+    c = 0
     while True:
 
         print("\n\n\nNEUES SPIEL")
-        uct_vs_uct()
+        uct_vs_uct(c)
+        c += 1
