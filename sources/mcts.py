@@ -16,6 +16,135 @@ from plot_cards import display_spielbrett_dict, draw_card
 
 from rotate2 import rotate_info_right, rotate_kanten_dict_right
 
+def uct_vs_uct():
+    player1 = Player(1)
+    player2 = Player(2, 'ai')
+
+    # player1.punkte = 3
+
+    d = {player1: player2, player2: player1}
+
+    # zum probieren
+    # von einer random-Kartenliste die ersten 10 Karten
+    spiel = Spiel(create_kartenliste(karteninfoliste)[:10], player1, player2)
+
+    #spiel = Spiel(create_kartenliste(determinized_karteninfoliste, False), player1, player2)
+
+    # select startspieler
+    current_player = random.choice([player1, player2])
+
+    mcts = MCTS((player1, player2))
+    mcts.root = Node(True, None, current_player.nummer)
+
+    game_is_running = True
+    while game_is_running:
+
+        print('\n\nNEUER ZUG: Aktuell hat player1 {} Punkte und player2 {} Punkte.\n'.format(player1.punkte,
+                                                                                             player2.punkte))
+        #display_spielbrett_dict(spiel.cards_set)
+        current_card = spiel.cards_left[0]
+
+        print('Die nachste Karte ist [{0}, {1}, {2}, {3}, {4}, {5}]'.format(current_card.info[0], current_card.info[1],
+                                                                            current_card.info[2], current_card.info[3],
+                                                                            current_card.mitte, current_card.schild))
+        #draw_card(current_card)
+        print('Sie enthält folgende moegliche Meeplepositionen:')
+        print('Orte:')
+        for o in current_card.orte:
+            print(o.name, o.kanten)
+        print('Strassen:')
+        for s in current_card.strassen:
+            print(s.name, s.kanten)
+        print('Wiesen:')
+        for w in current_card.wiesen:
+            print(w.name, w.ecken)
+
+        pos = spiel.calculate_possible_actions(current_card, current_player)
+
+        # wenn es moegliche anlegestellenn (fuer den aktuellen Spieler) gibt, (es gibt fuer einen spieler auf jeden Fall
+        # eine Anlegemoeglichkeit, wenn es fuer den anderen auch eine gibt)
+        if pos:
+            if current_player.nummer == 1:
+                print('Player1 ist am Zug')
+
+                mcts.root = mcts.find_next_move(spiel)
+
+                # l_a_K auf die gespielt werden soll
+                if mcts.root.action[2] is None:
+                    landschaft = None
+                elif mcts.root.action[2] == 'k':
+                    landschaft = 'K'
+                else:
+                    l_dict = {'o': current_card.orte, 's': current_card.strassen, 'w': current_card.wiesen}
+                    landschaft = [l for l in l_dict[mcts.root.action[2]] if l.name == mcts.root.action[3]][0]
+
+                spiel.make_action(current_card, mcts.root.action[0], mcts.root.action[1], current_player,
+                                  landschaft)  #######################################
+
+                if mcts.root.action[2] is not None:
+                    # action_ausgabe = 'K' if mcts.root.action[2] == 'k' else mcts.root.action[2]
+                    print("\nDie AI setzt einen Meeple auf {}{}.".format(mcts.root.action[2], mcts.root.action[3]))
+                elif mcts.root.action[2] == 'k':
+                    print("\nDie AI setzt einem Meeple auf das Kloster.")
+                else:
+                    print("\nDie AI setzt keinen Meeple.")
+
+                print("Die AI setzt die Karte an {} und rotiert sie {} mal".format(mcts.root.action[0],
+                                                                                   mcts.root.action[1]))
+
+                # gesetzte Karte loeschen
+                del spiel.cards_left[0]
+
+                if len(spiel.cards_left) == 0:
+                    game_is_running = False
+
+                # spieler wechseln
+                current_player = d[current_player]
+
+            else:
+                # player2
+                print('Player2 ist am Zug')
+
+                mcts.root = mcts.find_next_move(spiel)
+
+                # l_a_K auf die gespielt werden soll
+                if mcts.root.action[2] is None:
+                    landschaft = None
+                elif mcts.root.action[2] == 'k':
+                    landschaft = 'K'
+                else:
+                    l_dict = {'o': current_card.orte, 's': current_card.strassen, 'w': current_card.wiesen}
+                    landschaft = [l for l in l_dict[mcts.root.action[2]] if l.name == mcts.root.action[3]][0]
+
+                spiel.make_action(current_card, mcts.root.action[0], mcts.root.action[1], current_player,
+                                  landschaft)  #######################################
+
+                if mcts.root.action[2] is not None:
+                    # action_ausgabe = 'K' if mcts.root.action[2] == 'k' else mcts.root.action[2]
+                    print("\nDie AI setzt einen Meeple auf {}{}.".format(mcts.root.action[2], mcts.root.action[3]))
+                elif mcts.root.action[2] == 'k':
+                    print("\nDie AI setzt einem Meeple auf das Kloster.")
+                else:
+                    print("\nDie AI setzt keinen Meeple.")
+
+                print("Die AI setzt die Karte an {} und rotiert sie {} mal".format(mcts.root.action[0],
+                                                                                   mcts.root.action[1]))
+
+                # gesetzte Karte loeschen
+                del spiel.cards_left[0]
+
+                if len(spiel.cards_left) == 0:
+                    game_is_running = False
+
+                # spieler wechseln
+                current_player = d[current_player]
+
+        else:
+            continue
+
+    spiel.final_evaluate()
+    print("\nSpielende: Player1 hat {} Punkte, Player2 hat {} Punkte.".format(player1.punkte, player2.punkte))
+
 def player_vs_uct():
 
     player1 = Player(1)
@@ -193,4 +322,9 @@ def player_vs_uct():
     print("\nSpielende: Player1 hat {} Punkte, Player2 hat {} Punkte.".format(player1.punkte, player2.punkte))
 
 if __name__ == '__main__':
-    player_vs_uct()
+    #player_vs_uct()
+
+    while True:
+
+        print("\n\n\nNEUES SPIEL")
+        uct_vs_uct()

@@ -91,7 +91,7 @@ class MCTSTest(unittest.TestCase):
 
         k1 = spiel.cards_left.pop(0)
 
-        spiel.make_action(k1, (1, 1), 3, d[current_player], 'k')
+        spiel.make_action(k1, (1, 1), 3, d[current_player], 'K')
 
         self.assertEqual(65, len(spiel.cards_left))
         self.assertEqual(4, player1.punkte)
@@ -102,7 +102,7 @@ class MCTSTest(unittest.TestCase):
 
         k1 = spiel.cards_left.pop(0)
 
-        display_spielbrett_dict(spiel.cards_set)
+        #display_spielbrett_dict(spiel.cards_set)
         spiel.make_action(k1, (-1, 1), 0, current_player, k1.strassen[0])
 
         self.assertEqual(64, len(spiel.cards_left))
@@ -162,17 +162,147 @@ class MCTSTest(unittest.TestCase):
         self.assertEqual(0, player2.punkte)
         self.assertEqual(3, player2.meeples)
 
+        k1 = spiel.cards_left.pop(0)
+
+        spiel.make_action(k1, (-1, 3), 0, d[current_player], None)
+
+        self.assertEqual(59, len(spiel.cards_left))
+        self.assertEqual(11, player1.punkte)
+        self.assertEqual(5, player1.meeples)
+
+        self.assertEqual(0, player2.punkte)
+        self.assertEqual(3, player2.meeples)
+
+        self.assertEqual(len(spiel.alle_kloester), 1)
+        self.assertEqual(len(spiel.alle_strassen), 8)
+        self.assertEqual(len(spiel.alle_orte), 5)
+        self.assertEqual(len(spiel.alle_wiesen), 8)
+
+        k1 = spiel.cards_left.pop(0)
+
+        spiel.make_action(k1, (-1, -2), 3, current_player, k1.wiesen[0])
+
+        self.assertEqual(58, len(spiel.cards_left))
+        self.assertEqual(21, player1.punkte)
+        self.assertEqual(5, player1.meeples)
+
+        self.assertEqual(0, player2.punkte)
+        self.assertEqual(3, player2.meeples)
+
+        self.assertEqual(len(spiel.alle_kloester), 1)
+        self.assertEqual(len(spiel.alle_strassen), 8)
+        self.assertEqual(len(spiel.alle_orte), 6)
+        self.assertEqual(len(spiel.alle_wiesen), 9)
+
+        k1 = spiel.cards_left.pop(0)
+
+        spiel.make_action(k1, (2, 1), 1, d[current_player], None)
+
+        self.assertEqual(57, len(spiel.cards_left))
+        self.assertEqual(21, player1.punkte)
+        self.assertEqual(5, player1.meeples)
+
+        self.assertEqual(0, player2.punkte)
+        self.assertEqual(3, player2.meeples)
+
+        self.assertEqual(len(spiel.alle_kloester), 1)
+        self.assertEqual(len(spiel.alle_strassen), 8)
+        self.assertEqual(len(spiel.alle_orte), 6)
+        self.assertEqual(len(spiel.alle_wiesen), 9)
+
+        k1 = spiel.cards_left.pop(0)
+
+        spiel.make_action(k1, (-1, -3), 0, current_player, k1.orte[0])
+
+        self.assertEqual(56, len(spiel.cards_left))
+        self.assertEqual(21, player1.punkte)
+        self.assertEqual(4, player1.meeples)
+
+        self.assertEqual(0, player2.punkte)
+        self.assertEqual(3, player2.meeples)
+
+        self.assertEqual(len(spiel.alle_kloester), 1)
+        self.assertEqual(len(spiel.alle_strassen), 8)
+        self.assertEqual(len(spiel.alle_orte), 7)
+        self.assertEqual(len(spiel.alle_wiesen), 10)
 
 
+        k1 = spiel.cards_left.pop(0)
 
+        ort = None
+        for o in k1.orte:
+            if o.kanten == [3]:
+                ort = o
+                break
+        spiel.make_action(k1, (-3, 0), 1, d[current_player], ort)
 
+        self.assertEqual(55, len(spiel.cards_left))
+        self.assertEqual(21, player1.punkte)
+        self.assertEqual(4, player1.meeples)
+
+        self.assertEqual(0, player2.punkte)
+        self.assertEqual(2, player2.meeples)
+
+        self.assertEqual(len(spiel.alle_kloester), 1)
+        self.assertEqual(len(spiel.alle_strassen), 8)
+        self.assertEqual(len(spiel.alle_orte), 9)
+        self.assertEqual(len(spiel.alle_wiesen), 10)
+
+        k1 = spiel.cards_left.pop(0)
+
+        spiel.make_action(k1, (0, -2), 0, current_player, None)
+
+        self.assertEqual(54, len(spiel.cards_left))
+        self.assertEqual(27, player1.punkte)
+        self.assertEqual(5, player1.meeples)
+
+        self.assertEqual(0, player2.punkte)
+        self.assertEqual(2, player2.meeples)
+
+        self.assertEqual(len(spiel.alle_kloester), 1)
+        self.assertEqual(len(spiel.alle_strassen), 8)
+        self.assertEqual(len(spiel.alle_orte), 8)
+        self.assertEqual(len(spiel.alle_wiesen), 11)
+
+        k1 = spiel.cards_left.pop(0)
+
+        spiel.make_action(k1, (3, 1), 1, d[current_player], None)
+
+        self.assertEqual(53, len(spiel.cards_left))
+        self.assertEqual(27, player1.punkte)
+        self.assertEqual(5, player1.meeples)
+
+        self.assertEqual(0, player2.punkte)
+        self.assertEqual(2, player2.meeples)
+
+        self.assertEqual(len(spiel.alle_kloester), 1)
+        self.assertEqual(len(spiel.alle_strassen), 8)
+        self.assertEqual(len(spiel.alle_orte), 8)
+        self.assertEqual(len(spiel.alle_wiesen), 11)
+
+        k1 = spiel.cards_left.pop(0)
+
+        spiel.make_action(k1, (-2, 1), 0, current_player, 'K')
+
+        self.assertEqual(52, len(spiel.cards_left))
+        self.assertEqual(27, player1.punkte)
+        self.assertEqual(4, player1.meeples)
+
+        self.assertEqual(0, player2.punkte)
+        self.assertEqual(2, player2.meeples)
+
+        self.assertEqual(len(spiel.alle_kloester), 2)
+        self.assertEqual(len(spiel.alle_strassen), 8)
+        self.assertEqual(len(spiel.alle_orte), 8)
+        self.assertEqual(len(spiel.alle_wiesen), 11)
 
         mcts = MCTS((player1, player2), spiel.play_random1v1, spiel.calculate_possible_actions)
-        mcts.root = Node(True, None, current_player.nummer)
+        mcts.root = Node(True, None, d[current_player].nummer)
 
+        player1.art = 'human'
+        player2.art = 'ai'
 
-
-
+        current_player = d[current_player]
 
         game_is_running = True
         while game_is_running:

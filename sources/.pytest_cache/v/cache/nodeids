@@ -1,4 +1,3 @@
 [
-  "Unittest.py::CardTest::testGeneration",
-  "Unittest.py::CardTest::test_matrix_creation"
+  "mcts_test.py::MCTSTest::test_1"
 ]
