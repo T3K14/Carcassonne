@@ -1,7 +1,4 @@
 [
-  "make_actionTest.py::MakeActionTest::test4",
-  "make_actionTest.py::MakeActionTest::test_1",
-  "make_actionTest.py::MakeActionTest::test_2",
-  "make_actionTest.py::MakeActionTest::test_3",
-  "make_actionTest.py::MakeActionTest::test_4"
+  "Unittest.py::CardTest::testGeneration",
+  "Unittest.py::CardTest::test_matrix_creation"
 ]

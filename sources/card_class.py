@@ -355,6 +355,8 @@ determinized_karteninfoliste = ['SOWS', 'WWSS', 'SOSSG', 'OSSW', 'OOSOOT', 'WWSW
                                 'OSSW', 'WWWWK', 'OWWW', 'OWWOOT', 'WWSS', 'SWSW', 'OSSOO', 'WSSSG', 'WSSSG', 'SWSW',
                                                                                                               'WWSS']
 determinized_short_karteninfoliste = ['SOWS', 'WWSS', 'SOSSG', 'OSSW', 'OOSOOT', 'OSSW']#'WWSWK']#, 'OSSW', 'WWSS', 'SWSW', 'WOWOOT']
+#determinized_short_karteninfoliste = ['WWSS','WWSWK']
+
 
 def create_kartenliste(karteninfos, shuffle=True):
 

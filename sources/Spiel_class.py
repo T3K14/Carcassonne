@@ -404,9 +404,9 @@ class Spiel:
                     else:
                         hauptlandschaft.add_part((x, y), landschaft)
 
-                    if landschaft == meeple_position:
-                        hauptlandschaft.update_meeples(player)
-                        hauptlandschaft.update_besitzer()
+                        if landschaft == meeple_position:
+                            hauptlandschaft.update_meeples(player)
+                            hauptlandschaft.update_besitzer()
 
             card.update_kanten(landschaft, hauptlandschaft)
 

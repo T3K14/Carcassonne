@@ -25,7 +25,10 @@ def player_vs_uct():
 
     d = {player1: player2, player2: player1}
 
-    spiel = Spiel(create_kartenliste(determinized_short_karteninfoliste, False), player1, player2)
+    #zum probieren
+    #spiel = Spiel(create_kartenliste(determinized_short_karteninfoliste, False), player1, player2)
+
+    spiel = Spiel(create_kartenliste(determinized_karteninfoliste, False), player1, player2)
 
     #select startspieler
     current_player = player1
@@ -118,15 +121,27 @@ def player_vs_uct():
                     if mcts.root.children:
                         for child in mcts.root.children:
                             # wenn die action von der child-node der gespielten entspricht
-                            landschafts_name = 1 if inp_split[3][0] == 'k' else action[3].name
-                            if child.action == ((action[0], action[1]), action[2], inp_split[3][0], landschafts_name):  ###
+
+                            # wenn nicht none
+                            if action[3]:
+                                landschafts_name = 1 if inp_split[3][0] == 'k' else action[3].name
+                                landschafts_id = inp_split[3][0]
+                            else:
+                                landschafts_name = None
+                                landschafts_id = None
+                            if child.action == ((action[0], action[1]), action[2], landschafts_id, landschafts_name):  ###
                                 mcts.root = child
                                 break
                     else:
                         #another player made the first move of the game
-                        landschafts_name = 1 if inp_split[3][0] == 'k' else action[3].name
+                        if action[3]:
+                            landschafts_name = 1 if inp_split[3][0] == 'k' else action[3].name
+                            landschafts_id = inp_split[3][0]
+                        else:
+                            landschafts_name = None
+                            landschafts_id = None
                         p_num = 1 if current_player.nummer == 2 else 2
-                        mcts.root = Node(True, ((action[0], action[1]), action[2], inp_split[3][0], landschafts_name), p_num, mcts.root)
+                        mcts.root = Node(True, ((action[0], action[1]), action[2], landschafts_id, landschafts_name), p_num, mcts.root)
 
                     #gesetzte Karte loeschen
                     del spiel.cards_left[0]
@@ -154,8 +169,10 @@ def player_vs_uct():
                 if mcts.root.action[2] is not None:
                     #action_ausgabe = 'K' if mcts.root.action[2] == 'k' else mcts.root.action[2]
                     print("\nDie AI setzt einen Meeple auf {}{}.".format(mcts.root.action[2], mcts.root.action[3]))
+                elif mcts.root.action[2] == 'k':
+                    print("\nDie AI setzt einem Meeple auf das Kloster.")
                 else:
-                    print("\nDie AI setzt keinen Maaple.")
+                    print("\nDie AI setzt keinen Meeple.")
 
                 print("Die AI setzt die Karte an {} und rotiert sie {} mal".format(mcts.root.action[0], mcts.root.action[1]))
 
