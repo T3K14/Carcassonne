@@ -1,3 +1,5 @@
 [
-  "mcts_test.py::MCTSTest::test_1"
+  "klosterTest.py::KlosterTest::test3",
+  "klosterTest.py::KlosterTest::test_1",
+  "klosterTest.py::KlosterTest::test_2"
 ]

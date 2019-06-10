@@ -53,7 +53,25 @@ class KlosterTest(unittest.TestCase):
         self.assertEqual(len(spiel.alle_kloester), 1)
         self.assertEqual(player2.meeples, 7)
 
+        #plot_cards.display_spielbrett_dict(spiel.cards_set)
+
+    def test3(self):
+        spiel = Spiel(Kartenliste)
+        player1 = Player(1)
+        player2 = Player(2)
+
+        k1 = Card('W', 'W', 'W', 'W', 'K')
+        spiel.make_action(k1, (-1, 0), 0, player1, 'K')
+
+        k2 = Card('W', 'W', 'S', 'W', 'K')
+        spiel.make_action(k2, (-1, 1), 1, player2, 'K')
+
         plot_cards.display_spielbrett_dict(spiel.cards_set)
+
+        spiel.final_evaluate()
+
+        self.assertEqual(player1.punkte, 3)
+        self.assertEqual(player2.punkte, 3)
 
 if __name__ == '__main__':
     unittest.main()

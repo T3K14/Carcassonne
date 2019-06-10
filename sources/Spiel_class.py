@@ -522,13 +522,13 @@ class Spiel:
             if not new_kloster.fertig:
                 self.alle_kloester.append(new_kloster)
 
-        else:
-            for kloster in self.alle_kloester[:]:
-                if (x, y) in kloster.umgebungs_koordinaten:
-                    kloster.counter += 1
-                    kloster.check_if_fertig()
-                    if kloster.fertig:
-                        self.alle_kloester.remove(kloster)
+        #else:
+        for kloster in self.alle_kloester[:]:
+            if (x, y) in kloster.umgebungs_koordinaten:
+                kloster.counter += 1
+                kloster.check_if_fertig()
+                if kloster.fertig:
+                    self.alle_kloester.remove(kloster)
 
     def final_evaluate(self):
         """for counting if the game is finished to declare the winning player"""

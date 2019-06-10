@@ -148,7 +148,14 @@ def uct_vs_uct(counter):
                 current_player = d[current_player]
 
         else:
-            continue
+            print("ES GIBT FUER DIESE KARTE KEINE ANLEGESTELLE")
+
+            # gesetzte Karte loeschen
+            del spiel.cards_left[0]
+
+            if len(spiel.cards_left) == 0:
+                game_is_running = False
+
 
     spiel.final_evaluate()
     logfile.write("\nSpielende: Player1 hat {} Punkte, Player2 hat {} Punkte.".format(player1.punkte, player2.punkte))
@@ -325,7 +332,17 @@ def player_vs_uct():
                 current_player = d[current_player]
 
         else:
-            continue
+
+            print("ES GIBT FUER DIESE KARTE KEINE ANLEGESTELLE")
+
+            # gesetzte Karte loeschen
+            del spiel.cards_left[0]
+#
+            if len(spiel.cards_left) == 0:
+                game_is_running = False
+#
+            ## spieler wechseln
+            #current_player = d[current_player]
 
     spiel.final_evaluate()
     print("\nSpielende: Player1 hat {} Punkte, Player2 hat {} Punkte.".format(player1.punkte, player2.punkte))
@@ -335,6 +352,6 @@ if __name__ == '__main__':
     c = 0
     while True:
 
-        print("\n\n\nNEUES SPIEL")
+        print("\n\n\nNEUES SPIEL{}".format(c))
         uct_vs_uct(c)
         c += 1
