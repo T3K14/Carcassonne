@@ -30,9 +30,9 @@ def uct_vs_uct(counter):
 
     # zum probieren
     # von einer random-Kartenliste die ersten 10 Karten
-    spiel = Spiel(create_kartenliste(karteninfoliste)[:10], player1, player2)
+    #spiel = Spiel(create_kartenliste(karteninfoliste)[:10], player1, player2)
 
-    #spiel = Spiel(create_kartenliste(determinized_karteninfoliste, False), player1, player2)
+    spiel = Spiel(create_kartenliste(determinized_karteninfoliste, False), player1, player2)
 
     # select startspieler
     current_player = random.choice([player1, player2])
