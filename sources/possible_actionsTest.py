@@ -248,6 +248,39 @@ class PossibleActionsTest(unittest.TestCase):
 
         self.assertEqual(len(pos3), 18)
 
+    def test10(self):
+        spiel = Spiel_class.Spiel(Kartenliste)
+        player1 = Player(1)
+        player2 = Player(2)
+
+        k1 = Card('O', 'S', 'S', 'W')
+        pos1 = spiel.calculate_possible_actions(k1, player1)
+
+        self.assertEqual(30, len(pos1))     # 12
+        spiel.make_action(k1, (0, 1), 1, player1, k1.orte[0])
+
+        k2 = Card('O', 'W', 'W', 'O', 'O', True)
+        pos2 = spiel.calculate_possible_actions(k2, player2)
+
+        self.assertEqual(22, len(pos2))
+        spiel.make_action(k2, (1, 0), 0, player2, k2.orte[0])
+
+
+        k3 = Card('O', 'O', 'W', 'O', 'O')
+
+        pos3 = spiel.calculate_possible_actions(k3, player1)
+
+        self.assertEqual(16, len(pos3))
+        spiel.make_action(k3, (1, 1), 2, player1)
+
+        #display_spielbrett_dict(spiel.cards_set)
+
+        k4 = Card('W', 'O', 'W', 'O')
+
+        pos4 = spiel.calculate_possible_actions(k4, player2)
+
+        self.assertEqual(46, len(pos4))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -100,7 +100,7 @@ class Spiel:
 
     def meeple_check2(self, x, y, nachbar_kanten, kanten_dict):
         """berechnet zu bel. rotierter Karte an geg Koordinaten zu gegebenem Landschaftstyp (buchstabe, zB. 'O')
-         wo ich auf der Karte ein meeple setzen kann (Strassen und Orte)
+         wo ich auf der Karte kein meeple setzen kann (Strassen und Orte)
 
         :param x: die koordinaten an denen gecheckt werden soll
         :param y:
@@ -114,7 +114,7 @@ class Spiel:
         :param kanten_dict: ein dict der Form {0: <Ort.Ort_auf_Karte object at 0x7fd3ef25e0b8>,
                                                 1: None, 2: <Ort.Ort_auf_Karte object at 0x7fd3ef25e080>, 3: None}
         Es ist das kanten dict der Karte zur aktuellen Rotation:
-        An Kante 0 der Karte liegt der OaK 0x7fd... etc
+        An Kante 0 der Karte liegt bei aktueller Rotation der OaK 0x7fd... etc
 
         :return: gibt Liste mit Landschaften auf der Karte zurueck, auf die in Abhaengigkeit mit anderen Landschaften
         des selben Typs keine Meeples gesetzt werden koennen"""
@@ -123,7 +123,11 @@ class Spiel:
         d2 = {0: (x, y + 1), 1: (x + 1, y), 2: (x, y - 1), 3: (x - 1, y)}
 
         for kante in nachbar_kanten:
-            if nachbar_kanten[kante] is not 'W' and d2[kante] in self.cards_set and self.cards_set[d2[kante]].kanten[self.d[kante]].besitzer is not None:
+
+            #debugging
+            #meeples = self.cards_set[d2[kante]].kanten[self.d[kante]].meeples
+
+            if nachbar_kanten[kante] is not 'W' and d2[kante] in self.cards_set and self.cards_set[d2[kante]].kanten[self.d[kante]].meeples != {}:
 
                 # appende die entprechende Landschaft auf der Karte
                 if kanten_dict[kante] not in forbidden_landschaften:
@@ -169,7 +173,7 @@ class Spiel:
                 for kante in self.d2[ecke]:
                     if info[kante] in ('W', 'S'):
                         if d[(ecke, kante)] in self.cards_set:
-                            if self.cards_set[d[(ecke, kante)]].ecken[self.d3[(ecke, kante)]].besitzer is not None:
+                            if self.cards_set[d[(ecke, kante)]].ecken[self.d3[(ecke, kante)]].meeples != {}:
                                 forbidden.append(ecken[ecke])
 
         return forbidden
@@ -236,10 +240,12 @@ class Spiel:
                         # falls beliebig viele ort angrenzen
                         if 'O' in nachbar_karten.values():
 
-                            # durchsuche alle orte nach dem der dort liegt und checke, ob der schon besetzt ist, falls nicht
-                            # append mit dieser moeglichkeit
+
+                            # berechne fuer die gegebene Rotation alle orte auf die nicht angelegt werden darf
+                            forbidden_orte = self.meeple_check2(x, y, nachbar_karten, kanten_dict)
+
                             for o in card.orte:
-                                if o not in self.meeple_check2(x, y, nachbar_karten, kanten_dict):
+                                if o not in forbidden_orte:
                                     possible_actions.append((x, y, i, o))
 
                             # fuer alle orte, die nicht wechselwirken, aber noch auf der Karte sind:

@@ -44,3 +44,8 @@ print(list(a))
 file = open('file.txt', 'w+')
 file.write("hi")
 file.close()
+
+d = {}
+
+if d:
+    print("not d")
