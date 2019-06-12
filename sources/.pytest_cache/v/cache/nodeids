@@ -1,5 +1,12 @@
 [
-  "klosterTest.py::KlosterTest::test3",
-  "klosterTest.py::KlosterTest::test_1",
-  "klosterTest.py::KlosterTest::test_2"
+  "possible_actionsTest.py::PossibleActionsTest::test10",
+  "possible_actionsTest.py::PossibleActionsTest::test3",
+  "possible_actionsTest.py::PossibleActionsTest::test4",
+  "possible_actionsTest.py::PossibleActionsTest::test5",
+  "possible_actionsTest.py::PossibleActionsTest::test6",
+  "possible_actionsTest.py::PossibleActionsTest::test7",
+  "possible_actionsTest.py::PossibleActionsTest::test8",
+  "possible_actionsTest.py::PossibleActionsTest::test9",
+  "possible_actionsTest.py::PossibleActionsTest::test_1",
+  "possible_actionsTest.py::PossibleActionsTest::test_2"
 ]
