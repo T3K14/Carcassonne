@@ -1,7 +1,7 @@
 NEUES SPIEL
 
 
-NEUER ZUG: Player2 ist am Zug
+NEUER ZUG: Player1 ist am Zug
 Aktuell hat player1 0 Punkte und player2 0 Punkte.
 
 Die nachste Karte ist [S, O, W, S, None, False]
@@ -9,3 +9,16 @@ Sie enthält folgende moegliche Meeplepositionen:
 Orte: 1: [1]  
 Strassen: 1: [0, 3]  
 Wiesen: 1: [5, 6, 7]  2: [4]  
+
+Die AI setzt einen Meeple auf w1.
+Die AI setzt die Karte an (0, -1) und rotiert sie 1 mal
+
+
+NEUER ZUG: Player2 ist am Zug
+Aktuell hat player1 0 Punkte und player2 0 Punkte.
+
+Die nachste Karte ist [W, W, S, S, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte: 
+Strassen: 1: [2, 3]  
+Wiesen: 1: [4, 5, 6]  2: [7]  

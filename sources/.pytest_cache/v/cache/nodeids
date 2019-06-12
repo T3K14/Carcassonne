@@ -1,8 +1,3 @@
 [
-  "bigTest.py::BigTest::test1",
-  "bigTest.py::BigTest::test2",
-  "bigTest.py::BigTest::test3",
-  "bigTest.py::BigTest::test4",
-  "bigTest.py::BigTest::test5",
-  "bigTest.py::BigTest::test6"
+  "possible_actionsTest.py::PossibleActionsTest::test7"
 ]
