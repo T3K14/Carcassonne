@@ -152,7 +152,7 @@ def player_vs_ucb(kartenliste=None):
                 child_nodes = [Node(action) for action in pos]
 
                 t = 0
-                t_end = 5000
+                t_end = 500
 
                 # player stats in real game
                 current_player_stats = (current_player.meeples, current_player.punkte)

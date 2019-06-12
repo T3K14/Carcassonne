@@ -1,4 +1,4 @@
-d = {'a': {'a1': 3, 'a2': 4}, 'b': {'b1': 5, 'b2': 6}}
+"""d = {'a': {'a1': 3, 'a2': 4}, 'b': {'b1': 5, 'b2': 6}}
 
 print([k for lak in d for k in d[lak]])
 
@@ -41,11 +41,19 @@ liste = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 a = filter(lambda x: x/2 in (1,2,3,4,5,6), liste)
 print(list(a))
 
-file = open('file.txt', 'w+')
-file.write("hi")
-file.close()
 
 d = {}
 
 if d:
     print("not d")
+
+k = []
+print(k[:-1]
+"""
+from rotate2 import rotate_info_right
+
+infos = [1, 2, 3, 4]
+rotations = 2
+
+
+print(liste)

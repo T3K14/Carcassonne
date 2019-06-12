@@ -169,6 +169,9 @@ class Spiel:
 
         for x, y in self.possible_coordinates:
 
+            # ich will hier nicht wirklich was an der Karte rotieren, nur um zu schauen, wo was passt
+            info = card.info[:]
+
             # zuerst alle nachbarkarten finden und speichern wo sie relatativ zu eigener Karte liegen
             # das sollte woanders gemacht werden, da man sonst fuer jede neu gezogene Karte immer wieder die umgebung
             # untersucht, obwohl man das schon x mal davor gemacht hat
@@ -187,11 +190,12 @@ class Spiel:
                         # nicht 100 pro sicher, aber da dann schon karte an nkoo gefunden wurde, kann da ja keine weitere mehr sein
                         continue
 
-            # ecken_dict = card.ecken.copy()
             kanten_dict = card.kanten.copy()
+
+            written_rotations = []
             for i in range(4):
 
-                # wenn pro Rotation nach allen Ueberpruefungen immer noch True, dann hinzufuegen
+                # wenn pro Rotation nach allen Ueberpruefungen immer noch True, dann kann die Karte dort angelegt werden
                 b = True
                 for n in nachbar_karten:
                     if b:
@@ -200,59 +204,65 @@ class Spiel:
                         break
                 # hinzufuegen?
                 if b:
-                    # jetzt Meeples
-                    if player.meeples > 0:
-                        # falls beliebig viele ort angrenzen
-                        if 'O' in nachbar_karten.values():
+                    # wenn die Karteninfos zur aktuellen Rotation nicht gleich sind wie die einer bisher eingetragenen
+                    if info not in written_rotations:
+
+                        # jetzt Meeples
+                        if player.meeples > 0:
+                            # falls beliebig viele ort angrenzen
+                            if 'O' in nachbar_karten.values():
 
 
-                            # berechne fuer die gegebene Rotation alle orte auf die nicht angelegt werden darf
-                            forbidden_orte = self.meeple_check2(x, y, nachbar_karten, kanten_dict)
+                                # berechne fuer die gegebene Rotation alle orte auf die nicht angelegt werden darf
+                                forbidden_orte = self.meeple_check2(x, y, nachbar_karten, kanten_dict)
 
-                            for o in card.orte:
-                                if o not in forbidden_orte:
+                                for o in card.orte:
+                                    if o not in forbidden_orte:
+                                        possible_actions.append((x, y, i, o))
+
+                                # fuer alle orte, die nicht wechselwirken, aber noch auf der Karte sind:
+
+                            else:
+                                # fuer alle Orte auf der Karte appende actions mit diesem als meepleauswahl
+                                for o in card.orte:
                                     possible_actions.append((x, y, i, o))
 
-                            # fuer alle orte, die nicht wechselwirken, aber noch auf der Karte sind:
+                            if 'S' in nachbar_karten.values():
 
+                                # berechne fuer die gegebene Rotation alle Srtassen auf die nicht angelegt werden darf
 
+                                forbidden = self.meeple_check2(x, y, nachbar_karten, kanten_dict)
 
-                        else:
-                            # fuer alle Orte auf der Karte appende actions mit diesem als meepleauswahl
-                            for o in card.orte:
-                                possible_actions.append((x, y, i, o))
-
-                        if 'S' in nachbar_karten.values():
-
-                            # berechne fuer die gegebene Rotation alle Srtassen auf die nicht angelegt werden darf
-
-                            forbidden = self.meeple_check2(x, y, nachbar_karten, kanten_dict)
-
-                            for s in card.strassen:
-                                if s not in forbidden:
+                                for s in card.strassen:
+                                    if s not in forbidden:
+                                        possible_actions.append((x, y, i, s))
+                            else:
+                                # fuer alle Orte auf der Karte appende actions mit diesem als meepleauswahl
+                                for s in card.strassen:
                                     possible_actions.append((x, y, i, s))
-                        else:
-                            # fuer alle Orte auf der Karte appende actions mit diesem als meepleauswahl
-                            for s in card.strassen:
-                                possible_actions.append((x, y, i, s))
 
-                        # TESTEN
-                        #for wiese_auf_karte in card.wiesen:
-                        #    besitzer = [0 for x in self.find_angrenzende_wiesen(x, y, info, wiese_auf_karte) if x.besitzer is not None]
-                        #    if not besitzer:
-                        #        possible_actions.append((x, y, i, wiese_auf_karte))
+                            # TESTEN
+                            #for wiese_auf_karte in card.wiesen:
+                            #    besitzer = [0 for x in self.find_angrenzende_wiesen(x, y, info, wiese_auf_karte) if x.besitzer is not None]
+                            #    if not besitzer:
+                            #        possible_actions.append((x, y, i, wiese_auf_karte))
 
-                        forbidden_wiesen = self.meeple_check_wiesen(x, y, i, info, card)
-                        for wiese in card.wiesen:
-                            if wiese not in forbidden_wiesen:
-                                possible_actions.append((x, y, i, wiese))
+                            forbidden_wiesen = self.meeple_check_wiesen(x, y, i, info, card)
+                            for wiese in card.wiesen:
+                                if wiese not in forbidden_wiesen:
+                                    possible_actions.append((x, y, i, wiese))
 
-                        if card.mitte == 'K':
-                            possible_actions.append((x, y, i, 'K'))
+                            if card.mitte == 'K':
+                                possible_actions.append((x, y, i, 'K'))
 
-                    possible_actions.append((x, y, i, None))
+                        possible_actions.append((x, y, i, None))
+
+                    # die Karte liegt bei dieser Rotation gleich zu einer bereits betrachteten
+                    else:
+                        continue
 
                 # eins weiter rotieren
+                written_rotations.append(info[:])
                 info = rotate_info_right(info)
                 kanten_dict = rotate_kanten_dict_right(kanten_dict)
 

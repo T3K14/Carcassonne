@@ -1,12 +1,8 @@
 [
-  "possible_actionsTest.py::PossibleActionsTest::test10",
-  "possible_actionsTest.py::PossibleActionsTest::test3",
-  "possible_actionsTest.py::PossibleActionsTest::test4",
-  "possible_actionsTest.py::PossibleActionsTest::test5",
-  "possible_actionsTest.py::PossibleActionsTest::test6",
-  "possible_actionsTest.py::PossibleActionsTest::test7",
-  "possible_actionsTest.py::PossibleActionsTest::test8",
-  "possible_actionsTest.py::PossibleActionsTest::test9",
-  "possible_actionsTest.py::PossibleActionsTest::test_1",
-  "possible_actionsTest.py::PossibleActionsTest::test_2"
+  "bigTest.py::BigTest::test1",
+  "bigTest.py::BigTest::test2",
+  "bigTest.py::BigTest::test3",
+  "bigTest.py::BigTest::test4",
+  "bigTest.py::BigTest::test5",
+  "bigTest.py::BigTest::test6"
 ]
