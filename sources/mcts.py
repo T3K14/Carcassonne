@@ -21,7 +21,7 @@ def uct_vs_uct(counter):
     logfile = open('../log/logfile{}'.format(counter), 'w+')
     logfile.write('NEUES SPIEL')
 
-    player1 = Player(1)
+    player1 = Player(1, 'ai')
     player2 = Player(2, 'ai')
 
     # player1.punkte = 3
@@ -32,7 +32,7 @@ def uct_vs_uct(counter):
     # von einer random-Kartenliste die ersten 10 Karten
     #spiel = Spiel(create_kartenliste(karteninfoliste)[:10], player1, player2)
 
-    spiel = Spiel(create_kartenliste(determinized_karteninfoliste, False), player1, player2)
+    spiel = Spiel(create_kartenliste(determinized_short_karteninfoliste, False), player1, player2)
 
     # select startspieler
     current_player = random.choice([player1, player2])
