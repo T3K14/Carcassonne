@@ -20,7 +20,7 @@ class MakeActionTest(unittest.TestCase):
         goal2 = [spiel.alle_strassen[0], Strasse((1, 0), [1, 2])]
 
         k = card_class.Card("O", "S", 'S', 'O', 'O')
-        spiel.make_action(k, (1, 0), 0, Player_Class.Player(1), None)
+        spiel.make_action(k, 1, 0, 0, Player_Class.Player(1), None)
 
         self.assertEqual(len(spiel.alle_orte), len(goal))
         self.assertEqual(len(goal2), len(spiel.alle_strassen))
@@ -43,27 +43,27 @@ class MakeActionTest(unittest.TestCase):
         player2 = Player_Class.Player(2)
 
         k1 = card_class.Card('O', 'W', 'S', 'S')
-        spiel.make_action(k1, (0, 1), 0, player1, k1.strassen[0])
+        spiel.make_action(k1, 0, 1, 0, player1, k1.strassen[0])
 
         self.assertEqual(len(spiel.alle_strassen), 1)
         self.assertEqual(len(spiel.alle_orte), 2)
         self.assertEqual(player1.meeples, 6)
 
         k2 = card_class.Card('O', 'W', 'W', 'O', 'O')
-        spiel.make_action(k2, (1, 1), 2, player2, k2.orte[0])
+        spiel.make_action(k2, 1, 1, 2, player2, k2.orte[0])
 
         self.assertEqual(len(spiel.alle_strassen), 1)
         self.assertEqual(len(spiel.alle_orte), 3)
         self.assertEqual(player2.meeples, 6)
 
         k3 = card_class.Card('W', 'S', 'S', 'S', 'G')
-        spiel.make_action(k3, (0, -1), 3, player1, None)
+        spiel.make_action(k3, 0, -1, 3, player1, None)
 
         self.assertEqual(len(spiel.alle_strassen), 3)
         self.assertEqual(len(spiel.alle_orte), 3)
 
         k4 = card_class.Card('O', 'S', 'S', 'O', 'O', True)
-        spiel.make_action(k4, (1, -1), 1, player2, None)
+        spiel.make_action(k4, 1, -1, 1, player2, None)
 
         self.assertEqual(len(spiel.alle_strassen), 3)
         self.assertEqual(len(spiel.alle_orte), 4)
@@ -71,7 +71,7 @@ class MakeActionTest(unittest.TestCase):
         #display_spielbrett_dict(spiel.cards_set)
 
         k5 = card_class.Card('O', 'O', 'O', 'O', 'O', True)
-        spiel.make_action(k5, (1, 0), 1, player1, None)
+        spiel.make_action(k5, 1, 0, 1, player1, None)
 
         self.assertEqual(len(spiel.alle_strassen), 3)
         self.assertEqual(len(spiel.alle_orte), 2)
@@ -82,7 +82,7 @@ class MakeActionTest(unittest.TestCase):
         player2 = Player_Class.Player(2)
 
         k1 = card_class.Card('O', 'W', 'W', 'W')
-        spiel.make_action(k1, (1, 0), 3, player1, k1.orte[0])
+        spiel.make_action(k1, 1, 0, 3, player1, k1.orte[0])
 
         self.assertEqual(player1.punkte, 4)
         self.assertEqual(player1.meeples, 7)
@@ -94,24 +94,24 @@ class MakeActionTest(unittest.TestCase):
 
         k1 = card_class.Card('O', 'W', 'W', 'O', 'O', True)
         #plot_cards.draw_card(k1)
-        spiel.make_action(k1, (1, 0), 0, player1, k1.orte[0])
+        spiel.make_action(k1, 1, 0, 0, player1, k1.orte[0])
 
         self.assertEqual(spiel.alle_orte[0].besitzer, player1)
         self.assertEqual(len(spiel.alle_orte[0].meeples), 1)
 
         k2 = card_class.Card('O', 'O', 'W', 'O', 'O')
         #plot_cards.draw_card(k2)
-        spiel.make_action(k2, (2, 0), 1, player2, k2.orte[0])
+        spiel.make_action(k2, 2, 0, 1, player2, k2.orte[0])
 
         self.assertEqual(spiel.alle_orte[-1].besitzer, player2)
         self.assertEqual(len(spiel.alle_orte[-1].meeples), 1)
 
 
         k3 = card_class.Card('O', 'W', 'W', 'O', 'O')
-        spiel.make_action(k3, (1, 1), 2, player1)
+        spiel.make_action(k3, 1, 1, 2, player1)
 
         k4 = card_class.Card('O', 'W', 'W', 'O', 'O')
-        spiel.make_action(k4, (2, 1), 3, player2)
+        spiel.make_action(k4, 2, 1, 3, player2)
 
         #plot_cards.display_spielbrett_dict(spiel.cards_set)
         print('end')
@@ -122,16 +122,17 @@ class MakeActionTest(unittest.TestCase):
         player2 = Player_Class.Player(2)
 
         k1 = Card('W', 'W', 'W', 'W', 'K')
-        spiel.make_action(k1, (-1, 0), 0, player2, 'K')
+        spiel.make_action(k1, -1, 0, 0, player2, 'K')
 
         k2 = Card('O', 'W', 'W', 'W')
-        spiel.make_action(k2, (-2, 0), 0, player1)
+        spiel.make_action(k2, -2, 0, 0, player1)
 
         k3 = Card('W', 'O', 'W', 'O')
-        spiel.make_action(k3, (-2, 1), 3, player2, k3.wiesen[0])
+        spiel.make_action(k3, -2, 1, 3, player2, k3.wiesen[0])
 
         self.assertEqual(player1.punkte, 0)
         self.assertEqual(player2.punkte, 0)
+
 
 if __name__ == '__main__':
     unittest.main()

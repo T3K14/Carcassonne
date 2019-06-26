@@ -151,7 +151,11 @@ class Spiel:
 
         :param card:    die Karte
         :param player:  der Spieler fuer den geschaut werden muss, ob er noch meeples hat
-        :return:        liste mit tupel bestehend aus moeglicher anlegestelle und anzahl von rotationen die dafür noetig sind
+        :return:        Liste mit tuples der form:
+                        [(x, y, rotations, lak)], wobei lak auch None sein kann, falls kein Meeple gesetzt wird
+
+
+
 
         fuer jede theoretisch freien koordinaten werden aktuell noch die Nachbarkanten ermittelt, um zu schauen, ob dort angelegt werden kann
 
@@ -270,13 +274,12 @@ class Spiel:
 
         return possible_actions
 
-    def make_action(self, card, koordinates, rotations, player, meeple_position=None):
+    def make_action(self, player, card, x, y, rotations, meeple_position=None):
         """
-
-        :param card: Karte, die gespielt werden soll
-        :param koordinates: tuple (x, y)
-        :param rotations: anzahl an rechtsrotationen zum Karte legen
         :param player: Spieler, der diese Aktion spielt
+        :param card: Karte, die gespielt werden soll
+        :param x, y:  x, y
+        :param rotations: anzahl an rechtsrotationen zum Karte legen
         :param meeple_position: Landschaft auf der ein Meeple pletziert werden soll, standard=None, also keine Meeple-Platzierung
         :return:
         for setting a card and placing a meeple, geht davon aus, dass die action auch legitim ist (sollte ja
@@ -293,27 +296,27 @@ class Spiel:
 
         # wenn auf Karte Orte, Strassen oder Wiesen sind, muessen globale Aequivalente geupdatet werden
         if len(card.orte) > 0:
-            self.update_all_landschaften(card, koordinates[0], koordinates[1], meeple_position, 'O', player)
+            self.update_all_landschaften(card, x, y, meeple_position, 'O', player)
         if len(card.strassen) > 0:
-            self.update_all_landschaften(card, koordinates[0], koordinates[1], meeple_position, 'S', player)
+            self.update_all_landschaften(card, x, y, meeple_position, 'S', player)
         if len(card.wiesen) > 0:            # nur bei ooooo nicht
-            self.update_all_wiesen(card, koordinates[0], koordinates[1], meeple_position, player)
+            self.update_all_wiesen(card, x, y, meeple_position, player)
 
         # kloester muessen moeglicherweise immer geupdatet werden, da sie von der Anzahl an Umgebungskarten abhaengen
-        self.update_all_kloester(card, koordinates[0], koordinates[1], meeple_position, player)
+        self.update_all_kloester(card, x, y, meeple_position, player)
 
         # cards_set updaten
-        self.cards_set.update({(koordinates[0], koordinates[1]): card})
+        self.cards_set.update({(x, y): card})
 
         # possible_coordinates und unavailable coordinates updaten
-        self.unavailable_coordinates.append((koordinates[0], koordinates[1]))
+        self.unavailable_coordinates.append((x, y))
 
         for i, (v, w) in enumerate(self.possible_coordinates):
-            if (koordinates[0], koordinates[1]) == (v, w):
+            if (x, y) == (v, w):
                 del self.possible_coordinates[i]
 
                 # neue possible coordinates hinzufuegen
-                for (a, b) in [(koordinates[0], koordinates[1] - 1), (koordinates[0], koordinates[1] + 1), (koordinates[0] - 1, koordinates[1]), (koordinates[0] + 1, koordinates[1])]:
+                for (a, b) in [(x, y - 1), (x, y + 1), (x - 1, y), (x + 1, y)]:
                     if (a, b) not in self.possible_coordinates and (a, b) not in self.unavailable_coordinates:
                         self.possible_coordinates.append((a, b))
 
@@ -465,15 +468,11 @@ class Spiel:
                     # hauptwiese kommt zum einsatz
                     if global_wiese != hauptwiese:
 
-
-
                         hauptwiese.add_global(global_wiese, self.alle_wiesen)
                         for koos in global_wiese.alle_teile:
                             if koos in self.cards_set:
                                 self.cards_set[koos].update_ecken(global_wiese, hauptwiese)
                     else:
-
-
 
                         hauptwiese.add_part((x, y), wiese_auf_karte)
 

@@ -14,7 +14,7 @@ class Ort:
         self.wert = wert
         self.besitzer = None
         self.fertig = False
-        self.name = None # zum debuggen
+        self.name = None  # zum debuggen
         self.meeples = {}
 
     def update_kanten(self, koordinaten_kanten):

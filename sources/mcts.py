@@ -173,10 +173,12 @@ def player_vs_uct():
     #zum probieren
     #spiel = Spiel(create_kartenliste(determinized_short_karteninfoliste, False), player1, player2)
 
-    spiel = Spiel(create_kartenliste(determinized_karteninfoliste, False), player1, player2)
+    #spiel = Spiel(create_kartenliste(determinized_karteninfoliste, False), player1, player2)
+    spiel = Spiel(create_kartenliste(determinized_short_karteninfoliste, False), player1, player2)
 
     #select startspieler
-    current_player = player1
+    current_player = random.choice((player1, player2))
+    print('Der Startspieler ist Player{}'.format(current_player.nummer))
 
     mcts = MCTS((player1, player2), spiel.play_random1v1, spiel.calculate_possible_actions)
     mcts.root = Node(True, None, current_player.nummer)
@@ -260,7 +262,7 @@ def player_vs_uct():
                         if action in pos:
                             ungueltig = False
 
-                    spiel.make_action(current_card, (action[0], action[1]), action[2], current_player, action[3])
+                    spiel.make_action(current_player, current_card, action[0], action[1], action[2], action[3])
 
                     # root anpassen
                     if mcts.root.children:
@@ -274,7 +276,7 @@ def player_vs_uct():
                             else:
                                 landschafts_name = None
                                 landschafts_id = None
-                            if child.action == ((action[0], action[1]), action[2], landschafts_id, landschafts_name):  ###
+                            if child.action == (action[0], action[1], action[2], landschafts_id, landschafts_name):  ###
                                 mcts.root = child
                                 break
                     else:
@@ -286,7 +288,7 @@ def player_vs_uct():
                             landschafts_name = None
                             landschafts_id = None
                         p_num = 1 if current_player.nummer == 2 else 2
-                        mcts.root = Node(True, ((action[0], action[1]), action[2], landschafts_id, landschafts_name), p_num, mcts.root)
+                        mcts.root = Node(True, (action[0], action[1], action[2], landschafts_id, landschafts_name), p_num, mcts.root)
 
                     #gesetzte Karte loeschen
                     del spiel.cards_left[0]
@@ -353,5 +355,6 @@ if __name__ == '__main__':
     while True:
 
         print("\n\n\nNEUES SPIEL{}".format(c))
-        uct_vs_uct(c)
+        #uct_vs_uct(c)
+        player_vs_uct()
         c += 1
