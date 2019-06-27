@@ -612,43 +612,40 @@ class Spiel:
             turn = d[turn]
 
 
-    def play_random1v1(self, player1, player2):
+    def play_random1v1(self, first_player, second_player):
         """
+        :param first_player:    Spieler der zuerst seinen Zug macht
+        :param second_player:   Spieler, der als zweites dran ist
+        :return:                Spieler, der am Ende gewonnen hat, oder 0 bei Unentschieden
 
-        :param player1: spieler der zuerst seinen Zug macht
-        :param player2:
-        :return: Spieler, der am Ende gewonnen hat
         """
-        d = {player1: player2, player2: player1}
-        turn_player = player1
+        d = {first_player: second_player, second_player: first_player}
+        turn_player = first_player
 
         while len(self.cards_left) > 0:
             card = self.draw_card()
-            #draw_card(card)
             pos = self.calculate_possible_actions(card, turn_player)
+
             if len(pos) > 0:
                 action = random.choice(pos)
 
-            # keine moegliche anlegestelle
+            # keine moegliche anlegestelle, ziehe naechste Karte
             else:
                 continue
 
+            self.make_action(turn_player, card, action[0], action[1], action[2], action[3])
 
-            self.make_action(card, (action[0], action[1]), action[2], turn_player, action[3])
-            #display_spielbrett_dict(self.cards_set)
-
+            # aendere zu naechstem Spieler
             turn_player = d[turn_player]
 
         self.final_evaluate()
-        #display_spielbrett_dict(self.cards_set)
 
-        #unentschieden:
-        if player1.punkte == player2.punkte:
+        # Unentschieden:
+        if first_player.punkte == second_player.punkte:
             return 0
+        # ansonsten returne den gewinner
         else:
-            # ansonsten returne den gewinner
             return max(list(d), key=lambda x: x.punkte)
-
 
 
 if __name__ == "__main__":

@@ -211,8 +211,6 @@ def player_vs_uct():
         if pos:
             if current_player.art == 'human':
 
-                    #mache deinen move
-
                     #gib move ein
                     inp = input('Bitte gib deine Aktion an:')
                     inp_split = inp.split(' ')
@@ -295,6 +293,7 @@ def player_vs_uct():
 
                     if len(spiel.cards_left) == 0:
                         game_is_running = False
+
                     #spieler wechseln
                     current_player = d[current_player]
 
@@ -303,25 +302,25 @@ def player_vs_uct():
                 mcts.root = mcts.find_next_move(spiel)
 
                 # l_a_K auf die gespielt werden soll
-                if mcts.root.action[2] is None:
+                if mcts.root.action[3] is None:
                     landschaft = None
-                elif mcts.root.action[2] == 'k':
+                elif mcts.root.action[3] == 'k':
                     landschaft = 'K'
                 else:
                     l_dict = {'o': current_card.orte, 's': current_card.strassen, 'w': current_card.wiesen}
-                    landschaft = [l for l in l_dict[mcts.root.action[2]] if l.name == mcts.root.action[3]][0]
+                    landschaft = [l for l in l_dict[mcts.root.action[3]] if l.name == mcts.root.action[4]][0]
 
-                spiel.make_action(current_card, mcts.root.action[0], mcts.root.action[1], current_player, landschaft)   #######################################
+                spiel.make_action(current_player, current_card, mcts.root.action[0], mcts.root.action[1], mcts.root.action[2], landschaft)   #######################################
 
-                if mcts.root.action[2] is not None:
-                    #action_ausgabe = 'K' if mcts.root.action[2] == 'k' else mcts.root.action[2]
-                    print("\nDie AI setzt einen Meeple auf {}{}.".format(mcts.root.action[2], mcts.root.action[3]))
-                elif mcts.root.action[2] == 'k':
+                # falls die AI-Aktion einen Meeple auf eine Landschaft (ausser Kloster) setzt
+                if mcts.root.action[3] is not None:
+                    print("\nDie AI setzt einen Meeple auf {}{}.".format(mcts.root.action[3], mcts.root.action[4]))
+                elif mcts.root.action[3] == 'k':
                     print("\nDie AI setzt einem Meeple auf das Kloster.")
                 else:
                     print("\nDie AI setzt keinen Meeple.")
 
-                print("Die AI setzt die Karte an {} und rotiert sie {} mal".format(mcts.root.action[0], mcts.root.action[1]))
+                print("Die AI setzt die Karte an ({}, {}) und rotiert sie {} mal".format(mcts.root.action[0], mcts.root.action[1], mcts.root.action[2]))
 
 
                 # gesetzte Karte loeschen
@@ -339,15 +338,13 @@ def player_vs_uct():
 
             # gesetzte Karte loeschen
             del spiel.cards_left[0]
-#
+
             if len(spiel.cards_left) == 0:
                 game_is_running = False
-#
-            ## spieler wechseln
-            #current_player = d[current_player]
 
     spiel.final_evaluate()
     print("\nSpielende: Player1 hat {} Punkte, Player2 hat {} Punkte.".format(player1.punkte, player2.punkte))
+
 
 if __name__ == '__main__':
     #player_vs_uct()
