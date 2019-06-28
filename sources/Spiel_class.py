@@ -612,18 +612,25 @@ class Spiel:
             turn = d[turn]
 
 
-    def play_random1v1(self, first_player, second_player):
+    def play_random1v1(self, first_player, second_player, random_card_draw=True):
         """
-        :param first_player:    Spieler der zuerst seinen Zug macht
-        :param second_player:   Spieler, der als zweites dran ist
-        :return:                Spieler, der am Ende gewonnen hat, oder 0 bei Unentschieden
+        :param first_player:        Spieler der zuerst seinen Zug macht
+        :param second_player:       Spieler, der als zweites dran ist
+        :param random_card_draw:    bool:   gibt an, ob auch die Karten zufaellig gezogen werden sollen.
+                                            falls False wird immer die oberste Karte deterministisch gezogen
+        :return:                    Spieler, der am Ende gewonnen hat, oder 0 bei Unentschieden
 
         """
         d = {first_player: second_player, second_player: first_player}
         turn_player = first_player
 
         while len(self.cards_left) > 0:
-            card = self.draw_card()
+
+            if random_card_draw:
+                card = self.draw_card()
+            else:
+                card = self.cards_left.pop(0)
+
             pos = self.calculate_possible_actions(card, turn_player)
 
             if len(pos) > 0:

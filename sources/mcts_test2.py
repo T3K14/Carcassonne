@@ -52,6 +52,7 @@ class MCTSTEST(unittest.TestCase):
         for node in mcts.root.children:
             if node.action == (0, 1, 0, 's', 1):
                 mcts.root = node
+                break
             #print('\n', node.action)
             #print(node.wins,'/', node.visits)
 
