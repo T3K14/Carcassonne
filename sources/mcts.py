@@ -277,8 +277,9 @@ def player_vs_uct():
                             if child.action == (action[0], action[1], action[2], landschafts_id, landschafts_name):  ###
                                 mcts.root = child
                                 break
+
+                    # another player made the first move of the game
                     else:
-                        #another player made the first move of the game
                         if action[3]:
                             landschafts_name = 1 if inp_split[3][0] == 'k' else action[3].name
                             landschafts_id = inp_split[3][0]
@@ -288,17 +289,8 @@ def player_vs_uct():
                         p_num = 1 if current_player.nummer == 2 else 2
                         mcts.root = Node(True, (action[0], action[1], action[2], landschafts_id, landschafts_name), p_num, mcts.root)
 
-                    #gesetzte Karte loeschen
-                    del spiel.cards_left[0]
-
-                    if len(spiel.cards_left) == 0:
-                        game_is_running = False
-
-                    #spieler wechseln
-                    current_player = d[current_player]
-
+            # AI-PLayer
             else:
-                # AI-PLayer
                 mcts.root = mcts.find_next_move(spiel)
 
                 # l_a_K auf die gespielt werden soll
@@ -322,18 +314,18 @@ def player_vs_uct():
 
                 print("Die AI setzt die Karte an ({}, {}) und rotiert sie {} mal".format(mcts.root.action[0], mcts.root.action[1], mcts.root.action[2]))
 
+            # Vorbereitung fuer naechsten Zug
+            # gesetzte Karte loeschen
+            del spiel.cards_left[0]
 
-                # gesetzte Karte loeschen
-                del spiel.cards_left[0]
-
-                if len(spiel.cards_left) == 0:
+            if len(spiel.cards_left) == 0:
                     game_is_running = False
 
-                # spieler wechseln
-                current_player = d[current_player]
+            # spieler wechseln
+            current_player = d[current_player]
 
+        # wenn es fuer die gezogene Karte keine Anlegestelle gibt
         else:
-
             print("ES GIBT FUER DIESE KARTE KEINE ANLEGESTELLE")
 
             # gesetzte Karte loeschen

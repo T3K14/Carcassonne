@@ -359,7 +359,14 @@ determinized_short_karteninfoliste = ['SOWS', 'WWSS', 'SOSSG', 'OSSW', 'OOSOOT',
 
 
 def create_kartenliste(karteninfos, shuffle=True):
+    """
+    Zur Erstellung einer Kartenliste aus einer Liste aus Karteninfos
 
+    :param karteninfos:     list: ['WWSWK', 'OOSOO', ...]
+    :param shuffle:         bool: falls True, wird die Kartenliste gemischt, bevor sie zurueckgegeben wird
+    :return:                list: Liste mit den Kartenobjekten
+
+    """
     l = []
 
     for info in karteninfos:
