@@ -174,10 +174,10 @@ def player_vs_uct():
     #spiel = Spiel(create_kartenliste(determinized_short_karteninfoliste, False), player1, player2)
 
     #spiel = Spiel(create_kartenliste(determinized_karteninfoliste, False), player1, player2)
-    spiel = Spiel(create_kartenliste(determinized_short_karteninfoliste, False), player1, player2)
+    spiel = Spiel(create_kartenliste(determinized_short_karteninfoliste, False), player1, player2)      #['OSSW', 'WWSS', 'OSSW', 'WWSWK']
 
     #select startspieler
-    current_player = random.choice((player1, player2))
+    current_player = player1 #random.choice((player1, player2))
     print('Der Startspieler ist Player{}'.format(current_player.nummer))
 
     mcts = MCTS((player1, player2), spiel.play_random1v1, spiel.calculate_possible_actions)
@@ -228,7 +228,7 @@ def player_vs_uct():
                             w = [a for a in current_card.wiesen if a.name == int(inp_split[3][1])]
                             action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), w[0])
                         elif inp_split[3][0] == 'k':
-                            action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), 'K')
+                            action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), 'kloster')
                         else:
                             action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), None)
                     except IndexError or ValueError:
@@ -252,7 +252,7 @@ def player_vs_uct():
                                 w = [a for a in current_card.wiesen if a.name == int(inp_split[3][1])]
                                 action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), w[0])
                             elif inp_split[3][0] == 'k':
-                                action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), 'K')
+                                action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), 'kloster')
                             else:
                                 action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), None)
                         except IndexError or ValueError:
@@ -261,6 +261,8 @@ def player_vs_uct():
                             ungueltig = False
 
                     spiel.make_action(current_player, current_card, action[0], action[1], action[2], action[3])
+
+                    # gespielte action formulieren
 
                     # root anpassen
                     if mcts.root.children:

@@ -493,21 +493,24 @@ class Spiel:
                 card.update_ecken(w, neue_wiese)
 
     def update_all_kloester(self, card, x, y, meeple_position, player):
-        if card.mitte == 'K' and meeple_position == 'K':
+
+        #if card.mitte == 'K' and meeple_position == 'K':
+        if meeple_position == 'k':
             new_kloster = Kloster((x, y), player)
             for k in new_kloster.umgebungs_koordinaten:
                 if k in self.cards_set:
                     new_kloster.counter += 1
+
+            new_kloster.calculate_if_fertig()
+
             # wenn das kloster nach Erstellung noch nicht fertig ist
-            new_kloster.check_if_fertig()
             if not new_kloster.fertig:
                 self.alle_kloester.append(new_kloster)
 
-        #else:
         for kloster in self.alle_kloester[:]:
             if (x, y) in kloster.umgebungs_koordinaten:
                 kloster.counter += 1
-                kloster.check_if_fertig()
+                kloster.calculate_if_fertig()
                 if kloster.fertig:
                     self.alle_kloester.remove(kloster)
 

@@ -355,6 +355,8 @@ determinized_karteninfoliste = ['SOWS', 'WWSS', 'SOSSG', 'OSSW', 'OOSOOT', 'WWSW
                                 'OSSW', 'WWWWK', 'OWWW', 'OWWOOT', 'WWSS', 'SWSW', 'OSSOO', 'WSSSG', 'WSSSG', 'SWSW',
                                                                                                               'WWSS']
 determinized_short_karteninfoliste = ['SOWS', 'WWSS', 'SOSSG', 'OSSW', 'OOSOOT', 'OSSW', 'WWSWK', 'OSSW', 'WWSS', 'SWSW']
+#determinized_short_karteninfoliste = ['SOWS', 'WWSS', 'SOSSG', 'OSSW', 'OOSOOT', 'OSSW', 'WWSS', 'OSSW', 'WWSS', 'SWSW']
+
 #determinized_short_karteninfoliste = ['WWSS','WWSWK']
 
 

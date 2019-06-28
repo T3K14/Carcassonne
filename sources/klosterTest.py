@@ -13,7 +13,7 @@ class KlosterTest(unittest.TestCase):
         card1 = Card('W', 'W', 'W', 'W', 'K')
         player1 = Player(1)
 
-        spiel.make_action(card1, (-1, 0), 1, player1, 'K')
+        spiel.make_action(player1, card1, -1, 0, 1, 'K')
 
         self.assertEqual(player1.meeples, 6)
         self.assertEqual(len(spiel.alle_kloester), 1)
@@ -24,31 +24,31 @@ class KlosterTest(unittest.TestCase):
         player2 = Player(2)
 
         card1 = Card('W', 'W', 'S', 'S')
-        spiel.make_action(card1, (0, -1), 1, player1)
+        spiel.make_action(player1, card1, 0, -1, 1)
 
         card2 = Card('O', 'S', 'S', 'O', 'O')
-        spiel.make_action(card2, (0, 1), 1, player2)
+        spiel.make_action(player2, card2, 0, 1, 1)
 
         card3 = Card('O', 'S', 'S', 'W')
-        spiel.make_action(card3, (-1, 1), 3, player1)
+        spiel.make_action(player1, card3, -1, 1, 3)
 
         card4 = Card('S', 'W', 'S', 'W')
-        spiel.make_action(card4, (-1, -1), 1, player2)
+        spiel.make_action(player2, card4, -1, -1, 1)
 
         card5 = Card('S', 'O', 'W', 'S')
-        spiel.make_action(card5, (-2, -1), 1, player1)
+        spiel.make_action(player1, card5, -2, -1, 1)
 
         card6 = Card('O', 'W', 'W', 'W')
-        spiel.make_action(card6, (-2, 1), 1, player2)
+        spiel.make_action(player2, card6, -2, 1, 1)
 
         card7 = Card('W', 'W', 'S', 'W', 'K')
-        spiel.make_action(card7, (-2, 0), 0, player1, 'K')
+        spiel.make_action(player1, card7, -2, 0, 0, 'K')
 
         self.assertEqual(len(spiel.alle_kloester), 1)
         self.assertEqual(player1.meeples, 6)
 
         card8 = Card('W', 'W', 'W', 'W', 'K')
-        spiel.make_action(card8, (-1, 0), 0, player2, 'K')
+        spiel.make_action(player2, card8, -1, 0, 0, 'K')
 
         self.assertEqual(len(spiel.alle_kloester), 1)
         self.assertEqual(player2.meeples, 7)
@@ -61,12 +61,12 @@ class KlosterTest(unittest.TestCase):
         player2 = Player(2)
 
         k1 = Card('W', 'W', 'W', 'W', 'K')
-        spiel.make_action(k1, (-1, 0), 0, player1, 'K')
+        spiel.make_action(player1, k1, -1, 0, 0, 'K')
 
         k2 = Card('W', 'W', 'S', 'W', 'K')
-        spiel.make_action(k2, (-1, 1), 1, player2, 'K')
+        spiel.make_action(player2, k2, -1, 1, 1, 'K')
 
-        plot_cards.display_spielbrett_dict(spiel.cards_set)
+        #plot_cards.display_spielbrett_dict(spiel.cards_set)
 
         spiel.final_evaluate()
 

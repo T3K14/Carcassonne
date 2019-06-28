@@ -12,7 +12,7 @@ class Kloster():
         self.name = 1
 
 
-    def check_if_fertig(self):
+    def calculate_if_fertig(self):
         if self.counter == 9:
             self.besitzer.punkte += 9
             self.besitzer.meeples += 1
