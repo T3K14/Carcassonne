@@ -257,7 +257,7 @@ class Spiel:
                                     possible_actions.append((x, y, i, wiese))
 
                             if card.mitte == 'K':
-                                possible_actions.append((x, y, i, 'K'))
+                                possible_actions.append((x, y, i, 'k'))
 
                         possible_actions.append((x, y, i, None))
 

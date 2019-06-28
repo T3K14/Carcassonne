@@ -13,7 +13,7 @@ class KlosterTest(unittest.TestCase):
         card1 = Card('W', 'W', 'W', 'W', 'K')
         player1 = Player(1)
 
-        spiel.make_action(player1, card1, -1, 0, 1, 'K')
+        spiel.make_action(player1, card1, -1, 0, 1, 'k')
 
         self.assertEqual(player1.meeples, 6)
         self.assertEqual(len(spiel.alle_kloester), 1)
@@ -42,13 +42,13 @@ class KlosterTest(unittest.TestCase):
         spiel.make_action(player2, card6, -2, 1, 1)
 
         card7 = Card('W', 'W', 'S', 'W', 'K')
-        spiel.make_action(player1, card7, -2, 0, 0, 'K')
+        spiel.make_action(player1, card7, -2, 0, 0, 'k')
 
         self.assertEqual(len(spiel.alle_kloester), 1)
         self.assertEqual(player1.meeples, 6)
 
         card8 = Card('W', 'W', 'W', 'W', 'K')
-        spiel.make_action(player2, card8, -1, 0, 0, 'K')
+        spiel.make_action(player2, card8, -1, 0, 0, 'k')
 
         self.assertEqual(len(spiel.alle_kloester), 1)
         self.assertEqual(player2.meeples, 7)
@@ -61,10 +61,10 @@ class KlosterTest(unittest.TestCase):
         player2 = Player(2)
 
         k1 = Card('W', 'W', 'W', 'W', 'K')
-        spiel.make_action(player1, k1, -1, 0, 0, 'K')
+        spiel.make_action(player1, k1, -1, 0, 0, 'k')
 
         k2 = Card('W', 'W', 'S', 'W', 'K')
-        spiel.make_action(player2, k2, -1, 1, 1, 'K')
+        spiel.make_action(player2, k2, -1, 1, 1, 'k')
 
         #plot_cards.display_spielbrett_dict(spiel.cards_set)
 

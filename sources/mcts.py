@@ -228,11 +228,11 @@ def player_vs_uct():
                             w = [a for a in current_card.wiesen if a.name == int(inp_split[3][1])]
                             action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), w[0])
                         elif inp_split[3][0] == 'k':
-                            action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), 'kloster')
+                            action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), 'k')
                         else:
                             action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), None)
                     except IndexError or ValueError:
-                        pass
+                        print('ERROR CATCHED')
 
                     # falls move unguelig:
                     if action in pos:
@@ -252,7 +252,7 @@ def player_vs_uct():
                                 w = [a for a in current_card.wiesen if a.name == int(inp_split[3][1])]
                                 action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), w[0])
                             elif inp_split[3][0] == 'k':
-                                action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), 'kloster')
+                                action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), 'k')
                             else:
                                 action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), None)
                         except IndexError or ValueError:
@@ -263,33 +263,30 @@ def player_vs_uct():
                     spiel.make_action(current_player, current_card, action[0], action[1], action[2], action[3])
 
                     # gespielte action formulieren
+                    if action[3]:
+                        lak_id = inp_split[3][0]
+                        lak_name = 1 if inp_split[3][0] == 'k' else action[3].name
+                    else:
+                        lak_id = None
+                        lak_name = None
+
+                    node_action = (action[0], action[1], action[2], lak_id, lak_name)
 
                     # root anpassen
+
+                    # falls die aktuelle root_node bereits Kinder hat
                     if mcts.root.children:
                         for child in mcts.root.children:
-                            # wenn die action von der child-node der gespielten entspricht
 
-                            # wenn nicht none
-                            if action[3]:
-                                landschafts_name = 1 if inp_split[3][0] == 'k' else action[3].name
-                                landschafts_id = inp_split[3][0]
-                            else:
-                                landschafts_name = None
-                                landschafts_id = None
-                            if child.action == (action[0], action[1], action[2], landschafts_id, landschafts_name):  ###
+                            # wenn die action von der child-node der gespielten entspricht
+                            if child.action == node_action:  ###
                                 mcts.root = child
                                 break
 
-                    # another player made the first move of the game
+                    # another player made the first move of the game, or the node has no visits yet
                     else:
-                        if action[3]:
-                            landschafts_name = 1 if inp_split[3][0] == 'k' else action[3].name
-                            landschafts_id = inp_split[3][0]
-                        else:
-                            landschafts_name = None
-                            landschafts_id = None
                         p_num = 1 if current_player.nummer == 2 else 2
-                        mcts.root = Node(True, (action[0], action[1], action[2], landschafts_id, landschafts_name), p_num, mcts.root)
+                        mcts.root = Node(True, node_action, p_num, mcts.root)
 
             # AI-PLayer
             else:
