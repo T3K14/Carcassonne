@@ -81,7 +81,7 @@ def uct_vs_uct(counter):
                 if mcts.root.action[2] is None:
                     landschaft = None
                 elif mcts.root.action[2] == 'k':
-                    landschaft = 'K'
+                    landschaft = 'k'
                 else:
                     l_dict = {'o': current_card.orte, 's': current_card.strassen, 'w': current_card.wiesen}
                     landschaft = [l for l in l_dict[mcts.root.action[2]] if l.name == mcts.root.action[3]][0]
@@ -90,7 +90,7 @@ def uct_vs_uct(counter):
                                   landschaft)  #######################################
 
                 if mcts.root.action[2] is not None:
-                    # action_ausgabe = 'K' if mcts.root.action[2] == 'k' else mcts.root.action[2]
+                    # action_ausgabe = 'k' if mcts.root.action[2] == 'k' else mcts.root.action[2]
                     logfile.write("\n\nDie AI setzt einen Meeple auf {}{}.".format(mcts.root.action[2], mcts.root.action[3]))
                 elif mcts.root.action[2] == 'k':
                     logfile.write("\nDie AI setzt einem Meeple auf das Kloster.")
@@ -119,7 +119,7 @@ def uct_vs_uct(counter):
                 if mcts.root.action[2] is None:
                     landschaft = None
                 elif mcts.root.action[2] == 'k':
-                    landschaft = 'K'
+                    landschaft = 'k'
                 else:
                     l_dict = {'o': current_card.orte, 's': current_card.strassen, 'w': current_card.wiesen}
                     landschaft = [l for l in l_dict[mcts.root.action[2]] if l.name == mcts.root.action[3]][0]
@@ -128,7 +128,7 @@ def uct_vs_uct(counter):
                                   landschaft)  #######################################
 
                 if mcts.root.action[2] is not None:
-                    # action_ausgabe = 'K' if mcts.root.action[2] == 'k' else mcts.root.action[2]
+                    # action_ausgabe = 'k' if mcts.root.action[2] == 'k' else mcts.root.action[2]
                     logfile.write("\n\nDie AI setzt einen Meeple auf {}{}.".format(mcts.root.action[2], mcts.root.action[3]))
                 elif mcts.root.action[2] == 'k':
                     logfile.write("\nDie AI setzt einem Meeple auf das Kloster.")
@@ -296,7 +296,7 @@ def player_vs_uct():
                 if mcts.root.action[3] is None:
                     landschaft = None
                 elif mcts.root.action[3] == 'k':
-                    landschaft = 'K'
+                    landschaft = 'k'
                 else:
                     l_dict = {'o': current_card.orte, 's': current_card.strassen, 'w': current_card.wiesen}
                     landschaft = [l for l in l_dict[mcts.root.action[3]] if l.name == mcts.root.action[4]][0]
@@ -338,7 +338,7 @@ def player_vs_uct():
 
 
 if __name__ == '__main__':
-    #player_vs_uct()
+    player_vs_uct()
     c = 0
     while True:
 
