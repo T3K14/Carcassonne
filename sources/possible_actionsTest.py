@@ -97,7 +97,7 @@ class PossibleActionsTest(unittest.TestCase):
 
         #display_spielbrett_dict(spiel.cards_set)
 
-        goal = [(-1, 0, 0, k3.wiesen[0]), (-1, 0, 0, None), (-1, 0, 0, 'K'), (1, 2, 0, None), (1, 2, 0, 'K')]
+        goal = [(-1, 0, 0, k3.wiesen[0]), (-1, 0, 0, None), (-1, 0, 0, 'k'), (1, 2, 0, None), (1, 2, 0, 'k')]
 
         self.assertEqual(len(pos), len(goal))
         for tup in pos:
@@ -281,6 +281,44 @@ class PossibleActionsTest(unittest.TestCase):
 
         self.assertEqual(23, len(pos4))
 
+    def test11(self):
+        spiel = Spiel_class.Spiel(Kartenliste)
+        player1 = Player(1)
+        player2 = Player(2)
+
+        k1 = Card('S', 'O', 'S', 'S', 'G')
+
+        spiel.make_action(player1, k1, 1, 0, 2, k1.orte[0])
+
+        k2 = Card('O', 'S', 'S', 'W')
+        spiel.make_action(player2, k2, 0, -1, 2, k2.orte[0])
+        pos = spiel.calculate_possible_actions(k2, player2)
+
+        k3 = Card('W', 'W', 'S', 'S')
+        wiese = None
+        for w in k3.wiesen:
+            if sorted(w.ecken) == sorted([4, 5, 7]):
+                wiese = w
+        spiel.make_action(player1, k3, 1, -1, 2, wiese)
+
+        k4 = Card('S', 'W', 'S', 'W')
+        spiel.make_action(player2, k4, 0, 1, 0, k4.strassen[0])
+
+        k5 = Card('O', 'O', 'S', 'O', 'O', True)
+        wiese = [w for w in k5.wiesen if w.ecken == [6]][0]
+        spiel.make_action(player1, k5, 2, -1, 1, wiese)
+
+        k6 = Card('O', 'S', 'S', 'W')
+        wiese = [w for w in k6.wiesen if sorted(w.ecken) == sorted([4, 5, 7])][0]
+        spiel.make_action(player2, k6, 0, -2, 0, wiese)
+
+        k7 = Card('O', 'S', 'S', 'W')
+        spiel.make_action(player1, k7, 2, 0, 2, k7.orte[0])
+
+        k8 = Card('S', 'O', 'W', 'S')
+        pos = spiel.calculate_possible_actions(k8, player2)
+
+        print('hi')
 
 if __name__ == "__main__":
     unittest.main()
