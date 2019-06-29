@@ -357,6 +357,8 @@ determinized_karteninfoliste = ['SOWS', 'WWSS', 'SOSSG', 'OSSW', 'OOSOOT', 'WWSW
 #determinized_short_karteninfoliste = ['SOWS', 'WWSS', 'SOSSG', 'OSSW', 'OOSOOT', 'OSSW', 'WWSWK', 'OSSW', 'WWSS', 'SWSW']
 determinized_short_karteninfoliste = ['SWSW', 'OSSW', 'SOSSG', 'WWSWK', 'WWSS', 'WWSS', 'OOSOOT', 'OSSW', 'SOWS', 'OSSW']
 
+test_karteninfolist = ['SOSSG', 'OSSW', 'WWSS', 'SWSW', 'OOSOOT', 'OSSW', 'OSSW', 'SOWS', 'WWSS', 'WWSWK']
+
 #determinized_short_karteninfoliste = ['WWSS','WWSWK']
 
 k1 = Card('S', 'O', 'W', 'S')

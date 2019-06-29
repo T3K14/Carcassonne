@@ -3,7 +3,7 @@ import random
 
 from mcts2 import MCTS, Node
 from Spiel_class import Spiel
-from card_class import Card, karteninfoliste, create_kartenliste, determinized_karteninfoliste, determinized_short_karteninfoliste
+from card_class import Card, karteninfoliste, create_kartenliste, determinized_karteninfoliste, determinized_short_karteninfoliste, test_karteninfolist
 
 from Ort import Ort
 from Strasse import Strasse
@@ -174,10 +174,10 @@ def player_vs_uct():
     #spiel = Spiel(create_kartenliste(determinized_short_karteninfoliste, False), player1, player2)
 
     #spiel = Spiel(create_kartenliste(determinized_karteninfoliste, False), player1, player2)
-    spiel = Spiel(create_kartenliste(determinized_short_karteninfoliste, True), player1, player2)      #['OSSW', 'WWSS', 'OSSW', 'WWSWK']
+    spiel = Spiel(create_kartenliste(test_karteninfolist, False), player1, player2)      #['OSSW', 'WWSS', 'OSSW', 'WWSWK']
 
     #select startspieler
-    current_player = random.choice((player1, player2))
+    current_player = player1#random.choice((player1, player2))
     print('Der Startspieler ist Player{}'.format(current_player.nummer))
 
     mcts = MCTS((player1, player2), spiel.play_random1v1, spiel.calculate_possible_actions)
