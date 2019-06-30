@@ -136,12 +136,12 @@ class MCTSTEST(unittest.TestCase):
         # neuer human Zug
         k7 = spiel.cards_left.pop(0)
 
-        spiel.make_action(current_player, k7, 1, 1, 3, 'K')
+        spiel.make_action(current_player, k7, 1, 1, 3, 'k')
 
         # tree updaten
         for node in mcts.root.children:
             #print(node.action)
-            if node.action == (1, 1, 3, 'k', 'k'):
+            if node.action == (1, 1, 3, 'k', 1):
                 mcts.root = node
 
         current_player = d[current_player]

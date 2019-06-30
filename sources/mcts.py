@@ -78,27 +78,26 @@ def uct_vs_uct(counter):
                 mcts.root = mcts.find_next_move(spiel)
 
                 # l_a_K auf die gespielt werden soll
-                if mcts.root.action[2] is None:
+                if mcts.root.action[3] is None:
                     landschaft = None
-                elif mcts.root.action[2] == 'k':
+                elif mcts.root.action[3] == 'k':
                     landschaft = 'k'
                 else:
                     l_dict = {'o': current_card.orte, 's': current_card.strassen, 'w': current_card.wiesen}
-                    landschaft = [l for l in l_dict[mcts.root.action[2]] if l.name == mcts.root.action[3]][0]
+                    landschaft = [l for l in l_dict[mcts.root.action[3]] if l.name == mcts.root.action[4]][0]
 
-                spiel.make_action(current_card, mcts.root.action[0], mcts.root.action[1], current_player,
+                spiel.make_action(current_player, current_card, mcts.root.action[0], mcts.root.action[1], mcts.root.action[2],
                                   landschaft)  #######################################
 
-                if mcts.root.action[2] is not None:
+                if mcts.root.action[3] is not None:
                     # action_ausgabe = 'k' if mcts.root.action[2] == 'k' else mcts.root.action[2]
-                    logfile.write("\n\nDie AI setzt einen Meeple auf {}{}.".format(mcts.root.action[2], mcts.root.action[3]))
-                elif mcts.root.action[2] == 'k':
+                    logfile.write("\n\nDie AI setzt einen Meeple auf {}{}.".format(mcts.root.action[3], mcts.root.action[4]))
+                elif mcts.root.action[3] == 'k':
                     logfile.write("\nDie AI setzt einem Meeple auf das Kloster.")
                 else:
                     logfile.write("\nDie AI setzt keinen Meeple.")
 
-                logfile.write("\nDie AI setzt die Karte an {} und rotiert sie {} mal".format(mcts.root.action[0],
-                                                                                   mcts.root.action[1]))
+                logfile.write("\nDie AI setzt die Karte an ({}, {}) und rotiert sie {} mal".format(mcts.root.action[0], mcts.root.action[1], mcts.root.action[2]))
 
                 # gesetzte Karte loeschen
                 del spiel.cards_left[0]
@@ -116,27 +115,26 @@ def uct_vs_uct(counter):
                 mcts.root = mcts.find_next_move(spiel)
 
                 # l_a_K auf die gespielt werden soll
-                if mcts.root.action[2] is None:
+                if mcts.root.action[3] is None:
                     landschaft = None
-                elif mcts.root.action[2] == 'k':
+                elif mcts.root.action[3] == 'k':
                     landschaft = 'k'
                 else:
                     l_dict = {'o': current_card.orte, 's': current_card.strassen, 'w': current_card.wiesen}
-                    landschaft = [l for l in l_dict[mcts.root.action[2]] if l.name == mcts.root.action[3]][0]
+                    landschaft = [l for l in l_dict[mcts.root.action[3]] if l.name == mcts.root.action[4]][0]
 
-                spiel.make_action(current_card, mcts.root.action[0], mcts.root.action[1], current_player,
+                spiel.make_action(current_player, current_card, mcts.root.action[0], mcts.root.action[1], mcts.root.action[2],
                                   landschaft)  #######################################
 
                 if mcts.root.action[2] is not None:
                     # action_ausgabe = 'k' if mcts.root.action[2] == 'k' else mcts.root.action[2]
-                    logfile.write("\n\nDie AI setzt einen Meeple auf {}{}.".format(mcts.root.action[2], mcts.root.action[3]))
+                    logfile.write("\n\nDie AI setzt einen Meeple auf {}{}.".format(mcts.root.action[3], mcts.root.action[4]))
                 elif mcts.root.action[2] == 'k':
                     logfile.write("\nDie AI setzt einem Meeple auf das Kloster.")
                 else:
                     logfile.write("\nDie AI setzt keinen Meeple.")
 
-                logfile.write("Die AI setzt die Karte an {} und rotiert sie {} mal".format(mcts.root.action[0],
-                                                                                   mcts.root.action[1]))
+                logfile.write("\nDie AI setzt die Karte an ({}, {}) und rotiert sie {} mal".format(mcts.root.action[0], mcts.root.action[1], mcts.root.action[2]))
 
                 # gesetzte Karte loeschen
                 del spiel.cards_left[0]
@@ -338,7 +336,7 @@ def player_vs_uct():
 
 
 if __name__ == '__main__':
-    player_vs_uct()
+    uct_vs_uct(0)
     #c = 0
     #while True:
 
