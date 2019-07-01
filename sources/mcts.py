@@ -32,7 +32,7 @@ def uct_vs_uct(counter):
     # von einer random-Kartenliste die ersten 10 Karten
     #spiel = Spiel(create_kartenliste(karteninfoliste)[:10], player1, player2)
 
-    spiel = Spiel(create_kartenliste(determinized_short_karteninfoliste, False), player1, player2)
+    spiel = Spiel(create_kartenliste(determinized_karteninfoliste, False), player1, player2)
 
     # select startspieler
     current_player = random.choice([player1, player2])
@@ -126,7 +126,7 @@ def uct_vs_uct(counter):
                 spiel.make_action(current_player, current_card, mcts.root.action[0], mcts.root.action[1], mcts.root.action[2],
                                   landschaft)  #######################################
 
-                if mcts.root.action[2] is not None:
+                if mcts.root.action[3] is not None:
                     # action_ausgabe = 'k' if mcts.root.action[2] == 'k' else mcts.root.action[2]
                     logfile.write("\n\nDie AI setzt einen Meeple auf {}{}.".format(mcts.root.action[3], mcts.root.action[4]))
                 elif mcts.root.action[2] == 'k':
@@ -171,8 +171,8 @@ def player_vs_uct():
     #zum probieren
     #spiel = Spiel(create_kartenliste(determinized_short_karteninfoliste, False), player1, player2)
 
-    #spiel = Spiel(create_kartenliste(determinized_karteninfoliste, False), player1, player2)
-    spiel = Spiel(create_kartenliste(test_karteninfolist, False), player1, player2)      #['OSSW', 'WWSS', 'OSSW', 'WWSWK']
+    spiel = Spiel(create_kartenliste(determinized_karteninfoliste, False), player1, player2)
+    #spiel = Spiel(create_kartenliste(test_karteninfolist, False), player1, player2)      #['OSSW', 'WWSS', 'OSSW', 'WWSWK']
 
     #select startspieler
     current_player = player1#random.choice((player1, player2))
@@ -336,11 +336,10 @@ def player_vs_uct():
 
 
 if __name__ == '__main__':
-    uct_vs_uct(0)
-    #c = 0
-    #while True:
+    c = 0
+    while True:
 
-    #    print("\n\n\nNEUES SPIEL{}".format(c))
-    #    #uct_vs_uct(c)
-    #    player_vs_uct()
-    #    c += 1
+        print("\n\n\nNEUES SPIEL{}".format(c))
+        uct_vs_uct(c)
+        #player_vs_uct()
+        c += 1
