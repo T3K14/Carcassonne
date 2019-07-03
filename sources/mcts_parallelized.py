@@ -1,0 +1,361 @@
+from copy import deepcopy
+import random
+import multiprocessing
+
+from mcts2 import MCTS, Node
+from Spiel_class import Spiel
+from card_class import Card, karteninfoliste, create_kartenliste, determinized_karteninfoliste, determinized_short_karteninfoliste, test_karteninfolist
+
+from Ort import Ort
+from Strasse import Strasse
+from Kloster import Kloster
+from Wiese import Wiese
+from Player_Class import Player
+
+
+from plot_cards import display_spielbrett_dict, draw_card
+
+from rotate2 import rotate_info_right, rotate_kanten_dict_right
+
+def get_best_child(root_nodes):
+    """
+    Funktion zum ermitteln der besten Child-Node aus verschiedenen Trees, welche von der selben root-Node aus starten.
+    Die Auswahl findet auf Basis der visits statt.
+
+    :param root_nodes:  list    Liste mit root_nodes, zu welchen ein Tree aufgebaut wurde
+    :return:            node    Node mit der besten Aktion von dem Tree, bei welchem diese Node am haeufigsten besucht
+                                wurde
+    """
+
+    visists = [node.visits for node in root_nodes[0].children]
+    for i, root_node in enumerate(root_nodes[1:]):
+        pass
+
+
+def uct_vs_uct(counter):
+
+    logfile = open('../log/logfile{}'.format(counter), 'w+')
+    logfile.write('NEUES SPIEL')
+
+    player1 = Player(1, 'ai')
+    player2 = Player(2, 'ai')
+
+    # player1.punkte = 3
+
+    d = {player1: player2, player2: player1}
+
+    # zum probieren
+    # von einer random-Kartenliste die ersten 10 Karten
+    #spiel = Spiel(create_kartenliste(karteninfoliste)[:10], player1, player2)
+
+    spiel = Spiel(create_kartenliste(determinized_karteninfoliste, False), player1, player2)
+
+    # select startspieler
+    current_player = random.choice([player1, player2])
+
+    mcts = MCTS((player1, player2))
+    mcts.root = Node(True, None, current_player.nummer)
+
+    game_is_running = True
+    while game_is_running:
+
+        logfile.write("\n\n\nNEUER ZUG: Player{} ist am Zug\n".format(current_player.nummer))
+        logfile.write('Aktuell hat player1 {} Punkte und player2 {} Punkte.\n'.format(player1.punkte,
+                                                                                             player2.punkte))
+        #display_spielbrett_dict(spiel.cards_set)
+        current_card = spiel.cards_left[0]
+
+        print('\nDie nachste Karte ist [{0}, {1}, {2}, {3}, {4}, {5}]'.format(current_card.info[0], current_card.info[1],
+                                                                            current_card.info[2], current_card.info[3],
+                                                                            current_card.mitte, current_card.schild))
+        logfile.write('\nDie nachste Karte ist [{0}, {1}, {2}, {3}, {4}, {5}]'.format(current_card.info[0], current_card.info[1],
+                                                                            current_card.info[2], current_card.info[3],
+                                                                            current_card.mitte, current_card.schild))
+        #draw_card(current_card)
+        logfile.write('\nSie enthält folgende moegliche Meeplepositionen:')
+        logfile.write('\nOrte: ')
+        for o in current_card.orte:
+            logfile.write("{}: {}  ".format(o.name, o.kanten))
+        logfile.write('\nStrassen: ')
+        for s in current_card.strassen:
+            logfile.write("{}: {}  ".format(s.name, s.kanten))
+        logfile.write('\nWiesen: ')
+        for w in current_card.wiesen:
+            logfile.write("{}: {}  ".format(w.name, w.ecken))
+
+        pos = spiel.calculate_possible_actions(current_card, current_player)
+
+        # wenn es moegliche anlegestellenn (fuer den aktuellen Spieler) gibt, (es gibt fuer einen spieler auf jeden Fall
+        # eine Anlegemoeglichkeit, wenn es fuer den anderen auch eine gibt)
+        if pos:
+            if current_player.nummer == 1:
+                #logfile.write('\nPlayer1 ist am Zug')
+
+                mcts.root = mcts.find_next_move(spiel)
+
+                # l_a_K auf die gespielt werden soll
+                if mcts.root.action[3] is None:
+                    landschaft = None
+                elif mcts.root.action[3] == 'k':
+                    landschaft = 'k'
+                else:
+                    l_dict = {'o': current_card.orte, 's': current_card.strassen, 'w': current_card.wiesen}
+                    landschaft = [l for l in l_dict[mcts.root.action[3]] if l.name == mcts.root.action[4]][0]
+
+                spiel.make_action(current_player, current_card, mcts.root.action[0], mcts.root.action[1], mcts.root.action[2],
+                                  landschaft)  #######################################
+
+                if mcts.root.action[3] is not None:
+                    # action_ausgabe = 'k' if mcts.root.action[2] == 'k' else mcts.root.action[2]
+                    logfile.write("\n\nDie AI setzt einen Meeple auf {}{}.".format(mcts.root.action[3], mcts.root.action[4]))
+                elif mcts.root.action[3] == 'k':
+                    logfile.write("\nDie AI setzt einem Meeple auf das Kloster.")
+                else:
+                    logfile.write("\nDie AI setzt keinen Meeple.")
+
+                logfile.write("\nDie AI setzt die Karte an ({}, {}) und rotiert sie {} mal".format(mcts.root.action[0], mcts.root.action[1], mcts.root.action[2]))
+
+                # gesetzte Karte loeschen
+                del spiel.cards_left[0]
+
+                if len(spiel.cards_left) == 0:
+                    game_is_running = False
+
+                # spieler wechseln
+                current_player = d[current_player]
+
+            else:
+                # player2
+                #logfile.write('Player2 ist am Zug')
+
+                mcts.root = mcts.find_next_move(spiel)
+
+                # l_a_K auf die gespielt werden soll
+                if mcts.root.action[3] is None:
+                    landschaft = None
+                elif mcts.root.action[3] == 'k':
+                    landschaft = 'k'
+                else:
+                    l_dict = {'o': current_card.orte, 's': current_card.strassen, 'w': current_card.wiesen}
+                    landschaft = [l for l in l_dict[mcts.root.action[3]] if l.name == mcts.root.action[4]][0]
+
+                spiel.make_action(current_player, current_card, mcts.root.action[0], mcts.root.action[1], mcts.root.action[2],
+                                  landschaft)  #######################################
+
+                if mcts.root.action[3] is not None:
+                    # action_ausgabe = 'k' if mcts.root.action[2] == 'k' else mcts.root.action[2]
+                    logfile.write("\n\nDie AI setzt einen Meeple auf {}{}.".format(mcts.root.action[3], mcts.root.action[4]))
+                elif mcts.root.action[2] == 'k':
+                    logfile.write("\nDie AI setzt einem Meeple auf das Kloster.")
+                else:
+                    logfile.write("\nDie AI setzt keinen Meeple.")
+
+                logfile.write("\nDie AI setzt die Karte an ({}, {}) und rotiert sie {} mal".format(mcts.root.action[0], mcts.root.action[1], mcts.root.action[2]))
+
+                # gesetzte Karte loeschen
+                del spiel.cards_left[0]
+
+                if len(spiel.cards_left) == 0:
+                    game_is_running = False
+
+                # spieler wechseln
+                current_player = d[current_player]
+
+        else:
+            print("ES GIBT FUER DIESE KARTE KEINE ANLEGESTELLE")
+
+            # gesetzte Karte loeschen
+            del spiel.cards_left[0]
+
+            if len(spiel.cards_left) == 0:
+                game_is_running = False
+
+
+    spiel.final_evaluate()
+    logfile.write("\nSpielende: Player1 hat {} Punkte, Player2 hat {} Punkte.".format(player1.punkte, player2.punkte))
+    logfile.close()
+
+def player_vs_uct():
+
+    player1 = Player(1)
+    player2 = Player(2, 'ai')
+
+    #player1.punkte = 3
+
+    d = {player1: player2, player2: player1}
+
+    #zum probieren
+    #spiel = Spiel(create_kartenliste(determinized_short_karteninfoliste, False), player1, player2)
+
+    spiel = Spiel(create_kartenliste(determinized_karteninfoliste, False), player1, player2)
+    #spiel = Spiel(create_kartenliste(test_karteninfolist, False), player1, player2)      #['OSSW', 'WWSS', 'OSSW', 'WWSWK']
+
+    #select startspieler
+    current_player = player1#random.choice((player1, player2))
+    print('Der Startspieler ist Player{}'.format(current_player.nummer))
+
+    mcts = MCTS((player1, player2), spiel.play_random1v1, spiel.calculate_possible_actions)
+    mcts.root = Node(True, None, current_player.nummer)
+
+    game_is_running = True
+    while game_is_running:
+
+        print('\n\nNEUER ZUG: Aktuell hat player1 {} Punkte und player2 {} Punkte.\n'.format(player1.punkte, player2.punkte))
+
+        display_spielbrett_dict(spiel.cards_set)
+        current_card = spiel.cards_left[0]
+
+        print('Die nachste Karte ist [{0}, {1}, {2}, {3}, {4}, {5}]'.format(current_card.info[0], current_card.info[1], current_card.info[2], current_card.info[3], current_card.mitte, current_card.schild))
+        draw_card(current_card)
+        print('Sie enthält folgende moegliche Meeplepositionen:')
+        print('Orte:')
+        for o in current_card.orte:
+            print(o.name, o.kanten)
+        print('Strassen:')
+        for s in current_card.strassen:
+            print(s.name, s.kanten)
+        print('Wiesen:')
+        for w in current_card.wiesen:
+            print(w.name, w.ecken)
+
+        pos = spiel.calculate_possible_actions(current_card, current_player)
+
+        # wenn es moegliche anlegestellenn (fuer den aktuellen Spieler) gibt, (es gibt fuer einen spieler auf jeden Fall
+        # eine Anlegemoeglichkeit, wenn es fuer den anderen auch eine gibt)
+        if pos:
+            if current_player.art == 'human':
+
+                    #gib move ein
+                    inp = input('Bitte gib deine Aktion an:')
+                    inp_split = inp.split(' ')
+
+                    ungueltig = True
+                    action = None
+                    try:
+                        if inp_split[3][0] == 'o':
+                            o = [a for a in current_card.orte if a.name == int(inp_split[3][1])]
+                            action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), o[0])
+                        elif inp_split[3][0] == 's':
+                            s = [a for a in current_card.strassen if a.name == int(inp_split[3][1])]
+                            action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), s[0])
+                        elif inp_split[3][0] == 'w':
+                            w = [a for a in current_card.wiesen if a.name == int(inp_split[3][1])]
+                            action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), w[0])
+                        elif inp_split[3][0] == 'k':
+                            action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), 'k')
+                        else:
+                            action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), None)
+                    except IndexError or ValueError:
+                        print('ERROR CATCHED')
+
+                    # falls move unguelig:
+                    if action in pos:
+                        ungueltig = False
+                    while ungueltig:
+                        print("illegaler Move")
+                        inp = input('Bitte gib deine Aktion an:')
+                        inp_split = inp.split(' ')
+                        try:
+                            if inp_split[3][0] == 'o':
+                                o = [a for a in current_card.orte if a.name == int(inp_split[3][1])]
+                                action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), o[0])
+                            elif inp_split[3][0] == 's':
+                                s = [a for a in current_card.strassen if a.name == int(inp_split[3][1])]
+                                action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), s[0])
+                            elif inp_split[3][0] == 'w':
+                                w = [a for a in current_card.wiesen if a.name == int(inp_split[3][1])]
+                                action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), w[0])
+                            elif inp_split[3][0] == 'k':
+                                action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), 'k')
+                            else:
+                                action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), None)
+                        except IndexError or ValueError:
+                            pass
+                        if action in pos:
+                            ungueltig = False
+
+                    spiel.make_action(current_player, current_card, action[0], action[1], action[2], action[3])
+
+                    # gespielte action formulieren
+                    if action[3]:
+                        lak_id = inp_split[3][0]
+                        lak_name = 1 if inp_split[3][0] == 'k' else action[3].name
+                    else:
+                        lak_id = None
+                        lak_name = None
+
+                    node_action = (action[0], action[1], action[2], lak_id, lak_name)
+
+                    # root anpassen
+
+                    # falls die aktuelle root_node bereits Kinder hat
+                    if mcts.root.children:
+                        for child in mcts.root.children:
+
+                            # wenn die action von der child-node der gespielten entspricht
+                            if child.action == node_action:  ###
+                                mcts.root = child
+                                break
+
+                    # another player made the first move of the game, or the node has no visits yet
+                    else:
+                        p_num = 1 if current_player.nummer == 2 else 2
+                        mcts.root = Node(True, node_action, p_num, mcts.root)
+
+            # AI-PLayer
+            else:
+                mcts.root = mcts.find_next_move(spiel)
+
+                # l_a_K auf die gespielt werden soll
+                if mcts.root.action[3] is None:
+                    landschaft = None
+                elif mcts.root.action[3] == 'k':
+                    landschaft = 'k'
+                else:
+                    l_dict = {'o': current_card.orte, 's': current_card.strassen, 'w': current_card.wiesen}
+                    landschaft = [l for l in l_dict[mcts.root.action[3]] if l.name == mcts.root.action[4]][0]
+
+                spiel.make_action(current_player, current_card, mcts.root.action[0], mcts.root.action[1], mcts.root.action[2], landschaft)   #######################################
+
+                # falls die AI-Aktion einen Meeple auf eine Landschaft (ausser Kloster) setzt
+                if mcts.root.action[3] is not None:
+                    print("\nDie AI setzt einen Meeple auf {}{}.".format(mcts.root.action[3], mcts.root.action[4]))
+                elif mcts.root.action[3] == 'k':
+                    print("\nDie AI setzt einem Meeple auf das Kloster.")
+                else:
+                    print("\nDie AI setzt keinen Meeple.")
+
+                print("Die AI setzt die Karte an ({}, {}) und rotiert sie {} mal".format(mcts.root.action[0], mcts.root.action[1], mcts.root.action[2]))
+
+            # Vorbereitung fuer naechsten Zug
+            # gesetzte Karte loeschen
+            del spiel.cards_left[0]
+
+            if len(spiel.cards_left) == 0:
+                    game_is_running = False
+
+            # spieler wechseln
+            current_player = d[current_player]
+
+        # wenn es fuer die gezogene Karte keine Anlegestelle gibt
+        else:
+            print("ES GIBT FUER DIESE KARTE KEINE ANLEGESTELLE")
+
+            # gesetzte Karte loeschen
+            del spiel.cards_left[0]
+
+            if len(spiel.cards_left) == 0:
+                game_is_running = False
+
+    spiel.final_evaluate()
+    print("\nSpielende: Player1 hat {} Punkte, Player2 hat {} Punkte.".format(player1.punkte, player2.punkte))
+
+
+if __name__ == '__main__':
+    c = 0
+    while True:
+
+        print("\n\n\nNEUES SPIEL{}".format(c))
+        uct_vs_uct(c)
+        #player_vs_uct()
+        c += 1

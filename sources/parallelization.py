@@ -30,3 +30,5 @@ end = time.time()
 print(f'This took {end - start:.2f} seconds.')
 
 reduce(add_two_trees, trees)
+
+print(map.__doc__)
