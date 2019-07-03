@@ -2,10 +2,11 @@ from copy import deepcopy
 import random
 import multiprocessing
 from itertools import repeat
+import time
 
 from mcts2 import MCTS, Node
 from Spiel_class import Spiel
-from card_class import Card, karteninfoliste, create_kartenliste, determinized_karteninfoliste, determinized_short_karteninfoliste, test_karteninfolist
+from card_class import Card, karteninfoliste, create_kartenliste, determinized_karteninfoliste, determinized_short_karteninfoliste, test_karteninfolist, speed_test_karteninfoliste
 
 from Ort import Ort
 from Strasse import Strasse
@@ -31,7 +32,7 @@ def calculate_tree(root, global_spiel):
 
     # start time replacement
     t = 0
-    t_end = 4000
+    t_end = 3000
     # loop as long as time is left:
     while t < t_end:
 
@@ -136,6 +137,7 @@ def calculate_tree(root, global_spiel):
         # print(t, "Aktuell praeferierte Aktion: ", self.root.get_best_child().action, "mit {}/{}".format(self.root.get_best_child().wins, self.root.get_best_child().visits))
 
         t += 1
+    print('ICH BIN SCHON FERTIG.')
     return root
 
 def get_best_child(root_nodes):
@@ -320,11 +322,11 @@ def player_vs_uct():
     #zum probieren
     #spiel = Spiel(create_kartenliste(determinized_short_karteninfoliste, False), player1, player2)
 
-    spiel = Spiel(create_kartenliste(determinized_karteninfoliste, False), player1, player2)
+    spiel = Spiel(create_kartenliste(speed_test_karteninfoliste, False), player1, player2)
     #spiel = Spiel(create_kartenliste(test_karteninfolist, False), player1, player2)      #['OSSW', 'WWSS', 'OSSW', 'WWSWK']
 
     #select startspieler
-    current_player = player1#random.choice((player1, player2))
+    current_player = player2#random.choice((player1, player2))
     print('Der Startspieler ist Player{}'.format(current_player.nummer))
 
     mcts = MCTS((player1, player2), spiel.play_random1v1, spiel.calculate_possible_actions)
@@ -440,6 +442,7 @@ def player_vs_uct():
                 #mcts.root = mcts.find_next_move(spiel)
 
                 # erstelle Liste mit den root_nodes_kopien fuer welche die Trees aufgebaut wurden
+                t_start = time.time()
                 root_copies = [deepcopy(mcts.root) for i in range(4)]
 
                 # multiprocessing
@@ -450,6 +453,10 @@ def player_vs_uct():
                 pool.join()
                 # ermittle die neue child-Node
                 mcts.root = get_best_child(roots)
+
+                t_ende = time.time()
+
+                print(f'Es wurden {t_ende - t_start} Sekunden gebraucht, um die naechste Node auszurechnen.')
 
 
                 # l_a_K auf die gespielt werden soll
