@@ -27,9 +27,8 @@ print("kloster" in a)
 if "kloster" in None:
     print("j")
 """
+from card_class import karteninfoliste
+import random
 
-tuples = ((1, 2), (2, 3), (1, 4))
-
-a = map(lambda x: x[0]+x[1], tuples)
-for i in a:
-    print(i)
+print(karteninfoliste)
+print(random.shuffle(karteninfoliste))

@@ -1,4 +1,5 @@
 {
+  "algorithm_testing.py": true,
   "mcts_test.py::MCTSTest::test_1": true,
   "possible_actionsTest.py::PossibleActionsTest::test7": true,
   "possible_actionsTest.py::PossibleActionsTest::test8": true,

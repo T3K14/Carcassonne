@@ -283,7 +283,7 @@ class Spiel:
         :param meeple_position: Landschaft auf der ein Meeple pletziert werden soll, standard=None, also keine Meeple-Platzierung
         :return:
         for setting a card and placing a meeple, geht davon aus, dass die action auch legitim ist (sollte ja
-        vorher gechekt werden)"""
+        vorher gecheckt werden)"""
 
         # if action_is_valid() muss im Spielprogramm dann davor!!!!!!
 
