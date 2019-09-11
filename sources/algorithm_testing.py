@@ -6,7 +6,8 @@ from card_class import karteninfoliste
 import random
 
 def testing(func1, func2='human', nr_of_games=100):
-    """function for simulating, evaluating and logging AI Battles or games of an AI-agent against a human player"""
+    """function for simulating, evaluating and logging AI Battles or games of an AI-agent against a human player based
+    one determinized card lists"""
 
     player1 = Player(1)
     player2 = Player(2)
@@ -28,6 +29,8 @@ def testing(func1, func2='human', nr_of_games=100):
 
         cardlist = random.shuffle(karteninfoliste)
         spiel = Spiel(cardlist, player1, player2)
+
+        mcts_tree = None
 
         #starting player
         turn = player1 if i < 50 else player2
@@ -56,3 +59,14 @@ def testing(func1, func2='human', nr_of_games=100):
 
     allg_log.write('allg_log_werte')
     allg_log.close()
+
+
+def random_select(spiel, next_card):
+    pass
+
+
+def mc_select():
+    pass
+
+def mcts_select():
+    pass
