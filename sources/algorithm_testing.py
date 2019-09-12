@@ -119,6 +119,7 @@ def testing(func1, func2, nr_of_games=100):
                 print(i, 'Es gibt in diesem Spiel mal keine Anlegemoeglichkeit')
                 continue
 
+        spiel.final_evaluate()
         game_log.write('Das Spiel ist vorbei. Player1 hat {} und Player2 {} Punkte.'.format(player1.punkte, player2.punkte))
         game_log.write(
             '\n\nDie Punkte von Player1 verteilen sich dabei wie folgt:\n\n{} Kloester:\t{}\n\n{} Orte:\t\t{}\n\n{} Strassen:\t{}\n\n{} Wiesen:\t{}'.format(
