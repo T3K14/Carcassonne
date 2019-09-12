@@ -94,7 +94,7 @@ class Strasse:
                     pl.punkte += self.wert
 
                     # Punkte, die der Spieler mit Strassen verdient hat updaten
-                    self.besitzer.strassen_points += self.wert
+                    pl.strassen_points += self.wert
 
             # Meeplerueckgabe
             for pl in self.meeples:

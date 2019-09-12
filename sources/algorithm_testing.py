@@ -49,6 +49,16 @@ def testing(func1, func2, nr_of_games=100):
         player2.meeples_per_strasse = 0
         player2.meeples_per_ort = 0
 
+        player1.kloster_points = 0
+        player1.wiesen_points = 0
+        player1.strassen_points = 0
+        player1.ort_points = 0
+
+        player2.kloster_points = 0
+        player2.wiesen_points = 0
+        player2.strassen_points = 0
+        player2.ort_points = 0
+
         # erstellt gemischte Kartenliste
         cardlist = create_kartenliste(karteninfoliste, True)
 
@@ -105,11 +115,21 @@ def testing(func1, func2, nr_of_games=100):
                 turn = d[turn]
 
             else:
-                game_log.write('Es gibt fuer diese Kerte keine Anlegestellt.\n\n')
+                game_log.write('\nEs gibt fuer diese Kerte keine Anlegestellt.\n\n')
                 print(i, 'Es gibt in diesem Spiel mal keine Anlegemoeglichkeit')
                 continue
 
         game_log.write('Das Spiel ist vorbei. Player1 hat {} und Player2 {} Punkte.'.format(player1.punkte, player2.punkte))
+        game_log.write('Die Punkte von Player1 verteilen sich dabei wie folgt:\n\nKloester:\t{}\n\nOrte:\t\t{}\n\nStrassen:\t{}\n\nWiesen:\t\t{}'.format(player1.kloster_points,
+                                                                                                                                             player1.ort_points,
+                                                                                                                                             player1.strassen_points,
+                                                                                                                                             player1.wiesen_points))
+        game_log.write(
+            '\n\nDie Punkte von Player2 verteilen sich dabei wie folgt:\n\nKloester:\t{}\n\nOrte:\t\t{}\n\nStrassen:\t{}\n\nWiesen:\t\t{}'.format(
+                player2.kloster_points,
+                player2.ort_points,
+                player2.strassen_points,
+                player2.wiesen_points))
         game_log.close()
 
         # allg log werte anpassen
