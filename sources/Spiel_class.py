@@ -11,6 +11,10 @@ from rotate2 import rotate_info_right, rotate_kanten_dict_right, rotate_ecken_di
 import random
 from copy import deepcopy
 
+from Wiese import WieseAufKarte
+from Strasse import StasseAufKarte
+from Ort import Ort_auf_Karte
+
 class Spiel:
 
     #def __init__(self, card_list, cards_set=None, unavailable_coords=None, possible_coords=None, alle_orte=None,
@@ -290,6 +294,16 @@ class Spiel:
         if meeple_position is not None:
             player.meeples -= 1
 
+            # update the meeples per feature scores
+            if isinstance(meeple_position, Ort_auf_Karte):
+                player.meeples_per_ort += 1
+            elif isinstance(meeple_position, StasseAufKarte):
+                player.meeples_per_strasse += 1
+            elif isinstance(meeple_position, WieseAufKarte):
+                player.meeples_per_wiese += 1
+            else:
+                player.meeples_per_kloster += 1
+
         # entprechend der Rotationen Karte drehen
         for i in range(rotations):
             card.rotate_right()
@@ -519,12 +533,27 @@ class Spiel:
 
         for k in self.alle_kloester:
             k.besitzer.punkte += k.counter
+            k.besitzer.kloster_points += k.counter
         for s in self.alle_strassen:
-            if s.besitzer and not s.fertig:
-                s.besitzer.punkte += s.wert
+            if s.meeples and not s.fertig:
+                if s.besitzer:
+                    s.besitzer.punkte += s.wert
+                    s.besitzer.strassen_points += s.wert
+                else:
+                    for pl in s.meeples:
+                        pl.punkte += s.wert
+                        pl.strassen_points += s.wert
+
         for o in self.alle_orte:
-            if o.besitzer and not o.fertig:
-                o.besitzer.punkte += int(o.wert / 2)
+            if o.meeples and not o.fertig:
+                if o.besitzer:
+                    o.besitzer.punkte += int(o.wert / 2)
+                    o.besitzer.ort_points += int(o.wert / 2)
+                else:
+                    for pl in o.meeples:
+                        pl.punkte += int(o.wert / 2)
+                        pl.ort_points += int(o.wert / 2)
+
         for w in self.alle_wiesen:
             if len(w.meeples) > 0:
                 # damit spaeter nicht jeder ort mehrmals ueberprueft wird

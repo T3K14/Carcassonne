@@ -85,9 +85,16 @@ class Strasse:
             # wenn es einen eindeutigen Besitzer gibt
             if self.besitzer is not None:
                 self.besitzer.punkte += self.wert
+
+                # Punkte, die der Spieler mit Strassen verdient hat updaten
+                self.besitzer.strassen_points += self.wert
+
             elif len(self.meeples) > 0:
                 for pl in self.meeples:
                     pl.punkte += self.wert
+
+                    # Punkte, die der Spieler mit Strassen verdient hat updaten
+                    self.besitzer.strassen_points += self.wert
 
             # Meeplerueckgabe
             for pl in self.meeples:

@@ -21,6 +21,7 @@ class evaluationTest(unittest.TestCase):
         k1 = Card('O', 'W', 'W', 'O', 'O')
         spiel.make_action(player2, k1, 1, 0, 0, k1.orte[0])
 
+
         x, y = player1.punkte, player2.punkte
 
         spiel.final_evaluate()
@@ -96,6 +97,27 @@ class evaluationTest(unittest.TestCase):
 
         player1.punkte, player2.punkte = x, y
 
+    def test2(self):
+        spiel = Spiel_class.Spiel(Kartenliste)
+        player1 = Player(1)
+        player2 = Player(2)
+
+        k1 = Card('W', 'S', 'S', 'W')
+        spiel.make_action(player1, k1, 0, 1, 1, k1.strassen[0])
+
+        k2 = Card("S", 'W', 'S', 'W')
+        spiel.make_action(player2, k2, -1, 0, 0, k2.strassen[0])
+
+
+        k3 = Card('W', 'S', 'S', 'W')
+        spiel.make_action(player1, k3, -1, 1, 0, None)
+
+        # display_spielbrett_dict(spiel.cards_set)
+
+        spiel.final_evaluate()
+
+        self.assertEqual(player1.punkte, 4)
+        self.assertEqual(player2.punkte, 4)
 
 if __name__ == '__main__':
     unittest.main()

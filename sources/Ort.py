@@ -65,8 +65,8 @@ class Ort:
             self.meeples[player] += 1
         else:
             self.meeples.update({player: 1})
-    def update_besitzer(self):
 
+    def update_besitzer(self):
 
         max_meeple_count = max(self.meeples.values())
         players_with_max_count = [pl for pl in self.meeples if self.meeples[pl] == max_meeple_count]
@@ -85,9 +85,15 @@ class Ort:
             # wenn es einen eindeutigen Besitzer gibt
             if self.besitzer is not None:
                 self.besitzer.punkte += self.wert
+
+                # Punkte, die der Spieler mit Orten verdient hat updaten
+                self.besitzer.ort_points += self.wert
             elif len(self.meeples) > 0:
                 for pl in self.meeples:
                     pl.punkte += self.wert
+
+                    # Punkte, die der Spieler mit Orten verdient hat updaten
+                    pl.ort_points += self.wert
 
             # Meeplerueckgabe
             for pl in self.meeples:

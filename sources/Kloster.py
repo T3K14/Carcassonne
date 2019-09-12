@@ -15,6 +15,10 @@ class Kloster():
     def calculate_if_fertig(self):
         if self.counter == 9:
             self.besitzer.punkte += 9
+
+            # Punkte, die der Spieler mit Kloestern verdient hat updaten
+            self.besitzer.kloster_points += 9
+
             self.besitzer.meeples += 1
             self.fertig = True
 

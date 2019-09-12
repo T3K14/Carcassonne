@@ -39,6 +39,16 @@ def testing(func1, func2, nr_of_games=100):
         player1.punkte = 0
         player2.punkte = 0
 
+        player1.meeples_per_kloster = 0
+        player1.meeples_per_wiese = 0
+        player1.meeples_per_strasse = 0
+        player1.meeples_per_ort = 0
+
+        player2.meeples_per_kloster = 0
+        player2.meeples_per_wiese = 0
+        player2.meeples_per_strasse = 0
+        player2.meeples_per_ort = 0
+
         # erstellt gemischte Kartenliste
         cardlist = create_kartenliste(karteninfoliste, True)
 
@@ -162,7 +172,7 @@ def mc_select(spiel, current_card, player, pos, d, mcts=None):
         # the enemy player
         op_copy = spiel_copy.player_to_playernumber[dic1[player_copy.nummer]]
 
-        winner = spiel_copy.play_random1v1(op_copy, player_copy)
+        winner = spiel_copy.play_random1v1(op_copy, player_copy, False)     # False for no random card raw
 
         current_node.visits += 1
 

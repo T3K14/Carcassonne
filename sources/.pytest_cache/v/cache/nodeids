@@ -1,1 +1,4 @@
-[]
+[
+  "evaluationTest.py::evaluationTest::test1",
+  "evaluationTest.py::evaluationTest::test2"
+]
