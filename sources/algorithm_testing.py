@@ -12,6 +12,9 @@ from Ort import Ort_auf_Karte
 import random
 from copy import deepcopy
 
+# Hilfsdictionaries
+dic1 = {1: 2, 2: 1}     # zum player tauschen
+
 
 def testing(func1, func2, nr_of_games=100):
     """function for simulating, evaluating and logging AI Battles based one determinized card lists"""
@@ -46,7 +49,7 @@ def testing(func1, func2, nr_of_games=100):
         # starting player
         turn = player1 if i < 50 else player2
 
-        game_log.write('Player{} beginnt das Spiel.'.format(turn.nummer))
+        game_log.write('Player{} beginnt das Spiel.\n\n'.format(turn.nummer))
 
         while len(spiel.cards_left) > 0:
 
@@ -56,15 +59,31 @@ def testing(func1, func2, nr_of_games=100):
             game_log.write('Player{0} zieht die Karte [{1}, {2}, {3}, {4}, {5}, {6}]'.format(turn.nummer, next_card.info[0], next_card.info[1],
                                                                                             next_card.info[2], next_card.info[3],
                                                                                             next_card.mitte, next_card.schild))
-
+            game_log.write('\nSie enthält folgende moegliche Meeplepositionen:')
+            game_log.write('\nOrte: ')
+            for o in next_card.orte:
+                game_log.write("{}: {}  ".format(o.name, o.kanten))
+            game_log.write('\nStrassen: ')
+            for s in next_card.strassen:
+                game_log.write("{}: {}  ".format(s.name, s.kanten))
+            game_log.write('\nWiesen: ')
+            for w in next_card.wiesen:
+                game_log.write("{}: {}  ".format(w.name, w.ecken))
 
             # calculate next move according to the selection function (random/MC/MCTS)
             action = d2[turn](spiel, next_card, turn, d, mcts_tree)
             spiel.make_action(turn, next_card, action[0], action[1], action[2], action[3])  # ####
 
-            if action[3] == None:
-                game_log.write('Player{} setzt keinen Meeple.')
-            game_log.write('Player{} rotiert die Karte {} mal und setzt sie auf ({}, {})')
+            if action[3] is not None and action[3] != 'k':
+                # action_ausgabe = 'k' if mcts.root.action[2] == 'k' else mcts.root.action[2]
+                game_log.write("\n\nPlayer{} setzt einen Meeple auf {}{}.".format(turn.nummer, action[3].id, action[3].name))
+            elif action[3] == 'k':
+                game_log.write("\nPlayer{} setzt einem Meeple auf das Kloster.".format(turn.nummer))
+            else:
+                game_log.write("\nPlayer{} setzt keinen Meeple.".format(turn.nummer))
+
+            game_log.write("\nPlayer{} setzt die Karte an ({}, {}) und rotiert sie {} mal".format(turn.nummer, action[0],
+                                                                                                  action[1], action[2]))
 
             turn = d[turn]
 
@@ -89,10 +108,11 @@ def mc_select(spiel, current_card, player, d, mcts=None):
     child_nodes = [UCB_Node(action) for action in spiel.calculate_possible_actions(current_card, player)]
 
     t = 0
-    t_end = 3
+    t_end = 5
+
     # player stats in real game
-    current_player_stats = (player.meeples, player.punkte)
-    other_player_stats = (d[player].meeples, d[player].punkte)
+    # current_player_stats = (player.meeples, player.punkte)
+    # other_player_stats = (d[player].meeples, d[player].punkte)
 
     # loop as long as time is left:
     while t < t_end:
@@ -100,32 +120,9 @@ def mc_select(spiel, current_card, player, d, mcts=None):
         spiel_copy = deepcopy(spiel)
         current_card_copy = deepcopy(current_card)
 
-        # player zurueckaendern:
-        """die spieler, die beim kopieren vom Spiel veraendert wurden werden hier wieder zurueckgesetzt"""
-        l = [spiel_copy.alle_orte, spiel_copy.alle_wiesen, spiel_copy.alle_strassen]
-        for landart in l:
-            for instance in landart:
-                if instance.meeples:
-
-                    new_d = {player: 0, d[player]: 0}
-                    for player in instance.meeples:
-                        for global_player in new_d:
-                            if global_player.nummer == player.nummer:
-                                new_d[global_player] = instance.meeples[player]
-                    instance.meeples = new_d
-                    instance.update_besitzer()
-
-        # spieler von kloestern zuruecksetzen
-        for global_kloster in spiel.alle_kloester:
-            for kloster in spiel_copy.alle_kloester:
-                if kloster.umgebungs_koordinaten == global_kloster.umgebungs_koordinaten:
-                    kloster.besitzer = global_kloster.besitzer
-
-        # current_card_copy = deepcopy(current_card)
-
         current_node = max(child_nodes, key=lambda nod: nod.calculate_UCB1_value(t))
 
-        meeple_pos = 'K'
+        meeple_pos = 'k'
 
         if isinstance(current_node.action[3], Ort_auf_Karte):
             for ort in current_card_copy.orte:
@@ -143,27 +140,29 @@ def mc_select(spiel, current_card, player, d, mcts=None):
                     meeple_pos = wiese
                     break
 
-        spiel_copy.make_action(player, current_card_copy, current_node.action[0], current_node.action[1],
+        # the copy of the player in this copied game
+        player_copy = spiel_copy.player_to_playernumber[player.nummer]
+        spiel_copy.make_action(player_copy, current_card_copy, current_node.action[0], current_node.action[1],
                                current_node.action[2], meeple_pos)
 
         # play random
-        winner = spiel_copy.play_random1v1(d[player], player)
+
+        # the enemy player
+        op_copy = spiel_copy.player_to_playernumber[dic1[player_copy.nummer]]
+
+        winner = spiel_copy.play_random1v1(op_copy, player_copy)
 
         current_node.visits += 1
-        # if winner == player:
-        #    current_node.wins += 1
-        # elif winner == 0:
-        #    current_node.wins += 0.5
 
         # neue evaluierung
-        current_node.wins += player.punkte - d[player].punkte
+        current_node.wins += player_copy.punkte - op_copy.punkte
 
         # spieler nach random-spiel wieder auf ihre ausgangswerte setzen
-        player.meeples = current_player_stats[0]
-        player.punkte = current_player_stats[1]
+        # player.meeples = current_player_stats[0]
+        # player.punkte = current_player_stats[1]
 
-        d[player].meeples = other_player_stats[0]
-        d[player].punkte = other_player_stats[1]
+        # d[player].meeples = other_player_stats[0]
+        # d[player].punkte = other_player_stats[1]
 
         # erste Karte nach dem Spiel wieder resetten
         # current_card.ecken, current_card.kanten, current_card.orte, current_card.orte_kanten,\

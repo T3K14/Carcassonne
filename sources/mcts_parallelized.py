@@ -505,7 +505,7 @@ def player_vs_uct():
 
 
 if __name__ == '__main__':
-    player_vs_uct()
+    uct_vs_uct('test')
     #c = 0
     #while True:
 
