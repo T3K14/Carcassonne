@@ -27,7 +27,7 @@ def testing(func1, func2, nr_of_games=100):
 
     allg_log_werte = 0
     allg_log = open('../simulations/auswertung', 'w+')
-    allg_log.write('Player1 spielt nach der {}-Taktik und Player2 nach der {}-Taktik'.format(d3[func1], d3[func2]))
+    allg_log.write('Player1 spielt nach der {}-Taktik und Player2 nach der {}-Taktik\n\n'.format(d3[func1], d3[func2]))
 
     i = 0
     while i < nr_of_games:
@@ -47,15 +47,18 @@ def testing(func1, func2, nr_of_games=100):
         mcts_tree = None
 
         # starting player
-        turn = player1 if i < 50 else player2
+        turn = player1 if i < 10 else player2
 
+        game_log.write('Player1 spielt nach der {}-Taktik und Player2 nach der {}-Taktik\n\n'.format(d3[func1], d3[func2]))
         game_log.write('Player{} beginnt das Spiel.\n\n'.format(turn.nummer))
+
 
         while len(spiel.cards_left) > 0:
 
             next_card = spiel.cards_left.pop(0)                 # ?????????????????????????
 
-            game_log.write('Neuer Zug:\n')
+            game_log.write('Neuer Zug:\n\n')
+            game_log.write('Aktuell hat Player1 {} Punkte und Player2 {} Punkte.\n\n'.format(player1.punkte, player2.punkte))
             game_log.write('Player{0} zieht die Karte [{1}, {2}, {3}, {4}, {5}, {6}]'.format(turn.nummer, next_card.info[0], next_card.info[1],
                                                                                             next_card.info[2], next_card.info[3],
                                                                                             next_card.mitte, next_card.schild))
@@ -70,24 +73,33 @@ def testing(func1, func2, nr_of_games=100):
             for w in next_card.wiesen:
                 game_log.write("{}: {}  ".format(w.name, w.ecken))
 
-            # calculate next move according to the selection function (random/MC/MCTS)
-            action = d2[turn](spiel, next_card, turn, d, mcts_tree)
-            spiel.make_action(turn, next_card, action[0], action[1], action[2], action[3])  # ####
+            pos = spiel.calculate_possible_actions(next_card, turn)
 
-            if action[3] is not None and action[3] != 'k':
-                # action_ausgabe = 'k' if mcts.root.action[2] == 'k' else mcts.root.action[2]
-                game_log.write("\n\nPlayer{} setzt einen Meeple auf {}{}.".format(turn.nummer, action[3].id, action[3].name))
-            elif action[3] == 'k':
-                game_log.write("\nPlayer{} setzt einem Meeple auf das Kloster.".format(turn.nummer))
+            if pos:
+                # calculate next move according to the selection function (random/MC/MCTS)
+                action = d2[turn](spiel, next_card, turn, pos, d, mcts_tree)
+                spiel.make_action(turn, next_card, action[0], action[1], action[2], action[3])
+
+                if action[3] is not None and action[3] != 'k':
+                    # action_ausgabe = 'k' if mcts.root.action[2] == 'k' else mcts.root.action[2]
+                    game_log.write(
+                        "\n\nPlayer{} setzt einen Meeple auf {}{}.".format(turn.nummer, action[3].id, action[3].name))
+                elif action[3] == 'k':
+                    game_log.write("\nPlayer{} setzt einem Meeple auf das Kloster.".format(turn.nummer))
+                else:
+                    game_log.write("\nPlayer{} setzt keinen Meeple.".format(turn.nummer))
+
+                game_log.write(
+                    "\nPlayer{} setzt die Karte an ({}, {}) und rotiert sie {} mal\n\n".format(turn.nummer, action[0],
+                                                                                               action[1], action[2]))
+                turn = d[turn]
+
             else:
-                game_log.write("\nPlayer{} setzt keinen Meeple.".format(turn.nummer))
+                game_log.write('Es gibt fuer diese Kerte keine Anlegestellt.\n\n')
+                print(i, 'Es gibt in diesem Spiel mal keine Anlegemoeglichkeit')
+                continue
 
-            game_log.write("\nPlayer{} setzt die Karte an ({}, {}) und rotiert sie {} mal".format(turn.nummer, action[0],
-                                                                                                  action[1], action[2]))
-
-            turn = d[turn]
-
-        game_log.write('Fertig gespielt')
+        game_log.write('Das Spiel ist vorbei. Player1 hat {} und Player2 {} Punkte.'.format(player1.punkte, player2.punkte))
         game_log.close()
 
         # allg log werte anpassen
@@ -99,13 +111,13 @@ def testing(func1, func2, nr_of_games=100):
     allg_log.close()
 
 
-def random_select(spiel, next_card, player, d, mcts=None):
-    return random.choice(spiel.calculate_possible_actions(next_card, player))
+def random_select(spiel, next_card, player, pos, d, mcts=None):
+    return random.choice(pos)
 
 
-def mc_select(spiel, current_card, player, d, mcts=None):
+def mc_select(spiel, current_card, player, pos, d, mcts=None):
 
-    child_nodes = [UCB_Node(action) for action in spiel.calculate_possible_actions(current_card, player)]
+    child_nodes = [UCB_Node(action) for action in pos]
 
     t = 0
     t_end = 5
@@ -172,8 +184,9 @@ def mc_select(spiel, current_card, player, d, mcts=None):
 
     return max(child_nodes, key=lambda nod: nod.wins).action
 
-def mcts_select(spiel, next_card, player, d, mcts_root):
+
+def mcts_select(spiel, next_card, player, pos, d, mcts_root):
     pass
 
 
-testing(mc_select, random_select)
+testing(mc_select, random_select, 20)
