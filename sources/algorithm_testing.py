@@ -120,15 +120,25 @@ def testing(func1, func2, nr_of_games=100):
                 continue
 
         game_log.write('Das Spiel ist vorbei. Player1 hat {} und Player2 {} Punkte.'.format(player1.punkte, player2.punkte))
-        game_log.write('Die Punkte von Player1 verteilen sich dabei wie folgt:\n\nKloester:\t{}\n\nOrte:\t\t{}\n\nStrassen:\t{}\n\nWiesen:\t\t{}'.format(player1.kloster_points,
-                                                                                                                                             player1.ort_points,
-                                                                                                                                             player1.strassen_points,
-                                                                                                                                             player1.wiesen_points))
         game_log.write(
-            '\n\nDie Punkte von Player2 verteilen sich dabei wie folgt:\n\nKloester:\t{}\n\nOrte:\t\t{}\n\nStrassen:\t{}\n\nWiesen:\t\t{}'.format(
+            '\n\nDie Punkte von Player1 verteilen sich dabei wie folgt:\n\n{} Kloester:\t{}\n\n{} Orte:\t\t{}\n\n{} Strassen:\t{}\n\n{} Wiesen:\t{}'.format(
+                player1.meeples_per_kloster,
+                player1.kloster_points,
+                player1.meeples_per_ort,
+                player1.ort_points,
+                player1.meeples_per_strasse,
+                player1.strassen_points,
+                player1.meeples_per_wiese,
+                player1.wiesen_points))
+        game_log.write(
+            '\n\nDie Punkte von Player2 verteilen sich dabei wie folgt:\n\n{} Kloester:\t{}\n\n{} Orte:\t\t{}\n\n{} Strassen:\t{}\n\n{} Wiesen:\t{}'.format(
+                player2.meeples_per_kloster,
                 player2.kloster_points,
+                player2.meeples_per_ort,
                 player2.ort_points,
+                player2.meeples_per_strasse,
                 player2.strassen_points,
+                player2.meeples_per_wiese,
                 player2.wiesen_points))
         game_log.close()
 
@@ -150,7 +160,7 @@ def mc_select(spiel, current_card, player, pos, d, mcts=None):
     child_nodes = [UCB_Node(action) for action in pos]
 
     t = 0
-    t_end = 5
+    t_end = 500
 
     # player stats in real game
     # current_player_stats = (player.meeples, player.punkte)
