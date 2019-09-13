@@ -571,9 +571,11 @@ class Spiel:
                     if ort.fertig:
                         if w.besitzer is not None:
                             w.besitzer.punkte += 3
+                            w.besitzer.wiesen_points += 3
                         else:
                             for pl in w.meeples:
                                 pl.punkte += 3
+                                pl.wiesen_points += 3
 
 
     def player_vs_player(self):

@@ -25,7 +25,35 @@ def testing(func1, func2, nr_of_games=100):
     d2 = {player1: func1, player2: func2}
     d3 = {random_select: 'Random', mc_select: 'UCB1-MC', mcts_select: 'MCTS'}
 
-    allg_log_werte = 0
+    # allg_log_werte:
+    first_half_1 = 0
+    first_half_2 = 0
+    second_half_1 = 0
+    second_half_2 = 0
+
+    first_half_draws = 0
+    second_half_draws = 0
+
+    p1_ort_meeples = 0
+    p1_strasse_meeples = 0
+    p1_wiese_meeple = 0
+    p1_kloster_meeples = 0
+
+    p2_ort_meeples = 0
+    p2_strasse_meeples = 0
+    p2_wiese_meeple = 0
+    p2_kloster_meeples = 0
+
+    allg_p1_orts_points = 0
+    allg_p1_strassen_points = 0
+    allg_p1_wiesen_points = 0
+    allg_p1_kloester_points = 0
+
+    allg_p2_orts_points = 0
+    allg_p2_strassen_points = 0
+    allg_p2_wiesen_points = 0
+    allg_p2_kloester_points = 0
+
     allg_log = open('../simulations/auswertung', 'w+')
     allg_log.write('Player1 spielt nach der {}-Taktik und Player2 nach der {}-Taktik\n\n'.format(d3[func1], d3[func2]))
 
@@ -67,11 +95,10 @@ def testing(func1, func2, nr_of_games=100):
         mcts_tree = None
 
         # starting player
-        turn = player1 if i < 10 else player2
+        turn = player1 if i < int(nr_of_games/2) else player2
 
         game_log.write('Player1 spielt nach der {}-Taktik und Player2 nach der {}-Taktik\n\n'.format(d3[func1], d3[func2]))
         game_log.write('Player{} beginnt das Spiel.\n\n'.format(turn.nummer))
-
 
         while len(spiel.cards_left) > 0:
 
@@ -143,12 +170,111 @@ def testing(func1, func2, nr_of_games=100):
                 player2.wiesen_points))
         game_log.close()
 
-        # allg log werte anpassen
+        # allg log:
+
+        allg_log.write(f'\n\nSpiel {i}: Spieler1 hat {player1.punkte} und Spieler2 hat {player2.punkte} Punkte.')
+        allg_log.write(
+            '\n\nDie Punkte von Player1 verteilen sich dabei wie folgt:\n\n{} Kloester:\t{}\n\n{} Orte:\t\t{}\n\n{} Strassen:\t{}\n\n{} Wiesen:\t{}'.format(
+                player1.meeples_per_kloster,
+                player1.kloster_points,
+                player1.meeples_per_ort,
+                player1.ort_points,
+                player1.meeples_per_strasse,
+                player1.strassen_points,
+                player1.meeples_per_wiese,
+                player1.wiesen_points))
+        allg_log.write(
+            '\n\nDie Punkte von Player2 verteilen sich dabei wie folgt:\n\n{} Kloester:\t{}\n\n{} Orte:\t\t{}\n\n{} Strassen:\t{}\n\n{} Wiesen:\t{}'.format(
+                player2.meeples_per_kloster,
+                player2.kloster_points,
+                player2.meeples_per_ort,
+                player2.ort_points,
+                player2.meeples_per_strasse,
+                player2.strassen_points,
+                player2.meeples_per_wiese,
+                player2.wiesen_points))
+
+
         allg_log_werte = 0
+        if i < int(nr_of_games/2):
+            if player1.punkte > player2.punkte:
+                first_half_1 += 1
+            elif player2.punkte > player1.punkte:
+                first_half_2 += 1
+            else:
+                first_half_draws += 1
+        else:
+            if player1.punkte > player2.punkte:
+                second_half_1 += 1
+            elif player2.punkte > player1.punkte:
+                second_half_2 += 1
+            else:
+                second_half_draws += 1
+
+        p1_ort_meeples += player1.meeples_per_ort
+        p1_strasse_meeples += player1.meeples_per_strasse
+        p1_wiese_meeple += player1.meeples_per_wiese
+        p1_kloster_meeples += player1.meeples_per_kloster
+
+        p2_ort_meeples += player2.meeples_per_ort
+        p2_strasse_meeples += player2.meeples_per_strasse
+        p2_wiese_meeple += player2.meeples_per_wiese
+        p2_kloster_meeples += player2.meeples_per_kloster
+
+        allg_p1_orts_points += player1.ort_points
+        allg_p1_strassen_points += player1.strassen_points
+        allg_p1_wiesen_points += player1.wiesen_points
+        allg_p1_kloester_points += player1.kloster_points
+
+        allg_p2_orts_points += player2.ort_points
+        allg_p2_strassen_points += player2.strassen_points
+        allg_p2_wiesen_points += player2.wiesen_points
+        allg_p2_kloester_points += player2.kloster_points
 
         i += 1
 
-    allg_log.write('allg_log_werte')
+    allg_log.write('\n\n\nAllgemeine Auswertung:\n\n\n')
+    allg_log.write(f'Spieler1 hat in der ersten Haelfte {first_half_1} Spiele gewonnen, Player2 {first_half_2} und {first_half_draws} Spiele endeten Unentschieden.')
+    allg_log.write(f'Spieler1 hat in der zweiten Haelfte {second_half_1} Spiele gewonnen, Player2 {second_half_2} und {second_half_draws} Spiele endeten Unentschieden.')
+
+    allg_log.write('Player1 hat durschnittlich folgende Zahl von Meeples auf die folgenden Gebiete gesetzt:\n\n')
+    allg_log.write(f'Orte:\t{p1_ort_meeples/nr_of_games}\n')
+    allg_log.write(f'Strassen:\t{p1_strasse_meeples/nr_of_games}\n')
+    allg_log.write(f'Kloester:\t{p1_kloster_meeples/nr_of_games}\n')
+    allg_log.write(f'Wiesen:\t{p1_wiese_meeple/nr_of_games}\n\n')
+
+    allg_log.write('Player2 hat durschnittlich folgende Zahl von Meeples auf die folgenden Gebiete gesetzt:\n\n')
+    allg_log.write(f'Orte:\t{p2_ort_meeples/nr_of_games}\n')
+    allg_log.write(f'Strassen:\t{p2_strasse_meeples/nr_of_games}\n')
+    allg_log.write(f'Kloester:\t{p2_kloster_meeples/nr_of_games}\n')
+    allg_log.write(f'Wiesen:\t{p2_wiese_meeple/nr_of_games}\n\n')
+
+    allg_log.write('Player1 hat in den Spielen durchschnittlich folgende Punktzahlen mit den folgenden Gebieten gemacht:\n\n')
+    allg_log.write(f'Orte:\t{allg_p1_orts_points/nr_of_games}\n')
+    allg_log.write(f'Strassen:\t{allg_p1_strassen_points/nr_of_games}\n')
+    allg_log.write(f'Kloester:\t{allg_p1_kloester_points/nr_of_games}\n')
+    allg_log.write(f'Wiesen:\t{allg_p1_wiesen_points/nr_of_games}\n')
+
+    allg_log.write(
+        'Player2 hat in den Spielen durchschnittlich folgende Punktzahlen mit den folgenden Gebieten gemacht:\n\n')
+    allg_log.write(f'Orte:\t{allg_p2_orts_points/nr_of_games}\n')
+    allg_log.write(f'Strassen:\t{allg_p2_strassen_points/nr_of_games}\n')
+    allg_log.write(f'Kloester:\t{allg_p2_kloester_points/nr_of_games}\n')
+    allg_log.write(f'Wiesen:\t{allg_p2_wiesen_points/nr_of_games}\n')
+
+    allg_log.write('\n\nDas entprischt den folgenden Durchschnittswerten fuer Punkte pro feature-meeple:\n')
+    allg_log.write('Player1:\n\n')
+    allg_log.write(f'{allg_p1_orts_points/p1_ort_meeples} Punkte pro Orts-Meeple\n')
+    allg_log.write(f'{allg_p1_strassen_points/p1_strasse_meeples} Punkte pro Strassen-Meeple\n')
+    allg_log.write(f'{allg_p1_wiesen_points/p1_wiese_meeple} Punkte pro Wiesen-Meeple\n')
+    allg_log.write(f'{allg_p1_kloester_points/p1_kloster_meeples} Punkte pro Kloster-Meeple\n\n')
+
+    allg_log.write('Player2:\n\n')
+    allg_log.write(f'{allg_p2_orts_points/p2_ort_meeples} Punkte pro Orts-Meeple\n')
+    allg_log.write(f'{allg_p2_strassen_points/p2_strasse_meeples} Punkte pro Strassen-Meeple\n')
+    allg_log.write(f'{allg_p2_wiesen_points/p2_wiese_meeple} Punkte pro Wiesen-Meeple\n')
+    allg_log.write(f'{allg_p2_kloester_points/p2_kloster_meeples} Punkte pro Kloster-Meeple\n')
+
     allg_log.close()
 
 
@@ -230,4 +356,4 @@ def mcts_select(spiel, next_card, player, pos, d, mcts_root):
     pass
 
 
-testing(mc_select, random_select, 20)
+testing(mc_select, random_select, 40)
