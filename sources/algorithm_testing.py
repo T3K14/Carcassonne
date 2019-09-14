@@ -114,7 +114,7 @@ def testing(func1, func2, nr_of_games=100):
             game_log.write('Player{0} zieht die Karte [{1}, {2}, {3}, {4}, {5}, {6}]'.format(turn.nummer, next_card.info[0], next_card.info[1],
                                                                                             next_card.info[2], next_card.info[3],
                                                                                             next_card.mitte, next_card.schild))
-            game_log.write('\nSie enthält folgende moegliche Meeplepositionen:')
+            game_log.write('\nSie enthaelt folgende moegliche Meeplepositionen:')
             game_log.write('\nOrte: ')
             for o in next_card.orte:
                 game_log.write("{}: {}  ".format(o.name, o.kanten))
@@ -280,33 +280,32 @@ def testing(func1, func2, nr_of_games=100):
     allg_log.write(f'Spieler1 hat in der ersten Haelfte {first_half_1} Spiele gewonnen, Player2 {first_half_2} und {first_half_draws} Spiele endeten Unentschieden.')
     allg_log.write(f'Spieler1 hat in der zweiten Haelfte {second_half_1} Spiele gewonnen, Player2 {second_half_2} und {second_half_draws} Spiele endeten Unentschieden.')
 
-    allg_log.write('Player1 hat durschnittlich folgende Zahl von Meeples auf die folgenden Gebiete gesetzt:\n\n')
-    allg_log.write(f'Orte:\t{p1_ort_meeples/nr_of_games}\n')
+    allg_log.write('\n\nPlayer1 hat durchschnittlich folgende Zahl von Meeples auf die folgenden Gebiete gesetzt:\n\n')
+    allg_log.write(f'Orte:\t\t{p1_ort_meeples/nr_of_games}\n')
     allg_log.write(f'Strassen:\t{p1_strasse_meeples/nr_of_games}\n')
     allg_log.write(f'Kloester:\t{p1_kloster_meeples/nr_of_games}\n')
-    allg_log.write(f'Wiesen:\t{p1_wiese_meeple/nr_of_games}\n\n')
+    allg_log.write(f'Wiesen:\t\t{p1_wiese_meeple/nr_of_games}\n\n')
 
-    allg_log.write('Player2 hat durschnittlich folgende Zahl von Meeples auf die folgenden Gebiete gesetzt:\n\n')
-    allg_log.write(f'Orte:\t{p2_ort_meeples/nr_of_games}\n')
+    allg_log.write('Player2 hat durchschnittlich folgende Zahl von Meeples auf die folgenden Gebiete gesetzt:\n\n')
+    allg_log.write(f'Orte:\t\t{p2_ort_meeples/nr_of_games}\n')
     allg_log.write(f'Strassen:\t{p2_strasse_meeples/nr_of_games}\n')
     allg_log.write(f'Kloester:\t{p2_kloster_meeples/nr_of_games}\n')
-    allg_log.write(f'Wiesen:\t{p2_wiese_meeple/nr_of_games}\n\n')
+    allg_log.write(f'Wiesen:\t\t{p2_wiese_meeple/nr_of_games}\n\n')
 
     allg_log.write('Player1 hat in den Spielen durchschnittlich folgende Punktzahlen mit den folgenden Gebieten gemacht:\n\n')
-    allg_log.write(f'Orte:\t{allg_p1_orts_points/nr_of_games}\n')
+    allg_log.write(f'Orte:\t\t{allg_p1_orts_points/nr_of_games}\n')
     allg_log.write(f'Strassen:\t{allg_p1_strassen_points/nr_of_games}\n')
     allg_log.write(f'Kloester:\t{allg_p1_kloester_points/nr_of_games}\n')
-    allg_log.write(f'Wiesen:\t{allg_p1_wiesen_points/nr_of_games}\n')
+    allg_log.write(f'Wiesen:\t\t{allg_p1_wiesen_points/nr_of_games}\n\n')
 
-    allg_log.write(
-        'Player2 hat in den Spielen durchschnittlich folgende Punktzahlen mit den folgenden Gebieten gemacht:\n\n')
-    allg_log.write(f'Orte:\t{allg_p2_orts_points/nr_of_games}\n')
+    allg_log.write('Player2 hat in den Spielen durchschnittlich folgende Punktzahlen mit den folgenden Gebieten gemacht:\n\n')
+    allg_log.write(f'Orte:\t\t{allg_p2_orts_points/nr_of_games}\n')
     allg_log.write(f'Strassen:\t{allg_p2_strassen_points/nr_of_games}\n')
     allg_log.write(f'Kloester:\t{allg_p2_kloester_points/nr_of_games}\n')
-    allg_log.write(f'Wiesen:\t{allg_p2_wiesen_points/nr_of_games}\n')
+    allg_log.write(f'Wiesen:\t\t{allg_p2_wiesen_points/nr_of_games}\n')
 
-    allg_log.write('\n\nDas entprischt den folgenden Durchschnittswerten fuer Punkte pro feature-meeple:\n')
-    allg_log.write('Player1:\n\n')
+    allg_log.write('\nDas entspricht den folgenden Durchschnittswerten fuer Punkte pro feature-meeple:\n')
+    allg_log.write('\nPlayer1:\n\n')
     allg_log.write(f'{allg_p1_orts_points/p1_ort_meeples} Punkte pro Orts-Meeple\n')
     allg_log.write(f'{allg_p1_strassen_points/p1_strasse_meeples} Punkte pro Strassen-Meeple\n')
     allg_log.write(f'{allg_p1_wiesen_points/p1_wiese_meeple} Punkte pro Wiesen-Meeple\n')
