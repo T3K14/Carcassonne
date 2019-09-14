@@ -13,6 +13,7 @@ from Strasse import StasseAufKarte
 from Ort import Ort_auf_Karte
 
 import random
+import time
 from copy import deepcopy
 
 # Hilfsdictionaries
@@ -330,13 +331,12 @@ def mc_select(spiel, current_card, player, pos, d, root_node):
 
     t = 0
     t_end = 600
+    start = time.time()
 
-    # player stats in real game
-    # current_player_stats = (player.meeples, player.punkte)
-    # other_player_stats = (d[player].meeples, d[player].punkte)
+    rechenzeit_in_s = 44
 
     # loop as long as time is left:
-    while t < t_end:
+    while time.time() - start < rechenzeit_in_s:
 
         spiel_copy = deepcopy(spiel)
         current_card_copy = deepcopy(current_card)
@@ -377,17 +377,6 @@ def mc_select(spiel, current_card, player, pos, d, root_node):
 
         # neue evaluierung
         current_node.wins += player_copy.punkte - op_copy.punkte
-
-        # spieler nach random-spiel wieder auf ihre ausgangswerte setzen
-        # player.meeples = current_player_stats[0]
-        # player.punkte = current_player_stats[1]
-
-        # d[player].meeples = other_player_stats[0]
-        # d[player].punkte = other_player_stats[1]
-
-        # erste Karte nach dem Spiel wieder resetten
-        # current_card.ecken, current_card.kanten, current_card.orte, current_card.orte_kanten,\
-        # current_card.strassen, current_card.strassen_kanten, current_card.wiesen, current_card.wiesen_kanten = card_stats[0], card_stats[1], card_stats[2], card_stats[3], card_stats[4], card_stats[5], card_stats[6], card_stats[7]
 
         t += 1
 
@@ -431,7 +420,11 @@ def calculate_tree(root, global_spiel, next_card):
     t = 0
     t_end = 150
     # loop as long as time is left:
-    while t < t_end:
+    #while t < t_end:
+
+    start = time.time()
+
+    while time.time() - start < 11:
 
         # create new spiel entsprechend dem aktuellen Großen
         spiel = deepcopy(global_spiel)
@@ -544,9 +537,10 @@ def calculate_tree(root, global_spiel, next_card):
 
         #print(t)
         t += 1
+        print(t)
 
-    print('ICH BIN SCHON FERTIG.')
+    # print('ICH BIN SCHON FERTIG.')
     return root
 
-
-testing(mc_select, mcts_select, 4)
+if __name__ == '__main__':
+    testing(mc_select, mcts_select, 4)

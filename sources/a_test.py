@@ -46,3 +46,9 @@ P1 = player()
 f(P1)
 
 print(P1.punkt)
+
+import time
+
+start = time.time()
+time.sleep(5)
+print(time.time()-start)
