@@ -4,7 +4,7 @@ from card_class import karteninfoliste, create_kartenliste
 from mcts2 import Node
 from UCB import Node as UCB_Node
 
-from mcts_parallelized import calculate_tree, get_best_child
+from mcts_parallelized import get_best_child
 import multiprocessing
 from itertools import repeat
 
@@ -17,6 +17,7 @@ from copy import deepcopy
 
 # Hilfsdictionaries
 dic1 = {1: 2, 2: 1}     # zum player tauschen
+
 
 
 def testing(func1, func2, nr_of_games=100):
@@ -130,6 +131,7 @@ def testing(func1, func2, nr_of_games=100):
                 # calculate next move according to the selection function (random/MC/MCTS)
                 action, root_node = d2[turn](spiel, next_card, turn, pos, d, root_node)
 
+                # root_node updaten
                 # falls ueberhaupt ein mcts-spieler mitspielt und der turn-spieler nicht der mcts spieler ist
                 if root_node and d2[turn] != mcts_select:
                     # waehle die entprechend naechste Node als neue root_node
@@ -137,15 +139,34 @@ def testing(func1, func2, nr_of_games=100):
                         for child in root_node.children:
 
                             # wenn die action von der child-node der gespielten entspricht
-                            if child.action == action:  ###
-                                root_node = child
-                                root_node.parent = None
-                                break
+                            if action[3] == None:
+                                if child.action == (action[0], action[1], action[2], None, None):  ###
+                                    root_node = child
+                                    root_node.parent = None
+                                    break
+                            elif action[3] == 'k':
+                                if child.action == (action[0], action[1], action[2], 'k', 1):  ###
+                                    root_node = child
+                                    root_node.parent = None
+                                    break
+                            else:
+                                if child.action == (action[0], action[1], action[2], action[3].id, action[3].name):  ###
+                                    root_node = child
+                                    root_node.parent = None
+                                    break
 
                     # another player made the first move of the game, or the node has no visits yet
                     else:
                         p_num = 1 if turn.nummer == 2 else 2
-                        root_node = Node(True, action, p_num, None)
+
+                        if action[3] == None:
+                            mcts_action = (action[0], action[1], action[2], None, None)
+                        elif action[3] == 'k':
+                            mcts_action = (action[0], action[1], action[2], 'k', 1)
+                        else:
+                            mcts_action = (action[0], action[1], action[2], action[3].id, action[3].name)
+
+                        root_node = Node(True, mcts_action, p_num, None)
 
                 spiel.make_action(turn, next_card, action[0], action[1], action[2], action[3])
 
@@ -380,7 +401,7 @@ def mcts_select(spiel, next_card, player, pos, d, root_node):
 
     # multiprocessing
     pool = multiprocessing.Pool()
-    roots = pool.starmap(calculate_tree, zip(root_copies, repeat(spiel, 4)))
+    roots = pool.starmap(calculate_tree, zip(root_copies, repeat(spiel, 4), repeat(next_card, 4)))
 
     pool.close()
     pool.join()
@@ -399,4 +420,134 @@ def mcts_select(spiel, next_card, player, pos, d, root_node):
     return (node.action[0], node.action[1], node.action[2], landschaft), node
 
 
-testing(mc_select, mcts_select, 100)
+def calculate_tree(root, global_spiel, next_card):
+    """
+
+    :param root:
+    :param global_spiel:
+    :return:
+    """
+
+    # start time replacement
+    t = 0
+    t_end = 150
+    # loop as long as time is left:
+    while t < t_end:
+
+        # create new spiel entsprechend dem aktuellen Großen
+        spiel = deepcopy(global_spiel)
+
+        # nachste Karte
+        #card = spiel.cards_left.pop(0)
+        card = deepcopy(next_card)
+
+        # selection
+        # in select_next node die action der Node spielen und die Kartenlist updaten
+
+        # startnode (aktuelle root-Node vom globalen Spiel)
+        node = root
+
+        # as long as there are known children, choose next child-node with uct
+        # und spiele den Zug der gewaehlten Node
+        while len(node.children) != 0:
+            node = max(node.children, key=lambda nod: nod.calculate_UCT_value())
+
+            # wenn kein Meeple platziert wird
+            if node.action[3] is None:
+                landschaft = None
+            elif node.action[3] == 'k':
+                landschaft = 'k'
+            else:
+                l_dict = {'o': card.orte, 's': card.strassen, 'w': card.wiesen}
+                landschaft = [l for l in l_dict[node.action[3]] if l.name == node.action[4]][0]
+            spiel.make_action(spiel.player_to_playernumber[node.parent.player_number], card, node.action[0],
+                              node.action[1], node.action[2], landschaft)  ######################
+
+            # naechste Karte ziehen
+            if len(spiel.cards_left) > 0:
+                card = spiel.cards_left.pop(0)
+
+        # expansion if the choosen node does not represent an and-state of the game
+        if node.status:
+            for pos_act in spiel.calculate_possible_actions(card, spiel.player_to_playernumber[node.player_number]):   # #################################
+                status = True if len(spiel.cards_left) > 0 else False
+                # wenn die Aktion keine Maeepleplatzierung beinhlatet
+                if pos_act[3] is None:
+                    node.children.append(Node(status, (pos_act[0], pos_act[1], pos_act[2], None, None),
+                                              dic1[node.player_number], node))
+                elif pos_act[3] == 'k':
+                    node.children.append(Node(status, (pos_act[0], pos_act[1], pos_act[2], 'k', 1),
+                                              dic1[node.player_number], node))
+                else:
+                    node.children.append(Node(status, (pos_act[0], pos_act[1], pos_act[2], pos_act[3].id,
+                                                       pos_act[3].name), dic1[node.player_number],
+                                              node))  ######
+
+        # simulation
+
+        # if there has been an expansion select next node at random, else evaluate instant
+        choosen_node = node
+        if len(node.children) > 0:
+            choosen_node = random.choice(node.children)
+
+            if choosen_node.action[3] is None:
+                landschaft = None
+            elif choosen_node.action[3] == 'k':
+                landschaft = 'k'
+            else:
+                l_dict = {'o': card.orte, 's': card.strassen, 'w': card.wiesen}
+                landschaft = [l for l in l_dict[choosen_node.action[3]] if l.name == choosen_node.action[4]][0]
+            spiel.make_action(spiel.player_to_playernumber[choosen_node.parent.player_number], card,
+                              choosen_node.action[0], choosen_node.action[1], choosen_node.action[2], landschaft)
+
+            # naechste Karte ziehen
+            # if len(spiel.cards_left) > 0:
+            #    card = spiel.cards_left.pop(0)
+
+        winner = spiel.play_random1v1(spiel.player_to_playernumber[choosen_node.player_number],
+                                      spiel.player_to_playernumber[dic1[choosen_node.player_number]],
+                                      random_card_draw=False)  ################
+        # backprob
+        #if winner == 0:
+        #    while choosen_node.parent is not None:
+        #        choosen_node.visits += 1
+        #        choosen_node.wins += 0.5
+        #        choosen_node = choosen_node.parent
+
+            # for the root node:
+        #    choosen_node.visits += 1
+        #    choosen_node.wins += 0.5
+
+        #else:
+        #    while choosen_node.parent is not None:
+        #        choosen_node.visits += 1
+
+        #        if choosen_node.player_number != winner.nummer:  # if the player for that choosen_node did not win
+        #            choosen_node.wins += 1
+        #        choosen_node = choosen_node.parent
+
+        #    # for the root node:
+        #    choosen_node.visits += 1
+        #    if choosen_node.player_number != winner.nummer:
+        #        choosen_node.wins += 1
+
+        while choosen_node.parent is not None:
+            choosen_node.visits += 1
+            choosen_node.wins += spiel.player_to_playernumber[choosen_node.parent.player_number].punkte - spiel.player_to_playernumber[choosen_node.player_number].punkte
+
+            choosen_node = choosen_node.parent
+
+        # for root-node
+        choosen_node.visits += 1
+
+        # current best node zum debuggen
+        # print(t, "Aktuell praeferierte Aktion: ", self.root.get_best_child().action, "mit {}/{}".format(self.root.get_best_child().wins, self.root.get_best_child().visits))
+
+        #print(t)
+        t += 1
+
+    print('ICH BIN SCHON FERTIG.')
+    return root
+
+
+testing(mc_select, mcts_select, 4)

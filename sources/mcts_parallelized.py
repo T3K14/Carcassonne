@@ -145,7 +145,7 @@ def calculate_tree(root, global_spiel):
         # current best node zum debuggen
         # print(t, "Aktuell praeferierte Aktion: ", self.root.get_best_child().action, "mit {}/{}".format(self.root.get_best_child().wins, self.root.get_best_child().visits))
 
-        print(t)
+        #print(t)
         t += 1
 
     print('ICH BIN SCHON FERTIG.')

@@ -455,7 +455,7 @@ class Spiel:
                                 ww.update({wiese: [(self.cards_set[d2[(ecke, kante)]].ecken[self.d3[(ecke, kante)]], d2[(ecke, kante)])]})
 
                             else:
-                                # wenn die globale wiese schon als ww eingetregen ist
+                                # wenn die globale wiese schon als ww eingetragen ist
                                 #if self.cards_set[d2[(ecke, kante)]].ecken[self.d3[(ecke, kante)]]:
                                 if self.cards_set[d2[(ecke, kante)]].ecken[self.d3[(ecke, kante)]] in [w[0] for w in ww[wiese]]:
                                     continue
