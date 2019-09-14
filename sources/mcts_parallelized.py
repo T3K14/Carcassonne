@@ -32,7 +32,7 @@ def calculate_tree(root, global_spiel):
 
     # start time replacement
     t = 0
-    t_end = 3000
+    t_end = 150
     # loop as long as time is left:
     while t < t_end:
 
@@ -110,35 +110,47 @@ def calculate_tree(root, global_spiel):
                                       spiel.player_to_playernumber[next_player_number[choosen_node.player_number]],
                                       random_card_draw=False)  ################
         # backprob
-        if winner == 0:
-            while choosen_node.parent is not None:
-                choosen_node.visits += 1
-                choosen_node.wins += 0.5
-                choosen_node = choosen_node.parent
+        #if winner == 0:
+        #    while choosen_node.parent is not None:
+        #        choosen_node.visits += 1
+        #        choosen_node.wins += 0.5
+        #        choosen_node = choosen_node.parent
 
             # for the root node:
+        #    choosen_node.visits += 1
+        #    choosen_node.wins += 0.5
+
+        #else:
+        #    while choosen_node.parent is not None:
+        #        choosen_node.visits += 1
+
+        #        if choosen_node.player_number != winner.nummer:  # if the player for that choosen_node did not win
+        #            choosen_node.wins += 1
+        #        choosen_node = choosen_node.parent
+
+        #    # for the root node:
+        #    choosen_node.visits += 1
+        #    if choosen_node.player_number != winner.nummer:
+        #        choosen_node.wins += 1
+
+        while choosen_node.parent is not None:
             choosen_node.visits += 1
-            choosen_node.wins += 0.5
+            choosen_node.wins += spiel.player_to_playernumber[choosen_node.parent.player_number].punkte - spiel.player_to_playernumber[choosen_node.player_number].punkte
 
-        else:
-            while choosen_node.parent is not None:
-                choosen_node.visits += 1
+            choosen_node = choosen_node.parent
 
-                if choosen_node.player_number != winner.nummer:  # if the player for that choosen_node did not win
-                    choosen_node.wins += 1
-                choosen_node = choosen_node.parent
-
-            # for the root node:
-            choosen_node.visits += 1
-            if choosen_node.player_number != winner.nummer:
-                choosen_node.wins += 1
+        # for root-node
+        choosen_node.visits += 1
 
         # current best node zum debuggen
         # print(t, "Aktuell praeferierte Aktion: ", self.root.get_best_child().action, "mit {}/{}".format(self.root.get_best_child().wins, self.root.get_best_child().visits))
 
+        print(t)
         t += 1
+
     print('ICH BIN SCHON FERTIG.')
     return root
+
 
 def get_best_child(root_nodes):
     """
@@ -164,7 +176,6 @@ def get_best_child(root_nodes):
     # ermittel child_node zu dem Index aus allen Trees, welche am haeufigsten besucht wurde und returne diese
     # die Child Nodes von den Trees zu dem Index = [root.children[index] for root in root_nodes]
     return max([root.children[index] for root in root_nodes], key=lambda nod: nod.visits)
-
 
 
 def uct_vs_uct(counter):
@@ -309,6 +320,7 @@ def uct_vs_uct(counter):
     spiel.final_evaluate()
     logfile.write("\nSpielende: Player1 hat {} Punkte, Player2 hat {} Punkte.".format(player1.punkte, player2.punkte))
     logfile.close()
+
 
 def player_vs_uct():
 

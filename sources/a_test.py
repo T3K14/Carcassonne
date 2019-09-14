@@ -30,5 +30,19 @@ if "kloster" in None:
 from card_class import karteninfoliste
 import random
 
-print(karteninfoliste)
-print(random.shuffle(karteninfoliste))
+#print(karteninfoliste)
+#print(random.shuffle(karteninfoliste))
+
+class player:
+
+    def __init__(self):
+        self.punkt = 0
+
+
+def f(p):
+    p.punkt += 1
+
+P1 = player()
+f(P1)
+
+print(P1.punkt)

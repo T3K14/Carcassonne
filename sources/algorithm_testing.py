@@ -4,6 +4,9 @@ from card_class import karteninfoliste, create_kartenliste
 from mcts2 import Node
 from UCB import Node as UCB_Node
 
+from mcts_parallelized import calculate_tree, get_best_child
+import multiprocessing
+from itertools import repeat
 
 from Wiese import WieseAufKarte
 from Strasse import StasseAufKarte
@@ -92,10 +95,11 @@ def testing(func1, func2, nr_of_games=100):
 
         spiel = Spiel(cardlist, player1, player2)
 
-        mcts_tree = None
-
         # starting player
         turn = player1 if i < int(nr_of_games/2) else player2
+
+        # root-node
+        root_node = Node(True, None, turn.nummer) if mcts_select in d2.values() else None
 
         game_log.write('Player1 spielt nach der {}-Taktik und Player2 nach der {}-Taktik\n\n'.format(d3[func1], d3[func2]))
         game_log.write('Player{} beginnt das Spiel.\n\n'.format(turn.nummer))
@@ -124,7 +128,25 @@ def testing(func1, func2, nr_of_games=100):
 
             if pos:
                 # calculate next move according to the selection function (random/MC/MCTS)
-                action = d2[turn](spiel, next_card, turn, pos, d, mcts_tree)
+                action, root_node = d2[turn](spiel, next_card, turn, pos, d, root_node)
+
+                # falls ueberhaupt ein mcts-spieler mitspielt und der turn-spieler nicht der mcts spieler ist
+                if root_node and d2[turn] != mcts_select:
+                    # waehle die entprechend naechste Node als neue root_node
+                    if root_node.children:
+                        for child in root_node.children:
+
+                            # wenn die action von der child-node der gespielten entspricht
+                            if child.action == action:  ###
+                                root_node = child
+                                root_node.parent = None
+                                break
+
+                    # another player made the first move of the game, or the node has no visits yet
+                    else:
+                        p_num = 1 if turn.nummer == 2 else 2
+                        root_node = Node(True, action, p_num, None)
+
                 spiel.make_action(turn, next_card, action[0], action[1], action[2], action[3])
 
                 if action[3] is not None and action[3] != 'k':
@@ -278,16 +300,16 @@ def testing(func1, func2, nr_of_games=100):
     allg_log.close()
 
 
-def random_select(spiel, next_card, player, pos, d, mcts=None):
-    return random.choice(pos)
+def random_select(spiel, next_card, player, pos, d, root_node):
+    return random.choice(pos), root_node
 
 
-def mc_select(spiel, current_card, player, pos, d, mcts=None):
+def mc_select(spiel, current_card, player, pos, d, root_node):
 
     child_nodes = [UCB_Node(action) for action in pos]
 
     t = 0
-    t_end = 500
+    t_end = 600
 
     # player stats in real game
     # current_player_stats = (player.meeples, player.punkte)
@@ -349,11 +371,32 @@ def mc_select(spiel, current_card, player, pos, d, mcts=None):
 
         t += 1
 
-    return max(child_nodes, key=lambda nod: nod.wins).action
+    return max(child_nodes, key=lambda nod: nod.wins).action, root_node
 
 
-def mcts_select(spiel, next_card, player, pos, d, mcts_root):
-    pass
+def mcts_select(spiel, next_card, player, pos, d, root_node):
+
+    root_copies = [deepcopy(root_node) for i in range(4)]
+
+    # multiprocessing
+    pool = multiprocessing.Pool()
+    roots = pool.starmap(calculate_tree, zip(root_copies, repeat(spiel, 4)))
+
+    pool.close()
+    pool.join()
+    # ermittle die neue child-Node
+    node = get_best_child(roots)
+
+    if node.action[3] is None:
+        landschaft = None
+    elif node.action[3] == 'k':
+        landschaft = 'k'
+    else:
+        l_dict = {'o': next_card.orte, 's': next_card.strassen, 'w': next_card.wiesen}
+        landschaft = [l for l in l_dict[node.action[3]] if l.name == node.action[4]][0]
+
+    node.parent = None
+    return (node.action[0], node.action[1], node.action[2], landschaft), node
 
 
-testing(mc_select, random_select, 40)
+testing(mc_select, mcts_select, 100)
