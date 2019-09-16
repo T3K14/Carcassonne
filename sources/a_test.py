@@ -32,23 +32,14 @@ import random
 
 #print(karteninfoliste)
 #print(random.shuffle(karteninfoliste))
-
-class player:
-
+class P:
     def __init__(self):
-        self.punkt = 0
+        self.wert = 2
 
+p1 = P()
+p2 = P()
 
-def f(p):
-    p.punkt += 1
+dic1 = {1: p1}
 
-P1 = player()
-f(P1)
-
-print(P1.punkt)
-
-import time
-
-start = time.time()
-time.sleep(5)
-print(time.time()-start)
+p1.wert = 3
+dic1[1] = p2

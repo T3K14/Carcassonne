@@ -1,6 +1,6 @@
 from Player_Class import Player
 from Spiel_class import Spiel
-from card_class import karteninfoliste, create_kartenliste
+from card_class import karteninfoliste, create_kartenliste, mcts_list
 from mcts2 import Node
 from UCB import Node as UCB_Node
 
@@ -25,8 +25,8 @@ def testing(func1, func2, nr_of_games=100):
 
     player1 = Player(1)
     player2 = Player(2)
-    d = {player1: player2, player2: player1}
-    d2 = {player1: func1, player2: func2}
+    next_player_to_player = {player1: player2, player2: player1}
+    function_to_player = {player1: func1, player2: func2}
     d3 = {random_select: 'Random', mc_select: 'UCB1-MC', mcts_select: 'MCTS', mcts_select1: 'MCTS-1'}
     mcts_functions = (mcts_select, mcts_select1)
 
@@ -93,7 +93,8 @@ def testing(func1, func2, nr_of_games=100):
         player2.ort_points = 0
 
         # erstellt gemischte Kartenliste
-        cardlist = create_kartenliste(karteninfoliste, True)
+        # cardlist = create_kartenliste(karteninfoliste, True)
+        cardlist = create_kartenliste(mcts_list, False)
 
         spiel = Spiel(cardlist, player1, player2)
 
@@ -102,11 +103,11 @@ def testing(func1, func2, nr_of_games=100):
 
         # root-node
         root_nodes = {}
-        if d2[player1] in mcts_functions:
+        if function_to_player[player1] in mcts_functions:
             root_node1 = Node(True, None, turn.nummer)
             root_nodes.update({player1: root_node1})
 
-        if d2[player2] in mcts_functions:
+        if function_to_player[player2] in mcts_functions:
             root_node2 = Node(True, None, turn.nummer)
             root_nodes.update({player2: root_node2})
 
@@ -146,15 +147,15 @@ def testing(func1, func2, nr_of_games=100):
                 # calculate next move according to the selection function (random/MC/MCTS)
 
                 if len(root_nodes) < 2:
-                    action, root_node = d2[turn](spiel, next_card, turn, pos, d, root_node)
+                    action, root_node = function_to_player[turn](spiel, next_card, turn, pos, next_player_to_player, root_node)
                 else:
-                    action, root_nodes[d2[turn]] = d2[turn](spiel, next_card, turn, pos, d, root_nodes[turn])
+                    action, root_nodes[turn] = function_to_player[turn](spiel, next_card, turn, pos, next_player_to_player, root_nodes[turn])
 
                 # root_node updaten
                 # falls ueberhaupt ein mcts-spieler mitspielt
                 if len(root_nodes) > 0:
                     # falls der turn-spieler nicht ein mcts spieler ist
-                    if d2[turn] not in mcts_functions:
+                    if function_to_player[turn] not in mcts_functions:
                         # waehle die entprechend naechste Node als neue root_node
                         if root_node.children:
                             for child in root_node.children:
@@ -191,19 +192,34 @@ def testing(func1, func2, nr_of_games=100):
 
                     else:
                         # der Gegner muss seine Node um die Aktion updaten, die der turn-Spieler gerade gespielt hat
-                        if root_nodes[d2[turn]].children:
-                            for child in root_nodes[d2[turn]].children:
+                        if root_nodes[next_player_to_player[turn]].children:
+                            for child in root_nodes[next_player_to_player[turn]].children:
 
                                 # wenn die action von der child-node der gespielten entspricht
-                                if child.action == action:  ###
-                                    root_nodes[d2[turn]] = child
+
+                                if action[3] == None:
+                                    mcts_action = (action[0], action[1], action[2], None, None)
+                                elif action[3] == 'k':
+                                    mcts_action = (action[0], action[1], action[2], 'k', 1)
+                                else:
+                                    mcts_action = (action[0], action[1], action[2], action[3].id, action[3].name)
+
+                                if child.action == mcts_action:  ###
+                                    root_nodes[next_player_to_player[turn]] = child
                                     break
 
                         # another player made the first move of the game, or the node has no visits yet
                         else:
                             p_num = 1 if turn.nummer == 2 else 2
-                            root_nodes[d2[turn]] = Node(True, action, p_num, None)
 
+                            if action[3] == None:
+                                mcts_action = (action[0], action[1], action[2], None, None)
+                            elif action[3] == 'k':
+                                mcts_action = (action[0], action[1], action[2], 'k', 1)
+                            else:
+                                mcts_action = (action[0], action[1], action[2], action[3].id, action[3].name)
+
+                            root_nodes[next_player_to_player[turn]] = Node(True, mcts_action, p_num, None)
 
                 spiel.make_action(turn, next_card, action[0], action[1], action[2], action[3])
 
@@ -219,7 +235,7 @@ def testing(func1, func2, nr_of_games=100):
                 game_log.write(
                     "\nPlayer{} setzt die Karte an ({}, {}) und rotiert sie {} mal\n\n".format(turn.nummer, action[0],
                                                                                                action[1], action[2]))
-                turn = d[turn]
+                turn = next_player_to_player[turn]
 
             else:
                 game_log.write('\nEs gibt fuer diese Kerte keine Anlegestellt.\n\n')

@@ -361,6 +361,8 @@ speed_test_karteninfoliste =['OSSW', 'SWSW', 'SOSSG', 'WWSWK', 'WWSS', 'WWSS', '
 
 test_karteninfolist = ['SOSSG', 'OSSW', 'WWSS', 'SWSW', 'OOSOOT', 'OSSW', 'OSSW', 'SOWS', 'WWSS', 'WWSWK']
 
+mcts_list = ['SWSW', 'SOSSG', 'WWWWK', 'WSSW']
+
 #determinized_short_karteninfoliste = ['WWSS','WWSWK']
 
 k1 = Card('S', 'O', 'W', 'S')
