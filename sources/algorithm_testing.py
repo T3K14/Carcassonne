@@ -93,8 +93,8 @@ def testing(func1, func2, nr_of_games=100):
         player2.ort_points = 0
 
         # erstellt gemischte Kartenliste
-        # cardlist = create_kartenliste(karteninfoliste, True)
-        cardlist = create_kartenliste(mcts_list, False)
+        cardlist = create_kartenliste(karteninfoliste, True)
+        # cardlist = create_kartenliste(mcts_list, False)
 
         spiel = Spiel(cardlist, player1, player2)
 
@@ -385,7 +385,7 @@ def mc_select(spiel, current_card, player, pos, d, root_node):
     t_end = 600
     start = time.time()
 
-    rechenzeit_in_s = 44
+    rechenzeit_in_s = 15            # 44
 
     # loop as long as time is left:
     while time.time() - start < rechenzeit_in_s:
@@ -432,7 +432,8 @@ def mc_select(spiel, current_card, player, pos, d, root_node):
 
         t += 1
 
-    return max(child_nodes, key=lambda nod: nod.wins).action, root_node
+    # return max(child_nodes, key=lambda nod: nod.wins).action, root_node
+    return max(child_nodes, key=lambda nod: nod.visits).action, root_node
 
 
 def mcts_select(spiel, next_card, player, pos, d, root_node):
@@ -755,4 +756,4 @@ def calculate_tree1(root, global_spiel, next_card):
     return root
 
 if __name__ == '__main__':
-    testing(mcts_select, mcts_select1, 4)
+    testing(random_select, mc_select, 6)
