@@ -1,13 +1,3 @@
 [
-  "possible_actionsTest.py::PossibleActionsTest::test10",
-  "possible_actionsTest.py::PossibleActionsTest::test11",
-  "possible_actionsTest.py::PossibleActionsTest::test3",
-  "possible_actionsTest.py::PossibleActionsTest::test4",
-  "possible_actionsTest.py::PossibleActionsTest::test5",
-  "possible_actionsTest.py::PossibleActionsTest::test6",
-  "possible_actionsTest.py::PossibleActionsTest::test7",
-  "possible_actionsTest.py::PossibleActionsTest::test8",
-  "possible_actionsTest.py::PossibleActionsTest::test9",
-  "possible_actionsTest.py::PossibleActionsTest::test_1",
-  "possible_actionsTest.py::PossibleActionsTest::test_2"
+  "algorithm_testing.py::testing"
 ]

@@ -93,8 +93,8 @@ def testing(func1, func2, nr_of_games=100):
         player2.ort_points = 0
 
         # erstellt gemischte Kartenliste
-        # cardlist = create_kartenliste(karteninfoliste, True)
-        cardlist = create_kartenliste(mcts_list, False)
+        cardlist = create_kartenliste(karteninfoliste, True)
+        #cardlist = create_kartenliste(mcts_list, False)
 
         spiel = Spiel(cardlist, player1, player2)
 
@@ -388,7 +388,8 @@ def mc_select(spiel, current_card, player, pos, d, root_node):
     rechenzeit_in_s = 15            # 44
 
     # loop as long as time is left:
-    while time.time() - start < rechenzeit_in_s:
+    #while time.time() - start < rechenzeit_in_s:
+    while t < t_end:
 
         spiel_copy = deepcopy(spiel)
         current_card_copy = deepcopy(current_card)
