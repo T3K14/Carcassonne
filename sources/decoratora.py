@@ -1,3 +1,42 @@
+
+def greeting(expr):
+    def greeting_decorator(func):
+        def function_wrapper(x):
+            print(expr + ", " + func.__name__ + " returns:")
+            func(x)
+        return function_wrapper
+    return greeting_decorator
+
+
+#@greeting("καλημερα")
+
+def foo(x):
+    print(42)
+
+foo = greeting("καλημερα")(foo)
+
+foo("Hi")
+
+
+def f(x, y=2):
+    #print(x + y)
+    return x+y
+
+f(1)
+
+def g(y):
+    def decorator(func):
+        def func_wrapper(x):
+            func(x, y)
+        return func_wrapper
+    return decorator
+
+
+f = g(3)(f)
+
+f(1)
+
+
 from Player_Class import Player
 from Spiel_class import Spiel
 from card_class import karteninfoliste, create_kartenliste, mcts_list
@@ -19,15 +58,171 @@ from copy import deepcopy
 # Hilfsdictionaries
 dic1 = {1: 2, 2: 1}     # zum player tauschen
 
+def mc(t_end=500):
+    def mc_decorator(_mc_select):
+        def wrapper(spiel, current_card, player, pos, d, root_node):
+            return _mc_select(spiel, current_card, player, pos, d, root_node, t_end)
+        return wrapper
+    return mc_decorator
 
-def testing(func1, func2, nr_of_games=100):
+def flat_ucb(t_end=500, rechenzeit=None, c=1.4142):
+    def flat_ucb_decorator(_flat_ucb_select):
+        def wrapper(spiel, current_card, player, pos, d, root_node):
+           return _flat_ucb_select(spiel, current_card, player, pos, d, root_node, t_end, rechenzeit, c)
+        return wrapper
+    return flat_ucb_decorator
+
+def time_helper(bool, t):
+    """
+    for calculating the current iteration, or the current time to determine if the algorithm is allowed to calculate
+    another iteration
+    :param bool: True: return t, False: return current time
+    :param t: the number of iterations
+    :return: the relative already used time
+
+    if bool == True: the algorithm works with iterations and the current iteration is returned
+    else: The algorithm works with a time limit and the current time is returned
+
+    """
+    if bool:
+        return t
+    else:
+        return time.time()
+
+
+def random_select(spiel, next_card, player, pos, d, root_node):
+    return random.choice(pos), root_node
+
+
+def flat_ucb_select(spiel, current_card, player, pos, d, root_node, t_end, rechenzeit, c):
+    child_nodes = [UCB_Node(action) for action in pos]
+
+    t = 0
+    ende = t_end if t_end else time.time() + rechenzeit
+    iterationen = True if t_end else False
+
+    # loop as long as time is left:
+    # while time.time() - start < rechenzeit_in_s:
+    while time_helper(iterationen, t) < ende:
+
+        spiel_copy = deepcopy(spiel)
+        current_card_copy = deepcopy(current_card)
+
+        current_node = max(child_nodes, key=lambda nod: nod.calculate_UCB1_value(t, c))
+
+        meeple_pos = 'k' if current_node.action[3] == 'k' else None
+
+        if isinstance(current_node.action[3], Ort_auf_Karte):
+            for ort in current_card_copy.orte:
+                if ort.name == current_node.action[3].name:
+                    meeple_pos = ort
+                    break
+        elif isinstance(current_node.action[3], StasseAufKarte):
+            for strasse in current_card_copy.strassen:
+                if strasse.name == current_node.action[3].name:
+                    meeple_pos = strasse
+                    break
+        elif isinstance(current_node.action[3], WieseAufKarte):
+            for wiese in current_card_copy.wiesen:
+                if wiese.name == current_node.action[3].name:
+                    meeple_pos = wiese
+                    break
+
+        # the copy of the player in this copied game
+        player_copy = spiel_copy.player_to_playernumber[player.nummer]
+        # if (current_node.action[0], current_node.action[1], current_node.action[2],meeple_pos) in spiel_copy.calculate_possible_actions(current_card_copy, player_copy):
+        spiel_copy.make_action(player_copy, current_card_copy, current_node.action[0], current_node.action[1],
+                                   current_node.action[2], meeple_pos)
+        #else:
+        #    print("DIE AKTION DARF EIGENTLICH GAR NICHT GESPIELT WERDEN")
+
+        # play random
+
+        # the enemy player
+        op_copy = spiel_copy.player_to_playernumber[dic1[player_copy.nummer]]
+
+        winner = spiel_copy.play_random1v1(op_copy, player_copy, False)  # False for no random card raw
+
+        current_node.visits += 1
+
+        # neue evaluierung
+        current_node.wins += player_copy.punkte - op_copy.punkte
+
+        t += 1
+
+    # return max(child_nodes, key=lambda nod: nod.wins).action, root_node
+    return max(child_nodes, key=lambda nod: nod.visits).action, root_node
+
+
+def mc_select(spiel, current_card, player, pos, d, root_node, t_end):
+    child_nodes = [UCB_Node(action) for action in pos]
+
+    iterations_per_node = int(t_end / len(pos))
+
+    for node in child_nodes:
+        for i in range(iterations_per_node):
+
+            spiel_copy = deepcopy(spiel)
+            current_card_copy = deepcopy(current_card)
+
+            meeple_pos = 'k' if node.action[3] == 'k' else None
+
+            if isinstance(node.action[3], Ort_auf_Karte):
+                for ort in current_card_copy.orte:
+                    if ort.name == node.action[3].name:
+                        meeple_pos = ort
+                        break
+            elif isinstance(node.action[3], StasseAufKarte):
+                for strasse in current_card_copy.strassen:
+                    if strasse.name == node.action[3].name:
+                        meeple_pos = strasse
+                        break
+            elif isinstance(node.action[3], WieseAufKarte):
+                for wiese in current_card_copy.wiesen:
+                    if wiese.name == node.action[3].name:
+                        meeple_pos = wiese
+                        break
+
+            # the copy of the player in this copied game
+            player_copy = spiel_copy.player_to_playernumber[player.nummer]
+
+            #if (node.action[0], node.action[1], node.action[2], meeple_pos) in spiel_copy.calculate_possible_actions(current_card_copy, player_copy):
+            spiel_copy.make_action(player_copy, current_card_copy, node.action[0], node.action[1], node.action[2], meeple_pos)
+            #else:
+            #    print("DIE AKTION HAETTE NICHT AUSGEWAEHLT WERDEN DUERFEN!")
+
+            # play random
+
+            # the enemy player
+            op_copy = spiel_copy.player_to_playernumber[dic1[player_copy.nummer]]
+
+            winner = spiel_copy.play_random1v1(op_copy, player_copy, False)  # False for no random card raw
+
+            # neue evaluierung
+            node.wins += player_copy.punkte - op_copy.punkte
+
+    # return max(child_nodes, key=lambda nod: nod.wins).action, root_node
+    return max(child_nodes, key=lambda nod: nod.wins).action, root_node
+
+select_to_decorator = {'flat_ucb_decorator': flat_ucb_select, 'mc_decorator': mc_select}
+
+
+def testing(decorator1, decorator2, nr_of_games=100):
     """function for simulating, evaluating and logging AI Battles based one determinized card lists"""
 
     player1 = Player(1)
     player2 = Player(2)
+
+
+    func1 = decorator1(select_to_decorator[decorator1.__name__])
+    func2 = decorator2(select_to_decorator[decorator2.__name__])
+
+    #func1 = decorator1(mc_select)
+    #func2 = decorator2(flat_ucb_select)
+
     next_player_to_player = {player1: player2, player2: player1}
     function_to_player = {player1: func1, player2: func2}
-    d3 = {random_select: 'Random', mc_select: 'UCB1-MC', mcts_select: 'MCTS', mcts_select1: 'MCTS-1', simple_mc_select: 'Simple MC'}
+    d3 = {random_select: 'Random', mc_select: 'UCB1-MC', mcts_select: 'MCTS', mcts_select1: 'MCTS-1', mc_select: 'Simple MC'}
     mcts_functions = (mcts_select, mcts_select1)
 
     # allg_log_werte:
@@ -60,7 +255,7 @@ def testing(func1, func2, nr_of_games=100):
     allg_p2_kloester_points = 0
 
     allg_log = open('../simulations/auswertung', 'w+')
-    allg_log.write('Player1 spielt nach der {}-Taktik und Player2 nach der {}-Taktik\n\n'.format(d3[func1], d3[func2]))
+#    allg_log.write('Player1 spielt nach der {}-Taktik und Player2 nach der {}-Taktik\n\n'.format(d3[func1], d3[func2]))
 
     i = 0
     while i < nr_of_games:
@@ -118,7 +313,7 @@ def testing(func1, func2, nr_of_games=100):
 
         # root_node = Node(True, None, turn.nummer) if mcts_select in d2.values() else None
 
-        game_log.write('Player1 spielt nach der {}-Taktik und Player2 nach der {}-Taktik\n\n'.format(d3[func1], d3[func2]))
+#        game_log.write('Player1 spielt nach der {}-Taktik und Player2 nach der {}-Taktik\n\n'.format(d3[func1], d3[func2]))
         game_log.write('Player{} beginnt das Spiel.\n\n'.format(turn.nummer))
 
         while len(spiel.cards_left) > 0:
@@ -371,129 +566,6 @@ def testing(func1, func2, nr_of_games=100):
     allg_log.write(f'{allg_p2_kloester_points/p2_kloster_meeples} Punkte pro Kloster-Meeple\n')
 
     allg_log.close()
-
-
-def random_select(spiel, next_card, player, pos, d, root_node):
-    return random.choice(pos), root_node
-
-
-def mc_select(spiel, current_card, player, pos, d, root_node):
-
-    child_nodes = [UCB_Node(action) for action in pos]
-
-    t = 0
-    t_end = 600
-    start = time.time()
-
-    rechenzeit_in_s = 15            # 44
-
-    # loop as long as time is left:
-    #while time.time() - start < rechenzeit_in_s:
-    while t < t_end:
-
-        spiel_copy = deepcopy(spiel)
-        current_card_copy = deepcopy(current_card)
-
-        current_node = max(child_nodes, key=lambda nod: nod.calculate_UCB1_value(t))
-
-        meeple_pos = 'k' if current_node.action[3] == 'k' else None
-
-        if isinstance(current_node.action[3], Ort_auf_Karte):
-            for ort in current_card_copy.orte:
-                if ort.name == current_node.action[3].name:
-                    meeple_pos = ort
-                    break
-        elif isinstance(current_node.action[3], StasseAufKarte):
-            for strasse in current_card_copy.strassen:
-                if strasse.name == current_node.action[3].name:
-                    meeple_pos = strasse
-                    break
-        elif isinstance(current_node.action[3], WieseAufKarte):
-            for wiese in current_card_copy.wiesen:
-                if wiese.name == current_node.action[3].name:
-                    meeple_pos = wiese
-                    break
-
-        # the copy of the player in this copied game
-        player_copy = spiel_copy.player_to_playernumber[player.nummer]
-        if (current_node.action[0], current_node.action[1], current_node.action[2], meeple_pos) in spiel_copy.calculate_possible_actions(current_card_copy, player_copy):
-            spiel_copy.make_action(player_copy, current_card_copy, current_node.action[0], current_node.action[1],
-                               current_node.action[2], meeple_pos)
-        else:
-            print("DIE AKTION DARF EIGENTLICH GAR NICHT GESPIELT WERDEN")
-
-        # play random
-
-        # the enemy player
-        op_copy = spiel_copy.player_to_playernumber[dic1[player_copy.nummer]]
-
-        winner = spiel_copy.play_random1v1(op_copy, player_copy, False)     # False for no random card raw
-
-        current_node.visits += 1
-
-        # neue evaluierung
-        current_node.wins += player_copy.punkte - op_copy.punkte
-
-        t += 1
-
-    # return max(child_nodes, key=lambda nod: nod.wins).action, root_node
-    return max(child_nodes, key=lambda nod: nod.visits).action, root_node
-
-
-def simple_mc_select(spiel, current_card, player, pos, d, root_node):
-
-    child_nodes = [UCB_Node(action) for action in pos]
-
-
-    t = 0
-    t_end = 600
-    iterations_per_node = int(t_end / len(pos))
-
-    for node in child_nodes:
-        for i in range(iterations_per_node):
-
-            spiel_copy = deepcopy(spiel)
-            current_card_copy = deepcopy(current_card)
-
-            meeple_pos = 'k' if node.action[3] == 'k' else None
-
-            if isinstance(node.action[3], Ort_auf_Karte):
-                for ort in current_card_copy.orte:
-                    if ort.name == node.action[3].name:
-                        meeple_pos = ort
-                        break
-            elif isinstance(node.action[3], StasseAufKarte):
-                for strasse in current_card_copy.strassen:
-                    if strasse.name == node.action[3].name:
-                        meeple_pos = strasse
-                        break
-            elif isinstance(node.action[3], WieseAufKarte):
-                for wiese in current_card_copy.wiesen:
-                    if wiese.name == node.action[3].name:
-                        meeple_pos = wiese
-                        break
-
-            # the copy of the player in this copied game
-            player_copy = spiel_copy.player_to_playernumber[player.nummer]
-
-            if (node.action[0], node.action[1], node.action[2], meeple_pos) in spiel_copy.calculate_possible_actions(current_card_copy, player_copy):
-                spiel_copy.make_action(player_copy, current_card_copy, node.action[0], node.action[1],
-                                   node.action[2], meeple_pos)
-            else:
-                print("DIE AKTION HAETTE NICHT AUSGEWAEHLT WERDEN DUERFEN!")
-
-            # play random
-
-            # the enemy player
-            op_copy = spiel_copy.player_to_playernumber[dic1[player_copy.nummer]]
-
-            winner = spiel_copy.play_random1v1(op_copy, player_copy, False)     # False for no random card raw
-
-            # neue evaluierung
-            node.wins += player_copy.punkte - op_copy.punkte
-
-    # return max(child_nodes, key=lambda nod: nod.wins).action, root_node
-    return max(child_nodes, key=lambda nod: nod.wins).action, root_node
 
 
 def mcts_select(spiel, next_card, player, pos, d, root_node):
@@ -816,4 +888,4 @@ def calculate_tree1(root, global_spiel, next_card):
     return root
 
 if __name__ == '__main__':
-    testing(simple_mc_select, mc_select, 6)
+    testing(mc(50), flat_ucb(50, None, 2), 6)
