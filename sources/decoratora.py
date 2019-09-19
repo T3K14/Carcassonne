@@ -22,19 +22,26 @@ from copy import deepcopy
 dic1 = {1: 2, 2: 1}     # zum player tauschen
 
 
-def mc(t_end=500):
+def mc(t_end=None):
+    if t_end is None:
+        t_end = 500
+
     def mc_decorator(_mc_select, d):
         d.update({'t_end': t_end})
-        #hyper = {'t_end': t_end}
+
         def wrapper(spiel, current_card, player, pos, d, root_node):
             return _mc_select(spiel, current_card, player, pos, d, root_node, t_end)
         return wrapper
     return mc_decorator
 
 
-def flat_ucb(t_end=500, rechenzeit=None, c=1.4142):
+def flat_ucb(t_end=None, rechenzeit=None, c=1.4142):
+    if t_end is None:
+        t_end = 500
+
     def flat_ucb_decorator(_flat_ucb_select, d):
         d.update({'t_end': t_end, 'rechenzeit': rechenzeit, 'c': c})
+
         def wrapper(spiel, current_card, player, pos, d, root_node):
             return _flat_ucb_select(spiel, current_card, player, pos, d, root_node, t_end, rechenzeit, c)
         return wrapper
@@ -49,9 +56,13 @@ def random_play():
     return random_decorator
 
 
-def uct(t_end=500, rechenzeit=None, c=1.4142, threads=1):
+def uct(t_end=None, rechenzeit=None, c=1.4142, threads=1):
+    if t_end is None:
+        t_end = 500
+
     def uct_decorator(_uct_select, d):
         d.update({'t_end': t_end, 'rechenzeit': rechenzeit, 'c': c, 'threads': threads})
+        
         def wrapper(spiel, current_card, player, pos, d, root_node):
             return _uct_select(spiel, current_card, player, pos, d, root_node, t_end, rechenzeit, c, threads)
         return wrapper
@@ -135,7 +146,7 @@ def flat_ucb_select(spiel, current_card, player, pos, d, root_node, t_end, reche
         current_node.wins += player_copy.punkte - op_copy.punkte
 
         t += 1
-        print(t)
+        print('flat_ucb:', t)
 
     # return max(child_nodes, key=lambda nod: nod.wins).action, root_node
     return max(child_nodes, key=lambda nod: nod.visits).action, root_node
@@ -308,7 +319,7 @@ def calculate_tree(root, global_spiel, next_card, t_end, rechenzeit, c):
 
         # for root-node
         choosen_node.visits += 1
-        #print(t_end, t)
+        print(t_end, t)
         t += 1
 
     return root
@@ -682,4 +693,4 @@ def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste
 
 
 if __name__ == '__main__':
-    testing(uct(10, None, 1.4142, 4), uct(10, None, 4, 4), 6, mcts_list, False)
+    testing(flat_ucb(None, 60), uct(None, 15, 1.4142, 4), 50, karteninfoliste, True)
