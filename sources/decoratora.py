@@ -22,10 +22,7 @@ from copy import deepcopy
 dic1 = {1: 2, 2: 1}     # zum player tauschen
 
 
-def mc(t_end=None):
-    if t_end is None:
-        t_end = 500
-
+def mc(t_end=500):
     def mc_decorator(_mc_select, d):
         d.update({'t_end': t_end})
 
@@ -36,7 +33,7 @@ def mc(t_end=None):
 
 
 def flat_ucb(t_end=None, rechenzeit=None, c=1.4142):
-    if t_end is None:
+    if t_end is None and rechenzeit is not None:
         t_end = 500
 
     def flat_ucb_decorator(_flat_ucb_select, d):
@@ -57,12 +54,12 @@ def random_play():
 
 
 def uct(t_end=None, rechenzeit=None, c=1.4142, threads=1):
-    if t_end is None:
+    if t_end is None and rechenzeit is not None:
         t_end = 500
 
     def uct_decorator(_uct_select, d):
         d.update({'t_end': t_end, 'rechenzeit': rechenzeit, 'c': c, 'threads': threads})
-        
+
         def wrapper(spiel, current_card, player, pos, d, root_node):
             return _uct_select(spiel, current_card, player, pos, d, root_node, t_end, rechenzeit, c, threads)
         return wrapper
