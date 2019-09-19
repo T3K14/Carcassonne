@@ -114,7 +114,7 @@ def testing(func1, func2, nr_of_games=100):
         if len(root_nodes) == 0:
             root_node = None
         elif len(root_nodes) == 1:
-            root_node = root_nodes[turn]
+            root_node = list(root_nodes.values())[0]
 
         # root_node = Node(True, None, turn.nummer) if mcts_select in d2.values() else None
 

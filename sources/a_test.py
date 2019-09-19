@@ -30,16 +30,6 @@ if "kloster" in None:
 from card_class import karteninfoliste
 import random
 
-#print(karteninfoliste)
-#print(random.shuffle(karteninfoliste))
-class P:
-    def __init__(self):
-        self.wert = 2
+dic = {'a': 2}
 
-p1 = P()
-p2 = P()
-
-dic1 = {1: p1}
-
-p1.wert = 3
-dic1[1] = p2
+print(list(dic.values()))

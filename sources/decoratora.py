@@ -421,7 +421,7 @@ def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste
         if len(root_nodes) == 0:
             root_node = None
         elif len(root_nodes) == 1:
-            root_node = root_nodes[turn]
+            root_node = list(root_nodes.values())[0]
 
         game_log.write('Player1 spielt nach der {}-Taktik mit den Hyperparametern {} und Player2 nach der {}-Taktik mit den Hyperparametern {}.\n\n'.format(name_to_method[decorator1.__name__], dic1, name_to_method[decorator2.__name__], dic2))
         game_log.write('Player{} beginnt das Spiel.\n\n'.format(turn.nummer))
