@@ -33,7 +33,7 @@ def mc(t_end=500):
 
 
 def flat_ucb(t_end=None, rechenzeit=None, c=1.4142):
-    if t_end is None and rechenzeit is not None:
+    if t_end is None and rechenzeit is None:
         t_end = 500
 
     def flat_ucb_decorator(_flat_ucb_select, d):
@@ -54,7 +54,7 @@ def random_play():
 
 
 def uct(t_end=None, rechenzeit=None, c=1.4142, threads=1):
-    if t_end is None and rechenzeit is not None:
+    if t_end is None and rechenzeit is None:
         t_end = 500
 
     def uct_decorator(_uct_select, d):
