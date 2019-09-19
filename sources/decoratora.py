@@ -308,7 +308,7 @@ def calculate_tree(root, global_spiel, next_card, t_end, rechenzeit, c):
 
         # for root-node
         choosen_node.visits += 1
-        #print(t)
+        #print(t_end, t)
         t += 1
 
     return root
@@ -459,7 +459,7 @@ def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste
                 # root_node updaten
                 # falls ueberhaupt ein mcts-spieler mitspielt
                 if len(root_nodes) > 0:
-                    # falls der turn-spieler nicht ein mcts spieler ist
+                    # falls der turn-spieler kein mcts spieler ist
                     if decorator_to_player[turn].__name__ != 'uct_decorator':
                         # waehle die entprechend naechste Node als neue root_node
                         if root_node.children:
@@ -496,11 +496,29 @@ def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste
                             root_node = Node(True, mcts_action, p_num, None)
 
                     else:
-                        # der Gegner muss seine Node um die Aktion updaten, die der turn-Spieler gerade gespielt hat
-                        if root_nodes[next_player_to_player[turn]].children:
-                            for child in root_nodes[next_player_to_player[turn]].children:
+                        # falls es genau zwei uct-Spieler gibt, muss der Gegner updaten. Gibt es nur einen UCT-Spieler,
+                        # ansonsten hat der UCT-Spieler die root-Node bereits upgedatet
+                        if len(root_nodes) == 2:
+                            # der Gegner muss seine Node um die Aktion updaten, die der turn-Spieler gerade gespielt hat
+                            if root_nodes[next_player_to_player[turn]].children:
+                                for child in root_nodes[next_player_to_player[turn]].children:
 
-                                # wenn die action von der child-node der gespielten entspricht
+                                    # wenn die action von der child-node der gespielten entspricht
+
+                                    if action[3] == None:
+                                        mcts_action = (action[0], action[1], action[2], None, None)
+                                    elif action[3] == 'k':
+                                        mcts_action = (action[0], action[1], action[2], 'k', 1)
+                                    else:
+                                        mcts_action = (action[0], action[1], action[2], action[3].id, action[3].name)
+
+                                    if child.action == mcts_action:  ###
+                                        root_nodes[next_player_to_player[turn]] = child
+                                        break
+
+                            # another player made the first move of the game, or the node has no visits yet
+                            else:
+                                p_num = 1 if turn.nummer == 2 else 2
 
                                 if action[3] == None:
                                     mcts_action = (action[0], action[1], action[2], None, None)
@@ -509,22 +527,7 @@ def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste
                                 else:
                                     mcts_action = (action[0], action[1], action[2], action[3].id, action[3].name)
 
-                                if child.action == mcts_action:  ###
-                                    root_nodes[next_player_to_player[turn]] = child
-                                    break
-
-                        # another player made the first move of the game, or the node has no visits yet
-                        else:
-                            p_num = 1 if turn.nummer == 2 else 2
-
-                            if action[3] == None:
-                                mcts_action = (action[0], action[1], action[2], None, None)
-                            elif action[3] == 'k':
-                                mcts_action = (action[0], action[1], action[2], 'k', 1)
-                            else:
-                                mcts_action = (action[0], action[1], action[2], action[3].id, action[3].name)
-
-                            root_nodes[next_player_to_player[turn]] = Node(True, mcts_action, p_num, None)
+                                root_nodes[next_player_to_player[turn]] = Node(True, mcts_action, p_num, None)
 
                 spiel.make_action(turn, next_card, action[0], action[1], action[2], action[3])
 
@@ -677,5 +680,6 @@ def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste
 
     allg_log.close()
 
+
 if __name__ == '__main__':
-    testing(uct(500, None, 1.4142, 4), uct(500, None, 4, 4), 6, mcts_list, False)
+    testing(uct(10, None, 1.4142, 4), uct(10, None, 4, 4), 6, mcts_list, False)

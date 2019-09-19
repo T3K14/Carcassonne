@@ -191,11 +191,29 @@ def testing(func1, func2, nr_of_games=100):
                             root_node = Node(True, mcts_action, p_num, None)
 
                     else:
-                        # der Gegner muss seine Node um die Aktion updaten, die der turn-Spieler gerade gespielt hat
-                        if root_nodes[next_player_to_player[turn]].children:
-                            for child in root_nodes[next_player_to_player[turn]].children:
+                        # falls es genau zwei uct-Spieler gibt, muss der Gegner updaten. Gibt es nur einen UCT-Spieler,
+                        # ansonsten hat der UCT-Spieler die root-Node bereits upgedatet
+                        if len(root_nodes) == 2:
+                            # der Gegner muss seine Node um die Aktion updaten, die der turn-Spieler gerade gespielt hat
+                            if root_nodes[next_player_to_player[turn]].children:
+                                for child in root_nodes[next_player_to_player[turn]].children:
 
-                                # wenn die action von der child-node der gespielten entspricht
+                                    # wenn die action von der child-node der gespielten entspricht
+
+                                    if action[3] == None:
+                                        mcts_action = (action[0], action[1], action[2], None, None)
+                                    elif action[3] == 'k':
+                                        mcts_action = (action[0], action[1], action[2], 'k', 1)
+                                    else:
+                                        mcts_action = (action[0], action[1], action[2], action[3].id, action[3].name)
+
+                                    if child.action == mcts_action:  ###
+                                        root_nodes[next_player_to_player[turn]] = child
+                                        break
+
+                            # another player made the first move of the game, or the node has no visits yet
+                            else:
+                                p_num = 1 if turn.nummer == 2 else 2
 
                                 if action[3] == None:
                                     mcts_action = (action[0], action[1], action[2], None, None)
@@ -204,22 +222,7 @@ def testing(func1, func2, nr_of_games=100):
                                 else:
                                     mcts_action = (action[0], action[1], action[2], action[3].id, action[3].name)
 
-                                if child.action == mcts_action:  ###
-                                    root_nodes[next_player_to_player[turn]] = child
-                                    break
-
-                        # another player made the first move of the game, or the node has no visits yet
-                        else:
-                            p_num = 1 if turn.nummer == 2 else 2
-
-                            if action[3] == None:
-                                mcts_action = (action[0], action[1], action[2], None, None)
-                            elif action[3] == 'k':
-                                mcts_action = (action[0], action[1], action[2], 'k', 1)
-                            else:
-                                mcts_action = (action[0], action[1], action[2], action[3].id, action[3].name)
-
-                            root_nodes[next_player_to_player[turn]] = Node(True, mcts_action, p_num, None)
+                                root_nodes[next_player_to_player[turn]] = Node(True, mcts_action, p_num, None)
 
                 spiel.make_action(turn, next_card, action[0], action[1], action[2], action[3])
 
@@ -498,16 +501,20 @@ def simple_mc_select(spiel, current_card, player, pos, d, root_node):
 
 def mcts_select(spiel, next_card, player, pos, d, root_node):
 
-    root_copies = [deepcopy(root_node) for i in range(4)]
+    s = time.time()
+
+    root_copies = [deepcopy(root_node) for i in range(1)]
 
     # multiprocessing
     pool = multiprocessing.Pool()
-    roots = pool.starmap(calculate_tree, zip(root_copies, repeat(spiel, 4), repeat(next_card, 4)))
+    roots = pool.starmap(calculate_tree, zip(root_copies, repeat(spiel, 1), repeat(next_card, 1)))
 
     pool.close()
     pool.join()
     # ermittle die neue child-Node
     node = get_best_child(roots)
+
+    print('zeit zum Berechnen des naechsten zuges:', time.time()-s)
 
     if node.action[3] is None:
         landschaft = None
@@ -556,13 +563,11 @@ def calculate_tree(root, global_spiel, next_card):
 
     # start time replacement
     t = 0
-    t_end = 150
+    t_end = 10
     # loop as long as time is left:
-    #while t < t_end:
-
     start = time.time()
-
-    while time.time() - start < 11:
+    while t < t_end:
+    #while time.time() - start < 11:
 
         # create new spiel entsprechend dem aktuellen Großen
         spiel = deepcopy(global_spiel)
@@ -816,4 +821,4 @@ def calculate_tree1(root, global_spiel, next_card):
     return root
 
 if __name__ == '__main__':
-    testing(simple_mc_select, mc_select, 6)
+    testing(mcts_select, mc_select, 6)
