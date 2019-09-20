@@ -391,6 +391,9 @@ def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste
     p2_punkte_list_strassen = []
     p2_punkte_list_wiesen = []
 
+    p1_punkte = []
+    p2_punkte = []
+
     allg_log = open('../simulations/auswertung', 'w+')
     allg_log.write('Player1 spielt nach der {}-Taktik mit den Hyperparametern {} und Player2 nach der {}-Taktik mit den Hyperparametern {}.\n\n'.format(name_to_method[decorator1.__name__], dic1, name_to_method[decorator2.__name__], dic2))
 
@@ -577,6 +580,10 @@ def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste
                 continue
 
         spiel.final_evaluate()
+
+        p1_punkte.append(player1.punkte)
+        p2_punkte.append(player2.punkte)
+
         game_log.write('Das Spiel ist vorbei. Player1 hat {} und Player2 {} Punkte.'.format(player1.punkte, player2.punkte))
         game_log.write(
             '\n\nDie Punkte von Player1 verteilen sich dabei wie folgt:\n\n{} Kloester:\t{}\n\n{} Orte:\t\t{}\n\n{} Strassen:\t{}\n\n{} Wiesen:\t{}'.format(
@@ -741,30 +748,34 @@ def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste
 
     allg_log.write('\nDie einzelnen Spielwerte noch mal in Listen:\n')
     allg_log.write('Die von Player1 gesetzen Meeples auf die jeweiligen Gebiete:\n\n')
-    allg_log.write(f'Orte: {p1_meeples_list_orte}\n')
-    allg_log.write(f'Strassen: {p1_meeples_list_strassen}\n')
-    allg_log.write(f'Wiesen: {p1_meeples_list_wiesen}\n')
-    allg_log.write(f'Kloester: {p1_meeples_list_kloester}\n\n')
+    allg_log.write(f'Orte1 = {p1_meeples_list_orte}\n')
+    allg_log.write(f'Strassen1 = {p1_meeples_list_strassen}\n')
+    allg_log.write(f'Wiesen1 = {p1_meeples_list_wiesen}\n')
+    allg_log.write(f'Kloester1 = {p1_meeples_list_kloester}\n\n')
     allg_log.write('Die von Player2 gesetzen Meeples auf die jeweiligen Gebiete:\n\n')
-    allg_log.write(f'Orte: {p2_meeples_list_orte}\n')
-    allg_log.write(f'Strassen: {p2_meeples_list_strassen}\n')
-    allg_log.write(f'Wiesen: {p2_meeples_list_wiesen}\n')
-    allg_log.write(f'Kloester: {p2_meeples_list_kloester}\n\n')
+    allg_log.write(f'Orte2 = {p2_meeples_list_orte}\n')
+    allg_log.write(f'Strassen2 = {p2_meeples_list_strassen}\n')
+    allg_log.write(f'Wiesen2 = {p2_meeples_list_wiesen}\n')
+    allg_log.write(f'Kloester2 = {p2_meeples_list_kloester}\n\n')
+
+    allg_log.write('Die von Player1 bekommenen Punkte mit den Gebieten:\n\n')
+    allg_log.write(f'Orte1_punkte = {p1_punkte_list_orte}\n')
+    allg_log.write(f'Strassen1_punkte {p1_punkte_list_strassen}\n')
+    allg_log.write(f'Wiesen1_punkte = {p1_punkte_list_wiesen}\n')
+    allg_log.write(f'Kloester1_punkte = {p1_punkte_list_kloester}\n\n')
 
     allg_log.write('Die von Player2 bekommenen Punkte mit den Gebieten:\n\n')
-    allg_log.write(f'Orte: {p1_punkte_list_orte}\n')
-    allg_log.write(f'Strassen: {p1_punkte_list_strassen}\n')
-    allg_log.write(f'Wiesen: {p1_punkte_list_wiesen}\n')
-    allg_log.write(f'Kloester: {p1_punkte_list_kloester}\n\n')
+    allg_log.write(f'Orte2_punkte = {p2_punkte_list_orte}\n')
+    allg_log.write(f'Strassen2_punkte = {p2_punkte_list_strassen}\n')
+    allg_log.write(f'Wiesen2_punkte = {p2_punkte_list_wiesen}\n')
+    allg_log.write(f'Kloester2_punkte = {p2_punkte_list_kloester}\n\n')
 
-    allg_log.write('Die von Player2 bekommenen Punkte mit den Gebieten:\n\n')
-    allg_log.write(f'Orte: {p2_punkte_list_orte}\n')
-    allg_log.write(f'Strassen: {p2_punkte_list_strassen}\n')
-    allg_log.write(f'Wiesen: {p2_punkte_list_wiesen}\n')
-    allg_log.write(f'Kloester: {p2_punkte_list_kloester}\n\n')
+    allg_log.write(f'Player1_ergebnisse = {p1_punkte}')
+    allg_log.write(f'Player2_ergebnisse = {p2_punkte}')
+
 
     allg_log.close()
 
 
 if __name__ == '__main__':
-    testing(flat_ucb(None, 8), uct(None, 2, 1.4142, 4), 6, mcts_list, False)
+    testing(flat_ucb(None, 8), uct(None, 2, 1.4142, 4), 6, karteninfoliste, True)
