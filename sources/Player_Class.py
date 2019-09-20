@@ -15,3 +15,5 @@ class Player:
         self.ort_points = 0
         self.strassen_points = 0
         self.wiesen_points = 0
+
+

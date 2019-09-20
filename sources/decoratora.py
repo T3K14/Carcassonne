@@ -373,6 +373,24 @@ def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste
     allg_p2_wiesen_points = 0
     allg_p2_kloester_points = 0
 
+    p1_meeples_list_kloester = []
+    p1_meeples_list_orte = []
+    p1_meeples_list_strassen = []
+    p1_meeples_list_wiesen = []
+    p1_punkte_list_kloester = []
+    p1_punkte_list_orte = []
+    p1_punkte_list_strassen = []
+    p1_punkte_list_wiesen = []
+
+    p2_meeples_list_kloester = []
+    p2_meeples_list_orte = []
+    p2_meeples_list_strassen = []
+    p2_meeples_list_wiesen = []
+    p2_punkte_list_kloester = []
+    p2_punkte_list_orte = []
+    p2_punkte_list_strassen = []
+    p2_punkte_list_wiesen = []
+
     allg_log = open('../simulations/auswertung', 'w+')
     allg_log.write('Player1 spielt nach der {}-Taktik mit den Hyperparametern {} und Player2 nach der {}-Taktik mit den Hyperparametern {}.\n\n'.format(name_to_method[decorator1.__name__], dic1, name_to_method[decorator2.__name__], dic2))
 
@@ -622,26 +640,61 @@ def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste
                 second_half_2 += 1
             else:
                 second_half_draws += 1
+        # allg daten
 
+        #meeples
+        #player1
         p1_ort_meeples += player1.meeples_per_ort
+        p1_meeples_list_orte.append(player1.meeples_per_ort)
+
         p1_strasse_meeples += player1.meeples_per_strasse
+        p1_meeples_list_strassen.append(player1.meeples_per_strasse)
+
         p1_wiese_meeple += player1.meeples_per_wiese
+        p1_meeples_list_wiesen.append(player1.meeples_per_wiese)
+
         p1_kloster_meeples += player1.meeples_per_kloster
+        p1_meeples_list_kloester.append(player1.meeples_per_kloster)
 
+        #player2
         p2_ort_meeples += player2.meeples_per_ort
+        p2_meeples_list_orte.append(player2.meeples_per_ort)
+
         p2_strasse_meeples += player2.meeples_per_strasse
+        p2_meeples_list_strassen.append(player2.meeples_per_strasse)
+
         p2_wiese_meeple += player2.meeples_per_wiese
+        p2_meeples_list_wiesen.append(player2.meeples_per_wiese)
+
         p2_kloster_meeples += player2.meeples_per_kloster
+        p2_meeples_list_kloester.append(player2.meeples_per_kloster)
 
+        #punkte
+        #player1
         allg_p1_orts_points += player1.ort_points
-        allg_p1_strassen_points += player1.strassen_points
-        allg_p1_wiesen_points += player1.wiesen_points
-        allg_p1_kloester_points += player1.kloster_points
+        p1_punkte_list_orte.append(player1.ort_points)
 
+        allg_p1_strassen_points += player1.strassen_points
+        p1_punkte_list_strassen.append(player1.strassen_points)
+
+        allg_p1_wiesen_points += player1.wiesen_points
+        p1_punkte_list_wiesen.append(player1.wiesen_points)
+
+        allg_p1_kloester_points += player1.kloster_points
+        p1_punkte_list_kloester.append(player1.kloster_points)
+
+        #player2
         allg_p2_orts_points += player2.ort_points
+        p2_punkte_list_orte.append(player2.ort_points)
+
         allg_p2_strassen_points += player2.strassen_points
+        p2_punkte_list_strassen.append(player2.strassen_points)
+
         allg_p2_wiesen_points += player2.wiesen_points
+        p2_punkte_list_wiesen.append(player2.wiesen_points)
+
         allg_p2_kloester_points += player2.kloster_points
+        p2_punkte_list_kloester.append(player2.kloster_points)
 
         i += 1
 
@@ -686,8 +739,32 @@ def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste
     allg_log.write(f'{allg_p2_wiesen_points/p2_wiese_meeple} Punkte pro Wiesen-Meeple\n')
     allg_log.write(f'{allg_p2_kloester_points/p2_kloster_meeples} Punkte pro Kloster-Meeple\n')
 
+    allg_log.write('\nDie einzelnen Spielwerte noch mal in Listen:\n')
+    allg_log.write('Die von Player1 gesetzen Meeples auf die jeweiligen Gebiete:\n\n')
+    allg_log.write(f'Orte: {p1_meeples_list_orte}\n')
+    allg_log.write(f'Strassen: {p1_meeples_list_strassen}\n')
+    allg_log.write(f'Wiesen: {p1_meeples_list_wiesen}\n')
+    allg_log.write(f'Kloester: {p1_meeples_list_kloester}\n\n')
+    allg_log.write('Die von Player2 gesetzen Meeples auf die jeweiligen Gebiete:\n\n')
+    allg_log.write(f'Orte: {p2_meeples_list_orte}\n')
+    allg_log.write(f'Strassen: {p2_meeples_list_strassen}\n')
+    allg_log.write(f'Wiesen: {p2_meeples_list_wiesen}\n')
+    allg_log.write(f'Kloester: {p2_meeples_list_kloester}\n\n')
+
+    allg_log.write('Die von Player2 bekommenen Punkte mit den Gebieten:\n\n')
+    allg_log.write(f'Orte: {p1_punkte_list_orte}\n')
+    allg_log.write(f'Strassen: {p1_punkte_list_strassen}\n')
+    allg_log.write(f'Wiesen: {p1_punkte_list_wiesen}\n')
+    allg_log.write(f'Kloester: {p1_punkte_list_kloester}\n\n')
+
+    allg_log.write('Die von Player2 bekommenen Punkte mit den Gebieten:\n\n')
+    allg_log.write(f'Orte: {p2_punkte_list_orte}\n')
+    allg_log.write(f'Strassen: {p2_punkte_list_strassen}\n')
+    allg_log.write(f'Wiesen: {p2_punkte_list_wiesen}\n')
+    allg_log.write(f'Kloester: {p2_punkte_list_kloester}\n\n')
+
     allg_log.close()
 
 
 if __name__ == '__main__':
-    testing(flat_ucb(None, 60), uct(None, 15, 1.4142, 4), 50, karteninfoliste, True)
+    testing(flat_ucb(None, 8), uct(None, 2, 1.4142, 4), 6, mcts_list, False)
