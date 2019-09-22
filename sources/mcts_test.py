@@ -69,7 +69,7 @@ class MCTSTest(unittest.TestCase):
 
         k1 = spiel.cards_left.pop(0)
 
-        spiel.make_action(k1, (-1, 0), 2, d[current_player])
+        spiel.make_action(d[current_player], k1, -1, 0, 2)
 
         self.assertEqual(67, len(spiel.cards_left))
         self.assertEqual(4, player1.punkte)
@@ -80,7 +80,7 @@ class MCTSTest(unittest.TestCase):
 
         k1 = spiel.cards_left.pop(0)
 
-        spiel.make_action(k1, (-1, -1), 3, current_player, k1.orte[0])
+        spiel.make_action(current_player, k1, -1, -1, 3, k1.orte[0])
 
         self.assertEqual(66, len(spiel.cards_left))
         self.assertEqual(4, player1.punkte)
@@ -91,7 +91,7 @@ class MCTSTest(unittest.TestCase):
 
         k1 = spiel.cards_left.pop(0)
 
-        spiel.make_action(k1, (1, 1), 3, d[current_player], 'K')
+        spiel.make_action(d[current_player], k1, 1, 1, 3, 'k')
 
         self.assertEqual(65, len(spiel.cards_left))
         self.assertEqual(4, player1.punkte)
@@ -103,7 +103,7 @@ class MCTSTest(unittest.TestCase):
         k1 = spiel.cards_left.pop(0)
 
         #display_spielbrett_dict(spiel.cards_set)
-        spiel.make_action(k1, (-1, 1), 0, current_player, k1.strassen[0])
+        spiel.make_action(current_player, k1, -1, 1, 0, k1.strassen[0])
 
         self.assertEqual(64, len(spiel.cards_left))
         self.assertEqual(4, player1.punkte)
@@ -119,7 +119,7 @@ class MCTSTest(unittest.TestCase):
             if w.ecken == [7]:
                 wiese = w
                 break
-        spiel.make_action(k1, (-2, 0), 3, d[current_player], wiese)
+        spiel.make_action(d[current_player], k1, -2, 0, 3, wiese)
 
         self.assertEqual(63, len(spiel.cards_left))
         self.assertEqual(4, player1.punkte)
@@ -130,7 +130,7 @@ class MCTSTest(unittest.TestCase):
 
         k1 = spiel.cards_left.pop(0)
 
-        spiel.make_action(k1, (0, 2), 1, current_player, None)
+        spiel.make_action(current_player, k1, 0, 2, 1, None)
 
         self.assertEqual(62, len(spiel.cards_left))
         self.assertEqual(4, player1.punkte)
@@ -142,7 +142,7 @@ class MCTSTest(unittest.TestCase):
 
         k1 = spiel.cards_left.pop(0)
 
-        spiel.make_action(k1, (0, 3), 0, d[current_player], k1.orte[0])
+        spiel.make_action(d[current_player], k1, 0, 3, 0, k1.orte[0])
 
         self.assertEqual(61, len(spiel.cards_left))
         self.assertEqual(4, player1.punkte)
@@ -153,7 +153,7 @@ class MCTSTest(unittest.TestCase):
 
         k1 = spiel.cards_left.pop(0)
 
-        spiel.make_action(k1, (-2, -1), 0, current_player, None)
+        spiel.make_action(current_player, k1, -2, -1, 0, None)
 
         self.assertEqual(60, len(spiel.cards_left))
         self.assertEqual(11, player1.punkte)
@@ -164,7 +164,7 @@ class MCTSTest(unittest.TestCase):
 
         k1 = spiel.cards_left.pop(0)
 
-        spiel.make_action(k1, (-1, 3), 0, d[current_player], None)
+        spiel.make_action(d[current_player], k1, -1, 3, 0, None)
 
         self.assertEqual(59, len(spiel.cards_left))
         self.assertEqual(11, player1.punkte)
@@ -180,7 +180,7 @@ class MCTSTest(unittest.TestCase):
 
         k1 = spiel.cards_left.pop(0)
 
-        spiel.make_action(k1, (-1, -2), 3, current_player, k1.wiesen[0])
+        spiel.make_action(current_player, k1, -1, -2, 3 , k1.wiesen[0])
 
         self.assertEqual(58, len(spiel.cards_left))
         self.assertEqual(21, player1.punkte)
@@ -196,7 +196,7 @@ class MCTSTest(unittest.TestCase):
 
         k1 = spiel.cards_left.pop(0)
 
-        spiel.make_action(k1, (2, 1), 1, d[current_player], None)
+        spiel.make_action(d[current_player], k1, 2, 1, 1, None)
 
         self.assertEqual(57, len(spiel.cards_left))
         self.assertEqual(21, player1.punkte)
@@ -212,7 +212,7 @@ class MCTSTest(unittest.TestCase):
 
         k1 = spiel.cards_left.pop(0)
 
-        spiel.make_action(k1, (-1, -3), 0, current_player, k1.orte[0])
+        spiel.make_action(current_player, k1, -1, -3, 0, k1.orte[0])
 
         self.assertEqual(56, len(spiel.cards_left))
         self.assertEqual(21, player1.punkte)
@@ -234,7 +234,7 @@ class MCTSTest(unittest.TestCase):
             if o.kanten == [3]:
                 ort = o
                 break
-        spiel.make_action(k1, (-3, 0), 1, d[current_player], ort)
+        spiel.make_action( d[current_player], k1, -3, 0, 1, ort)
 
         self.assertEqual(55, len(spiel.cards_left))
         self.assertEqual(21, player1.punkte)
@@ -250,7 +250,7 @@ class MCTSTest(unittest.TestCase):
 
         k1 = spiel.cards_left.pop(0)
 
-        spiel.make_action(k1, (0, -2), 0, current_player, None)
+        spiel.make_action(current_player, k1, 0, -2, 0, None)
 
         self.assertEqual(54, len(spiel.cards_left))
         self.assertEqual(27, player1.punkte)
@@ -266,7 +266,7 @@ class MCTSTest(unittest.TestCase):
 
         k1 = spiel.cards_left.pop(0)
 
-        spiel.make_action(k1, (3, 1), 1, d[current_player], None)
+        spiel.make_action(d[current_player], k1, 3, 1, 1 , None)
 
         self.assertEqual(53, len(spiel.cards_left))
         self.assertEqual(27, player1.punkte)
@@ -282,7 +282,7 @@ class MCTSTest(unittest.TestCase):
 
         k1 = spiel.cards_left.pop(0)
 
-        spiel.make_action(k1, (-2, 1), 0, current_player, 'K')
+        spiel.make_action(current_player, k1, -2, 1, 0, 'k')
 
         self.assertEqual(52, len(spiel.cards_left))
         self.assertEqual(27, player1.punkte)

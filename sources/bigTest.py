@@ -16,7 +16,7 @@ class BigTest(unittest.TestCase):
         player2 = Player_Class.Player(2)
 
         k1 = Card('W', 'W', 'S', 'S')
-        spiel.make_action(k1, (0, 1), 0, player1, k1.strassen[0])
+        spiel.make_action(player1, k1, 0, 1, 0, k1.strassen[0])
 
         self.assertEqual(len(spiel.alle_strassen), 1)
         self.assertEqual(len(spiel.alle_orte), 1)
@@ -30,7 +30,7 @@ class BigTest(unittest.TestCase):
         self.assertEqual(player2.punkte, 0)
 
         k2 = Card('O', 'W', 'W', 'O', 'O', True)
-        spiel.make_action(k2, (1, 0), 3, player2, k2.orte[0])
+        spiel.make_action(player2, k2, 1, 0, 3, k2.orte[0])
 
         self.assertEqual(len(spiel.alle_strassen), 1)
         self.assertEqual(len(spiel.alle_orte), 1)
@@ -44,7 +44,7 @@ class BigTest(unittest.TestCase):
         self.assertEqual(player2.punkte, 0)
 
         k3 = Card('O', 'W', 'W', 'W')
-        spiel.make_action(k3, (2, 0), 1, player1, k3.orte[0])
+        spiel.make_action(player1, k3, 2, 0, 1, k3.orte[0])
 
         self.assertEqual(len(spiel.alle_strassen), 1)
         self.assertEqual(len(spiel.alle_orte), 2)
@@ -58,7 +58,7 @@ class BigTest(unittest.TestCase):
         self.assertEqual(player2.punkte, 0)
 
         k4 = Card('W', 'W', 'W', 'W', 'K')
-        spiel.make_action(k4, (1, 1), 2, player2, 'K')
+        spiel.make_action(player2, k4, 1, 1, 2, 'k')
 
         self.assertEqual(len(spiel.alle_strassen), 1)
         self.assertEqual(len(spiel.alle_orte), 2)
@@ -72,7 +72,7 @@ class BigTest(unittest.TestCase):
         self.assertEqual(player2.punkte, 0)
 
         k5 = Card('O', 'W', 'W', 'O', 'O')
-        spiel.make_action(k5, (3, 0), 3, player1)
+        spiel.make_action(player1, k5, 3, 0, 3)
 
         self.assertEqual(len(spiel.alle_strassen), 1)
         self.assertEqual(len(spiel.alle_orte), 2)
@@ -85,7 +85,7 @@ class BigTest(unittest.TestCase):
         self.assertEqual(player1.punkte, 0)
 
         k6 = Card('S', 'W', 'S', 'W')
-        spiel.make_action(k6, (0, 2), 1, player2)
+        spiel.make_action(player2, k6, 0, 2, 1)
 
         self.assertEqual(len(spiel.alle_strassen), 2)
         self.assertEqual(len(spiel.alle_orte), 2)
@@ -98,7 +98,7 @@ class BigTest(unittest.TestCase):
         self.assertEqual(player1.punkte, 0)
 
         k7 = Card('W', 'W', 'S', 'S')
-        spiel.make_action(k7, (0, -1), 1, player1)
+        spiel.make_action(player1, k7, 0, -1, 1)
 
         self.assertEqual(len(spiel.alle_strassen), 2)
         self.assertEqual(len(spiel.alle_orte), 2)
@@ -113,7 +113,7 @@ class BigTest(unittest.TestCase):
         #display_spielbrett_dict(spiel.cards_set)
 
         k8 = Card('O', 'W', 'W', 'W')
-        spiel.make_action(k8, (1, -1), 0, player2)
+        spiel.make_action(player2, k8, 1, -1, 0)
 
         self.assertEqual(len(spiel.alle_strassen), 2)
         self.assertEqual(len(spiel.alle_orte), 2)
@@ -138,7 +138,7 @@ class BigTest(unittest.TestCase):
         player2 = Player_Class.Player(2)
 
         k1 = Card('W', 'W', 'S', 'S')
-        spiel.make_action(k1, (0, 1), 3, player1)
+        spiel.make_action(player1, k1, 0, 1, 3)
 
         self.assertEqual(len(spiel.alle_strassen), 1)
         self.assertEqual(len(spiel.alle_orte), 1)
@@ -152,7 +152,7 @@ class BigTest(unittest.TestCase):
         self.assertEqual(player2.punkte, 0)
 
         k2 = Card('O', 'S', 'S', 'O', 'O', True)
-        spiel.make_action(k2, (1, 1), 2, player2, k2.orte[0])
+        spiel.make_action(player2, k2, 1, 1, 2, k2.orte[0])
 
         self.assertEqual(len(spiel.alle_strassen), 1)
         self.assertEqual(len(spiel.alle_orte), 2)
@@ -166,7 +166,7 @@ class BigTest(unittest.TestCase):
         self.assertEqual(player2.punkte, 0)
 
         k3 = Card('W', 'W', 'S', 'S')
-        spiel.make_action(k3, (0, -1), 2, player1, k3.strassen[0])
+        spiel.make_action(player1, k3, 0, -1, 2, k3.strassen[0])
 
         self.assertEqual(len(spiel.alle_strassen), 1)
         self.assertEqual(len(spiel.alle_orte), 2)
@@ -180,7 +180,7 @@ class BigTest(unittest.TestCase):
         self.assertEqual(player2.punkte, 0)
 
         k4 = Card('S', 'O', 'W', 'S')
-        spiel.make_action(k4, (1, -1), 3, player2, k4. orte[0])
+        spiel.make_action(player2, k4, 1, -1, 3, k4. orte[0])
 
         self.assertEqual(len(spiel.alle_strassen), 1)
         self.assertEqual(len(spiel.alle_orte), 3)
@@ -198,7 +198,7 @@ class BigTest(unittest.TestCase):
         for w in k5.wiesen:
             if w.ecken == [6]:
                 wies = w
-        spiel.make_action(k5, (1, 2), 0, player1, wies)
+        spiel.make_action(player1, k5, 1, 2, 0, wies)
 
         self.assertEqual(len(spiel.alle_strassen), 1)
         self.assertEqual(len(spiel.alle_orte), 4)
@@ -212,7 +212,7 @@ class BigTest(unittest.TestCase):
         self.assertEqual(player2.punkte, 0)
 
         k6 = Card('O', 'O', 'W', 'O', 'O', True)
-        spiel.make_action(k6, (1, 0), 3, player2)
+        spiel.make_action(player2, k6, 1, 0, 3)
 
         self.assertEqual(len(spiel.alle_strassen), 1)
         self.assertEqual(len(spiel.alle_orte), 2)
@@ -226,7 +226,7 @@ class BigTest(unittest.TestCase):
         self.assertEqual(player2.punkte, 0)
 
         k7 = Card('W', 'S', 'S', 'S')
-        spiel.make_action(k7, (1, -2), 1, player1)
+        spiel.make_action(player1, k7, 1, -2, 1)
 
         self.assertEqual(len(spiel.alle_strassen), 3)
         self.assertEqual(len(spiel.alle_orte), 2)
@@ -240,7 +240,7 @@ class BigTest(unittest.TestCase):
         self.assertEqual(player2.punkte, 0)
 
         k8 = Card('S', 'O', 'S', 'W')
-        spiel.make_action(k8, (2, 1), 2, player2, k8.strassen[0])
+        spiel.make_action(player2, k8, 2, 1, 2, k8.strassen[0])
 
         self.assertEqual(len(spiel.alle_strassen), 4)
         self.assertEqual(len(spiel.alle_orte), 2)
@@ -263,7 +263,7 @@ class BigTest(unittest.TestCase):
         player2 = Player_Class.Player(2)
 
         k1 = Card('O', 'W', 'W', 'W')
-        spiel.make_action(k1, (1, 0), 3, player1, k1.orte[0])
+        spiel.make_action(player1, k1, 1, 0, 3, k1.orte[0])
 
         self.assertEqual(len(spiel.cards_set), 2)
         self.assertEqual(len(spiel.alle_strassen), 1)
@@ -277,7 +277,7 @@ class BigTest(unittest.TestCase):
         self.assertEqual(player2.punkte, 0)
 
         k2 = Card('W', 'W', 'S', 'S')
-        spiel.make_action(k2, (0, 1), 0, player2, k2.strassen[0])
+        spiel.make_action(player2, k2, 0, 1, 0, k2.strassen[0])
 
         self.assertEqual(len(spiel.cards_set), 3)
 
@@ -292,7 +292,7 @@ class BigTest(unittest.TestCase):
         self.assertEqual(player2.punkte, 0)
 
         k3 = Card('O', 'S', 'S', 'O', 'O', True)
-        spiel.make_action(k3, (0, -1), 3, player1, k3.orte[0])
+        spiel.make_action(player1, k3, 0, -1, 3, k3.orte[0])
 
         self.assertEqual(len(spiel.cards_set), 4)
 
@@ -307,7 +307,7 @@ class BigTest(unittest.TestCase):
         self.assertEqual(player2.punkte, 0)
 
         k4 = Card('O', 'O', 'S', 'O', 'O', True)
-        spiel.make_action(k4, (-1, 1), 3, player2, k4.orte[0])
+        spiel.make_action(player2, k4, -1, 1, 3, k4.orte[0])
 
         self.assertEqual(len(spiel.cards_set), 5)
 
@@ -326,7 +326,7 @@ class BigTest(unittest.TestCase):
         for o in k5.orte:
             if o.kanten == [1]:
                 ort1 = o
-        spiel.make_action(k5, (-1, -1), 0, player1, ort1)
+        spiel.make_action(player1, k5, -1, -1, 0, ort1)
 
         self.assertEqual(len(spiel.cards_set), 6)
 
@@ -341,7 +341,7 @@ class BigTest(unittest.TestCase):
         self.assertEqual(player2.punkte, 0)
 
         k6 = Card('S', 'W', 'S', 'W')
-        spiel.make_action(k6, (1, -1), 3, player2)
+        spiel.make_action(player2, k6, 1, -1, 3)
 
         self.assertEqual(len(spiel.cards_set), 7)
 
@@ -362,7 +362,7 @@ class BigTest(unittest.TestCase):
         for s in k7.strassen:
             if s.kanten == [3]:
                 strasse1 = s
-        spiel.make_action(k7, (2, 0), 3, player1, strasse1)
+        spiel.make_action(player1, k7, 2, 0, 3, strasse1)
 
         self.assertEqual(len(spiel.cards_set), 8)
 
@@ -377,7 +377,7 @@ class BigTest(unittest.TestCase):
         self.assertEqual(player2.punkte, 0)
 
         k8 = Card('O', 'S', 'S', 'W')
-        spiel.make_action(k8, (-1, 2), 2, player2)
+        spiel.make_action(player2, k8, -1, 2, 2)
 
         self.assertEqual(len(spiel.cards_set), 9)
 
@@ -396,7 +396,7 @@ class BigTest(unittest.TestCase):
         for s in k9.strassen:
             if s.kanten == [1]:
                 strasse2 = s
-        spiel.make_action(k9, (-2, 2), 0, player1, strasse2)
+        spiel.make_action(player1, k9, -2, 2, 0, strasse2)
 
         self.assertEqual(len(spiel.cards_set), 10)
 
@@ -411,7 +411,7 @@ class BigTest(unittest.TestCase):
         self.assertEqual(player2.punkte, 0)
 
         k10 = Card('W', 'W', 'W', 'W', 'K')
-        spiel.make_action(k10, (1, 1), 2, player2, 'K')
+        spiel.make_action(player2, k10, 1, 1, 2, 'k')
 
         self.assertEqual(len(spiel.cards_set), 11)
 
@@ -426,7 +426,7 @@ class BigTest(unittest.TestCase):
         self.assertEqual(player2.punkte, 0)
 
         k11 = Card('W', 'O', 'W', 'O', 'O', True)
-        spiel.make_action(k11, (-2, 3), 0, player1)
+        spiel.make_action(player1, k11, -2, 3, 0)
 
         self.assertEqual(len(spiel.cards_set), 12)
 
@@ -441,7 +441,7 @@ class BigTest(unittest.TestCase):
         self.assertEqual(player2.punkte, 0)
 
         k12 = Card('O', 'W', 'W', 'O', 'O')
-        spiel.make_action(k12, (-1, 0), 0, player2)
+        spiel.make_action(player2, k12, -1, 0, 0)
 
         self.assertEqual(len(spiel.cards_set), 13)
 
@@ -456,7 +456,7 @@ class BigTest(unittest.TestCase):
         self.assertEqual(player2.punkte, 0)
 
         k13 = Card('W', 'W', 'S', 'S')
-        spiel.make_action(k13, (2, -1), 1, player1)
+        spiel.make_action(player1, k13, 2, -1, 1)
 
         #display_spielbrett_dict(spiel.cards_set)
 
@@ -473,7 +473,7 @@ class BigTest(unittest.TestCase):
         self.assertEqual(player2.punkte, 7)
 
         k14 = Card('S', 'W', 'S', 'W')
-        spiel.make_action(k14, (3, 0), 1, player2, k14.strassen[0])
+        spiel.make_action(player2, k14, 3, 0, 1, k14.strassen[0])
 
         self.assertEqual(len(spiel.cards_set), 15)
 
@@ -493,16 +493,16 @@ class BigTest(unittest.TestCase):
         player2 = Player_Class.Player(2)
 
         k1 = Card('O', 'O', 'W', 'O', 'O')
-        spiel.make_action(k1, (1, 0), 2, player1)
+        spiel.make_action(player1, k1, 1, 0, 2)
 
         k2 = Card('O', 'S', 'S', 'O', 'O')
-        spiel.make_action(k2, (1, -1), 1, player2)
+        spiel.make_action(player2, k2, 1, -1, 1)
 
         k3 = Card('O', 'W', 'W', 'O', 'O')
-        spiel.make_action(k3, (2, -1), 0, player1)
+        spiel.make_action(player1, k3, 2, -1, 0)
 
         k4 = Card('O', 'O', 'O', 'O', 'O')
-        spiel.make_action(k4, (2, 0), 0, player2)
+        spiel.make_action(player2, k4, 2, 0, 0)
 
     def test5(self):
         spiel = Spiel_class.Spiel(Kartenliste)
@@ -510,7 +510,7 @@ class BigTest(unittest.TestCase):
         player2 = Player_Class.Player(2)
 
         k1 = Card('W', 'O', 'W', 'O')
-        spiel.make_action(k1, (-1, 0), 1, player1)
+        spiel.make_action(player1, k1, -1, 0, 1)
 
         self.assertEqual(len(spiel.alle_orte), 3)
 
@@ -520,13 +520,13 @@ class BigTest(unittest.TestCase):
         player2 = Player_Class.Player(2)
 
         k1 = Card('S', 'O', 'S', 'S', 'G')
-        spiel.make_action(k1, (0, -1), 0, player2)
+        spiel.make_action(player2, k1, 0, -1, 0)
 
         k2 = Card('S', 'O', 'S', 'W')
-        spiel.make_action(k2, (0, 1), 2, player1)
+        spiel.make_action(player1, k2, 0, 1, 2)
 
         k3 = Card('O', 'W', 'W', 'O', 'O')
-        spiel.make_action(k3, (2, 0), 1, player2)
+        spiel.make_action(player2, k3, 2, 0, 1)
 
         k4 = Card('O', 'O', 'S', 'O', 'O', True)
         spiel.calculate_possible_actions(k4, player1)

@@ -27,9 +27,14 @@ print("kloster" in a)
 if "kloster" in None:
     print("j")
 """
-from card_class import karteninfoliste
-import random
 
-dic = {'a': 2}
+dic = {'a': 2, 'b': 3}
 
-print(list(dic.values()))
+print(list(dic))
+print(dic.keys())
+
+for i in dic.keys():
+    print(i)
+
+for i in list(dic):
+    print(i)

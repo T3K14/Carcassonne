@@ -1,6 +1,6 @@
 from Player_Class import Player
 from Spiel_class import Spiel
-from card_class import karteninfoliste, create_kartenliste, mcts_list
+from card_class import karteninfoliste, create_kartenliste, mcts_list, speed_test_karteninfoliste
 from mcts2 import Node
 from UCB import Node as UCB_Node
 
@@ -202,16 +202,25 @@ def mc_select(spiel, current_card, player, pos, d, root_node, t_end):
 
 def uct_select(spiel, next_card, player, pos, d, root_node, t_end, rechenzeit, c, threads):
 
-    root_copies = [deepcopy(root_node) for i in range(threads)]
+    if threads > 1:
 
-    # multiprocessing
-    pool = multiprocessing.Pool()
-    roots = pool.starmap(calculate_tree, zip(root_copies, repeat(spiel, threads), repeat(next_card, threads), repeat(t_end, threads), repeat(rechenzeit, threads), repeat(c, threads)))
+        root_copies = [deepcopy(root_node) for i in range(threads)]
 
-    pool.close()
-    pool.join()
-    # ermittle die neue child-Node
-    node = get_best_child(roots)
+        # multiprocessing
+        pool = multiprocessing.Pool()
+        roots = pool.starmap(calculate_tree, zip(root_copies, repeat(spiel, threads), repeat(next_card, threads), repeat(t_end, threads), repeat(rechenzeit, threads), repeat(c, threads)))
+
+        pool.close()
+        pool.join()
+        # ermittle die neue child-Node
+
+        node = get_best_child(roots)
+
+    else:
+        # no multiprocessing
+        node = calculate_tree(root_node, spiel, next_card, t_end, rechenzeit, c)
+        node = get_best_child([node])
+
 
     if node.action[3] is None:
         landschaft = None
@@ -778,4 +787,5 @@ def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste
 
 
 if __name__ == '__main__':
-    testing(random_play(), flat_ucb(500, None), 20, karteninfoliste, True)
+    #testing(uct(None, 20), flat_ucb(None, 20), 6, mcts_list, False)
+    testing(flat_ucb(None, 30), uct(None, 30),  50, speed_test_karteninfoliste, True)

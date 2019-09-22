@@ -6,7 +6,7 @@ from Wiese import Wiese
 import card_class
 import Spiel_class
 from Player_Class import Player
-from card_class import Card
+from card_class import Card, speed_test_karteninfoliste
 from plot_cards import display_spielbrett_dict, draw_card
 
 Kartenliste = card_class.create_kartenliste(card_class.karteninfoliste)
@@ -85,6 +85,8 @@ class evaluationTest(unittest.TestCase):
 
         player1.punkte, player2.punkte = x, y
 
+        #display_spielbrett_dict(spiel.cards_set)
+
         k6 = Card('W', 'W', 'S', 'S')
         spiel.make_action(player1, k6, 3, 1, 3, k6.strassen[0])
 
@@ -118,6 +120,57 @@ class evaluationTest(unittest.TestCase):
 
         self.assertEqual(player1.punkte, 4)
         self.assertEqual(player2.punkte, 4)
+
+    def test3(self):
+        spiel = Spiel_class.Spiel(card_class.create_kartenliste(['SOWS', 'SWSW', 'WWSS', 'WWSWK', 'OOSOOT', 'OSSW', 'SOSSG', 'OSSW', 'WWSS', 'OSSW'], False))
+        player1 = Player(1)
+        player2 = Player(2)
+
+        k1 = spiel.cards_left.pop(0)
+        spiel.make_action(player2, k1, 1, 0, 2, k1.orte[0])
+
+        k2 = spiel.cards_left.pop(0)
+        spiel.make_action(player1, k2, 2, 0, 1, k2.strassen[0])
+
+        k3 = spiel.cards_left.pop(0)
+        spiel.make_action(player2, k3, 0, 1, 3, k3.strassen[0])
+
+        k4 = spiel.cards_left.pop(0)
+        spiel.make_action(player1, k4, 1, -1, 2, 'k')
+
+        k5 = spiel.cards_left.pop(0)
+        spiel.make_action(player2, k5, 3, 0, 1, k5.orte[0])
+
+        k6 = spiel.cards_left.pop(0)
+        spiel.make_action(player1, k6, 1, -2, 1, k6.strassen[0])
+
+        k7 = spiel.cards_left.pop(0)
+
+        strasse = None
+        for s in k7.strassen:
+            if s.kanten == [0]:
+                strasse = s
+
+        spiel.make_action(player2, k7, 3, 1, 1, strasse)
+
+        k8 = spiel.cards_left.pop(0)
+        spiel.make_action(player1, k8, 2, -2, 3, k8.orte[0])
+
+        k9 = spiel.cards_left.pop(0)
+
+        w = [wi for wi in k9.wiesen if wi.ecken == [7]][0]
+        spiel.make_action(player2, k9,  1, -3, 2, w)
+
+        #display_spielbrett_dict(spiel.cards_set)
+
+        k10 = spiel.cards_left.pop(0)
+        spiel.make_action(player1, k10, 0, -2, 0, k10.orte[0])
+
+        spiel.final_evaluate()
+
+        self.assertEqual(player1.punkte, 19)
+        self.assertEqual(player2.punkte, 16)
+
 
 if __name__ == '__main__':
     unittest.main()

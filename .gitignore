@@ -5,3 +5,4 @@ __pycache__/
 .log/
 simulations/
 simulations_1/
+simulations*

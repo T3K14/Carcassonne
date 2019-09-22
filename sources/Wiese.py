@@ -18,7 +18,13 @@ class Wiese:
         self.alle_teile.update({(koords[0], koords[1]): wiese_auf_karte.ecken})
 
     def add_global(self, global_wiese, alle_wiesen):
-        self.alle_teile.update(global_wiese.alle_teile)
+
+        for teil in list(global_wiese.alle_teile):
+            if teil not in self.alle_teile:
+                self.alle_teile.update({teil: global_wiese.alle_teile[teil]})
+            else:
+                for ecke in global_wiese.alle_teile[teil]:
+                    self.alle_teile[teil].append(ecke)
 
         for pl in global_wiese.meeples:
             if pl in self.meeples:
@@ -29,7 +35,7 @@ class Wiese:
         if len(global_wiese.meeples) > 0:
             self.update_besitzer()
 
-        # gilt nur nicht, wenn das Kloster mit strasse involviert ist
+        # gilt nur nicht, wenn das Kloster mit strasse involviert ist ??? Quatsch
         if global_wiese in alle_wiesen:
             alle_wiesen.remove(global_wiese)
 
