@@ -1,24 +1,24 @@
 import numpy as np
 
-Orte1 = [0, 0, 0, 1, 1, 1]
-Strassen1 = [1, 1, 1, 0, 0, 0]
-Wiesen1 = [0, 0, 0, 1, 1, 1]
-Kloester1 = [1, 1, 1, 0, 0, 0]
+Orte1 = [6, 3, 4, 5, 6, 7]
+Strassen1 = [4, 6, 4, 5, 3, 4]
+Wiesen1 = [5, 3, 4, 2, 2, 3]
+Kloester1 = [0, 3, 2, 2, 1, 2]
 
-Orte2 = [1, 1, 1, 0, 0, 0]
-Strassen2 = [0, 0, 0, 1, 1, 1]
-Wiesen2 = [1, 1, 1, 0, 0, 0]
-Kloester2 = [0, 0, 0, 1, 1, 1]
+Orte2 = [6, 5, 4, 5, 3, 4]
+Strassen2 = [1, 4, 4, 3, 7, 6]
+Wiesen2 = [3, 1, 0, 2, 2, 2]
+Kloester2 = [0, 1, 0, 1, 1, 1]
 
-Orte1_punkte = [0, 0, 0, 4, 4, 4]
-Strassen1_punkte = [2, 2, 2, 0, 0, 0]
-Wiesen1_punkte = [0, 0, 0, 3, 3, 3]
-Kloester1_punkte = [3, 3, 3, 0, 0, 0]
+Orte1_punkte = [40, 52, 30, 43, 46, 43]
+Strassen1_punkte = [18, 22, 18, 23, 9, 17]
+Wiesen1_punkte = [30, 18, 30, 21, 18, 21]
+Kloester1_punkte = [0, 21, 15, 17, 8, 16]
 
-Orte2_punkte = [4, 4, 4, 0, 0, 0]
-Strassen2_punkte = [0, 0, 0, 2, 2, 2]
-Wiesen2_punkte = [3, 3, 3, 0, 0, 0]
-Kloester2_punkte = [0, 0, 0, 3, 3, 3]
+Orte2_punkte = [30, 21, 26, 30, 9, 28]
+Strassen2_punkte = [5, 16, 11, 14, 19, 23]
+Wiesen2_punkte = [0, 0, 0, 0, 9, 9]
+Kloester2_punkte = [0, 8, 0, 6, 8, 7]
 
 
 def calculate_mittelwert(liste):

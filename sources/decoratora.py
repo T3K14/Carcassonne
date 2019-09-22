@@ -760,7 +760,7 @@ def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste
 
     allg_log.write('Die von Player1 bekommenen Punkte mit den Gebieten:\n\n')
     allg_log.write(f'Orte1_punkte = {p1_punkte_list_orte}\n')
-    allg_log.write(f'Strassen1_punkte {p1_punkte_list_strassen}\n')
+    allg_log.write(f'Strassen1_punkte = {p1_punkte_list_strassen}\n')
     allg_log.write(f'Wiesen1_punkte = {p1_punkte_list_wiesen}\n')
     allg_log.write(f'Kloester1_punkte = {p1_punkte_list_kloester}\n\n')
 
@@ -778,4 +778,4 @@ def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste
 
 
 if __name__ == '__main__':
-    testing(flat_ucb(None, 8), uct(None, 2, 1.4142, 4), 6, karteninfoliste, True)
+    testing(random_play(), flat_ucb(500, None), 20, karteninfoliste, True)
