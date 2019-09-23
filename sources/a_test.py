@@ -30,8 +30,10 @@ if "kloster" in None:
 
 dic = {'a': 2, 'b': 3}
 
-a = [1,2,3,4]
+dic2 = {'b': 3, 'a': 2}
 
-b =  [1,2,3]
+print(dic2 == dic)
+s1 = {1,2,3,4}
+s2 = {1,2,3,4}
 
-print(set(dic))
+print(s1.issubset(s2))

@@ -193,5 +193,37 @@ class evaluationTest(unittest.TestCase):
 
         self.assertEqual(len(spiel.alle_wiesen), 2)
 
+    def test5(self):
+        spiel = Spiel_class.Spiel(card_class.create_kartenliste(
+            ['OSSW', 'SWSW', 'SOSSG', 'WWSWK', 'WWSS', 'WWSS', 'OOSOOT', 'OSSW', 'SOWS', 'OSSW'], False))
+        player1 = Player(1)
+        player2 = Player(2)
+
+        k1 = Card('O', 'S', 'S', 'W')
+        spiel.make_action(player1, k1, 1, 0, 3)
+
+        k2 = Card('W', 'W', 'S', 'W', 'K')
+        spiel.make_action(player2, k2, 1, -1, 1, 'k')
+
+        k3 = Card('W', 'W', 'S', 'W', 'K')
+        spiel.make_action(player1, k3, 0, 1, 1, 'k')
+
+        k4 = Card('W', 'W', 'S', 'S')
+        spiel.make_action(player2, k4, 0, -1, 2)
+
+        a = sorted([list(v) for v in [w.alle_teile.items() for w in spiel.alle_wiesen]])
+        b = [[((1, 0), [5])], [((1, 0), [7, 4, 6]), ((1, -1), [5, 6, 7, 4]), ((0, -1), [6, 7, 4, 5]), ((0, 0), [5, 6, 4, 7]), ((0, 1), [5, 6, 7, 4])]]
+
+        self.assertEqual(a, b)
+
+        w = [w for w in spiel.alle_wiesen if len(w.alle_teile) != 1][0]
+
+        for c in spiel.cards_set:
+            if c != (1, 0):
+                for ecke in spiel.cards_set[c].ecken:
+
+                    self.assertEqual(spiel.cards_set[c].ecken[ecke], w)
+
+
 if __name__ == '__main__':
     unittest.main()

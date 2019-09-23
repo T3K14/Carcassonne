@@ -484,8 +484,11 @@ class Spiel:
 
                         # falls die globale_wiese noch nicht aus alle_wiesen geloescht ist (das Loeschen passiert, wenn sie einer anderen Wiese angegliedert wird)
                         if global_wiese in self.alle_wiesen:
-                            hauptwiese.add_global(global_wiese, self.alle_wiesen, self.cards_set, card)
+                            if hauptwiese in self.alle_wiesen:
+                                hauptwiese.add_global(global_wiese, self.alle_wiesen, self.cards_set, card)
                             #self.alle_wiesen.remove(global_wiese)
+                            else:
+                                print('Die Hauptwiese wurde schon geloescht!!!')
 
                         else:
                             # finde die Wiese, an die die globale_wiese angeschlossen wurde
@@ -495,14 +498,27 @@ class Spiel:
                                     hauptwiese.add_global(glob, self.alle_wiesen, self.cards_set, card)
                                     #self.alle_wiesen.remove(glob)
                     else:
+                        # falls die Hauptwiese noch nicht geloescht wurde
+                        if global_wiese in self.alle_wiesen:
+                            hauptwiese.add_part((x, y), wiese_auf_karte)
 
-                        hauptwiese.add_part((x, y), wiese_auf_karte)
+                        else:
+                            # finde die Wiese, an die die globale_wiese (jetzt Hauptwiese) angeschlossen wurde
+                            for glob in self.alle_wiesen:
+                                if list(global_wiese.alle_teile)[0] in glob.alle_teile and set(global_wiese.alle_teile[list(global_wiese.alle_teile)[0]]).issubset(set(glob.alle_teile[list(global_wiese.alle_teile)[0]])):
+                                    glob.add_part((x, y), wiese_auf_karte)
+
 
                 #if meeple_position == wiese_auf_karte:
                 #    hauptwiese.besizter = player
 
-            card.update_ecken(wiese_auf_karte, hauptwiese)
+            if hauptwiese in self.alle_wiesen:
+                card.update_ecken(wiese_auf_karte, hauptwiese)
 
+            else:
+                # die Wiese, in die die Hauptwiese integriert wurde
+                wiese = [w for w in self.alle_wiesen if (x, y) in w.alle_teile and set(wiese_auf_karte.ecken).issubset(set(w.alle_teile[(x, y)]))][0]
+                card.update_ecken(wiese_auf_karte, wiese)
 
         # erstelle neue Wiesen fuer solche die nicht wechselwirken
         for w in card.wiesen:
