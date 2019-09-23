@@ -482,10 +482,18 @@ class Spiel:
                     # hauptwiese kommt zum einsatz
                     if global_wiese != hauptwiese:
 
-                        hauptwiese.add_global(global_wiese, self.alle_wiesen)
-                        for koos in global_wiese.alle_teile:
-                            if koos in self.cards_set:
-                                self.cards_set[koos].update_ecken(global_wiese, hauptwiese)
+                        # falls die globale_wiese noch nicht aus alle_wiesen geloescht ist (das Loeschen passiert, wenn sie einer anderen Wiese angegliedert wird)
+                        if global_wiese in self.alle_wiesen:
+                            hauptwiese.add_global(global_wiese, self.alle_wiesen, self.cards_set, card)
+                            #self.alle_wiesen.remove(global_wiese)
+
+                        else:
+                            # finde die Wiese, an die die globale_wiese angeschlossen wurde
+                            for glob in self.alle_wiesen:
+                                # die Wiese, welche die ersten Koord der 'global_wiese' beinhaltet und zu diesen Koordinaten auch die Ecken mind. als Teilmenge der Ecken zu diesen Koordinaten hat, ist die Wiese, an die die gloabel angeschlossen wurde
+                                if list(global_wiese.alle_teile)[0] in glob.alle_teile and set(global_wiese.alle_teile[list(global_wiese.alle_teile)[0]]).issubset(set(glob.alle_teile[list(global_wiese.alle_teile)[0]])):
+                                    hauptwiese.add_global(glob, self.alle_wiesen, self.cards_set, card)
+                                    #self.alle_wiesen.remove(glob)
                     else:
 
                         hauptwiese.add_part((x, y), wiese_auf_karte)

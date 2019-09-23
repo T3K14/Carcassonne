@@ -171,6 +171,27 @@ class evaluationTest(unittest.TestCase):
         self.assertEqual(player1.punkte, 19)
         self.assertEqual(player2.punkte, 16)
 
+    def test4(self):
+        spiel = Spiel_class.Spiel(card_class.create_kartenliste(['OSSW', 'SWSW', 'SOSSG', 'WWSWK', 'WWSS', 'WWSS', 'OOSOOT', 'OSSW', 'SOWS', 'OSSW'], False))
+        player1 = Player(1)
+        player2 = Player(2)
+
+        k1 = Card('O', 'S', 'S', 'W')
+        spiel.make_action(player1, k1, 1, 0, 3)
+
+        k2 = Card('W', 'W', 'S', 'W', 'K')
+        spiel.make_action(player2, k2, 1, -1, 1, 'k')
+
+        k3 = Card('S', 'O', 'W', 'S')
+        spiel.make_action(player1, k3, 0, 1, 3)
+
+        k4 = Card('O', 'S', 'S', 'W')
+        spiel.make_action(player2, k4, 0, -1, 3)
+
+        k5 = Card('W', 'W', 'S', 'S')
+        spiel.make_action(player1, k5, 1, 1, 3)
+
+        self.assertEqual(len(spiel.alle_wiesen), 2)
 
 if __name__ == '__main__':
     unittest.main()

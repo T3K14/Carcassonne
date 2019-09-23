@@ -30,11 +30,8 @@ if "kloster" in None:
 
 dic = {'a': 2, 'b': 3}
 
-print(list(dic))
-print(dic.keys())
+a = [1,2,3,4]
 
-for i in dic.keys():
-    print(i)
+b =  [1,2,3]
 
-for i in list(dic):
-    print(i)
+print(set(dic))
