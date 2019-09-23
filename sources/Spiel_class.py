@@ -471,12 +471,25 @@ class Spiel:
 
                 # wenn die wiese nur mit einer globalen wiese wechselwirkt
                 if len(ww[wiese_auf_karte]) == 1:
-                    # wenn euf das Teil das gesetzt wird ein meeple auf die wiese gesetzt wird
-                    if wiese_auf_karte == meeple_position:
-                        global_wiese.update_meeples(player)
-                        global_wiese.update_besitzer()
+                    if global_wiese in self.alle_wiesen:
+                        # wenn euf das Teil das gesetzt wird ein meeple auf die wiese gesetzt wird
+                        if wiese_auf_karte == meeple_position:
+                            global_wiese.update_meeples(player)
+                            global_wiese.update_besitzer()
 
-                    global_wiese.add_part((x, y), wiese_auf_karte)
+                        global_wiese.add_part((x, y), wiese_auf_karte)
+
+                    else:
+                        # finde die Wiese, an die die globale_wiese angeschlossen wurde
+                        for glob in self.alle_wiesen:
+                            # die Wiese, welche die ersten Koord der 'global_wiese' beinhaltet und zu diesen Koordinaten auch die Ecken mind. als Teilmenge der Ecken zu diesen Koordinaten hat, ist die Wiese, an die die gloabel angeschlossen wurde
+                            if list(global_wiese.alle_teile)[0] in glob.alle_teile and set(global_wiese.alle_teile[list(global_wiese.alle_teile)[0]]).issubset(set(glob.alle_teile[list(global_wiese.alle_teile)[0]])):
+
+                                if wiese_auf_karte == meeple_position:
+                                    glob.update_meeples(player)
+                                    glob.update_besitzer()
+
+                                glob.add_part((x, y), wiese_auf_karte)
 
                 else:
                     # hauptwiese kommt zum einsatz

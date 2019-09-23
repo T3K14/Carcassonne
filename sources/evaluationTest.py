@@ -224,6 +224,25 @@ class evaluationTest(unittest.TestCase):
 
                     self.assertEqual(spiel.cards_set[c].ecken[ecke], w)
 
+    def test6(self):
+        spiel = Spiel_class.Spiel(card_class.create_kartenliste(
+            ['OSSW', 'SWSW', 'SOSSG', 'WWSWK', 'WWSS', 'WWSS', 'OOSOOT', 'OSSW', 'SOWS', 'OSSW'], False))
+        player1 = Player(1)
+        player2 = Player(2)
+
+        k0 = Card('S', 'W', 'W', 'S')
+        spiel.make_action(player1, k0, 0, 1, 2)
+
+        k1 = Card('W', 'W', 'S', 'S')
+        spiel.make_action(player2, k1, 0, 2, 1)
+
+        k2 = Card('W', 'W', 'S', 'W', 'K')
+        spiel.make_action(player1, k2, 1, 2, 0)
+
+        k3 = Card('O', 'S', 'S', 'W')
+        spiel.make_action(player2, k3, 1, 1, 2)
+
+        self.assertEqual(1, 1)
 
 if __name__ == '__main__':
     unittest.main()
