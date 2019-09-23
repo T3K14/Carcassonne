@@ -513,12 +513,21 @@ class Spiel:
                     else:
                         # falls die Hauptwiese noch nicht geloescht wurde
                         if global_wiese in self.alle_wiesen:
+
+                            if wiese_auf_karte == meeple_position:
+                                hauptwiese.update_meeples(player)
+                                hauptwiese.update_besitzer()
+
                             hauptwiese.add_part((x, y), wiese_auf_karte)
 
                         else:
                             # finde die Wiese, an die die globale_wiese (jetzt Hauptwiese) angeschlossen wurde
                             for glob in self.alle_wiesen:
                                 if list(global_wiese.alle_teile)[0] in glob.alle_teile and set(global_wiese.alle_teile[list(global_wiese.alle_teile)[0]]).issubset(set(glob.alle_teile[list(global_wiese.alle_teile)[0]])):
+                                    if wiese_auf_karte == meeple_position:
+                                        glob.update_meeples(player)
+                                        glob.update_besitzer()
+
                                     glob.add_part((x, y), wiese_auf_karte)
 
 
