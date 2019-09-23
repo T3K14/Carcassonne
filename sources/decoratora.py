@@ -16,6 +16,8 @@ import random
 import time
 from copy import deepcopy
 
+from pympler import muppy, summary, tracker
+
 """Module for testing different AI players for the broadgame Carcassonne."""
 
 # Hilfsdictionaries
@@ -143,7 +145,8 @@ def flat_ucb_select(spiel, current_card, player, pos, d, root_node, t_end, reche
         current_node.wins += player_copy.punkte - op_copy.punkte
 
         t += 1
-        print('flat_ucb:', t)
+        if t % 100 == 0:
+            print('flat_ucb:', t)
 
     # return max(child_nodes, key=lambda nod: nod.wins).action, root_node
     return max(child_nodes, key=lambda nod: nod.visits).action, root_node
@@ -325,7 +328,8 @@ def calculate_tree(root, global_spiel, next_card, t_end, rechenzeit, c):
 
         # for root-node
         choosen_node.visits += 1
-        print(t_end, t)
+        if t % 100 == 0:
+            print(t_end, t)
         t += 1
 
     return root
@@ -337,6 +341,9 @@ name_to_method = {'flat_ucb_decorator': 'Flat-UCB', 'random_decorator': 'Random'
 
 def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste, shuffle=True):
     """function for simulating, evaluating and logging AI Battles based one determinized card lists"""
+
+    all_objects = muppy.get_objects()
+    sum1 = summary.summarize(all_objects)
 
     player1 = Player(1)
     player2 = Player(2)
@@ -406,8 +413,13 @@ def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste
     allg_log = open('../simulations/auswertung', 'w+')
     allg_log.write('Player1 spielt nach der {}-Taktik mit den Hyperparametern {} und Player2 nach der {}-Taktik mit den Hyperparametern {}.\n\n'.format(name_to_method[decorator1.__name__], dic1, name_to_method[decorator2.__name__], dic2))
 
+    tr = tracker.SummaryTracker()
+
+
     i = 0
     while i < nr_of_games:
+
+
         game_log = open('../simulations/game{}'.format(i), 'w+')
 
         # reset for new game
@@ -465,6 +477,8 @@ def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste
         game_log.write('Player{} beginnt das Spiel.\n\n'.format(turn.nummer))
 
         while len(spiel.cards_left) > 0:
+
+            tr.print_diff()
 
             next_card = spiel.cards_left.pop(0)
 
