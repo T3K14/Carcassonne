@@ -24,7 +24,7 @@ class Wiese:
             for ecke in wiese_auf_karte.ecken:
                 self.alle_teile[(koords[0], koords[1])].append(ecke)
 
-    def add_global(self, global_wiese, alle_wiesen, cards_set, card):
+    def add_global(self, global_wiese, cards_set, card):
 
         for teil in list(global_wiese.alle_teile):
             if teil not in self.alle_teile:
@@ -54,8 +54,8 @@ class Wiese:
             self.update_besitzer()
 
         # gilt nur nicht, wenn das Kloster mit strasse involviert ist ??? Quatsch
-        if global_wiese in alle_wiesen:
-            alle_wiesen.remove(global_wiese)
+        #if global_wiese in alle_wiesen:
+        #    alle_wiesen.remove(global_wiese)
 
 
         """

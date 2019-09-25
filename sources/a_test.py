@@ -1,16 +1,12 @@
-import gc
+import sys
+a = {'a': [1, 2], 'b': [4, 5]}
 
-gc.set_debug(gc.DEBUG_SAVEALL)
+del a['b']
 
-print(gc.get_count())
-lst = []
-lst.append(lst)
-list_id = id(lst)
+print(a)
 
-print(list_id)
 
-del lst
-gc.collect()
-for item in gc.garbage:
-    print(item)
-    assert list_id == id(item)
+l = [(1, 2), (3, 4)]
+
+for x, y in l:
+    print(x, y)

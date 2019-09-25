@@ -230,12 +230,16 @@ def uct_select(spiel, next_card, player, pos, d, root_node, t_end, rechenzeit, c
         garb1 = gc.garbage
 
         node = calculate_tree(root_node, spiel, next_card, t_end, rechenzeit, c)
-        node = get_best_child([node])
 
-        gc.collect()
-        garb = gc.garbage
-        for item in gc.garbage:
-            print(item)
+        # memory leak
+        #node = get_best_child([node])
+
+        node = max(node.children, key=lambda nod: nod.visits)
+
+        #gc.collect()
+        #garb = gc.garbage
+        #for item in gc.garbage:
+        #    print(item)
 
     if node.action[3] is None:
         landschaft = None
@@ -821,9 +825,9 @@ def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste
 
 
 if __name__ == '__main__':
-    listi = ['SWSW', 'OSSW', 'SOSSG', 'WWSWK', 'WWSS', 'WWSS', 'OOSOOT', 'OSSW', 'SOWS', 'WWSWK']
-    listi2 = ['OSSW', 'SOSSG', 'WWSS', 'WWSWK', 'WWSWK', 'SOWS', 'OOSOOT', 'OSSW', 'WWSS', 'SWSW']
-    l3 = ['OSSW', 'SWSW', 'SOSSG', 'WWSWK', 'WWSS', 'WWSS', 'OOSOOT', 'OSSW', 'SOWS', 'OSSW', 'SWSW', 'WOWOOT', 'WOWO', 'OWWOO', 'WWWWK', 'OOSOO']
+    #listi = ['SWSW', 'OSSW', 'SOSSG', 'WWSWK', 'WWSS', 'WWSS', 'OOSOOT', 'OSSW', 'SOWS', 'WWSWK']
+    #listi2 = ['OSSW', 'SOSSG', 'WWSS', 'WWSWK', 'WWSWK', 'SOWS', 'OOSOOT', 'OSSW', 'WWSS', 'SWSW']
+    #l3 = ['OSSW', 'SWSW', 'SOSSG', 'WWSWK', 'WWSS', 'WWSS', 'OOSOOT', 'OSSW', 'SOWS', 'OSSW', 'SWSW', 'WOWOOT', 'WOWO', 'OWWOO', 'WWWWK', 'OOSOO']
 
     #testing(uct(None, 20), flat_ucb(None, 20), 6, mcts_list, False)
-    testing(flat_ucb(None, 5), uct(None, 5),  20, l3, True)
+    testing(flat_ucb(None, 30), uct(None, 30),  30, karteninfoliste, True)

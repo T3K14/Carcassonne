@@ -52,7 +52,7 @@ class Node:
             return result
 
     def __del__(self):
-        print('Node gelöscht')
+        print('Node ', id(self),' gelöscht')
 
 class MCTS:
     """MCTS-class with essential update functions and the core algorithm functions"""

@@ -503,8 +503,10 @@ class Spiel:
                         # falls die globale_wiese noch nicht aus alle_wiesen geloescht ist (das Loeschen passiert, wenn sie einer anderen Wiese angegliedert wird)
                         if global_wiese in self.alle_wiesen:
                             if hauptwiese in self.alle_wiesen:
-                                hauptwiese.add_global(global_wiese, self.alle_wiesen, self.cards_set, card)
-                            #self.alle_wiesen.remove(global_wiese)
+                                hauptwiese.add_global(global_wiese, self.cards_set, card)
+                                self.alle_wiesen.remove(global_wiese)
+
+
                             else:
                                 print('Die Hauptwiese wurde schon geloescht!!!')
 
@@ -515,7 +517,8 @@ class Spiel:
                                 if list(global_wiese.alle_teile)[0] in glob.alle_teile and set(global_wiese.alle_teile[list(global_wiese.alle_teile)[0]]).issubset(set(glob.alle_teile[list(global_wiese.alle_teile)[0]])):
                                     if glob != hauptwiese:
 
-                                        hauptwiese.add_global(glob, self.alle_wiesen, self.cards_set, card)
+                                        hauptwiese.add_global(glob, self.cards_set, card)
+                                        self.alle_wiesen.remove(glob)
                                         break
                                     #self.alle_wiesen.remove(glob)
                                     else:
