@@ -75,5 +75,36 @@ class evaluationTest(unittest.TestCase):
 
         self.assertEqual(p2.punkte, 12)
 
+    def test2(self):
+        p1 = Player(1)
+        p2 = Player(2)
+
+        spiel = Spiel_class.Spiel([], p1, p2)
+
+        k1 = Card('W','W','S','W','K')
+        spiel.make_action(p1, k1, 0, -1, 2)
+
+        k2 = Card('O', 'O', 'S', 'O', 'O', True)
+        spiel.make_action(p2, k2, 1, 0, 2)
+
+        k3 = Card('S', 'O', 'W', 'S')
+        spiel.make_action(p1, k3, -1, 0, 3)
+
+        k4 = Card('W','W','S','W','K')
+        spiel.make_action(p2, k4, 1, 1, 0)
+
+        k5 = Card('O', 'S', 'S', 'W')
+        spiel.make_action(p1, k5, -1, 1, 2)
+
+        #display_spielbrett_dict(spiel.cards_set)
+
+        k6 = Card('S', 'W', 'S', 'W')
+        pos = spiel.calculate_possible_actions(k6, p2)
+
+        spiel.make_action(p2, k6, 0, 1, 0)
+
+
+
+
 if __name__ == '__main__':
     unittest.main()

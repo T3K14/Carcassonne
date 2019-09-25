@@ -1,3 +1,5 @@
+import gc
+
 class WieseAufKarte:
     def __init__(self, ecken, name):
         self.ecken = ecken
@@ -23,6 +25,8 @@ class Wiese:
                 self.alle_teile[(koords[0], koords[1])].append(ecke)
 
     def add_global(self, global_wiese, alle_wiesen, cards_set, card):
+
+        gc.set_debug(gc.DEBUG_SAVEALL)
 
         for teil in list(global_wiese.alle_teile):
             if teil not in self.alle_teile:
@@ -55,7 +59,9 @@ class Wiese:
         if global_wiese in alle_wiesen:
             alle_wiesen.remove(global_wiese)
 
-
+        gc.collect()
+        for item in gc.garbage:
+            print('HAHA: ', item)
         """
         if global_wiese in alle_wiesen:
             for teil in list(global_wiese.alle_teile):

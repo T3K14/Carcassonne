@@ -6,3 +6,4 @@ __pycache__/
 simulations/
 simulations_1/
 simulations*
+venv/

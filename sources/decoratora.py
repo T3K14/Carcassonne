@@ -16,7 +16,11 @@ import random
 import time
 from copy import deepcopy
 
-from pympler import muppy, summary, tracker
+import gc
+gc.set_debug(gc.DEBUG_SAVEALL)
+
+
+from memory_profiler import profile
 
 """Module for testing different AI players for the broadgame Carcassonne."""
 
@@ -145,8 +149,8 @@ def flat_ucb_select(spiel, current_card, player, pos, d, root_node, t_end, reche
         current_node.wins += player_copy.punkte - op_copy.punkte
 
         t += 1
-        if t % 100 == 0:
-            print('flat_ucb:', t)
+        #if t % 100 == 0:
+        print('flat_ucb:', t)
 
     # return max(child_nodes, key=lambda nod: nod.wins).action, root_node
     return max(child_nodes, key=lambda nod: nod.visits).action, root_node
@@ -328,8 +332,8 @@ def calculate_tree(root, global_spiel, next_card, t_end, rechenzeit, c):
 
         # for root-node
         choosen_node.visits += 1
-        if t % 100 == 0:
-            print(t_end, t)
+        #if t % 100 == 0:
+        print(t_end, t)
         t += 1
 
     return root
@@ -338,12 +342,10 @@ def calculate_tree(root, global_spiel, next_card, t_end, rechenzeit, c):
 select_to_decorator = {'flat_ucb_decorator': flat_ucb_select, 'mc_decorator': mc_select, 'random_decorator': random_select, 'uct_decorator': uct_select}
 name_to_method = {'flat_ucb_decorator': 'Flat-UCB', 'random_decorator': 'Random', 'uct_decorator': 'UCT', 'mc_decorator': 'Simple-MC'}
 
-
+#@profile
 def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste, shuffle=True):
     """function for simulating, evaluating and logging AI Battles based one determinized card lists"""
 
-    all_objects = muppy.get_objects()
-    sum1 = summary.summarize(all_objects)
 
     player1 = Player(1)
     player2 = Player(2)
@@ -413,9 +415,6 @@ def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste
     allg_log = open('../simulations/auswertung', 'w+')
     allg_log.write('Player1 spielt nach der {}-Taktik mit den Hyperparametern {} und Player2 nach der {}-Taktik mit den Hyperparametern {}.\n\n'.format(name_to_method[decorator1.__name__], dic1, name_to_method[decorator2.__name__], dic2))
 
-    tr = tracker.SummaryTracker()
-
-
     i = 0
     while i < nr_of_games:
 
@@ -450,6 +449,8 @@ def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste
 
         # erstellt gemischte Kartenliste
         cardlist = create_kartenliste(karteninfos, shuffle)
+        l  = [c.info for c in cardlist]
+        print(l)
         #cardlist = create_kartenliste(mcts_list, False)
 
         spiel = Spiel(cardlist, player1, player2)
@@ -478,7 +479,11 @@ def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste
 
         while len(spiel.cards_left) > 0:
 
-            tr.print_diff()
+            #gc.collect()
+            #for item in gc.garbage:
+            #    print('hah', item)
+
+            #tr.print_diff()
 
             next_card = spiel.cards_left.pop(0)
 
@@ -756,18 +761,23 @@ def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste
     allg_log.write(f'Kloester:\t{allg_p2_kloester_points/nr_of_games}\n')
     allg_log.write(f'Wiesen:\t\t{allg_p2_wiesen_points/nr_of_games}\n')
 
-    allg_log.write('\nDas entspricht den folgenden Durchschnittswerten fuer Punkte pro feature-meeple:\n')
-    allg_log.write('\nPlayer1:\n\n')
-    allg_log.write(f'{allg_p1_orts_points/p1_ort_meeples} Punkte pro Orts-Meeple\n')
-    allg_log.write(f'{allg_p1_strassen_points/p1_strasse_meeples} Punkte pro Strassen-Meeple\n')
-    allg_log.write(f'{allg_p1_wiesen_points/p1_wiese_meeple} Punkte pro Wiesen-Meeple\n')
-    allg_log.write(f'{allg_p1_kloester_points/p1_kloster_meeples} Punkte pro Kloster-Meeple\n\n')
 
-    allg_log.write('Player2:\n\n')
-    allg_log.write(f'{allg_p2_orts_points/p2_ort_meeples} Punkte pro Orts-Meeple\n')
-    allg_log.write(f'{allg_p2_strassen_points/p2_strasse_meeples} Punkte pro Strassen-Meeple\n')
-    allg_log.write(f'{allg_p2_wiesen_points/p2_wiese_meeple} Punkte pro Wiesen-Meeple\n')
-    allg_log.write(f'{allg_p2_kloester_points/p2_kloster_meeples} Punkte pro Kloster-Meeple\n')
+    try:
+        allg_log.write('\nDas entspricht den folgenden Durchschnittswerten fuer Punkte pro feature-meeple:\n')
+        allg_log.write('\nPlayer1:\n\n')
+        allg_log.write(f'{allg_p1_orts_points/p1_ort_meeples} Punkte pro Orts-Meeple\n')
+        allg_log.write(f'{allg_p1_strassen_points/p1_strasse_meeples} Punkte pro Strassen-Meeple\n')
+        allg_log.write(f'{allg_p1_wiesen_points/p1_wiese_meeple} Punkte pro Wiesen-Meeple\n')
+        allg_log.write(f'{allg_p1_kloester_points/p1_kloster_meeples} Punkte pro Kloster-Meeple\n\n')
+
+        allg_log.write('Player2:\n\n')
+        allg_log.write(f'{allg_p2_orts_points/p2_ort_meeples} Punkte pro Orts-Meeple\n')
+        allg_log.write(f'{allg_p2_strassen_points/p2_strasse_meeples} Punkte pro Strassen-Meeple\n')
+        allg_log.write(f'{allg_p2_wiesen_points/p2_wiese_meeple} Punkte pro Wiesen-Meeple\n')
+        allg_log.write(f'{allg_p2_kloester_points/p2_kloster_meeples} Punkte pro Kloster-Meeple\n')
+
+    except ZeroDivisionError:
+        print("div durch 0")
 
     allg_log.write('\nDie einzelnen Spielwerte noch mal in Listen:\n')
     allg_log.write('Die von Player1 gesetzen Meeples auf die jeweiligen Gebiete:\n\n')
@@ -800,6 +810,12 @@ def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste
     allg_log.close()
 
 
+
+
 if __name__ == '__main__':
+    listi = ['SWSW', 'OSSW', 'SOSSG', 'WWSWK', 'WWSS', 'WWSS', 'OOSOOT', 'OSSW', 'SOWS', 'WWSWK']
+    listi2 = ['OSSW', 'SOSSG', 'WWSS', 'WWSWK', 'WWSWK', 'SOWS', 'OOSOOT', 'OSSW', 'WWSS', 'SWSW']
+
+
     #testing(uct(None, 20), flat_ucb(None, 20), 6, mcts_list, False)
-    testing(flat_ucb(None, 30), uct(None, 30),  50, speed_test_karteninfoliste, True)
+    testing(flat_ucb(None, 10), uct(None, 10),  6, listi2, False)

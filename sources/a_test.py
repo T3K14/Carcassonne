@@ -1,39 +1,16 @@
-"""import time
+import gc
 
-def f(tuple):
-    x, y = tuple[0], tuple[1]
+gc.set_debug(gc.DEBUG_SAVEALL)
 
-    for i in range(10):
-        a, b = x, y
+print(gc.get_count())
+lst = []
+lst.append(lst)
+list_id = id(lst)
 
-def f2(tuple):
-    for i in range(10):
-        a, b = tuple[0], tuple[1]
+print(list_id)
 
-
-uple = (1, 2)
-t = time.time()
-f(uple)
-
-print(time.time()- t)
-t = time.time()
-f2(uple)
-
-print(time.time()- t)"
-""
-a = "kloster_1"
-
-print("kloster" in a)
-if "kloster" in None:
-    print("j")
-"""
-
-dic = {'a': 2, 'b': 3}
-
-dic2 = {'b': 3, 'a': 2}
-
-print(dic2 == dic)
-s1 = {1,2,3,4}
-s2 = {1,2,3,4}
-
-print(s1.issubset(s2))
+del lst
+gc.collect()
+for item in gc.garbage:
+    print(item)
+    assert list_id == id(item)
