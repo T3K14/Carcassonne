@@ -16,12 +16,6 @@ import random
 import time
 from copy import deepcopy
 
-import gc
-gc.set_debug(gc.DEBUG_SAVEALL)
-
-
-from memory_profiler import profile
-
 """Module for testing different AI players for the broadgame Carcassonne."""
 
 # Hilfsdictionaries
@@ -225,21 +219,12 @@ def uct_select(spiel, next_card, player, pos, d, root_node, t_end, rechenzeit, c
 
     else:
         # no multiprocessing
-
-        gc.collect()
-        garb1 = gc.garbage
-
         node = calculate_tree(root_node, spiel, next_card, t_end, rechenzeit, c)
 
         # memory leak
         #node = get_best_child([node])
 
         node = max(node.children, key=lambda nod: nod.visits)
-
-        #gc.collect()
-        #garb = gc.garbage
-        #for item in gc.garbage:
-        #    print(item)
 
     if node.action[3] is None:
         landschaft = None
@@ -490,12 +475,6 @@ def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste
         game_log.write('Player{} beginnt das Spiel.\n\n'.format(turn.nummer))
 
         while len(spiel.cards_left) > 0:
-
-            #gc.collect()
-            #for item in gc.garbage:
-            #    print('hah', item)
-
-            #tr.print_diff()
 
             next_card = spiel.cards_left.pop(0)
 
