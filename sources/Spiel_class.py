@@ -16,6 +16,8 @@ from Strasse import StasseAufKarte
 from Ort import Ort_auf_Karte
 
 
+import gc
+
 class Spiel:
 
     #def __init__(self, card_list, cards_set=None, unavailable_coords=None, possible_coords=None, alle_orte=None,
@@ -511,9 +513,13 @@ class Spiel:
                             for glob in self.alle_wiesen:
                                 # die Wiese, welche die ersten Koord der 'global_wiese' beinhaltet und zu diesen Koordinaten auch die Ecken mind. als Teilmenge der Ecken zu diesen Koordinaten hat, ist die Wiese, an die die gloabel angeschlossen wurde
                                 if list(global_wiese.alle_teile)[0] in glob.alle_teile and set(global_wiese.alle_teile[list(global_wiese.alle_teile)[0]]).issubset(set(glob.alle_teile[list(global_wiese.alle_teile)[0]])):
-                                    hauptwiese.add_global(glob, self.alle_wiesen, self.cards_set, card)
-                                    break
+                                    if glob != hauptwiese:
+
+                                        hauptwiese.add_global(glob, self.alle_wiesen, self.cards_set, card)
+                                        break
                                     #self.alle_wiesen.remove(glob)
+                                    else:
+                                        break
                     else:
                         # falls die Hauptwiese noch nicht geloescht wurde
                         if global_wiese in self.alle_wiesen:
@@ -555,6 +561,8 @@ class Spiel:
                     neue_wiese.update_besitzer()
                 self.alle_wiesen.append(neue_wiese)
                 card.update_ecken(w, neue_wiese)
+
+
 
 
     def update_all_kloester(self, card, x, y, meeple_position, player):

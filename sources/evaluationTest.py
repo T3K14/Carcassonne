@@ -244,5 +244,13 @@ class evaluationTest(unittest.TestCase):
 
         self.assertEqual(1, 1)
 
+
+    def test7(self):
+        spiel = Spiel_class.Spiel(card_class.create_kartenliste(
+            ['OSSW', 'SWSW', 'SOSSG', 'WWSWK', 'WWSS', 'WWSS', 'OOSOOT', 'OSSW', 'SOWS', 'OSSW', 'SWSW', 'WOWOOT', 'WOWO', 'OWWOO', 'WWWWK', 'OOSOO'], False))
+        player1 = Player(1)
+        player2 = Player(2)
+
+
 if __name__ == '__main__':
     unittest.main()

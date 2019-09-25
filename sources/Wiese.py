@@ -26,8 +26,6 @@ class Wiese:
 
     def add_global(self, global_wiese, alle_wiesen, cards_set, card):
 
-        gc.set_debug(gc.DEBUG_SAVEALL)
-
         for teil in list(global_wiese.alle_teile):
             if teil not in self.alle_teile:
                 self.alle_teile.update({teil: global_wiese.alle_teile[teil]})
@@ -59,9 +57,7 @@ class Wiese:
         if global_wiese in alle_wiesen:
             alle_wiesen.remove(global_wiese)
 
-        gc.collect()
-        for item in gc.garbage:
-            print('HAHA: ', item)
+
         """
         if global_wiese in alle_wiesen:
             for teil in list(global_wiese.alle_teile):

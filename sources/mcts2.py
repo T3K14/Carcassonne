@@ -51,6 +51,8 @@ class Node:
             result = self.wins / self.visits + c * np.sqrt(np.log(self.parent.visits / self.visits))
             return result
 
+    def __del__(self):
+        print('Node gelöscht')
 
 class MCTS:
     """MCTS-class with essential update functions and the core algorithm functions"""
