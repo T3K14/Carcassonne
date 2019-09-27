@@ -565,8 +565,92 @@ class Spiel:
                 self.alle_wiesen.append(neue_wiese)
                 card.update_ecken(w, neue_wiese)
 
+    def update_all_wiesen2(self, card, x, y, meeple_position, player):
+
+        d2 = {(4, 0): (x, y + 1), (5, 1): (x + 1, y), (6, 2): (x, y - 1), (7, 3): (x - 1, y),
+              (5, 0): (x, y + 1), (6, 1): (x + 1, y), (7, 2): (x, y - 1), (4, 3): (x - 1, y)}
+        ww = {}
+
+        # fuer jede wiese auf der karte
+        for wiese in card.wiesen:
+            for ecke in wiese.ecken:
+                for kante in self.d2[ecke]:
+                    # wenn an der Kante Wiese oder Strasse ist
+                    if card.info[kante] in ('W', 'S'):
+                        if d2[(ecke, kante)] in self.cards_set:
+                            if wiese not in ww:
+                                #ww.update({wiese: [self.cards_set[d2[(ecke, kante)]].ecken[self.d3[(ecke, kante)]]]})
+                                ww.update({wiese: [(self.cards_set[d2[(ecke, kante)]].ecken[self.d3[(ecke, kante)]], d2[(ecke, kante)])]})
+
+                            else:
+                                # wenn die globale wiese schon als ww eingetragen ist
+                                #if self.cards_set[d2[(ecke, kante)]].ecken[self.d3[(ecke, kante)]]:
+                                if self.cards_set[d2[(ecke, kante)]].ecken[self.d3[(ecke, kante)]] in [w[0] for w in ww[wiese]]:
+                                    continue
+                                else:
+                                    #ww[wiese].append(self.cards_set[d2[(ecke, kante)]].ecken[self.d3[(ecke, kante)]])
+                                    ww[wiese].append((self.cards_set[d2[(ecke, kante)]].ecken[self.d3[(ecke, kante)]], d2[(ecke, kante)]))
+
+        hauptwiesen = []
+        hauptwiesen_iter = []
+
+        for wiese_auf_karte in ww:
+            # schließe alle globalen Wiesen zusammen, welche mit der wak wechselwirken
+
+            # die erste Wiese in der Liste ist die Hauptwiese, an die alles angeschlossen wird
+            hauptwiese = ww[wiese_auf_karte][0][0]
+
+            # fuege der Hauptwiese das
+            hauptwiese.append(hauptwiese)
+            hauptwiesen_iter.append(hauptwiese)
+
+            for globale_wiese, koords in ww[wiese_auf_karte]:
+                if globale_wiese != hauptwiese:
+
+                    hauptwiese.add_part((x, y), wiese_auf_karte)
+
+                    if wiese_auf_karte == meeple_position:
+                        hauptwiese.update_meeples(player)
+                        hauptwiese.update_besitzer()
+
+                else:
+                    hauptwiese.add_global2(globale_wiese)
+
+                    # wenn die globale_wiese noch nicht geloescht wurde
+                    if globale_wiese in self.alle_wiesen:
+                        self.alle_wiesen.remove(globale_wiese)
+
+            # ??????
+            card.update_ecken(wiese_auf_karte, hauptwiese)
+
+        # alle Hauptwiesen noch auf Ueberschneidungen pruefen
+        for i in range(len(hauptwiesen)):
+            for hw in hauptwiesen[i:]:
+
+                if hauptwiesen[i].hat_ueberschneidung_mit(hw):
+                    hauptwiesen[i].add_global(hw)
+
+                    #die hw aus alle_wiesen loeschen
+                    if hw in self.alle_wiesen:
+                        self.alle_wiesen.remove(hw)
+                    if hw in hauptwiesen:
+                        hauptwiesen.remove(hw)
 
 
+        # die uebrig gebliebenen Hauptwiesen sind die, die auf jeden Fall alle in self.alle_wiesen sein muessen
+        for hw in hauptwiesen:
+            if hw not in self.alle_wiesen:
+                self.alle_wiesen.append(hw)
+
+        # erstelle neue Wiesen fuer solche die nicht wechselwirken
+        for w in card.wiesen:
+            if w not in ww:
+                neue_wiese = Wiese((x, y), w.ecken)
+                if meeple_position == w:
+                    neue_wiese.update_meeples(player)
+                    neue_wiese.update_besitzer()
+                self.alle_wiesen.append(neue_wiese)
+                card.update_ecken(w, neue_wiese)
 
     def update_all_kloester(self, card, x, y, meeple_position, player):
 

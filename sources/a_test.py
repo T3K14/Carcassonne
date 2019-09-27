@@ -1,6 +1,7 @@
 import sys
 a = {'a': [1, 2], 'b': [4, 5]}
 
+
 del a['b']
 
 print(a)

@@ -24,6 +24,43 @@ class Wiese:
             for ecke in wiese_auf_karte.ecken:
                 self.alle_teile[(koords[0], koords[1])].append(ecke)
 
+    def add_global2(self, global_wiese, cards_set, card):
+
+        # flag wird True, falls ein neues Teil dazu kommt, oder neue Kanten zu bestehenden Teilen
+        flag = False
+
+        for teil in list(global_wiese.alle_teile):
+            if teil not in self.alle_teile:
+                self.alle_teile.update({teil: global_wiese.alle_teile[teil]})
+                flag = True
+
+            else:
+                for ecke in global_wiese.alle_teile[teil]:
+                    if ecke not in self.alle_teile[teil]:
+                        self.alle_teile[teil].append(ecke)
+                        flag = True
+
+            # die neue Karte kann in der globalen Wiese bereits enthalten sein, aber das Teil dazu ist noch nicht in cards_set vorhanden
+            if teil in cards_set:
+                cards_set[teil].update_ecken(global_wiese, self)
+            else:
+                # die Ecken der neuen Karte muessen auch geupdated werden
+                for ecke in global_wiese.alle_teile[teil]:
+                    if card.ecken[ecke] == global_wiese:
+                        card.ecken[ecke] = self
+
+        # nur, falls was neues dazu gekommen ist, werden meeples geupdated, sonst werden vllt Wiesen zweimal hinzugefuegt und meeple-counts falsch
+        if flag:
+
+            for pl in global_wiese.meeples:
+                if pl in self.meeples:
+                    self.meeples[pl] += global_wiese.meeples[pl]
+                else:
+                    self.meeples.update({pl: global_wiese.meeples[pl]})
+
+            if len(global_wiese.meeples) > 0:
+                self.update_besitzer()
+
     def add_global(self, global_wiese, cards_set, card):
 
         for teil in list(global_wiese.alle_teile):
@@ -115,6 +152,20 @@ class Wiese:
                     break
             alle_wiesen.remove(to_delete)
         """
+
+    def hat_ueberschneidung_mit(self, hauptwiese):
+        """
+        nimmt eine andere Hauptwiese an und returend True, wenn beide Wiesen sich ueberschneiden, sonst false
+
+        :param hauptwiese: andere Hauptwiese
+        :return: True if Ueberschneidung sonst False
+        """
+        for koords in self.alle_teile:
+            if koords in hauptwiese.alle_teile:
+                if set(self.alle_teile[koords]).issubset(set(hauptwiese.alle_teile[koords])) or set(hauptwiese.alle_teile[koords]).issubset(set(self.alle_teile[koords])):
+                    return True
+
+        return False
 
     def update_meeples(self, player):
         """ nimmt player an, welcher ein meeple auf diese landschaft setzt"""
