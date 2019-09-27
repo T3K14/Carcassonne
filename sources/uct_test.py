@@ -56,6 +56,8 @@ class evaluationTest(unittest.TestCase):
         k9 = Card('O', 'S', 'S', 'W')
         spiel.make_action(p1, k9, 1, -2, 0, k9.orte[0])
 
+        #display_spielbrett_dict(spiel.cards_set)
+
         k10 = Card('S', 'O', 'W', 'S')
 
         #pos = spiel.calculate_possible_actions(k10, p2)

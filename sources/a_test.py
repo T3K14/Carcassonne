@@ -11,3 +11,5 @@ l = [(1, 2), (3, 4)]
 
 for x, y in l:
     print(x, y)
+
+print(l[4:])

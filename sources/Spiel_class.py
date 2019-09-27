@@ -318,7 +318,7 @@ class Spiel:
         if len(card.strassen) > 0:
             self.update_all_landschaften(card, x, y, meeple_position, 'S', player)
         if len(card.wiesen) > 0:            # nur bei ooooo nicht
-            self.update_all_wiesen(card, x, y, meeple_position, player)
+            self.update_all_wiesen2(card, x, y, meeple_position, player)
 
         # kloester muessen moeglicherweise immer geupdatet werden, da sie von der Anzahl an Umgebungskarten abhaengen
         self.update_all_kloester(card, x, y, meeple_position, player)
@@ -601,34 +601,33 @@ class Spiel:
             hauptwiese = ww[wiese_auf_karte][0][0]
 
             # fuege der Hauptwiese das
-            hauptwiese.append(hauptwiese)
+            hauptwiesen.append(hauptwiese)
             hauptwiesen_iter.append(hauptwiese)
 
             for globale_wiese, koords in ww[wiese_auf_karte]:
                 if globale_wiese != hauptwiese:
+                    hauptwiese.add_global2(globale_wiese, self.cards_set, card)
 
+                    # wenn die globale_wiese noch nicht geloescht wurde
+                    if globale_wiese in self.alle_wiesen:
+                        self.alle_wiesen.remove(globale_wiese)
+
+                else:
                     hauptwiese.add_part((x, y), wiese_auf_karte)
 
                     if wiese_auf_karte == meeple_position:
                         hauptwiese.update_meeples(player)
                         hauptwiese.update_besitzer()
 
-                else:
-                    hauptwiese.add_global2(globale_wiese)
-
-                    # wenn die globale_wiese noch nicht geloescht wurde
-                    if globale_wiese in self.alle_wiesen:
-                        self.alle_wiesen.remove(globale_wiese)
-
-            # ??????
+            # Die Ecken der Karte, welche zur WaK gehoert haben, werden als solche der hauptwiese gekennzeichnet
             card.update_ecken(wiese_auf_karte, hauptwiese)
 
         # alle Hauptwiesen noch auf Ueberschneidungen pruefen
-        for i in range(len(hauptwiesen)):
-            for hw in hauptwiesen[i:]:
+        for i in range(len(hauptwiesen_iter)):
+            for hw in hauptwiesen_iter[i+1:]:                                       # muss vllt geaendert werden
 
                 if hauptwiesen[i].hat_ueberschneidung_mit(hw):
-                    hauptwiesen[i].add_global(hw)
+                    hauptwiesen[i].add_global2(hw, self.cards_set, card)
 
                     #die hw aus alle_wiesen loeschen
                     if hw in self.alle_wiesen:
