@@ -139,5 +139,36 @@ class evaluationTest(unittest.TestCase):
 
         print('ende')
 
+    def test4(self):
+        p1 = Player(1)
+        p2 = Player(2)
+
+        spiel = Spiel_class.Spiel([], p1, p2)
+
+        k1 = Card('W', 'W', 'S', 'S')
+        spiel.make_action(p1, k1, 0, -1, 2)
+
+        k2 = Card('W', 'S', 'S', 'S', 'G')
+        spiel.make_action(p2, k2, 1, -1, 0)
+
+        k3 = Card('S', 'O', 'W', 'S')
+        spiel.make_action(p1, k3, 0, -2, 2)
+
+        k4 = Card('O', 'S', 'S', 'W')
+        spiel.make_action(p2, k4, 0, -3, 3)
+
+        k5 = Card('W', 'W', 'S', 'S')
+        spiel.make_action(p1, k5, 1, -3, 1)
+
+        k6 = Card('W', 'W', 'S', 'W', 'K')
+        spiel.make_action(p2, k6, 2, -3, 0)
+
+        #display_spielbrett_dict(spiel.cards_set)
+
+        k7 = Card('S', 'S', 'S', 'S', 'G')
+        spiel.make_action(p1, k7, 1, -2, 0)
+
+        print('ende')
+
 if __name__ == '__main__':
     unittest.main()

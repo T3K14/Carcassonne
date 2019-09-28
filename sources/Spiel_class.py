@@ -626,8 +626,8 @@ class Spiel:
         for i in range(len(hauptwiesen_iter)):
             for hw in hauptwiesen_iter[i+1:]:                                       # muss vllt geaendert werden
 
-                if hauptwiesen[i].hat_ueberschneidung_mit(hw):
-                    hauptwiesen[i].add_global2(hw, self.cards_set, card)
+                if hauptwiesen_iter[i].hat_ueberschneidung_mit(hw):
+                    hauptwiesen_iter[i].add_global2(hw, self.cards_set, card)
 
                     #die hw aus alle_wiesen loeschen
                     if hw in self.alle_wiesen:
