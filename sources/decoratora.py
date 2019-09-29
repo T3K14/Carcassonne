@@ -147,8 +147,9 @@ def flat_ucb_select(spiel, current_card, player, pos, d, root_node, t_end, reche
         print('flat_ucb:', t)
 
     # return max(child_nodes, key=lambda nod: nod.wins).action, root_node
-    return max(child_nodes, key=lambda nod: nod.visits).action, root_node
-
+    #return max(child_nodes, key=lambda nod: nod.visits).action, root_node
+    tmp = max(child_nodes, key=lambda nod: nod.visits).action, root_node
+    return tmp
 
 def mc_select(spiel, current_card, player, pos, d, root_node, t_end):
     child_nodes = [UCB_Node(action) for action in pos]
@@ -298,8 +299,7 @@ def calculate_tree(root, global_spiel, next_card, t_end, rechenzeit, c):
                                               dic1[node.player_number], node))
                 else:
                     node.children.append(Node(status, (pos_act[0], pos_act[1], pos_act[2], pos_act[3].id,
-                                                       pos_act[3].name), dic1[node.player_number],
-                                              node))
+                                                       pos_act[3].name), dic1[node.player_number], node))
 
         # simulation
         # if there has been an expansion select next node at random, else evaluate instant
@@ -809,4 +809,4 @@ if __name__ == '__main__':
     l3 = ['OSSW', 'SWSW', 'SOSSG', 'WWSWK', 'WWSS', 'WWSS', 'OOSOOT', 'OSSW', 'SOWS', 'OSSW', 'SWSW', 'WOWOOT', 'WOWO', 'OWWOO', 'WWWWK', 'OOSOO']
 
     #testing(uct(None, 20), flat_ucb(None, 20), 6, mcts_list, False)
-    testing(flat_ucb(None, 80), uct(None, 20, 1.4142, 4),  12, determinized_karteninfoliste, False)
+    testing(flat_ucb(500, None), uct(10000, None, 4),  12, determinized_karteninfoliste, False)

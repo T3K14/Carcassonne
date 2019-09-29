@@ -170,5 +170,24 @@ class evaluationTest(unittest.TestCase):
 
         print('ende')
 
+    def test4(self):
+        p1 = Player(1)
+        p2 = Player(2)
+
+        spiel = Spiel_class.Spiel([], p1, p2)
+
+        k1 = Card('S', 'W', 'S', 'W')
+        spiel.make_action(p1, k1, 0, -1, 0, k1.strassen[0])
+
+        k2 = Card('O', 'S', 'S', 'W')
+
+        w = None
+        for wi in k2.wiesen:
+            if sorted(wi.ecken) == [4, 5, 7]:
+                w = wi
+
+        spiel.make_action(p2, k2, 0, 1, 0, w)
+        print('ende')
+
 if __name__ == '__main__':
     unittest.main()
