@@ -1,6 +1,6 @@
 from Player_Class import Player
 from Spiel_class import Spiel
-from card_class import karteninfoliste, create_kartenliste, mcts_list, speed_test_karteninfoliste
+from card_class import karteninfoliste, create_kartenliste, mcts_list, speed_test_karteninfoliste, determinized_karteninfoliste
 from mcts2 import Node
 from UCB import Node as UCB_Node
 
@@ -795,7 +795,7 @@ def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste
     allg_log.write(f'Kloester2_punkte = {p2_punkte_list_kloester}\n\n')
 
     allg_log.write(f'Player1_ergebnisse = {p1_punkte}')
-    allg_log.write(f'Player2_ergebnisse = {p2_punkte}')
+    allg_log.write(f'\nPlayer2_ergebnisse = {p2_punkte}')
 
 
     allg_log.close()
@@ -806,7 +806,7 @@ def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste
 if __name__ == '__main__':
     listi = ['SWSW', 'OSSW', 'SOSSG', 'WWSWK', 'WWSS', 'WWSS', 'OOSOOT', 'OSSW', 'SOWS', 'WWSWK']
     #listi2 = ['OSSW', 'SOSSG', 'WWSS', 'WWSWK', 'WWSWK', 'SOWS', 'OOSOOT', 'OSSW', 'WWSS', 'SWSW']
-    #l3 = ['OSSW', 'SWSW', 'SOSSG', 'WWSWK', 'WWSS', 'WWSS', 'OOSOOT', 'OSSW', 'SOWS', 'OSSW', 'SWSW', 'WOWOOT', 'WOWO', 'OWWOO', 'WWWWK', 'OOSOO']
+    l3 = ['OSSW', 'SWSW', 'SOSSG', 'WWSWK', 'WWSS', 'WWSS', 'OOSOOT', 'OSSW', 'SOWS', 'OSSW', 'SWSW', 'WOWOOT', 'WOWO', 'OWWOO', 'WWWWK', 'OOSOO']
 
     #testing(uct(None, 20), flat_ucb(None, 20), 6, mcts_list, False)
-    testing(flat_ucb(None, 20, 10), uct(None, 20, 10),  20, karteninfoliste, True)
+    testing(flat_ucb(None, 80), uct(None, 20, 1.4142, 4),  12, determinized_karteninfoliste, False)
