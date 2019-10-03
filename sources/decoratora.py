@@ -971,4 +971,4 @@ if __name__ == '__main__':
 
     #testing(uct(None, 20), flat_ucb(None, 20), 6, mcts_list, False)
     #ai_vs_ai(uct(None, 600, 4), flat_ucb(None, 600, 4),  10, listi, False)
-    human_vs_ai(uct(None, 150, 4, 4), listi, False)
+    human_vs_ai(uct(None, 10, 4, 4), listi, False)
