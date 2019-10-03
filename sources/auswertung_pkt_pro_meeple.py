@@ -1,5 +1,5 @@
 import numpy as np
-import pandas as pd
+#import pandas as pd
 
 def calculate_mittelwert(liste):
     mittelwert1 = 0
@@ -52,17 +52,17 @@ def calculate_quotienten(punkte, meeples):
 #strassen_meeples = df['s'].tolist()
 #wiesen_meeples = df['w'].tolist()
 
-kloester_meeples = [0, 1, 2, 1, 2, 2, 4, 3, 0, 1, 1, 0, 3, 2, 1, 2, 1, 1, 2, 3]
-kloester_punkte = [0, 7, 16, 9, 18, 18, 31, 24, 0, 8, 8, 0, 24, 18, 7, 15, 8, 8, 16, 23]
+kloester_punkte =[9, 10, 9, 9, 10, 0, 0, 0, 0, 0]
+kloester_meeples =[2, 2, 2, 2, 2, 0, 0, 0, 0, 0]
 
-orte_punkte = [41, 44, 50, 67, 53, 47, 50, 52, 60, 43, 39, 36, 53, 56, 68, 40, 56, 54, 73, 33]
-orte_meeples = [4, 6, 9, 8, 8, 7, 7, 6, 8, 6, 2, 5, 7, 9, 7, 6, 7, 6, 10, 3]
+orte_punkte =[4, 4, 4, 4, 4, 8, 8, 8, 8, 8]
+orte_meeples =[1, 1, 1, 1, 1, 2, 2, 2, 2, 2]
 
-strassen_punkte = [29, 23, 7, 11, 20, 25, 28, 18, 20, 23, 37, 20, 21, 16, 22, 8, 33, 21, 29, 17]
-strassen_meeples = [7, 4, 1, 3, 6, 6, 6, 4, 5, 3, 9, 4, 6, 4, 7, 1, 5, 2, 7, 4]
+strassen_punkte =[3, 4, 3, 3, 4, 5, 5, 6, 6, 6]
+strassen_meeples =[1, 1, 1, 1, 1, 2, 2, 2, 2, 2]
 
-wiesen_punkte = [18, 15, 18, 15, 45, 18, 15, 6, 24, 21, 9, 18, 15, 24, 15, 18, 3, 18, 18, 9]
-wiesen_meeples = [4, 2, 1, 3, 2, 2, 2, 1, 3, 2, 1, 3, 2, 2, 2, 3, 1, 2, 1, 1]
+wiesen_punkte =[3, 3, 3, 3, 3, 6, 6, 6, 6, 6]
+wiesen_meeples =[1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 
 ###
 """

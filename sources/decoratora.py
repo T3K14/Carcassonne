@@ -12,6 +12,8 @@ from Wiese import WieseAufKarte
 from Strasse import StasseAufKarte
 from Ort import Ort_auf_Karte
 
+from plot_cards import display_spielbrett_dict, draw_card
+
 import random
 import time
 from copy import deepcopy
@@ -330,7 +332,7 @@ def calculate_tree(root, global_spiel, next_card, t_end, rechenzeit, c):
         # for root-node
         choosen_node.visits += 1
         #if t % 100 == 0:
-        print(t_end, t)
+        #print(t_end, t)
         t += 1
 
     return root
@@ -339,8 +341,8 @@ def calculate_tree(root, global_spiel, next_card, t_end, rechenzeit, c):
 select_to_decorator = {'flat_ucb_decorator': flat_ucb_select, 'mc_decorator': mc_select, 'random_decorator': random_select, 'uct_decorator': uct_select}
 name_to_method = {'flat_ucb_decorator': 'Flat-UCB', 'random_decorator': 'Random', 'uct_decorator': 'UCT', 'mc_decorator': 'Simple-MC'}
 
-#@profile
-def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste, shuffle=True):
+
+def ai_vs_ai(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste, shuffle=True):
     """function for simulating, evaluating and logging AI Battles based one determinized card lists"""
 
 
@@ -768,7 +770,7 @@ def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste
         allg_log.write(f'{allg_p2_kloester_points/p2_kloster_meeples} Punkte pro Kloster-Meeple\n')
 
     except ZeroDivisionError:
-        print("div durch 0")
+        print("Error: Division durch 0")
 
     allg_log.write('\nDie einzelnen Spielwerte noch mal in Listen:\n')
     allg_log.write('Die von Player1 gesetzen Meeples auf die jeweiligen Gebiete:\n\n')
@@ -801,12 +803,172 @@ def testing(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste
     allg_log.close()
 
 
+def human_vs_ai(decorator, karteninfos=karteninfoliste, shuffle=True, startspieler='human'):
+
+    player1 = Player(1)
+    player2 = Player(2, 'ai')
+    d = {player1: player2, player2: player1}
+
+    spiel = Spiel(create_kartenliste(karteninfos, shuffle), player1, player2)
+
+    # select startspieler
+    current_player = player1 if startspieler == 'human' else player2
+    print('Der Startspieler ist {} und hat die Nummer {}'.format(current_player.art, current_player.nummer))
+
+    # the function that the AI uses for selecting it's next move
+    dic1 = {}
+    ai_select = decorator(select_to_decorator[decorator.__name__], dic1)
+
+    # playing against an UCT-Player?
+    uct_bool = True if select_to_decorator[decorator.__name__] == uct_select else False
+
+    root = Node(True, None, current_player.nummer)
+
+    while len(spiel.cards_left) > 0:
+
+        print('\n\nNEUER ZUG: Aktuell hat player1 {} Punkte und player2 {} Punkte.\n'.format(player1.punkte, player2.punkte))
+
+        display_spielbrett_dict(spiel.cards_set)
+        current_card = spiel.cards_left.pop(0)
+
+        print('Die nachste Karte ist [{0}, {1}, {2}, {3}, {4}, {5}]'.format(current_card.info[0], current_card.info[1],
+                                                                            current_card.info[2], current_card.info[3],
+                                                                            current_card.mitte, current_card.schild))
+
+        print('Sie enthält folgende moegliche Meeplepositionen:')
+        print('Orte:')
+        for o in current_card.orte:
+            print(o.name, o.kanten)
+        print('Strassen:')
+        for s in current_card.strassen:
+            print(s.name, s.kanten)
+        print('Wiesen:')
+        for w in current_card.wiesen:
+            print(w.name, w.ecken)
+
+        draw_card(current_card)
+
+        pos = spiel.calculate_possible_actions(current_card, current_player)
+
+        # wenn es moegliche anlegestellenn (fuer den aktuellen Spieler) gibt, (es gibt fuer einen spieler auf jeden Fall
+        # eine Anlegemoeglichkeit, wenn es fuer den anderen auch eine gibt)
+        if pos:
+            if current_player.art == 'human':
+
+                # gib move ein
+                inp = input('Bitte gib deine Aktion an:')
+                inp_split = inp.split(' ')
+
+                ungueltig = True
+                action = None
+                try:
+                    if inp_split[3][0] == 'o':
+                        o = [a for a in current_card.orte if a.name == int(inp_split[3][1])]
+                        action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), o[0])
+                    elif inp_split[3][0] == 's':
+                        s = [a for a in current_card.strassen if a.name == int(inp_split[3][1])]
+                        action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), s[0])
+                    elif inp_split[3][0] == 'w':
+                        w = [a for a in current_card.wiesen if a.name == int(inp_split[3][1])]
+                        action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), w[0])
+                    elif inp_split[3][0] == 'k':
+                        action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), 'k')
+                    else:
+                        action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), None)
+                except IndexError or ValueError:
+                    print('ERROR CATCHED')
+
+                # falls move unguelig:
+                if action in pos:
+                    ungueltig = False
+                while ungueltig:
+                    print("illegaler Move")
+                    inp = input('Bitte gib deine Aktion an:')
+                    inp_split = inp.split(' ')
+                    try:
+                        if inp_split[3][0] == 'o':
+                            o = [a for a in current_card.orte if a.name == int(inp_split[3][1])]
+                            action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), o[0])
+                        elif inp_split[3][0] == 's':
+                            s = [a for a in current_card.strassen if a.name == int(inp_split[3][1])]
+                            action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), s[0])
+                        elif inp_split[3][0] == 'w':
+                            w = [a for a in current_card.wiesen if a.name == int(inp_split[3][1])]
+                            action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), w[0])
+                        elif inp_split[3][0] == 'k':
+                            action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), 'k')
+                        else:
+                            action = (int(inp_split[0]), int(inp_split[1]), int(inp_split[2]), None)
+                    except IndexError or ValueError:
+                        pass
+                    if action in pos:
+                        ungueltig = False
+
+                spiel.make_action(current_player, current_card, action[0], action[1], action[2], action[3])
+
+                if uct_bool:
+
+                    # gespielte action formulieren
+                    if action[3]:
+                        lak_id = inp_split[3][0]
+                        lak_name = 1 if inp_split[3][0] == 'k' else action[3].name
+                    else:
+                        lak_id = None
+                        lak_name = None
+
+                    node_action = (action[0], action[1], action[2], lak_id, lak_name)
+
+                    # root anpassen
+
+                    # falls die aktuelle root_node bereits Kinder hat
+                    if root.children:
+                        for child in root.children:
+
+                            # wenn die action von der child-node der gespielten entspricht
+                            if child.action == node_action:
+                                root = child
+                                break
+
+                    # another player made the first move of the game, or the node has no visits yet
+                    else:
+                        root = Node(True, node_action, 1, None)
+
+            # AI-PLayer
+            else:
+
+                action, root = ai_select(spiel, current_card, current_player, pos, d, root)
+                spiel.make_action(current_player, current_card, action[0], action[1], action[2], action[3])
+
+                # falls die AI-Aktion einen Meeple auf eine Landschaft (ausser Kloster) setzt
+                if action[3] == 'k':
+                    print("\nDie AI setzt einem Meeple auf das Kloster.")
+                elif action[3] is not None:
+                    print("\nDie AI setzt einen Meeple auf {}{}.".format(action[3].id, action[3].name))
+                else:
+                    print("\nDie AI setzt keinen Meeple.")
+
+                print("Die AI rotiert die Karte {} mal und setzt sie an ({}, {}) ".format(action[2], action[0], action[1]))
+
+            # spieler wechseln
+            current_player = d[current_player]
+
+        # wenn es fuer die gezogene Karte keine Anlegestelle gibt
+        else:
+            print("ES GIBT FUER DIESE KARTE KEINE ANLEGESTELLE")
+            continue
+
+    print(f'\nVor der finalen Auswertung hat Player1 {player1.punkte} und Player2 {player2.punkte} Punkte')
+
+    spiel.final_evaluate()
+    print("\nSpielende: Player1 hat {} Punkte, Player2 hat {} Punkte.".format(player1.punkte, player2.punkte))
 
 
 if __name__ == '__main__':
-    listi = ['SWSW', 'OSSW', 'SOSSG', 'WWSWK', 'WWSS', 'WWSS', 'OOSOOT', 'OSSW', 'SOWS', 'WWSWK']
+    #listi = ['SWSW', 'OSSW', 'SOSSG', 'WWSWK', 'WWSS', 'WWSS', 'OOSOOT', 'OSSW', 'SOWS', 'WWSWK']
+    listi = ['SWSW', 'OSSW', 'SOSSG', 'WWWWK', 'OSSOOT', 'WWSS', 'OOSOOT', 'OSSW', 'SOWS', 'WWSWK']
     #listi2 = ['OSSW', 'SOSSG', 'WWSS', 'WWSWK', 'WWSWK', 'SOWS', 'OOSOOT', 'OSSW', 'WWSS', 'SWSW']
     l3 = ['OSSW', 'SWSW', 'SOSSG', 'WWSWK', 'WWSS', 'WWSS', 'OOSOOT', 'OSSW', 'SOWS', 'OSSW', 'SWSW', 'WOWOOT', 'WOWO', 'OWWOO', 'WWWWK', 'OOSOO']
 
     #testing(uct(None, 20), flat_ucb(None, 20), 6, mcts_list, False)
-    testing(flat_ucb(500, None), uct(10000, None, 4),  12, determinized_karteninfoliste, False)
+    #ai_vs_ai(uct(None, 600, 4), flat_ucb(None, 600, 4),  10, listi, False)
+    human_vs_ai(uct(None, 150, 4, 4), listi, False)

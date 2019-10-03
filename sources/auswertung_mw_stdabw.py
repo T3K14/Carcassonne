@@ -1,31 +1,46 @@
 import numpy as np
 
 # meeples
-Orte1 = [2, 3, 3, 1, 3, 2, 3, 2, 3, 3, 2, 4]
-Strassen1 = [2, 4, 2, 2, 3, 3, 2, 1, 4, 2, 2, 2]
-Wiesen1 = [1, 1, 2, 3, 1, 0, 3, 3, 1, 1, 0, 0]
-Kloester1 = [2, 0, 1, 1, 0, 2, 0, 1, 0, 2, 2, 2]
+Orte1 = [2, 2, 2, 2, 2, 1, 1, 1, 1, 1]
+Strassen1 = [2, 2, 2, 2, 2, 1, 1, 1, 1, 1]
+Wiesen1 = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+Kloester1 = [0, 0, 0, 0, 0, 2, 2, 2, 2, 2]
 
-Orte2 = [4, 2, 2, 3, 3, 3, 2, 3, 2, 3, 3, 3]
-Strassen2 = [3, 1, 3, 3, 1, 1, 2, 2, 2, 3, 2, 3]
-Wiesen2 = [1, 3, 1, 1, 2, 3, 2, 2, 2, 2, 3, 2]
-Kloester2 = [0, 2, 1, 1, 2, 0, 2, 1, 2, 0, 0, 0]
+Orte2 = [1, 1, 1, 1, 1, 2, 2, 2, 2, 2]
+Strassen2 = [1, 1, 1, 1, 1, 2, 2, 2, 2, 2]
+Wiesen2 = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+Kloester2 = [2, 2, 2, 2, 2, 0, 0, 0, 0, 0]
 
 
 # gebietspunkte
-Orte1_punkte = [6, 6, 17, 5, 9, 6, 13, 12, 12, 8, 5, 10]
-Strassen1_punkte = [3, 9, 4, 6, 9, 9, 4, 2, 9, 4, 8, 4]
-Wiesen1_punkte = [3, 3, 6, 6, 6, 0, 18, 12, 6, 3, 0, 0]
-Kloester1_punkte = [14, 0, 4, 4, 0, 12, 0, 8, 0, 12, 14, 11]
+Orte1_punkte = [5, 5, 5, 5, 5, 4, 4, 4, 4, 4]
+Strassen1_punkte = [6, 6, 6, 6, 6, 2, 2, 2, 2, 2]
+Wiesen1_punkte = [3, 3, 3, 3, 3, 3, 3, 3, 6, 3]
+Kloester1_punkte = [0, 0, 0, 0, 0, 10, 10, 11, 11, 11]
 
-Orte2_punkte = [11, 8, 2, 9, 10, 12, 7, 12, 7, 10, 10, 10]
-Strassen2_punkte = [11, 2, 8, 6, 2, 3, 6, 5, 5, 9, 3, 8]
-Wiesen2_punkte = [3, 6, 0, 3, 9, 9, 12, 9, 9, 3, 15, 6]
-Kloester2_punkte = [0, 12, 8, 7, 11, 0, 10, 7, 10, 0, 0, 0]
+Orte2_punkte = [4, 4, 4, 4, 4, 8, 8, 8, 8, 8]
+Strassen2_punkte = [3, 4, 3, 3, 4, 5, 5, 6, 6, 6]
+Wiesen2_punkte = [3, 3, 3, 3, 3, 6, 6, 6, 6, 6]
+Kloester2_punkte = [9, 10, 9, 9, 10, 0, 0, 0, 0, 0]
 
 # gesamtpunkte
-Player1_ergebnisse = [26, 18, 31, 21, 24, 27, 35, 34, 27, 27, 27, 25]
-Player2_ergebnisse = [25, 28, 18, 25, 32, 24, 35, 33, 31, 22, 28, 24]
+Player1_ergebnisse = [14, 14, 14, 14, 14, 19, 19, 20, 23, 20]
+Player2_ergebnisse = [19, 21, 19, 19, 21, 19, 19, 20, 20, 20]
+
+gesamtmeeples1 = Orte1[:]
+gesamtmeeples2 = Orte2[:]
+
+for i in range(len(Orte1)):
+    gesamtmeeples1[i] += Strassen1[i]
+    gesamtmeeples1[i] += Wiesen1[i]
+    gesamtmeeples1[i] += Kloester1[i]
+
+for i in range(len(Orte2)):
+    gesamtmeeples2[i] += Strassen2[i]
+    gesamtmeeples2[i] += Wiesen2[i]
+    gesamtmeeples2[i] += Kloester2[i]
+
+print(gesamtmeeples2)
 
 
 def calculate_mittelwert(liste):
@@ -50,22 +65,32 @@ def calculate_standardabweichung(liste, mittelwert):
 
     return np.sqrt(summe / (len(liste) - 1))
 
-print(f'\nPlayer 1 hat durchschnittlich {calculate_mittelwert(Player1_ergebnisse)} +- {calculate_standardabweichung(Player1_ergebnisse, calculate_mittelwert(Player1_ergebnisse))}, Player2 {calculate_mittelwert(Player2_ergebnisse)} +- {calculate_standardabweichung(Player2_ergebnisse, calculate_mittelwert(Player2_ergebnisse))}.\n')
+print('\nPlayer1 hat durchschnittlich folgende Punktezahlen gemacht:')
+print(f'Erste Hälfte: {calculate_mittelwert(Player1_ergebnisse[:int(len(Player1_ergebnisse)/2)])} +- {calculate_standardabweichung(Player1_ergebnisse[:int(len(Player1_ergebnisse)/2)], calculate_mittelwert(Player1_ergebnisse[:int(len(Player1_ergebnisse)/2)]))},'
+      f'\nzweite Hälfte: {calculate_mittelwert(Player1_ergebnisse[int(len(Player1_ergebnisse)/2):])} +- {calculate_standardabweichung(Player1_ergebnisse[int(len(Player1_ergebnisse)/2):], calculate_mittelwert(Player1_ergebnisse[int(len(Player1_ergebnisse)/2):]))},'
+      f'\ngesamt: {calculate_mittelwert(Player1_ergebnisse)} +- {calculate_standardabweichung(Player1_ergebnisse, calculate_mittelwert(Player1_ergebnisse))}')
+
+print('\nPlayer2 hat durchschnittlich folgende Punktezahlen gemacht:')
+print(f'Erste Hälfte: {calculate_mittelwert(Player2_ergebnisse[:int(len(Player2_ergebnisse)/2)])} +- {calculate_standardabweichung(Player2_ergebnisse[:int(len(Player2_ergebnisse)/2)], calculate_mittelwert(Player2_ergebnisse[:int(len(Player2_ergebnisse)/2)]))},'
+      f'\nzweite Hälfte: {calculate_mittelwert(Player2_ergebnisse[int(len(Player2_ergebnisse)/2):])} +- {calculate_standardabweichung(Player2_ergebnisse[int(len(Player2_ergebnisse)/2):], calculate_mittelwert(Player2_ergebnisse[int(len(Player2_ergebnisse)/2):]))},'
+      f'\ngesamt: {calculate_mittelwert(Player2_ergebnisse)} +- {calculate_standardabweichung(Player2_ergebnisse, calculate_mittelwert(Player2_ergebnisse))}')
 
 
-print('durchschnittlich auf Gebiete gesetzt Meeples:')
+
+print('\ndurchschnittlich auf Gebiete gesetzt Meeples:')
 print('Player1:')
 print('Orte: erste Hälfte: ', calculate_mittelwert(Orte1[:int(len(Orte1)/2)]), ', zweite Hälfte: ', calculate_mittelwert(Orte1[int(len(Orte1)/2):]), ', gesamt:', calculate_mittelwert(Orte1), '+-', calculate_standardabweichung(Orte1, calculate_mittelwert(Orte1)))
 print('Strassen: erste Hälfte: ', calculate_mittelwert(Strassen1[:int(len(Strassen1)/2)]), ', zweite Hälfte: ', calculate_mittelwert(Strassen1[int(len(Strassen1)/2):]), ', gesamt:', calculate_mittelwert(Strassen1), '+-', calculate_standardabweichung(Strassen1, calculate_mittelwert(Strassen1)))
 print('Wiesen: erste Hälfte: ', calculate_mittelwert(Wiesen1[:int(len(Wiesen1)/2)]), ', zweite Hälfte: ', calculate_mittelwert(Wiesen1[int(len(Wiesen1)/2):]), ', gesamt:', calculate_mittelwert(Wiesen1), '+-', calculate_standardabweichung(Wiesen1, calculate_mittelwert(Wiesen1)))
 print('Kloester: erste Hälfte: ', calculate_mittelwert(Kloester1[:int(len(Kloester1)/2)]), ', zweite Hälfte: ', calculate_mittelwert(Kloester1[int(len(Kloester1)/2):]), ', gesamt:', calculate_mittelwert(Kloester1), '+-', calculate_standardabweichung(Kloester1, calculate_mittelwert(Kloester1)))
-
+print('gesamt: ', calculate_mittelwert(gesamtmeeples1), '+- ', calculate_standardabweichung(gesamtmeeples1, calculate_mittelwert(gesamtmeeples1)))
 
 print('\n\nPlayer2:')
 print('Orte: erste Hälfte: ', calculate_mittelwert(Orte2[:int(len(Orte2)/2)]), ', zweite Hälfte: ', calculate_mittelwert(Orte2[int(len(Orte2)/2):]), ', gesamt:', calculate_mittelwert(Orte2), '+-', calculate_standardabweichung(Orte2, calculate_mittelwert(Orte2)))
 print('Strassen: erste Hälfte: ', calculate_mittelwert(Strassen2[:int(len(Strassen2)/2)]), ', zweite Hälfte: ', calculate_mittelwert(Strassen2[int(len(Strassen2)/2):]), ', gesamt:', calculate_mittelwert(Strassen2), '+-', calculate_standardabweichung(Strassen2, calculate_mittelwert(Strassen2)))
 print('Wiesen: erste Hälfte: ', calculate_mittelwert(Wiesen2[:int(len(Wiesen2)/2)]), ', zweite Hälfte: ', calculate_mittelwert(Wiesen2[int(len(Wiesen2)/2):]), ', gesamt:', calculate_mittelwert(Wiesen2), '+-', calculate_standardabweichung(Wiesen2, calculate_mittelwert(Wiesen2)))
 print('Kloester: erste Hälfte: ', calculate_mittelwert(Kloester2[:int(len(Kloester2)/2)]), ', zweite Hälfte: ', calculate_mittelwert(Kloester2[int(len(Kloester2)/2):]), ', gesamt:', calculate_mittelwert(Kloester2), '+-', calculate_standardabweichung(Kloester2, calculate_mittelwert(Kloester2)))
+print('gesamt: ', calculate_mittelwert(gesamtmeeples2), '+- ', calculate_standardabweichung(gesamtmeeples2, calculate_mittelwert(gesamtmeeples2)))
 
 
 
