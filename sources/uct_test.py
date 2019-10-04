@@ -170,7 +170,7 @@ class evaluationTest(unittest.TestCase):
 
         print('ende')
 
-    def test4(self):
+    def test5(self):
         p1 = Player(1)
         p2 = Player(2)
 
@@ -189,7 +189,7 @@ class evaluationTest(unittest.TestCase):
         spiel.make_action(p2, k2, 0, 1, 0, w)
         print('ende')
 
-    def test5(self):
+    def test6(self):
         p1 = Player(1)
         p2 = Player(2)
 
@@ -206,7 +206,7 @@ class evaluationTest(unittest.TestCase):
         self.assertEqual(p2.meeples, 6)
 
         ka = Card('S', 'O', 'S', 'S', 'G')
-        s = [s for s in ka.strassen if s.kanten == [0]]
+        s = [s for s in ka.strassen if s.kanten == [0]][0]
         spiel.make_action(p1, ka, 1, 2, 2, s)
 
         self.assertEqual(p1.meeples, 6)
@@ -275,7 +275,7 @@ class evaluationTest(unittest.TestCase):
         #display_spielbrett_dict(spiel.cards_set)
 
         k5 = Card('S', 'O', 'S', 'S', 'G')
-        s = [s for s in k5.strassen if s.kanten == [0]]
+        s = [s for s in k5.strassen if s.kanten == [0]][0]
         spiel.make_action(p1, k5, 0, 1, 2, s)
 
         self.assertEqual(p1.meeples, 6)
@@ -306,6 +306,38 @@ class evaluationTest(unittest.TestCase):
         self.assertEqual(p1.punkte, 12)
         self.assertEqual(p2.meeples, 1)
         self.assertEqual(p2.punkte, 4)
+
+        #display_spielbrett_dict(spiel.cards_set)
+
+        k8 = Card('W', 'O', 'W', 'O', 'O', True)
+        spiel.make_action(p1, k8, 0, 4, 1, k8.orte[0])
+
+        self.assertEqual(p1.meeples, 4)
+        self.assertEqual(p1.punkte, 12)
+        self.assertEqual(p2.meeples, 1)
+        self.assertEqual(p2.punkte, 4)
+
+        k9 = Card('W', 'O', 'W', 'O')
+        spiel.make_action(p2, k9, 1, 4, 1, k9.wiesen[0])
+
+        self.assertEqual(p1.meeples, 5)
+        self.assertEqual(p1.punkte, 22)
+        self.assertEqual(p2.meeples, 0)
+        self.assertEqual(p2.punkte, 4)
+
+        k10 = Card('O', 'W', 'W', 'O', 'O')
+        spiel.make_action(p1, k10, 0, 5, 2)
+
+        self.assertEqual(p1.meeples, 5)
+        self.assertEqual(p1.punkte, 22)
+        self.assertEqual(p2.meeples, 0)
+        self.assertEqual(p2.punkte, 4)
+
+        k11 = Card('W', 'W','S', 'S')
+
+        pos = spiel.calculate_possible_actions(k11, p2)
+
+
         pass
 
 if __name__ == '__main__':

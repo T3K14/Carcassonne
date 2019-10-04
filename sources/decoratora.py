@@ -826,7 +826,7 @@ def human_vs_ai(decorator, karteninfos=karteninfoliste, shuffle=True, startspiel
 
     while len(spiel.cards_left) > 0:
 
-        print('\n\nNEUER ZUG: Aktuell hat player1 {} Punkte und player2 {} Punkte.\n'.format(player1.punkte, player2.punkte))
+        print(f'\n\nNEUER ZUG: Aktuell hat player1 {player1.punkte} Punkte und {player1.meeples} Meeples und player2 {player2.punkte} Punkte und {player2.meeples} Meeples.\n')
 
         display_spielbrett_dict(spiel.cards_set)
         current_card = spiel.cards_left.pop(0)
@@ -931,7 +931,7 @@ def human_vs_ai(decorator, karteninfos=karteninfoliste, shuffle=True, startspiel
 
                     # another player made the first move of the game, or the node has no visits yet
                     else:
-                        root = Node(True, node_action, 1, None)
+                        root = Node(True, node_action, 2, None)
 
             # AI-PLayer
             else:
@@ -957,7 +957,7 @@ def human_vs_ai(decorator, karteninfos=karteninfoliste, shuffle=True, startspiel
             print("ES GIBT FUER DIESE KARTE KEINE ANLEGESTELLE")
             continue
 
-    print(f'\nVor der finalen Auswertung hat Player1 {player1.punkte} und Player2 {player2.punkte} Punkte')
+    print(f'\nVor der finalen Auswertung hat Player1 {player1.punkte} und {player1.meeples} Meeples und Player2 {player2.punkte} Punkte und {player2.meeples} Meeples.')
 
     spiel.final_evaluate()
     print("\nSpielende: Player1 hat {} Punkte, Player2 hat {} Punkte.".format(player1.punkte, player2.punkte))
@@ -971,4 +971,4 @@ if __name__ == '__main__':
 
     #testing(uct(None, 20), flat_ucb(None, 20), 6, mcts_list, False)
     #ai_vs_ai(uct(None, 600, 4), flat_ucb(None, 600, 4),  10, listi, False)
-    human_vs_ai(uct(None, 10, 4, 4), listi, False)
+    human_vs_ai(uct(None, 150, 4), listi, False)
