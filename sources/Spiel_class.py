@@ -414,7 +414,13 @@ class Spiel:
             card.update_kanten(landschaft, hauptlandschaft)
 
         # fuer alle globalen landschaften checke, ob die fertig sind und wenn ja werte korrekt aus
-        glob_lands = [gl for lak in ww for gl in ww[lak] if gl in d4[buchstabe]]
+        #glob_lands = [gl for lak in ww for gl in ww[lak] if gl in d4[buchstabe]]           # dadurch konnte es sein, dass der selbe global ort/strasse mehrfach evaluiert wird, wodurch meeples und punkte vervielfacht werden konnten
+        glob_lands = []
+        for lak in ww:
+            for gl in ww[lak]:
+                if gl in d4[buchstabe] and gl not in glob_lands:
+                    glob_lands.append(gl)
+
         for global_land in glob_lands:
             global_land.check_if_fertig()
             global_land.evaluate()

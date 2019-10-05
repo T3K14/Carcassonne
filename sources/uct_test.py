@@ -340,5 +340,26 @@ class evaluationTest(unittest.TestCase):
 
         pass
 
+    def test7(self):
+        p1 = Player(1)
+        p2 = Player(2)
+
+        spiel = Spiel_class.Spiel([], p1, p2)
+
+        k1 = Card('O', 'S', 'S', 'O', 'O')
+        spiel.make_action(p2, k1, 1, 0, 0, k1.strassen[0])
+
+        k2 = Card('W', 'W', 'S', 'S')
+        spiel.make_action(p1, k2, 1, -1, 2)
+
+        k3 = Card('W', 'W', 'S', 'S')
+        spiel.make_action(p2, k3, 2, -1, 1)
+
+        k4 = Card('W', 'S', 'S', 'S', 'G')
+        spiel.make_action(p1, k4, 2, 0, 0)
+
+        self.assertEqual(p2.meeples, 7)
+        self.assertEqual(p2.punkte, 5)
+
 if __name__ == '__main__':
     unittest.main()
