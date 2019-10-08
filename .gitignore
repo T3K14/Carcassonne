@@ -4,6 +4,6 @@ __pycache__/
 .pytest_cache/
 .log/
 simulations/
-simulations_1/
 simulations*
+simulations_1/
 venv/
