@@ -18,11 +18,46 @@ import random
 import time
 from copy import deepcopy
 
-"""Module for testing different AI players for the broadgame Carcassonne."""
+"""Module for testing different AI players for the boardgame Carcassonne.
+
+    For every AI player there is a decorator function and a select function. The select functions include the algorithms
+    and the decorator functions are used for taking hyperparameters and then calling the selection functions with the
+    given parameters.
+
+    There are four algorithm players:
+    
+    - random_play():    The random_play() function does not accept any hyperparameters.
+    
+                        This function implements a player that makes actions at random.
+                                          
+                        
+    - mc():             This function accepts a number of iterations, the standard value is 500.           
+        
+                        This function implements a simple Monte Carlo AI that divides the number of given iterations by 
+                        the number of possible actions and then simulates this number of games after every possible
+                        action. After that the action with the highest rewards is selected for beeing played.
+                        
+                        
+    - flat_ucb():       This function accepts either a number of iterations or a time limit (in seconds) and a value
+                        for the UCB constant c.
+                        The standard settings are: # of iterations=500 and c=sqrt(2).
+                        
+                        This function implements a Flat-UCB player that selects its nodes with the help of the UCB1 
+                        selection formula.
+                        
+                        
+    - uct():            This function accepts either a number of iterations or a timelimit (in seconds), a UCB value for
+                        the constant c and an integer for the number of multiprocessing threads that the
+                        root-parallelized algorithm may run on. Standard values are: # of iterations: 500, c=sqrt(2) and
+                        # of threads=1                    
+    
+"""
 
 # Hilfsdictionaries
 dic1 = {1: 2, 2: 1}     # zum player tauschen
 
+
+# decorator functions
 
 def mc(t_end=500):
     def mc_decorator(_mc_select, d):
@@ -152,6 +187,7 @@ def flat_ucb_select(spiel, current_card, player, pos, d, root_node, t_end, reche
     #return max(child_nodes, key=lambda nod: nod.visits).action, root_node
     tmp = max(child_nodes, key=lambda nod: nod.visits).action, root_node
     return tmp
+
 
 def mc_select(spiel, current_card, player, pos, d, root_node, t_end):
     child_nodes = [UCB_Node(action) for action in pos]
@@ -343,8 +379,18 @@ name_to_method = {'flat_ucb_decorator': 'Flat-UCB', 'random_decorator': 'Random'
 
 
 def ai_vs_ai(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfoliste, shuffle=True):
-    """function for simulating, evaluating and logging AI Battles based one determinized card lists"""
+    """function for simulating, evaluating and logging AI Battles based one determinized card lists
 
+
+    :param decorator1:      the decorator function of the first AI
+    :param decorator2:      the decorator function of the first AI
+    :param nr_of_games:     the number of games that will be played, should be an even number, since after half the games
+                            have been played, the beginning player is changed
+    :param karteninfos:     list of card_informations for the game, the cardlist will be created from that list which has
+                            the following form: ['WWSWK', 'WWSS', 'OOSSOOT', ...]
+    :param shuffle:         boolean which ensures that the cardlist is beeing shuffled if True
+    :return:                None
+    """
 
     player1 = Player(1)
     player2 = Player(2)
@@ -804,6 +850,49 @@ def ai_vs_ai(decorator1, decorator2, nr_of_games=100, karteninfos=karteninfolist
 
 
 def human_vs_ai(decorator, karteninfos=karteninfoliste, shuffle=True, startspieler='human'):
+    """
+
+    function for playing a game against any implemented AI as a human player, based on a determinized cardlist
+
+    :param decorator:       the decorator function of the AI player
+    :param karteninfos:     list of card_informations for the game, the cardlist will be created from that list which has
+                            the following form: ['WWSWK', 'WWSS', 'OOSSOOT', ...]
+    :param shuffle:         boolean which ensures that the cardlist is beeing shuffled if True
+    :param startspieler:    either 'human', or 'ai' for selecting the starting player
+    :return:                None
+
+    The human player enters his commands via the python console:
+
+    For every card that is drawn by the human player there are information printed to the console.
+    One example might be:
+
+        Die naechste Karte ist [S, O, S, S, G, False]
+        Sie enthaelt folgende moegliche Meeplepositionen:
+        Orte:
+        1 [1]
+        Strassen:
+        1 [0]
+        2 [2]
+        3 [3]
+        Wiesen:
+        1 [4]
+        2 [5, 6]
+        3 [7]
+        Bitte gib deine Aktion an:
+
+    To enter the command, one has to use the following format:
+    x y (# of right-rotations) (letter for territory+# of territory)
+
+    For example:
+    0 1 3 o1
+
+    This stands for the following action:
+        - placing a meeple on the ort 1, which is located on the right side of the card
+        - rotating the card three times to the right
+        - placing the tile on the filed (0,1)
+    
+    """
+
 
     player1 = Player(1)
     player2 = Player(2, 'ai')
@@ -964,11 +1053,5 @@ def human_vs_ai(decorator, karteninfos=karteninfoliste, shuffle=True, startspiel
 
 
 if __name__ == '__main__':
-    #listi = ['SWSW', 'OSSW', 'SOSSG', 'WWSWK', 'WWSS', 'WWSS', 'OOSOOT', 'OSSW', 'SOWS', 'WWSWK']
-    listi = ['SWSW', 'OSSW', 'SOSSG', 'WWWWK', 'OSSOOT', 'WWSS', 'OOSOOT', 'OSSW', 'SOWS', 'WWSWK']
-    #listi2 = ['OSSW', 'SOSSG', 'WWSS', 'WWSWK', 'WWSWK', 'SOWS', 'OOSOOT', 'OSSW', 'WWSS', 'SWSW']
-    l3 = ['OSSW', 'SWSW', 'SOSSG', 'WWSWK', 'WWSS', 'WWSS', 'OOSOOT', 'OSSW', 'SOWS', 'OSSW', 'SWSW', 'WOWOOT', 'WOWO', 'OWWOO', 'WWWWK', 'OOSOO']
-
-    #testing(uct(None, 20), flat_ucb(None, 20), 6, mcts_list, False)
-    #ai_vs_ai(uct(None, 600, 4), flat_ucb(None, 600, 4),  10, listi, False)
-    human_vs_ai(uct(None, 150, 4), listi, False)
+    #ai_vs_ai(uct(None, 600, 4), flat_ucb(None, 600, 4),  10, karteninfoliste, True)
+    human_vs_ai(uct(None, 150, 4), karteninfoliste, True)
