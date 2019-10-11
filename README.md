@@ -3,6 +3,8 @@
 A version of the board game Carcassonne with Monte Carlo AIs, including UCT.
 
 ## How to play
+The code is written in Python 3.7 and requires the modules numpy and matplotlib.
+
 The [main_functions.py](https://github.com/T3K14/Carcassonne/blob/master/sources/main_functions.py) script contains the two main functions for simulating AI battles and for playing a game against one AI opponent.
 
 **How to make actions:**
