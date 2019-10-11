@@ -1,0 +1,897 @@
+Player1 spielt nach der Flat-UCB-Taktik mit den Hyperparametern {'t_end': 500, 'rechenzeit': None, 'c': 1.4142} und Player2 nach der Simple-MC-Taktik mit den Hyperparametern {'t_end': 500}.
+
+Player2 beginnt das Spiel.
+
+Neuer Zug:
+
+Aktuell hat Player1 0 Punkte und Player2 0 Punkte.
+
+Player2 zieht die Karte [S, O, S, W, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [1]  
+Strassen: 1: [0, 2]  
+Wiesen: 1: [5, 6]  2: [4, 7]  
+
+Player2 setzt einen Meeple auf o1.
+Player2 setzt die Karte an (0, 1) und rotiert sie 2 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 0 Punkte und Player2 0 Punkte.
+
+Player1 zieht die Karte [W, O, W, O, O, True]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [1, 3]  
+Strassen: 
+Wiesen: 1: [4, 5]  2: [6, 7]  
+
+Player1 setzt einen Meeple auf o1.
+Player1 setzt die Karte an (-1, 0) und rotiert sie 1 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 0 Punkte und Player2 0 Punkte.
+
+Player2 zieht die Karte [W, W, S, S, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 
+Strassen: 1: [2, 3]  
+Wiesen: 1: [4, 5, 6]  2: [7]  
+Player2 setzt keinen Meeple.
+Player2 setzt die Karte an (1, 1) und rotiert sie 3 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 0 Punkte und Player2 0 Punkte.
+
+Player1 zieht die Karte [O, W, W, O, O, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [3, 0]  
+Strassen: 
+Wiesen: 1: [5, 6, 7]  
+
+Player1 setzt einen Meeple auf o1.
+Player1 setzt die Karte an (-2, 0) und rotiert sie 0 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 0 Punkte und Player2 0 Punkte.
+
+Player2 zieht die Karte [S, O, W, S, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [1]  
+Strassen: 1: [0, 3]  
+Wiesen: 1: [5, 6, 7]  2: [4]  
+
+Player2 setzt einen Meeple auf o1.
+Player2 setzt die Karte an (0, -1) und rotiert sie 1 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 0 Punkte und Player2 0 Punkte.
+
+Player1 zieht die Karte [S, O, W, S, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [1]  
+Strassen: 1: [0, 3]  
+Wiesen: 1: [5, 6, 7]  2: [4]  
+
+Player1 setzt einen Meeple auf s1.
+Player1 setzt die Karte an (0, 2) und rotiert sie 3 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 0 Punkte und Player2 0 Punkte.
+
+Player2 zieht die Karte [W, O, W, O, O, True]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [1, 3]  
+Strassen: 
+Wiesen: 1: [4, 5]  2: [6, 7]  
+
+Player2 setzt einen Meeple auf o1.
+Player2 setzt die Karte an (0, 3) und rotiert sie 1 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 0 Punkte und Player2 0 Punkte.
+
+Player1 zieht die Karte [O, W, W, O, O, True]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [3, 0]  
+Strassen: 
+Wiesen: 1: [5, 6, 7]  
+
+Player1 setzt einen Meeple auf o1.
+Player1 setzt die Karte an (-1, 3) und rotiert sie 0 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 0 Punkte und Player2 0 Punkte.
+
+Player2 zieht die Karte [O, W, W, O, O, True]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [3, 0]  
+Strassen: 
+Wiesen: 1: [5, 6, 7]  
+
+Player2 setzt einen Meeple auf w1.
+Player2 setzt die Karte an (0, -2) und rotiert sie 0 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 0 Punkte und Player2 0 Punkte.
+
+Player1 zieht die Karte [W, W, S, W, K, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 
+Strassen: 1: [2]  
+Wiesen: 1: [4, 5, 6, 7]  
+Player1 setzt einem Meeple auf das Kloster.
+Player1 setzt die Karte an (1, 2) und rotiert sie 2 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 0 Punkte und Player2 0 Punkte.
+
+Player2 zieht die Karte [O, O, S, O, O, True]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [0, 1, 3]  
+Strassen: 1: [2]  
+Wiesen: 1: [6]  2: [7]  
+
+Player2 setzt einen Meeple auf o1.
+Player2 setzt die Karte an (2, 1) und rotiert sie 1 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 0 Punkte und Player2 0 Punkte.
+
+Player1 zieht die Karte [S, O, S, S, G, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [1]  
+Strassen: 1: [0]  2: [2]  3: [3]  
+Wiesen: 1: [4]  2: [5, 6]  3: [7]  
+
+Player1 setzt einen Meeple auf o1.
+Player1 setzt die Karte an (1, 0) und rotiert sie 2 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 4 Punkte und Player2 0 Punkte.
+
+Player2 zieht die Karte [O, O, W, O, O, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [0, 1, 3]  
+Strassen: 
+Wiesen: 1: [6, 7]  
+Player2 setzt keinen Meeple.
+Player2 setzt die Karte an (-1, 1) und rotiert sie 2 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 4 Punkte und Player2 0 Punkte.
+
+Player1 zieht die Karte [O, W, W, W, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [0]  
+Strassen: 
+Wiesen: 1: [4, 5, 6, 7]  
+
+Player1 setzt einen Meeple auf w1.
+Player1 setzt die Karte an (-1, 4) und rotiert sie 2 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 4 Punkte und Player2 0 Punkte.
+
+Player2 zieht die Karte [S, O, S, W, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [1]  
+Strassen: 1: [0, 2]  
+Wiesen: 1: [5, 6]  2: [4, 7]  
+
+Player2 setzt einen Meeple auf s1.
+Player2 setzt die Karte an (-1, -2) und rotiert sie 0 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 4 Punkte und Player2 8 Punkte.
+
+Player1 zieht die Karte [W, W, S, S, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 
+Strassen: 1: [2, 3]  
+Wiesen: 1: [4, 5, 6]  2: [7]  
+
+Player1 setzt einen Meeple auf w1.
+Player1 setzt die Karte an (1, -1) und rotiert sie 1 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 4 Punkte und Player2 8 Punkte.
+
+Player2 zieht die Karte [S, W, S, W, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 
+Strassen: 1: [0, 2]  
+Wiesen: 1: [5, 6]  2: [4, 7]  
+Player2 setzt keinen Meeple.
+Player2 setzt die Karte an (1, 3) und rotiert sie 0 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 4 Punkte und Player2 8 Punkte.
+
+Player1 zieht die Karte [O, O, O, O, O, True]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [0, 1, 2, 3]  
+Strassen: 
+Wiesen: 
+Player1 setzt keinen Meeple.
+Player1 setzt die Karte an (-3, 0) und rotiert sie 0 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 4 Punkte und Player2 8 Punkte.
+
+Player2 zieht die Karte [W, O, W, O, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [1]  2: [3]  
+Strassen: 
+Wiesen: 1: [4, 5, 6, 7]  
+
+Player2 setzt einen Meeple auf o2.
+Player2 setzt die Karte an (0, 4) und rotiert sie 1 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 4 Punkte und Player2 16 Punkte.
+
+Player1 zieht die Karte [W, O, W, O, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [1]  2: [3]  
+Strassen: 
+Wiesen: 1: [4, 5, 6, 7]  
+Player1 setzt keinen Meeple.
+Player1 setzt die Karte an (2, 3) und rotiert sie 1 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 4 Punkte und Player2 16 Punkte.
+
+Player2 zieht die Karte [W, S, S, S, G, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 
+Strassen: 1: [1]  2: [2]  3: [3]  
+Wiesen: 1: [4, 5]  2: [6]  3: [7]  
+
+Player2 setzt einen Meeple auf s2.
+Player2 setzt die Karte an (-2, 4) und rotiert sie 1 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 4 Punkte und Player2 16 Punkte.
+
+Player1 zieht die Karte [W, O, W, O, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [1]  2: [3]  
+Strassen: 
+Wiesen: 1: [4, 5, 6, 7]  
+Player1 setzt keinen Meeple.
+Player1 setzt die Karte an (2, 2) und rotiert sie 1 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 13 Punkte und Player2 16 Punkte.
+
+Player2 zieht die Karte [S, W, S, W, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 
+Strassen: 1: [0, 2]  
+Wiesen: 1: [5, 6]  2: [4, 7]  
+
+Player2 setzt einen Meeple auf w1.
+Player2 setzt die Karte an (1, 4) und rotiert sie 0 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 13 Punkte und Player2 16 Punkte.
+
+Player1 zieht die Karte [S, W, S, W, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 
+Strassen: 1: [0, 2]  
+Wiesen: 1: [5, 6]  2: [4, 7]  
+
+Player1 setzt einen Meeple auf s1.
+Player1 setzt die Karte an (1, 5) und rotiert sie 0 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 13 Punkte und Player2 16 Punkte.
+
+Player2 zieht die Karte [W, S, S, S, G, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 
+Strassen: 1: [1]  2: [2]  3: [3]  
+Wiesen: 1: [4, 5]  2: [6]  3: [7]  
+Player2 setzt keinen Meeple.
+Player2 setzt die Karte an (-1, 5) und rotiert sie 2 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 13 Punkte und Player2 16 Punkte.
+
+Player1 zieht die Karte [S, W, S, W, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 
+Strassen: 1: [0, 2]  
+Wiesen: 1: [5, 6]  2: [4, 7]  
+Player1 setzt keinen Meeple.
+Player1 setzt die Karte an (3, 2) und rotiert sie 0 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 13 Punkte und Player2 16 Punkte.
+
+Player2 zieht die Karte [O, W, O, W, O, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [0, 2]  
+Strassen: 
+Wiesen: 1: [5, 6]  2: [4, 7]  
+Player2 setzt keinen Meeple.
+Player2 setzt die Karte an (-2, -1) und rotiert sie 1 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 13 Punkte und Player2 16 Punkte.
+
+Player1 zieht die Karte [S, O, S, S, G, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [1]  
+Strassen: 1: [0]  2: [2]  3: [3]  
+Wiesen: 1: [4]  2: [5, 6]  3: [7]  
+Player1 setzt keinen Meeple.
+Player1 setzt die Karte an (-2, 3) und rotiert sie 0 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 21 Punkte und Player2 16 Punkte.
+
+Player2 zieht die Karte [O, S, S, O, O, True]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [3, 0]  
+Strassen: 1: [1, 2]  
+Wiesen: 1: [5, 7]  2: [6]  
+Player2 setzt keinen Meeple.
+Player2 setzt die Karte an (2, 0) und rotiert sie 1 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 21 Punkte und Player2 16 Punkte.
+
+Player1 zieht die Karte [S, W, S, W, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 
+Strassen: 1: [0, 2]  
+Wiesen: 1: [5, 6]  2: [4, 7]  
+
+Player1 setzt einen Meeple auf s1.
+Player1 setzt die Karte an (2, -1) und rotiert sie 0 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 21 Punkte und Player2 16 Punkte.
+
+Player2 zieht die Karte [W, W, S, S, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 
+Strassen: 1: [2, 3]  
+Wiesen: 1: [4, 5, 6]  2: [7]  
+Player2 setzt keinen Meeple.
+Player2 setzt die Karte an (-1, -3) und rotiert sie 1 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 21 Punkte und Player2 16 Punkte.
+
+Player1 zieht die Karte [O, S, S, W, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [0]  
+Strassen: 1: [1, 2]  
+Wiesen: 1: [4, 5, 7]  2: [6]  
+Player1 setzt keinen Meeple.
+Player1 setzt die Karte an (-2, 2) und rotiert sie 3 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 21 Punkte und Player2 16 Punkte.
+
+Player2 zieht die Karte [W, W, S, S, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 
+Strassen: 1: [2, 3]  
+Wiesen: 1: [4, 5, 6]  2: [7]  
+Player2 setzt keinen Meeple.
+Player2 setzt die Karte an (-3, 4) und rotiert sie 3 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 21 Punkte und Player2 16 Punkte.
+
+Player1 zieht die Karte [O, W, W, W, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [0]  
+Strassen: 
+Wiesen: 1: [4, 5, 6, 7]  
+Player1 setzt keinen Meeple.
+Player1 setzt die Karte an (2, 5) und rotiert sie 2 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 21 Punkte und Player2 16 Punkte.
+
+Player2 zieht die Karte [W, O, O, W, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [1]  2: [2]  
+Strassen: 
+Wiesen: 1: [4, 5, 6, 7]  
+Player2 setzt keinen Meeple.
+Player2 setzt die Karte an (0, -3) und rotiert sie 0 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 21 Punkte und Player2 16 Punkte.
+
+Player1 zieht die Karte [O, W, W, W, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [0]  
+Strassen: 
+Wiesen: 1: [4, 5, 6, 7]  
+Player1 setzt keinen Meeple.
+Player1 setzt die Karte an (-2, -2) und rotiert sie 2 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 21 Punkte und Player2 16 Punkte.
+
+Player2 zieht die Karte [W, W, S, S, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 
+Strassen: 1: [2, 3]  
+Wiesen: 1: [4, 5, 6]  2: [7]  
+Player2 setzt keinen Meeple.
+Player2 setzt die Karte an (-3, 3) und rotiert sie 2 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 21 Punkte und Player2 20 Punkte.
+
+Player1 zieht die Karte [S, W, S, W, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 
+Strassen: 1: [0, 2]  
+Wiesen: 1: [5, 6]  2: [4, 7]  
+Player1 setzt keinen Meeple.
+Player1 setzt die Karte an (-1, 2) und rotiert sie 1 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 30 Punkte und Player2 20 Punkte.
+
+Player2 zieht die Karte [W, W, W, W, K, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 
+Strassen: 
+Wiesen: 1: [4, 5, 6, 7]  
+Player2 setzt einem Meeple auf das Kloster.
+Player2 setzt die Karte an (1, -2) und rotiert sie 0 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 30 Punkte und Player2 20 Punkte.
+
+Player1 zieht die Karte [S, O, S, S, G, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [1]  
+Strassen: 1: [0]  2: [2]  3: [3]  
+Wiesen: 1: [4]  2: [5, 6]  3: [7]  
+
+Player1 setzt einen Meeple auf w2.
+Player1 setzt die Karte an (0, -4) und rotiert sie 3 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 30 Punkte und Player2 20 Punkte.
+
+Player2 zieht die Karte [S, S, S, S, G, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 
+Strassen: 1: [0]  2: [1]  3: [2]  4: [3]  
+Wiesen: 1: [4]  2: [5]  3: [6]  4: [7]  
+Player2 setzt keinen Meeple.
+Player2 setzt die Karte an (-2, 5) und rotiert sie 0 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 30 Punkte und Player2 20 Punkte.
+
+Player1 zieht die Karte [W, S, S, S, G, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 
+Strassen: 1: [1]  2: [2]  3: [3]  
+Wiesen: 1: [4, 5]  2: [6]  3: [7]  
+Player1 setzt keinen Meeple.
+Player1 setzt die Karte an (-1, -4) und rotiert sie 0 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 30 Punkte und Player2 20 Punkte.
+
+Player2 zieht die Karte [O, W, W, W, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [0]  
+Strassen: 
+Wiesen: 1: [4, 5, 6, 7]  
+Player2 setzt keinen Meeple.
+Player2 setzt die Karte an (2, 6) und rotiert sie 3 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 30 Punkte und Player2 20 Punkte.
+
+Player1 zieht die Karte [S, W, S, W, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 
+Strassen: 1: [0, 2]  
+Wiesen: 1: [5, 6]  2: [4, 7]  
+Player1 setzt keinen Meeple.
+Player1 setzt die Karte an (-1, 6) und rotiert sie 0 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 30 Punkte und Player2 20 Punkte.
+
+Player2 zieht die Karte [O, O, W, O, O, True]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [0, 1, 3]  
+Strassen: 
+Wiesen: 1: [6, 7]  
+Player2 setzt keinen Meeple.
+Player2 setzt die Karte an (3, 0) und rotiert sie 0 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 30 Punkte und Player2 20 Punkte.
+
+Player1 zieht die Karte [W, W, W, W, K, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 
+Strassen: 
+Wiesen: 1: [4, 5, 6, 7]  
+Player1 setzt keinen Meeple.
+Player1 setzt die Karte an (3, -1) und rotiert sie 0 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 30 Punkte und Player2 20 Punkte.
+
+Player2 zieht die Karte [W, W, S, S, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 
+Strassen: 1: [2, 3]  
+Wiesen: 1: [4, 5, 6]  2: [7]  
+Player2 setzt keinen Meeple.
+Player2 setzt die Karte an (1, -4) und rotiert sie 0 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 30 Punkte und Player2 20 Punkte.
+
+Player1 zieht die Karte [O, W, W, W, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [0]  
+Strassen: 
+Wiesen: 1: [4, 5, 6, 7]  
+Player1 setzt keinen Meeple.
+Player1 setzt die Karte an (-3, 2) und rotiert sie 1 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 30 Punkte und Player2 20 Punkte.
+
+Player2 zieht die Karte [W, W, S, S, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 
+Strassen: 1: [2, 3]  
+Wiesen: 1: [4, 5, 6]  2: [7]  
+Player2 setzt keinen Meeple.
+Player2 setzt die Karte an (-4, 4) und rotiert sie 1 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 30 Punkte und Player2 20 Punkte.
+
+Player1 zieht die Karte [O, W, W, O, O, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [3, 0]  
+Strassen: 
+Wiesen: 1: [5, 6, 7]  
+Player1 setzt keinen Meeple.
+Player1 setzt die Karte an (-2, 1) und rotiert sie 2 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 30 Punkte und Player2 20 Punkte.
+
+Player2 zieht die Karte [W, W, W, W, K, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 
+Strassen: 
+Wiesen: 1: [4, 5, 6, 7]  
+Player2 setzt keinen Meeple.
+Player2 setzt die Karte an (-4, 3) und rotiert sie 0 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 30 Punkte und Player2 20 Punkte.
+
+Player1 zieht die Karte [W, W, S, S, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 
+Strassen: 1: [2, 3]  
+Wiesen: 1: [4, 5, 6]  2: [7]  
+Player1 setzt keinen Meeple.
+Player1 setzt die Karte an (3, 6) und rotiert sie 3 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 30 Punkte und Player2 20 Punkte.
+
+Player2 zieht die Karte [O, O, S, O, O, True]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [0, 1, 3]  
+Strassen: 1: [2]  
+Wiesen: 1: [6]  2: [7]  
+Player2 setzt keinen Meeple.
+Player2 setzt die Karte an (4, 0) und rotiert sie 0 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 30 Punkte und Player2 20 Punkte.
+
+Player1 zieht die Karte [O, S, S, O, O, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [3, 0]  
+Strassen: 1: [1, 2]  
+Wiesen: 1: [5, 7]  2: [6]  
+Player1 setzt keinen Meeple.
+Player1 setzt die Karte an (-3, -1) und rotiert sie 1 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 30 Punkte und Player2 20 Punkte.
+
+Player2 zieht die Karte [O, S, S, O, O, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [3, 0]  
+Strassen: 1: [1, 2]  
+Wiesen: 1: [5, 7]  2: [6]  
+Player2 setzt keinen Meeple.
+Player2 setzt die Karte an (-5, 4) und rotiert sie 3 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 30 Punkte und Player2 20 Punkte.
+
+Player1 zieht die Karte [W, O, O, W, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [1]  2: [2]  
+Strassen: 
+Wiesen: 1: [4, 5, 6, 7]  
+Player1 setzt keinen Meeple.
+Player1 setzt die Karte an (-3, 1) und rotiert sie 1 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 30 Punkte und Player2 20 Punkte.
+
+Player2 zieht die Karte [O, O, W, O, O, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [0, 1, 3]  
+Strassen: 
+Wiesen: 1: [6, 7]  
+Player2 setzt keinen Meeple.
+Player2 setzt die Karte an (5, 0) und rotiert sie 0 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 30 Punkte und Player2 20 Punkte.
+
+Player1 zieht die Karte [O, S, S, W, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [0]  
+Strassen: 1: [1, 2]  
+Wiesen: 1: [4, 5, 7]  2: [6]  
+Player1 setzt keinen Meeple.
+Player1 setzt die Karte an (-4, 1) und rotiert sie 1 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 30 Punkte und Player2 20 Punkte.
+
+Player2 zieht die Karte [O, W, W, O, O, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [3, 0]  
+Strassen: 
+Wiesen: 1: [5, 6, 7]  
+Player2 setzt keinen Meeple.
+Player2 setzt die Karte an (6, 0) und rotiert sie 0 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 30 Punkte und Player2 20 Punkte.
+
+Player1 zieht die Karte [S, O, W, S, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [1]  
+Strassen: 1: [0, 3]  
+Wiesen: 1: [5, 6, 7]  2: [4]  
+Player1 setzt keinen Meeple.
+Player1 setzt die Karte an (-4, 0) und rotiert sie 0 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 30 Punkte und Player2 20 Punkte.
+
+Player2 zieht die Karte [O, S, S, O, O, True]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [3, 0]  
+Strassen: 1: [1, 2]  
+Wiesen: 1: [5, 7]  2: [6]  
+Player2 setzt keinen Meeple.
+Player2 setzt die Karte an (4, 1) und rotiert sie 2 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 30 Punkte und Player2 20 Punkte.
+
+Player1 zieht die Karte [O, O, S, O, O, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [0, 1, 3]  
+Strassen: 1: [2]  
+Wiesen: 1: [6]  2: [7]  
+Player1 setzt keinen Meeple.
+Player1 setzt die Karte an (1, 6) und rotiert sie 0 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 35 Punkte und Player2 20 Punkte.
+
+Player2 zieht die Karte [S, W, S, W, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 
+Strassen: 1: [0, 2]  
+Wiesen: 1: [5, 6]  2: [4, 7]  
+Player2 setzt keinen Meeple.
+Player2 setzt die Karte an (2, -4) und rotiert sie 0 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 35 Punkte und Player2 20 Punkte.
+
+Player1 zieht die Karte [W, W, S, W, K, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 
+Strassen: 1: [2]  
+Wiesen: 1: [4, 5, 6, 7]  
+Player1 setzt einem Meeple auf das Kloster.
+Player1 setzt die Karte an (-4, 2) und rotiert sie 1 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 35 Punkte und Player2 20 Punkte.
+
+Player2 zieht die Karte [O, S, S, O, O, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [3, 0]  
+Strassen: 1: [1, 2]  
+Wiesen: 1: [5, 7]  2: [6]  
+Player2 setzt keinen Meeple.
+Player2 setzt die Karte an (6, 1) und rotiert sie 3 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 35 Punkte und Player2 20 Punkte.
+
+Player1 zieht die Karte [W, S, S, S, G, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 
+Strassen: 1: [1]  2: [2]  3: [3]  
+Wiesen: 1: [4, 5]  2: [6]  3: [7]  
+Player1 setzt keinen Meeple.
+Player1 setzt die Karte an (2, -2) und rotiert sie 3 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 39 Punkte und Player2 20 Punkte.
+
+Player2 zieht die Karte [W, W, W, W, K, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 
+Strassen: 
+Wiesen: 1: [4, 5, 6, 7]  
+Player2 setzt keinen Meeple.
+Player2 setzt die Karte an (2, 7) und rotiert sie 0 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 39 Punkte und Player2 20 Punkte.
+
+Player1 zieht die Karte [O, O, W, O, O, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [0, 1, 3]  
+Strassen: 
+Wiesen: 1: [6, 7]  
+
+Player1 setzt einen Meeple auf o1.
+Player1 setzt die Karte an (0, 6) und rotiert sie 1 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 39 Punkte und Player2 20 Punkte.
+
+Player2 zieht die Karte [W, W, S, S, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 
+Strassen: 1: [2, 3]  
+Wiesen: 1: [4, 5, 6]  2: [7]  
+Player2 setzt keinen Meeple.
+Player2 setzt die Karte an (3, -4) und rotiert sie 2 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 39 Punkte und Player2 20 Punkte.
+
+Player1 zieht die Karte [S, O, S, W, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [1]  
+Strassen: 1: [0, 2]  
+Wiesen: 1: [5, 6]  2: [4, 7]  
+Player1 setzt keinen Meeple.
+Player1 setzt die Karte an (0, 7) und rotiert sie 1 mal
+
+Neuer Zug:
+
+Aktuell hat Player1 39 Punkte und Player2 20 Punkte.
+
+Player2 zieht die Karte [O, S, S, W, None, False]
+Sie enthaelt folgende moegliche Meeplepositionen:
+Orte: 1: [0]  
+Strassen: 1: [1, 2]  
+Wiesen: 1: [4, 5, 7]  2: [6]  
+Player2 setzt keinen Meeple.
+Player2 setzt die Karte an (-2, -3) und rotiert sie 0 mal
+
+Das Spiel ist vorbei. Player1 hat 73 und Player2 57 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+2 Kloester:	15
+
+5 Orte:		28
+
+3 Strassen:	18
+
+3 Wiesen:	12
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+1 Kloester:	7
+
+5 Orte:		31
+
+2 Strassen:	7
+
+2 Wiesen:	12

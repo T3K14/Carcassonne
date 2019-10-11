@@ -1,0 +1,305 @@
+Player1 spielt nach der Flat-UCB-Taktik mit den Hyperparametern {'t_end': None, 'rechenzeit': 600, 'c': 4} und Player2 nach der UCT-Taktik mit den Hyperparametern {'t_end': None, 'rechenzeit': 600, 'c': 4, 'threads': 1}.
+
+
+
+Spiel 0: Spieler1 hat 14 und Spieler2 hat 19 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+0 Kloester:	0
+
+2 Orte:		5
+
+2 Strassen:	6
+
+1 Wiesen:	3
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+2 Kloester:	9
+
+1 Orte:		4
+
+1 Strassen:	3
+
+1 Wiesen:	3
+
+Spiel 1: Spieler1 hat 14 und Spieler2 hat 21 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+0 Kloester:	0
+
+2 Orte:		5
+
+2 Strassen:	6
+
+1 Wiesen:	3
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+2 Kloester:	10
+
+1 Orte:		4
+
+1 Strassen:	4
+
+1 Wiesen:	3
+
+Spiel 2: Spieler1 hat 14 und Spieler2 hat 19 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+0 Kloester:	0
+
+2 Orte:		5
+
+2 Strassen:	6
+
+1 Wiesen:	3
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+2 Kloester:	9
+
+1 Orte:		4
+
+1 Strassen:	3
+
+1 Wiesen:	3
+
+Spiel 3: Spieler1 hat 14 und Spieler2 hat 19 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+0 Kloester:	0
+
+2 Orte:		5
+
+2 Strassen:	6
+
+1 Wiesen:	3
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+2 Kloester:	9
+
+1 Orte:		4
+
+1 Strassen:	3
+
+1 Wiesen:	3
+
+Spiel 4: Spieler1 hat 14 und Spieler2 hat 21 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+0 Kloester:	0
+
+2 Orte:		5
+
+2 Strassen:	6
+
+1 Wiesen:	3
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+2 Kloester:	10
+
+1 Orte:		4
+
+1 Strassen:	4
+
+1 Wiesen:	3
+
+Spiel 5: Spieler1 hat 19 und Spieler2 hat 19 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+2 Kloester:	10
+
+1 Orte:		4
+
+1 Strassen:	2
+
+1 Wiesen:	3
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+0 Kloester:	0
+
+2 Orte:		8
+
+2 Strassen:	5
+
+1 Wiesen:	6
+
+Spiel 6: Spieler1 hat 19 und Spieler2 hat 19 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+2 Kloester:	10
+
+1 Orte:		4
+
+1 Strassen:	2
+
+1 Wiesen:	3
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+0 Kloester:	0
+
+2 Orte:		8
+
+2 Strassen:	5
+
+1 Wiesen:	6
+
+Spiel 7: Spieler1 hat 20 und Spieler2 hat 20 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+2 Kloester:	11
+
+1 Orte:		4
+
+1 Strassen:	2
+
+1 Wiesen:	3
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+0 Kloester:	0
+
+2 Orte:		8
+
+2 Strassen:	6
+
+1 Wiesen:	6
+
+Spiel 8: Spieler1 hat 23 und Spieler2 hat 20 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+2 Kloester:	11
+
+1 Orte:		4
+
+1 Strassen:	2
+
+1 Wiesen:	6
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+0 Kloester:	0
+
+2 Orte:		8
+
+2 Strassen:	6
+
+1 Wiesen:	6
+
+Spiel 9: Spieler1 hat 20 und Spieler2 hat 20 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+2 Kloester:	11
+
+1 Orte:		4
+
+1 Strassen:	2
+
+1 Wiesen:	3
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+0 Kloester:	0
+
+2 Orte:		8
+
+2 Strassen:	6
+
+1 Wiesen:	6
+
+
+Allgemeine Auswertung:
+
+
+Spieler1 hat in der ersten Haelfte 0 Spiele gewonnen, Player2 5 und 0 Spiele endeten Unentschieden.Spieler1 hat in der zweiten Haelfte 1 Spiele gewonnen, Player2 0 und 4 Spiele endeten Unentschieden.
+
+Player1 hat durchschnittlich folgende Zahl von Meeples auf die folgenden Gebiete gesetzt:
+
+Orte:		1.5
+Strassen:	1.5
+Kloester:	1.0
+Wiesen:		1.0
+
+Player2 hat durchschnittlich folgende Zahl von Meeples auf die folgenden Gebiete gesetzt:
+
+Orte:		1.5
+Strassen:	1.5
+Kloester:	1.0
+Wiesen:		1.0
+
+Player1 hat in den Spielen durchschnittlich folgende Punktzahlen mit den folgenden Gebieten gemacht:
+
+Orte:		4.5
+Strassen:	4.0
+Kloester:	5.3
+Wiesen:		3.3
+
+Player2 hat in den Spielen durchschnittlich folgende Punktzahlen mit den folgenden Gebieten gemacht:
+
+Orte:		6.0
+Strassen:	4.5
+Kloester:	4.7
+Wiesen:		4.5
+
+Das entspricht den folgenden Durchschnittswerten fuer Punkte pro feature-meeple:
+
+Player1:
+
+3.0 Punkte pro Orts-Meeple
+2.6666666666666665 Punkte pro Strassen-Meeple
+3.3 Punkte pro Wiesen-Meeple
+5.3 Punkte pro Kloster-Meeple
+
+Player2:
+
+4.0 Punkte pro Orts-Meeple
+3.0 Punkte pro Strassen-Meeple
+4.5 Punkte pro Wiesen-Meeple
+4.7 Punkte pro Kloster-Meeple
+
+Die einzelnen Spielwerte noch mal in Listen:
+Die von Player1 gesetzen Meeples auf die jeweiligen Gebiete:
+
+Orte1 = [2, 2, 2, 2, 2, 1, 1, 1, 1, 1]
+Strassen1 = [2, 2, 2, 2, 2, 1, 1, 1, 1, 1]
+Wiesen1 = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+Kloester1 = [0, 0, 0, 0, 0, 2, 2, 2, 2, 2]
+
+Die von Player2 gesetzen Meeples auf die jeweiligen Gebiete:
+
+Orte2 = [1, 1, 1, 1, 1, 2, 2, 2, 2, 2]
+Strassen2 = [1, 1, 1, 1, 1, 2, 2, 2, 2, 2]
+Wiesen2 = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+Kloester2 = [2, 2, 2, 2, 2, 0, 0, 0, 0, 0]
+
+Die von Player1 bekommenen Punkte mit den Gebieten:
+
+Orte1_punkte = [5, 5, 5, 5, 5, 4, 4, 4, 4, 4]
+Strassen1_punkte = [6, 6, 6, 6, 6, 2, 2, 2, 2, 2]
+Wiesen1_punkte = [3, 3, 3, 3, 3, 3, 3, 3, 6, 3]
+Kloester1_punkte = [0, 0, 0, 0, 0, 10, 10, 11, 11, 11]
+
+Die von Player2 bekommenen Punkte mit den Gebieten:
+
+Orte2_punkte = [4, 4, 4, 4, 4, 8, 8, 8, 8, 8]
+Strassen2_punkte = [3, 4, 3, 3, 4, 5, 5, 6, 6, 6]
+Wiesen2_punkte = [3, 3, 3, 3, 3, 6, 6, 6, 6, 6]
+Kloester2_punkte = [9, 10, 9, 9, 10, 0, 0, 0, 0, 0]
+
+Player1_ergebnisse = [14, 14, 14, 14, 14, 19, 19, 20, 23, 20]
+Player2_ergebnisse = [19, 21, 19, 19, 21, 19, 19, 20, 20, 20]

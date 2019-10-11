@@ -1,0 +1,1185 @@
+Player1 spielt nach der Flat-UCB-Taktik mit den Hyperparametern {'t_end': 500, 'rechenzeit': None, 'c': 1.4142} und Player2 nach der Simple-MC-Taktik mit den Hyperparametern {'t_end': 500}.
+
+
+
+Spiel 0: Spieler1 hat 95 und Spieler2 hat 65 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+1 Kloester:	8
+
+8 Orte:		49
+
+4 Strassen:	17
+
+2 Wiesen:	21
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+2 Kloester:	15
+
+2 Orte:		15
+
+2 Strassen:	8
+
+3 Wiesen:	27
+
+Spiel 1: Spieler1 hat 96 und Spieler2 hat 57 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+2 Kloester:	17
+
+5 Orte:		24
+
+6 Strassen:	28
+
+2 Wiesen:	27
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+1 Kloester:	9
+
+5 Orte:		38
+
+2 Strassen:	4
+
+3 Wiesen:	6
+
+Spiel 2: Spieler1 hat 116 und Spieler2 hat 66 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+2 Kloester:	18
+
+6 Orte:		41
+
+6 Strassen:	30
+
+2 Wiesen:	27
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+0 Kloester:	0
+
+5 Orte:		35
+
+4 Strassen:	22
+
+2 Wiesen:	9
+
+Spiel 3: Spieler1 hat 99 und Spieler2 hat 86 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+4 Kloester:	32
+
+4 Orte:		27
+
+4 Strassen:	25
+
+3 Wiesen:	15
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+2 Kloester:	15
+
+7 Orte:		47
+
+0 Strassen:	0
+
+4 Wiesen:	24
+
+Spiel 4: Spieler1 hat 79 und Spieler2 hat 46 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+3 Kloester:	23
+
+4 Orte:		32
+
+2 Strassen:	9
+
+2 Wiesen:	15
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+2 Kloester:	13
+
+3 Orte:		8
+
+4 Strassen:	22
+
+2 Wiesen:	3
+
+Spiel 5: Spieler1 hat 80 und Spieler2 hat 78 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+1 Kloester:	9
+
+6 Orte:		35
+
+3 Strassen:	9
+
+5 Wiesen:	27
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+1 Kloester:	6
+
+5 Orte:		45
+
+5 Strassen:	24
+
+2 Wiesen:	3
+
+Spiel 6: Spieler1 hat 51 und Spieler2 hat 66 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+1 Kloester:	8
+
+4 Orte:		31
+
+2 Strassen:	12
+
+3 Wiesen:	0
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+3 Kloester:	23
+
+1 Orte:		4
+
+2 Strassen:	9
+
+2 Wiesen:	30
+
+Spiel 7: Spieler1 hat 83 und Spieler2 hat 67 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+2 Kloester:	16
+
+6 Orte:		45
+
+3 Strassen:	10
+
+2 Wiesen:	12
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+2 Kloester:	13
+
+3 Orte:		25
+
+5 Strassen:	17
+
+3 Wiesen:	12
+
+Spiel 8: Spieler1 hat 58 und Spieler2 hat 85 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+1 Kloester:	9
+
+3 Orte:		27
+
+2 Strassen:	7
+
+3 Wiesen:	15
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+2 Kloester:	16
+
+6 Orte:		35
+
+2 Strassen:	10
+
+4 Wiesen:	24
+
+Spiel 9: Spieler1 hat 67 und Spieler2 hat 38 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+1 Kloester:	7
+
+5 Orte:		32
+
+2 Strassen:	10
+
+4 Wiesen:	18
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+1 Kloester:	9
+
+4 Orte:		19
+
+2 Strassen:	10
+
+3 Wiesen:	0
+
+Spiel 10: Spieler1 hat 74 und Spieler2 hat 90 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+1 Kloester:	6
+
+6 Orte:		39
+
+4 Strassen:	17
+
+2 Wiesen:	12
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+3 Kloester:	19
+
+6 Orte:		40
+
+4 Strassen:	22
+
+1 Wiesen:	9
+
+Spiel 11: Spieler1 hat 75 und Spieler2 hat 54 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+0 Kloester:	0
+
+6 Orte:		49
+
+5 Strassen:	20
+
+3 Wiesen:	6
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+3 Kloester:	21
+
+2 Orte:		4
+
+2 Strassen:	11
+
+3 Wiesen:	18
+
+Spiel 12: Spieler1 hat 56 und Spieler2 hat 86 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+1 Kloester:	9
+
+5 Orte:		27
+
+2 Strassen:	11
+
+2 Wiesen:	9
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+2 Kloester:	15
+
+7 Orte:		37
+
+3 Strassen:	10
+
+2 Wiesen:	24
+
+Spiel 13: Spieler1 hat 79 und Spieler2 hat 63 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+2 Kloester:	15
+
+3 Orte:		28
+
+3 Strassen:	12
+
+3 Wiesen:	24
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+1 Kloester:	8
+
+4 Orte:		27
+
+1 Strassen:	4
+
+4 Wiesen:	24
+
+Spiel 14: Spieler1 hat 70 und Spieler2 hat 40 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+1 Kloester:	7
+
+7 Orte:		35
+
+5 Strassen:	22
+
+2 Wiesen:	6
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+0 Kloester:	0
+
+2 Orte:		22
+
+3 Strassen:	12
+
+3 Wiesen:	6
+
+Spiel 15: Spieler1 hat 87 und Spieler2 hat 81 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+1 Kloester:	7
+
+4 Orte:		36
+
+3 Strassen:	14
+
+3 Wiesen:	30
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+2 Kloester:	17
+
+6 Orte:		35
+
+1 Strassen:	8
+
+2 Wiesen:	21
+
+Spiel 16: Spieler1 hat 92 und Spieler2 hat 69 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+2 Kloester:	18
+
+7 Orte:		45
+
+3 Strassen:	11
+
+3 Wiesen:	18
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+0 Kloester:	0
+
+5 Orte:		24
+
+5 Strassen:	24
+
+3 Wiesen:	21
+
+Spiel 17: Spieler1 hat 85 und Spieler2 hat 84 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+2 Kloester:	17
+
+5 Orte:		36
+
+5 Strassen:	26
+
+2 Wiesen:	6
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+2 Kloester:	14
+
+4 Orte:		29
+
+2 Strassen:	14
+
+2 Wiesen:	27
+
+Spiel 18: Spieler1 hat 71 und Spieler2 hat 60 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+1 Kloester:	9
+
+4 Orte:		31
+
+4 Strassen:	19
+
+3 Wiesen:	12
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+1 Kloester:	6
+
+7 Orte:		43
+
+1 Strassen:	2
+
+2 Wiesen:	9
+
+Spiel 19: Spieler1 hat 87 und Spieler2 hat 67 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+1 Kloester:	6
+
+6 Orte:		39
+
+4 Strassen:	18
+
+3 Wiesen:	24
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+2 Kloester:	13
+
+4 Orte:		24
+
+3 Strassen:	15
+
+2 Wiesen:	15
+
+Spiel 20: Spieler1 hat 64 und Spieler2 hat 62 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+1 Kloester:	8
+
+4 Orte:		38
+
+4 Strassen:	18
+
+0 Wiesen:	0
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+3 Kloester:	21
+
+4 Orte:		18
+
+2 Strassen:	5
+
+2 Wiesen:	18
+
+Spiel 21: Spieler1 hat 71 und Spieler2 hat 104 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+0 Kloester:	0
+
+7 Orte:		44
+
+6 Strassen:	24
+
+1 Wiesen:	3
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+4 Kloester:	31
+
+6 Orte:		36
+
+5 Strassen:	16
+
+2 Wiesen:	21
+
+Spiel 22: Spieler1 hat 103 und Spieler2 hat 118 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+2 Kloester:	17
+
+6 Orte:		36
+
+5 Strassen:	20
+
+3 Wiesen:	30
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+2 Kloester:	15
+
+4 Orte:		68
+
+4 Strassen:	14
+
+2 Wiesen:	21
+
+Spiel 23: Spieler1 hat 73 und Spieler2 hat 65 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+2 Kloester:	14
+
+6 Orte:		41
+
+2 Strassen:	9
+
+2 Wiesen:	9
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+0 Kloester:	0
+
+3 Orte:		25
+
+4 Strassen:	19
+
+3 Wiesen:	21
+
+Spiel 24: Spieler1 hat 58 und Spieler2 hat 64 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+0 Kloester:	0
+
+4 Orte:		22
+
+4 Strassen:	21
+
+3 Wiesen:	15
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+2 Kloester:	17
+
+3 Orte:		24
+
+1 Strassen:	8
+
+3 Wiesen:	15
+
+Spiel 25: Spieler1 hat 103 und Spieler2 hat 52 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+2 Kloester:	13
+
+6 Orte:		42
+
+4 Strassen:	18
+
+2 Wiesen:	30
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+1 Kloester:	9
+
+3 Orte:		15
+
+5 Strassen:	10
+
+2 Wiesen:	18
+
+Spiel 26: Spieler1 hat 82 und Spieler2 hat 36 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+1 Kloester:	8
+
+5 Orte:		32
+
+3 Strassen:	24
+
+3 Wiesen:	18
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+1 Kloester:	8
+
+4 Orte:		26
+
+1 Strassen:	2
+
+3 Wiesen:	0
+
+Spiel 27: Spieler1 hat 90 und Spieler2 hat 76 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+1 Kloester:	9
+
+8 Orte:		48
+
+1 Strassen:	6
+
+4 Wiesen:	27
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+1 Kloester:	6
+
+5 Orte:		28
+
+4 Strassen:	21
+
+2 Wiesen:	21
+
+Spiel 28: Spieler1 hat 98 und Spieler2 hat 53 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+1 Kloester:	8
+
+7 Orte:		46
+
+3 Strassen:	14
+
+3 Wiesen:	30
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+1 Kloester:	8
+
+4 Orte:		24
+
+4 Strassen:	12
+
+3 Wiesen:	9
+
+Spiel 29: Spieler1 hat 95 und Spieler2 hat 84 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+2 Kloester:	16
+
+5 Orte:		29
+
+3 Strassen:	17
+
+4 Wiesen:	33
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+0 Kloester:	0
+
+6 Orte:		41
+
+5 Strassen:	28
+
+3 Wiesen:	15
+
+Spiel 30: Spieler1 hat 92 und Spieler2 hat 51 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+1 Kloester:	8
+
+6 Orte:		62
+
+1 Strassen:	10
+
+2 Wiesen:	12
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+1 Kloester:	8
+
+3 Orte:		14
+
+2 Strassen:	8
+
+4 Wiesen:	21
+
+Spiel 31: Spieler1 hat 65 und Spieler2 hat 62 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+2 Kloester:	16
+
+4 Orte:		23
+
+5 Strassen:	23
+
+1 Wiesen:	3
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+1 Kloester:	6
+
+6 Orte:		38
+
+3 Strassen:	12
+
+2 Wiesen:	6
+
+Spiel 32: Spieler1 hat 100 und Spieler2 hat 70 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+2 Kloester:	17
+
+7 Orte:		55
+
+4 Strassen:	16
+
+1 Wiesen:	12
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+0 Kloester:	0
+
+6 Orte:		36
+
+6 Strassen:	22
+
+2 Wiesen:	12
+
+Spiel 33: Spieler1 hat 73 und Spieler2 hat 57 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+2 Kloester:	15
+
+5 Orte:		28
+
+3 Strassen:	18
+
+3 Wiesen:	12
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+1 Kloester:	7
+
+5 Orte:		31
+
+2 Strassen:	7
+
+2 Wiesen:	12
+
+Spiel 34: Spieler1 hat 79 und Spieler2 hat 59 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+1 Kloester:	8
+
+6 Orte:		32
+
+5 Strassen:	21
+
+3 Wiesen:	18
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+1 Kloester:	9
+
+7 Orte:		35
+
+2 Strassen:	6
+
+1 Wiesen:	9
+
+Spiel 35: Spieler1 hat 86 und Spieler2 hat 79 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+1 Kloester:	8
+
+6 Orte:		40
+
+2 Strassen:	14
+
+3 Wiesen:	24
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+3 Kloester:	27
+
+4 Orte:		25
+
+3 Strassen:	15
+
+4 Wiesen:	12
+
+Spiel 36: Spieler1 hat 76 und Spieler2 hat 81 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+1 Kloester:	8
+
+3 Orte:		35
+
+4 Strassen:	12
+
+3 Wiesen:	21
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+2 Kloester:	18
+
+4 Orte:		22
+
+3 Strassen:	11
+
+4 Wiesen:	30
+
+Spiel 37: Spieler1 hat 104 und Spieler2 hat 82 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+2 Kloester:	15
+
+3 Orte:		36
+
+3 Strassen:	14
+
+3 Wiesen:	39
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+1 Kloester:	8
+
+4 Orte:		25
+
+4 Strassen:	19
+
+2 Wiesen:	30
+
+Spiel 38: Spieler1 hat 87 und Spieler2 hat 88 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+2 Kloester:	16
+
+5 Orte:		45
+
+3 Strassen:	11
+
+2 Wiesen:	15
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+2 Kloester:	14
+
+4 Orte:		48
+
+3 Strassen:	14
+
+3 Wiesen:	12
+
+Spiel 39: Spieler1 hat 96 und Spieler2 hat 64 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+2 Kloester:	16
+
+5 Orte:		40
+
+5 Strassen:	16
+
+3 Wiesen:	24
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+2 Kloester:	16
+
+5 Orte:		28
+
+3 Strassen:	8
+
+4 Wiesen:	12
+
+Spiel 40: Spieler1 hat 95 und Spieler2 hat 102 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+1 Kloester:	7
+
+6 Orte:		49
+
+4 Strassen:	21
+
+2 Wiesen:	18
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+2 Kloester:	16
+
+5 Orte:		42
+
+4 Strassen:	17
+
+3 Wiesen:	27
+
+Spiel 41: Spieler1 hat 65 und Spieler2 hat 62 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+1 Kloester:	9
+
+5 Orte:		30
+
+2 Strassen:	14
+
+2 Wiesen:	12
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+0 Kloester:	0
+
+6 Orte:		29
+
+3 Strassen:	12
+
+3 Wiesen:	21
+
+Spiel 42: Spieler1 hat 66 und Spieler2 hat 69 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+1 Kloester:	8
+
+4 Orte:		27
+
+3 Strassen:	13
+
+1 Wiesen:	18
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+2 Kloester:	14
+
+2 Orte:		25
+
+3 Strassen:	9
+
+2 Wiesen:	21
+
+Spiel 43: Spieler1 hat 84 und Spieler2 hat 55 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+1 Kloester:	7
+
+6 Orte:		51
+
+4 Strassen:	14
+
+2 Wiesen:	12
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+2 Kloester:	15
+
+3 Orte:		16
+
+2 Strassen:	6
+
+2 Wiesen:	18
+
+Spiel 44: Spieler1 hat 76 und Spieler2 hat 51 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+0 Kloester:	0
+
+6 Orte:		44
+
+4 Strassen:	14
+
+4 Wiesen:	18
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+1 Kloester:	8
+
+4 Orte:		24
+
+3 Strassen:	7
+
+3 Wiesen:	12
+
+Spiel 45: Spieler1 hat 56 und Spieler2 hat 69 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+1 Kloester:	8
+
+4 Orte:		28
+
+2 Strassen:	5
+
+2 Wiesen:	15
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+1 Kloester:	8
+
+5 Orte:		24
+
+4 Strassen:	19
+
+2 Wiesen:	18
+
+Spiel 46: Spieler1 hat 65 und Spieler2 hat 80 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+0 Kloester:	0
+
+6 Orte:		33
+
+3 Strassen:	14
+
+3 Wiesen:	18
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+1 Kloester:	7
+
+7 Orte:		46
+
+2 Strassen:	6
+
+2 Wiesen:	21
+
+Spiel 47: Spieler1 hat 61 und Spieler2 hat 80 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+1 Kloester:	6
+
+2 Orte:		35
+
+3 Strassen:	17
+
+4 Wiesen:	3
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+1 Kloester:	8
+
+6 Orte:		43
+
+2 Strassen:	5
+
+4 Wiesen:	24
+
+Spiel 48: Spieler1 hat 80 und Spieler2 hat 68 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+1 Kloester:	8
+
+7 Orte:		40
+
+2 Strassen:	11
+
+3 Wiesen:	21
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+2 Kloester:	17
+
+5 Orte:		38
+
+2 Strassen:	10
+
+2 Wiesen:	3
+
+Spiel 49: Spieler1 hat 82 und Spieler2 hat 56 Punkte.
+
+Die Punkte von Player1 verteilen sich dabei wie folgt:
+
+1 Kloester:	9
+
+5 Orte:		27
+
+4 Strassen:	19
+
+3 Wiesen:	27
+
+Die Punkte von Player2 verteilen sich dabei wie folgt:
+
+1 Kloester:	9
+
+4 Orte:		26
+
+4 Strassen:	15
+
+2 Wiesen:	6
+
+
+Allgemeine Auswertung:
+
+
+Spieler1 hat in der ersten Haelfte 18 Spiele gewonnen, Player2 7 und 0 Spiele endeten Unentschieden.Spieler1 hat in der zweiten Haelfte 18 Spiele gewonnen, Player2 7 und 0 Spiele endeten Unentschieden.
+
+Player1 hat durchschnittlich folgende Zahl von Meeples auf die folgenden Gebiete gesetzt:
+
+Orte:		5.26
+Strassen:	3.46
+Kloester:	1.32
+Wiesen:		2.58
+
+Player2 hat durchschnittlich folgende Zahl von Meeples auf die folgenden Gebiete gesetzt:
+
+Orte:		4.5
+Strassen:	2.96
+Kloester:	1.48
+Wiesen:		2.6
+
+Player1 hat in den Spielen durchschnittlich folgende Punktzahlen mit den folgenden Gebieten gemacht:
+
+Orte:		36.92
+Strassen:	15.9
+Kloester:	10.46
+Wiesen:		17.22
+
+Player2 hat in den Spielen durchschnittlich folgende Punktzahlen mit den folgenden Gebieten gemacht:
+
+Orte:		29.52
+Strassen:	12.22
+Kloester:	11.24
+Wiesen:		15.96
+
+Das entspricht den folgenden Durchschnittswerten fuer Punkte pro feature-meeple:
+
+Player1:
+
+7.019011406844107 Punkte pro Orts-Meeple
+4.595375722543353 Punkte pro Strassen-Meeple
+6.674418604651163 Punkte pro Wiesen-Meeple
+7.924242424242424 Punkte pro Kloster-Meeple
+
+Player2:
+
+6.56 Punkte pro Orts-Meeple
+4.128378378378378 Punkte pro Strassen-Meeple
+6.138461538461539 Punkte pro Wiesen-Meeple
+7.594594594594595 Punkte pro Kloster-Meeple
+
+Die einzelnen Spielwerte noch mal in Listen:
+Die von Player1 gesetzen Meeples auf die jeweiligen Gebiete:
+
+Orte1 = [8, 5, 6, 4, 4, 6, 4, 6, 3, 5, 6, 6, 5, 3, 7, 4, 7, 5, 4, 6, 4, 7, 6, 6, 4, 6, 5, 8, 7, 5, 6, 4, 7, 5, 6, 6, 3, 3, 5, 5, 6, 5, 4, 6, 6, 4, 6, 2, 7, 5]
+Strassen1 = [4, 6, 6, 4, 2, 3, 2, 3, 2, 2, 4, 5, 2, 3, 5, 3, 3, 5, 4, 4, 4, 6, 5, 2, 4, 4, 3, 1, 3, 3, 1, 5, 4, 3, 5, 2, 4, 3, 3, 5, 4, 2, 3, 4, 4, 2, 3, 3, 2, 4]
+Wiesen1 = [2, 2, 2, 3, 2, 5, 3, 2, 3, 4, 2, 3, 2, 3, 2, 3, 3, 2, 3, 3, 0, 1, 3, 2, 3, 2, 3, 4, 3, 4, 2, 1, 1, 3, 3, 3, 3, 3, 2, 3, 2, 2, 1, 2, 4, 2, 3, 4, 3, 3]
+Kloester1 = [1, 2, 2, 4, 3, 1, 1, 2, 1, 1, 1, 0, 1, 2, 1, 1, 2, 2, 1, 1, 1, 0, 2, 2, 0, 2, 1, 1, 1, 2, 1, 2, 2, 2, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1]
+
+Die von Player2 gesetzen Meeples auf die jeweiligen Gebiete:
+
+Orte2 = [2, 5, 5, 7, 3, 5, 1, 3, 6, 4, 6, 2, 7, 4, 2, 6, 5, 4, 7, 4, 4, 6, 4, 3, 3, 3, 4, 5, 4, 6, 3, 6, 6, 5, 7, 4, 4, 4, 4, 5, 5, 6, 2, 3, 4, 5, 7, 6, 5, 4]
+Strassen2 = [2, 2, 4, 0, 4, 5, 2, 5, 2, 2, 4, 2, 3, 1, 3, 1, 5, 2, 1, 3, 2, 5, 4, 4, 1, 5, 1, 4, 4, 5, 2, 3, 6, 2, 2, 3, 3, 4, 3, 3, 4, 3, 3, 2, 3, 4, 2, 2, 2, 4]
+Wiesen2 = [3, 3, 2, 4, 2, 2, 2, 3, 4, 3, 1, 3, 2, 4, 3, 2, 3, 2, 2, 2, 2, 2, 2, 3, 3, 2, 3, 2, 3, 3, 4, 2, 2, 2, 1, 4, 4, 2, 3, 4, 3, 3, 2, 2, 3, 2, 2, 4, 2, 2]
+Kloester2 = [2, 1, 0, 2, 2, 1, 3, 2, 2, 1, 3, 3, 2, 1, 0, 2, 0, 2, 1, 2, 3, 4, 2, 0, 2, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 3, 2, 1, 2, 2, 2, 0, 2, 2, 1, 1, 1, 1, 2, 1]
+
+Die von Player1 bekommenen Punkte mit den Gebieten:
+
+Orte1_punkte = [49, 24, 41, 27, 32, 35, 31, 45, 27, 32, 39, 49, 27, 28, 35, 36, 45, 36, 31, 39, 38, 44, 36, 41, 22, 42, 32, 48, 46, 29, 62, 23, 55, 28, 32, 40, 35, 36, 45, 40, 49, 30, 27, 51, 44, 28, 33, 35, 40, 27]
+Strassen1_punkte = [17, 28, 30, 25, 9, 9, 12, 10, 7, 10, 17, 20, 11, 12, 22, 14, 11, 26, 19, 18, 18, 24, 20, 9, 21, 18, 24, 6, 14, 17, 10, 23, 16, 18, 21, 14, 12, 14, 11, 16, 21, 14, 13, 14, 14, 5, 14, 17, 11, 19]
+Wiesen1_punkte = [21, 27, 27, 15, 15, 27, 0, 12, 15, 18, 12, 6, 9, 24, 6, 30, 18, 6, 12, 24, 0, 3, 30, 9, 15, 30, 18, 27, 30, 33, 12, 3, 12, 12, 18, 24, 21, 39, 15, 24, 18, 12, 18, 12, 18, 15, 18, 3, 21, 27]
+Kloester1_punkte = [8, 17, 18, 32, 23, 9, 8, 16, 9, 7, 6, 0, 9, 15, 7, 7, 18, 17, 9, 6, 8, 0, 17, 14, 0, 13, 8, 9, 8, 16, 8, 16, 17, 15, 8, 8, 8, 15, 16, 16, 7, 9, 8, 7, 0, 8, 0, 6, 8, 9]
+
+Die von Player2 bekommenen Punkte mit den Gebieten:
+
+Orte2_punkte = [15, 38, 35, 47, 8, 45, 4, 25, 35, 19, 40, 4, 37, 27, 22, 35, 24, 29, 43, 24, 18, 36, 68, 25, 24, 15, 26, 28, 24, 41, 14, 38, 36, 31, 35, 25, 22, 25, 48, 28, 42, 29, 25, 16, 24, 24, 46, 43, 38, 26]
+Strassen2_punkte = [8, 4, 22, 0, 22, 24, 9, 17, 10, 10, 22, 11, 10, 4, 12, 8, 24, 14, 2, 15, 5, 16, 14, 19, 8, 10, 2, 21, 12, 28, 8, 12, 22, 7, 6, 15, 11, 19, 14, 8, 17, 12, 9, 6, 7, 19, 6, 5, 10, 15]
+Wiesen2_punkte = [27, 6, 9, 24, 3, 3, 30, 12, 24, 0, 9, 18, 24, 24, 6, 21, 21, 27, 9, 15, 18, 21, 21, 21, 15, 18, 0, 21, 9, 15, 21, 6, 12, 12, 9, 12, 30, 30, 12, 12, 27, 21, 21, 18, 12, 18, 21, 24, 3, 6]
+Kloester2_punkte = [15, 9, 0, 15, 13, 6, 23, 13, 16, 9, 19, 21, 15, 8, 0, 17, 0, 14, 6, 13, 21, 31, 15, 0, 17, 9, 8, 6, 8, 0, 8, 6, 0, 7, 9, 27, 18, 8, 14, 16, 16, 0, 14, 15, 8, 8, 7, 8, 17, 9]
+
+Player1_ergebnisse = [95, 96, 116, 99, 79, 80, 51, 83, 58, 67, 74, 75, 56, 79, 70, 87, 92, 85, 71, 87, 64, 71, 103, 73, 58, 103, 82, 90, 98, 95, 92, 65, 100, 73, 79, 86, 76, 104, 87, 96, 95, 65, 66, 84, 76, 56, 65, 61, 80, 82]
+Player2_ergebnisse = [65, 57, 66, 86, 46, 78, 66, 67, 85, 38, 90, 54, 86, 63, 40, 81, 69, 84, 60, 67, 62, 104, 118, 65, 64, 52, 36, 76, 53, 84, 51, 62, 70, 57, 59, 79, 81, 82, 88, 64, 102, 62, 69, 55, 51, 69, 80, 80, 68, 56]

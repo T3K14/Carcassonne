@@ -1,0 +1,1025 @@
+C:\Users\pi\PycharmProjects\Carcassonne\venv\Scripts\python.exe C:/Users/pi/PycharmProjects/Carcassonne/sources/decoratora.py
+Der Startspieler ist human und hat die Nummer 1
+
+
+NEUER ZUG: Aktuell hat player1 0 Punkte und 7 Meeples und player2 0 Punkte und 7 Meeples.
+
+Die nachste Karte ist [S, O, W, S, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [1]
+Strassen:
+1 [0, 3]
+Wiesen:
+1 [5, 6, 7]
+2 [4]
+Bitte gib deine Aktion an:1 0 2 o1
+
+
+NEUER ZUG: Aktuell hat player1 4 Punkte und 7 Meeples und player2 0 Punkte und 7 Meeples.
+
+Die nachste Karte ist [W, W, S, S, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+Strassen:
+1 [2, 3]
+Wiesen:
+1 [4, 5, 6]
+2 [7]
+
+Die AI setzt einen Meeple auf s1.
+Die AI rotiert die Karte 1 mal und setzt sie an (1, -1) 
+
+
+NEUER ZUG: Aktuell hat player1 4 Punkte und 7 Meeples und player2 0 Punkte und 6 Meeples.
+
+Die nachste Karte ist [S, O, S, S, G, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [1]
+Strassen:
+1 [0]
+2 [2]
+3 [3]
+Wiesen:
+1 [4]
+2 [5, 6]
+3 [7]
+Bitte gib deine Aktion an:0 1 3 o1
+
+
+NEUER ZUG: Aktuell hat player1 4 Punkte und 6 Meeples und player2 0 Punkte und 6 Meeples.
+
+Die nachste Karte ist [O, S, S, W, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [0]
+Strassen:
+1 [1, 2]
+Wiesen:
+1 [4, 5, 7]
+2 [6]
+
+Die AI setzt einen Meeple auf o1.
+Die AI rotiert die Karte 3 mal und setzt sie an (0, -1) 
+
+
+NEUER ZUG: Aktuell hat player1 4 Punkte und 6 Meeples und player2 0 Punkte und 5 Meeples.
+
+Die nachste Karte ist [O, O, S, O, O, True]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [0, 1, 3]
+Strassen:
+1 [2]
+Wiesen:
+1 [6]
+2 [7]
+Bitte gib deine Aktion an:0 2 3 n
+
+
+NEUER ZUG: Aktuell hat player1 4 Punkte und 6 Meeples und player2 0 Punkte und 5 Meeples.
+
+Die nachste Karte ist [W, W, S, W, K, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+Strassen:
+1 [2]
+Wiesen:
+1 [4, 5, 6, 7]
+
+Die AI setzt einem Meeple auf das Kloster.
+Die AI rotiert die Karte 1 mal und setzt sie an (2, 0) 
+
+
+NEUER ZUG: Aktuell hat player1 4 Punkte und 6 Meeples und player2 6 Punkte und 5 Meeples.
+
+Die nachste Karte ist [O, S, S, W, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [0]
+Strassen:
+1 [1, 2]
+Wiesen:
+1 [4, 5, 7]
+2 [6]
+Bitte gib deine Aktion an:-1 1 0 o1
+
+
+NEUER ZUG: Aktuell hat player1 4 Punkte und 5 Meeples und player2 6 Punkte und 5 Meeples.
+
+Die nachste Karte ist [W, W, S, S, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+Strassen:
+1 [2, 3]
+Wiesen:
+1 [4, 5, 6]
+2 [7]
+
+Die AI setzt einen Meeple auf w1.
+Die AI rotiert die Karte 3 mal und setzt sie an (3, 0) 
+
+
+NEUER ZUG: Aktuell hat player1 4 Punkte und 5 Meeples und player2 6 Punkte und 4 Meeples.
+
+Die nachste Karte ist [S, W, S, W, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+Strassen:
+1 [0, 2]
+Wiesen:
+1 [5, 6]
+2 [4, 7]
+Bitte gib deine Aktion an:-1 0 0 n
+
+
+NEUER ZUG: Aktuell hat player1 4 Punkte und 5 Meeples und player2 6 Punkte und 4 Meeples.
+
+Die nachste Karte ist [W, O, W, O, O, True]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [1, 3]
+Strassen:
+Wiesen:
+1 [4, 5]
+2 [6, 7]
+
+Die AI setzt einen Meeple auf o1.
+Die AI rotiert die Karte 0 mal und setzt sie an (0, -2) 
+
+
+NEUER ZUG: Aktuell hat player1 4 Punkte und 5 Meeples und player2 6 Punkte und 3 Meeples.
+
+Die nachste Karte ist [S, O, S, S, G, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [1]
+Strassen:
+1 [0]
+2 [2]
+3 [3]
+Wiesen:
+1 [4]
+2 [5, 6]
+3 [7]
+Bitte gib deine Aktion an:0 3 1 n
+
+
+NEUER ZUG: Aktuell hat player1 4 Punkte und 5 Meeples und player2 6 Punkte und 3 Meeples.
+
+Die nachste Karte ist [O, O, W, O, O, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [0, 1, 3]
+Strassen:
+Wiesen:
+1 [6, 7]
+
+Die AI setzt keinen Meeple.
+Die AI rotiert die Karte 1 mal und setzt sie an (-1, 2) 
+
+
+NEUER ZUG: Aktuell hat player1 4 Punkte und 5 Meeples und player2 6 Punkte und 3 Meeples.
+
+Die nachste Karte ist [W, O, O, W, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [1]
+2 [2]
+Strassen:
+Wiesen:
+1 [4, 5, 6, 7]
+Bitte gib deine Aktion an:2 1 2 o2
+
+
+NEUER ZUG: Aktuell hat player1 4 Punkte und 4 Meeples und player2 6 Punkte und 3 Meeples.
+
+Die nachste Karte ist [S, W, S, W, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+Strassen:
+1 [0, 2]
+Wiesen:
+1 [5, 6]
+2 [4, 7]
+
+Die AI setzt keinen Meeple.
+Die AI rotiert die Karte 1 mal und setzt sie an (1, 2) 
+
+
+NEUER ZUG: Aktuell hat player1 4 Punkte und 4 Meeples und player2 6 Punkte und 3 Meeples.
+
+Die nachste Karte ist [W, O, W, O, O, True]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [1, 3]
+Strassen:
+Wiesen:
+1 [4, 5]
+2 [6, 7]
+Bitte gib deine Aktion an:-2 0 1 o1
+
+
+NEUER ZUG: Aktuell hat player1 4 Punkte und 3 Meeples und player2 6 Punkte und 3 Meeples.
+
+Die nachste Karte ist [W, O, W, O, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [1]
+2 [3]
+Strassen:
+Wiesen:
+1 [4, 5, 6, 7]
+
+Die AI setzt einen Meeple auf o1.
+Die AI rotiert die Karte 0 mal und setzt sie an (1, -2) 
+
+
+NEUER ZUG: Aktuell hat player1 4 Punkte und 3 Meeples und player2 6 Punkte und 2 Meeples.
+
+Die nachste Karte ist [O, W, W, O, O, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [3, 0]
+Strassen:
+Wiesen:
+1 [5, 6, 7]
+Bitte gib deine Aktion an:-2 -1 0 n
+
+
+NEUER ZUG: Aktuell hat player1 4 Punkte und 3 Meeples und player2 6 Punkte und 2 Meeples.
+
+Die nachste Karte ist [W, W, S, S, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+Strassen:
+1 [2, 3]
+Wiesen:
+1 [4, 5, 6]
+2 [7]
+
+Die AI setzt einen Meeple auf s1.
+Die AI rotiert die Karte 3 mal und setzt sie an (0, 4) 
+
+
+NEUER ZUG: Aktuell hat player1 4 Punkte und 3 Meeples und player2 6 Punkte und 1 Meeples.
+
+Die nachste Karte ist [W, W, W, W, K, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+Strassen:
+Wiesen:
+1 [4, 5, 6, 7]
+Bitte gib deine Aktion an:-3 0 0 k
+
+
+NEUER ZUG: Aktuell hat player1 4 Punkte und 2 Meeples und player2 6 Punkte und 1 Meeples.
+
+Die nachste Karte ist [O, O, S, O, O, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [0, 1, 3]
+Strassen:
+1 [2]
+Wiesen:
+1 [6]
+2 [7]
+
+Die AI setzt einen Meeple auf o1.
+Die AI rotiert die Karte 1 mal und setzt sie an (4, 0) 
+
+
+NEUER ZUG: Aktuell hat player1 4 Punkte und 2 Meeples und player2 6 Punkte und 0 Meeples.
+
+Die nachste Karte ist [O, O, W, O, O, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [0, 1, 3]
+Strassen:
+Wiesen:
+1 [6, 7]
+Bitte gib deine Aktion an:-3 -1 2 n
+
+
+NEUER ZUG: Aktuell hat player1 4 Punkte und 2 Meeples und player2 6 Punkte und 0 Meeples.
+
+Die nachste Karte ist [W, W, S, S, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+Strassen:
+1 [2, 3]
+Wiesen:
+1 [4, 5, 6]
+2 [7]
+
+Die AI setzt keinen Meeple.
+Die AI rotiert die Karte 0 mal und setzt sie an (-1, 4) 
+
+
+NEUER ZUG: Aktuell hat player1 4 Punkte und 2 Meeples und player2 6 Punkte und 0 Meeples.
+
+Die nachste Karte ist [S, O, S, W, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [1]
+Strassen:
+1 [0, 2]
+Wiesen:
+1 [5, 6]
+2 [4, 7]
+Bitte gib deine Aktion an:2 2 1 s1
+
+
+NEUER ZUG: Aktuell hat player1 8 Punkte und 2 Meeples und player2 6 Punkte und 0 Meeples.
+
+Die nachste Karte ist [O, W, W, W, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [0]
+Strassen:
+Wiesen:
+1 [4, 5, 6, 7]
+
+Die AI setzt keinen Meeple.
+Die AI rotiert die Karte 1 mal und setzt sie an (-1, -2) 
+
+
+NEUER ZUG: Aktuell hat player1 8 Punkte und 2 Meeples und player2 14 Punkte und 1 Meeples.
+
+Die nachste Karte ist [O, O, O, O, O, True]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [0, 1, 2, 3]
+Strassen:
+Wiesen:
+Bitte gib deine Aktion an:-4 -1 0 n
+
+
+NEUER ZUG: Aktuell hat player1 8 Punkte und 2 Meeples und player2 14 Punkte und 1 Meeples.
+
+Die nachste Karte ist [O, W, O, W, O, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [0, 2]
+Strassen:
+Wiesen:
+1 [5, 6]
+2 [4, 7]
+
+Die AI setzt keinen Meeple.
+Die AI rotiert die Karte 0 mal und setzt sie an (4, 1) 
+
+
+NEUER ZUG: Aktuell hat player1 8 Punkte und 2 Meeples und player2 14 Punkte und 1 Meeples.
+
+Die nachste Karte ist [S, O, W, S, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [1]
+Strassen:
+1 [0, 3]
+Wiesen:
+1 [5, 6, 7]
+2 [4]
+Bitte gib deine Aktion an:-1 3 1 s1
+
+
+NEUER ZUG: Aktuell hat player1 22 Punkte und 3 Meeples und player2 14 Punkte und 1 Meeples.
+
+Die nachste Karte ist [W, O, W, O, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [1]
+2 [3]
+Strassen:
+Wiesen:
+1 [4, 5, 6, 7]
+
+Die AI setzt einen Meeple auf w1.
+Die AI rotiert die Karte 0 mal und setzt sie an (2, -2) 
+
+
+NEUER ZUG: Aktuell hat player1 22 Punkte und 3 Meeples und player2 18 Punkte und 1 Meeples.
+
+Die nachste Karte ist [O, S, S, O, O, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [3, 0]
+Strassen:
+1 [1, 2]
+Wiesen:
+1 [5, 7]
+2 [6]
+Bitte gib deine Aktion an:-3 -2 0 n
+
+
+NEUER ZUG: Aktuell hat player1 22 Punkte und 3 Meeples und player2 18 Punkte und 1 Meeples.
+
+Die nachste Karte ist [O, O, W, O, O, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [0, 1, 3]
+Strassen:
+Wiesen:
+1 [6, 7]
+
+Die AI setzt keinen Meeple.
+Die AI rotiert die Karte 3 mal und setzt sie an (4, 2) 
+
+
+NEUER ZUG: Aktuell hat player1 22 Punkte und 3 Meeples und player2 18 Punkte und 1 Meeples.
+
+Die nachste Karte ist [O, S, S, O, O, True]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [3, 0]
+Strassen:
+1 [1, 2]
+Wiesen:
+1 [5, 7]
+2 [6]
+Bitte gib deine Aktion an:-4 -2 1 n
+
+
+NEUER ZUG: Aktuell hat player1 22 Punkte und 3 Meeples und player2 18 Punkte und 1 Meeples.
+
+Die nachste Karte ist [O, W, W, W, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [0]
+Strassen:
+Wiesen:
+1 [4, 5, 6, 7]
+
+Die AI setzt einen Meeple auf o1.
+Die AI rotiert die Karte 3 mal und setzt sie an (3, -2) 
+
+
+NEUER ZUG: Aktuell hat player1 22 Punkte und 3 Meeples und player2 22 Punkte und 1 Meeples.
+
+Die nachste Karte ist [W, S, S, S, G, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+Strassen:
+1 [1]
+2 [2]
+3 [3]
+Wiesen:
+1 [4, 5]
+2 [6]
+3 [7]
+Bitte gib deine Aktion an:3 -1 2 s2
+
+
+NEUER ZUG: Aktuell hat player1 25 Punkte und 3 Meeples und player2 22 Punkte und 1 Meeples.
+
+Die nachste Karte ist [O, S, S, O, O, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [3, 0]
+Strassen:
+1 [1, 2]
+Wiesen:
+1 [5, 7]
+2 [6]
+
+Die AI setzt einen Meeple auf w2.
+Die AI rotiert die Karte 1 mal und setzt sie an (3, 2) 
+
+
+NEUER ZUG: Aktuell hat player1 25 Punkte und 3 Meeples und player2 22 Punkte und 0 Meeples.
+
+Die nachste Karte ist [O, W, W, W, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [0]
+Strassen:
+Wiesen:
+1 [4, 5, 6, 7]
+Bitte gib deine Aktion an:-2 1 2 w1
+
+
+NEUER ZUG: Aktuell hat player1 25 Punkte und 2 Meeples und player2 22 Punkte und 0 Meeples.
+
+Die nachste Karte ist [S, W, S, W, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+Strassen:
+1 [0, 2]
+Wiesen:
+1 [5, 6]
+2 [4, 7]
+
+Die AI setzt keinen Meeple.
+Die AI rotiert die Karte 1 mal und setzt sie an (1, 4) 
+
+
+NEUER ZUG: Aktuell hat player1 25 Punkte und 2 Meeples und player2 22 Punkte und 0 Meeples.
+
+Die nachste Karte ist [O, W, W, W, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [0]
+Strassen:
+Wiesen:
+1 [4, 5, 6, 7]
+Bitte gib deine Aktion an:-4 0 2 n
+
+
+NEUER ZUG: Aktuell hat player1 25 Punkte und 2 Meeples und player2 22 Punkte und 0 Meeples.
+
+Die nachste Karte ist [O, W, W, O, O, True]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [3, 0]
+Strassen:
+Wiesen:
+1 [5, 6, 7]
+
+Die AI setzt keinen Meeple.
+Die AI rotiert die Karte 2 mal und setzt sie an (4, 3) 
+
+
+NEUER ZUG: Aktuell hat player1 25 Punkte und 2 Meeples und player2 22 Punkte und 0 Meeples.
+
+Die nachste Karte ist [W, W, S, W, K, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+Strassen:
+1 [2]
+Wiesen:
+1 [4, 5, 6, 7]
+Bitte gib deine Aktion an:2 -1 3 k
+
+
+NEUER ZUG: Aktuell hat player1 34 Punkte und 2 Meeples und player2 22 Punkte und 0 Meeples.
+
+Die nachste Karte ist [S, W, S, W, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+Strassen:
+1 [0, 2]
+Wiesen:
+1 [5, 6]
+2 [4, 7]
+
+Die AI setzt keinen Meeple.
+Die AI rotiert die Karte 1 mal und setzt sie an (-5, -2) 
+
+
+NEUER ZUG: Aktuell hat player1 34 Punkte und 2 Meeples und player2 22 Punkte und 0 Meeples.
+
+Die nachste Karte ist [S, S, S, S, G, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+Strassen:
+1 [0]
+2 [1]
+3 [2]
+4 [3]
+Wiesen:
+1 [4]
+2 [5]
+3 [6]
+4 [7]
+Bitte gib deine Aktion an:-2 4 0 s4
+
+
+NEUER ZUG: Aktuell hat player1 38 Punkte und 2 Meeples und player2 22 Punkte und 0 Meeples.
+
+Die nachste Karte ist [O, W, W, O, O, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [3, 0]
+Strassen:
+Wiesen:
+1 [5, 6, 7]
+
+Die AI setzt keinen Meeple.
+Die AI rotiert die Karte 3 mal und setzt sie an (5, 0) 
+
+
+NEUER ZUG: Aktuell hat player1 38 Punkte und 2 Meeples und player2 22 Punkte und 0 Meeples.
+
+Die nachste Karte ist [S, W, S, W, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+Strassen:
+1 [0, 2]
+Wiesen:
+1 [5, 6]
+2 [4, 7]
+Bitte gib deine Aktion an:-5 0 0 n
+
+
+NEUER ZUG: Aktuell hat player1 38 Punkte und 2 Meeples und player2 22 Punkte und 0 Meeples.
+
+Die nachste Karte ist [O, O, S, O, O, True]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [0, 1, 3]
+Strassen:
+1 [2]
+Wiesen:
+1 [6]
+2 [7]
+
+Die AI setzt keinen Meeple.
+Die AI rotiert die Karte 0 mal und setzt sie an (5, 3) 
+
+
+NEUER ZUG: Aktuell hat player1 38 Punkte und 2 Meeples und player2 22 Punkte und 0 Meeples.
+
+Die nachste Karte ist [W, W, W, W, K, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+Strassen:
+Wiesen:
+1 [4, 5, 6, 7]
+Bitte gib deine Aktion an:-3 1 0 k
+
+
+NEUER ZUG: Aktuell hat player1 38 Punkte und 1 Meeples und player2 22 Punkte und 0 Meeples.
+
+Die nachste Karte ist [S, O, S, W, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [1]
+Strassen:
+1 [0, 2]
+Wiesen:
+1 [5, 6]
+2 [4, 7]
+
+Die AI setzt keinen Meeple.
+Die AI rotiert die Karte 1 mal und setzt sie an (2, 4) 
+
+
+NEUER ZUG: Aktuell hat player1 38 Punkte und 1 Meeples und player2 22 Punkte und 0 Meeples.
+
+Die nachste Karte ist [S, O, S, W, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [1]
+Strassen:
+1 [0, 2]
+Wiesen:
+1 [5, 6]
+2 [4, 7]
+Bitte gib deine Aktion an:2 3 2 o1
+illegaler Move
+Bitte gib deine Aktion an:2 3 3 o1
+
+
+NEUER ZUG: Aktuell hat player1 42 Punkte und 1 Meeples und player2 22 Punkte und 0 Meeples.
+
+Die nachste Karte ist [W, W, S, S, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+Strassen:
+1 [2, 3]
+Wiesen:
+1 [4, 5, 6]
+2 [7]
+
+Die AI setzt keinen Meeple.
+Die AI rotiert die Karte 1 mal und setzt sie an (3, 4) 
+
+
+NEUER ZUG: Aktuell hat player1 42 Punkte und 1 Meeples und player2 22 Punkte und 0 Meeples.
+
+Die nachste Karte ist [S, O, S, S, G, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [1]
+Strassen:
+1 [0]
+2 [2]
+3 [3]
+Wiesen:
+1 [4]
+2 [5, 6]
+3 [7]
+Bitte gib deine Aktion an:-3 4 2 o1
+
+
+NEUER ZUG: Aktuell hat player1 44 Punkte und 1 Meeples und player2 22 Punkte und 0 Meeples.
+
+Die nachste Karte ist [W, S, S, S, G, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+Strassen:
+1 [1]
+2 [2]
+3 [3]
+Wiesen:
+1 [4, 5]
+2 [6]
+3 [7]
+
+Die AI setzt keinen Meeple.
+Die AI rotiert die Karte 0 mal und setzt sie an (3, 5) 
+
+
+NEUER ZUG: Aktuell hat player1 44 Punkte und 1 Meeples und player2 28 Punkte und 1 Meeples.
+
+Die nachste Karte ist [S, W, S, W, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+Strassen:
+1 [0, 2]
+Wiesen:
+1 [5, 6]
+2 [4, 7]
+Bitte gib deine Aktion an:-6 0 0 n
+
+
+NEUER ZUG: Aktuell hat player1 44 Punkte und 1 Meeples und player2 28 Punkte und 1 Meeples.
+
+Die nachste Karte ist [W, W, W, W, K, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+Strassen:
+Wiesen:
+1 [4, 5, 6, 7]
+
+Die AI setzt einem Meeple auf das Kloster.
+Die AI rotiert die Karte 0 mal und setzt sie an (5, 1) 
+
+
+NEUER ZUG: Aktuell hat player1 44 Punkte und 1 Meeples und player2 28 Punkte und 0 Meeples.
+
+Die nachste Karte ist [O, S, S, O, O, True]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [3, 0]
+Strassen:
+1 [1, 2]
+Wiesen:
+1 [5, 7]
+2 [6]
+Bitte gib deine Aktion an:-4 4 1 n
+
+
+NEUER ZUG: Aktuell hat player1 44 Punkte und 1 Meeples und player2 28 Punkte und 0 Meeples.
+
+Die nachste Karte ist [W, O, W, O, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [1]
+2 [3]
+Strassen:
+Wiesen:
+1 [4, 5, 6, 7]
+
+Die AI setzt keinen Meeple.
+Die AI rotiert die Karte 1 mal und setzt sie an (5, 4) 
+
+
+NEUER ZUG: Aktuell hat player1 44 Punkte und 1 Meeples und player2 28 Punkte und 0 Meeples.
+
+Die nachste Karte ist [W, W, S, S, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+Strassen:
+1 [2, 3]
+Wiesen:
+1 [4, 5, 6]
+2 [7]
+Bitte gib deine Aktion an:-6 -1 2 n
+
+
+NEUER ZUG: Aktuell hat player1 44 Punkte und 1 Meeples und player2 28 Punkte und 0 Meeples.
+
+Die nachste Karte ist [W, W, S, S, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+Strassen:
+1 [2, 3]
+Wiesen:
+1 [4, 5, 6]
+2 [7]
+
+Die AI setzt keinen Meeple.
+Die AI rotiert die Karte 2 mal und setzt sie an (5, 2) 
+
+
+NEUER ZUG: Aktuell hat player1 44 Punkte und 1 Meeples und player2 28 Punkte und 0 Meeples.
+
+Die nachste Karte ist [W, O, O, W, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [1]
+2 [2]
+Strassen:
+Wiesen:
+1 [4, 5, 6, 7]
+Bitte gib deine Aktion an:-3 5 1 o2
+illegaler Move
+Bitte gib deine Aktion an:-4 5 1 o2
+
+
+NEUER ZUG: Aktuell hat player1 52 Punkte und 1 Meeples und player2 28 Punkte und 0 Meeples.
+
+Die nachste Karte ist [O, O, W, O, O, True]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [0, 1, 3]
+Strassen:
+Wiesen:
+1 [6, 7]
+
+Die AI setzt keinen Meeple.
+Die AI rotiert die Karte 1 mal und setzt sie an (5, -1) 
+
+
+NEUER ZUG: Aktuell hat player1 52 Punkte und 1 Meeples und player2 28 Punkte und 0 Meeples.
+
+Die nachste Karte ist [S, O, W, S, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [1]
+Strassen:
+1 [0, 3]
+Wiesen:
+1 [5, 6, 7]
+2 [4]
+Bitte gib deine Aktion an:-5 -1 0 n
+
+
+NEUER ZUG: Aktuell hat player1 76 Punkte und 2 Meeples und player2 28 Punkte und 0 Meeples.
+
+Die nachste Karte ist [O, W, W, O, O, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [3, 0]
+Strassen:
+Wiesen:
+1 [5, 6, 7]
+
+Die AI setzt keinen Meeple.
+Die AI rotiert die Karte 1 mal und setzt sie an (5, -2) 
+
+
+NEUER ZUG: Aktuell hat player1 76 Punkte und 2 Meeples und player2 28 Punkte und 0 Meeples.
+
+Die nachste Karte ist [O, S, S, W, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [0]
+Strassen:
+1 [1, 2]
+Wiesen:
+1 [4, 5, 7]
+2 [6]
+Bitte gib deine Aktion an:5 5 2 o1
+
+
+NEUER ZUG: Aktuell hat player1 80 Punkte und 2 Meeples und player2 28 Punkte und 0 Meeples.
+
+Die nachste Karte ist [W, W, W, W, K, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+Strassen:
+Wiesen:
+1 [4, 5, 6, 7]
+
+Die AI setzt keinen Meeple.
+Die AI rotiert die Karte 0 mal und setzt sie an (6, 1) 
+
+
+NEUER ZUG: Aktuell hat player1 80 Punkte und 2 Meeples und player2 28 Punkte und 0 Meeples.
+
+Die nachste Karte ist [O, W, W, W, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [0]
+Strassen:
+Wiesen:
+1 [4, 5, 6, 7]
+Bitte gib deine Aktion an:-5 5 1 w1
+
+
+NEUER ZUG: Aktuell hat player1 84 Punkte und 2 Meeples und player2 28 Punkte und 0 Meeples.
+
+Die nachste Karte ist [O, W, W, O, O, True]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [3, 0]
+Strassen:
+Wiesen:
+1 [5, 6, 7]
+
+Die AI setzt keinen Meeple.
+Die AI rotiert die Karte 3 mal und setzt sie an (6, -2) 
+
+
+NEUER ZUG: Aktuell hat player1 84 Punkte und 2 Meeples und player2 28 Punkte und 0 Meeples.
+
+Die nachste Karte ist [W, W, S, S, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+Strassen:
+1 [2, 3]
+Wiesen:
+1 [4, 5, 6]
+2 [7]
+Bitte gib deine Aktion an:-5 4 3 s1
+
+
+NEUER ZUG: Aktuell hat player1 84 Punkte und 1 Meeples und player2 28 Punkte und 0 Meeples.
+
+Die nachste Karte ist [S, W, S, W, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+Strassen:
+1 [0, 2]
+Wiesen:
+1 [5, 6]
+2 [4, 7]
+
+Die AI setzt keinen Meeple.
+Die AI rotiert die Karte 1 mal und setzt sie an (6, 2) 
+
+
+NEUER ZUG: Aktuell hat player1 84 Punkte und 1 Meeples und player2 28 Punkte und 0 Meeples.
+
+Die nachste Karte ist [O, S, S, O, O, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+1 [3, 0]
+Strassen:
+1 [1, 2]
+Wiesen:
+1 [5, 7]
+2 [6]
+Bitte gib deine Aktion an:-6 1 0 s1
+
+
+NEUER ZUG: Aktuell hat player1 84 Punkte und 0 Meeples und player2 28 Punkte und 0 Meeples.
+
+Die nachste Karte ist [W, S, S, S, G, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+Strassen:
+1 [1]
+2 [2]
+3 [3]
+Wiesen:
+1 [4, 5]
+2 [6]
+3 [7]
+
+Die AI setzt keinen Meeple.
+Die AI rotiert die Karte 3 mal und setzt sie an (6, 5) 
+
+
+NEUER ZUG: Aktuell hat player1 84 Punkte und 0 Meeples und player2 28 Punkte und 0 Meeples.
+
+Die nachste Karte ist [W, S, S, S, G, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+Strassen:
+1 [1]
+2 [2]
+3 [3]
+Wiesen:
+1 [4, 5]
+2 [6]
+3 [7]
+Bitte gib deine Aktion an:-5 1 0 n
+
+
+NEUER ZUG: Aktuell hat player1 91 Punkte und 1 Meeples und player2 28 Punkte und 0 Meeples.
+
+Die nachste Karte ist [S, W, S, W, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+Strassen:
+1 [0, 2]
+Wiesen:
+1 [5, 6]
+2 [4, 7]
+
+Die AI setzt keinen Meeple.
+Die AI rotiert die Karte 1 mal und setzt sie an (7, 5) 
+
+
+NEUER ZUG: Aktuell hat player1 91 Punkte und 1 Meeples und player2 28 Punkte und 0 Meeples.
+
+Die nachste Karte ist [W, W, S, S, None, False]
+Sie enthält folgende moegliche Meeplepositionen:
+Orte:
+Strassen:
+1 [2, 3]
+Wiesen:
+1 [4, 5, 6]
+2 [7]
+Bitte gib deine Aktion an:7 2 0 s1
+
+Vor der finalen Auswertung hat Player1 91 und 0 Meeples und Player2 28 Punkte und 0 Meeples.
+
+Spielende: Player1 hat 126 Punkte, Player2 hat 80 Punkte.
+
+Process finished with exit code 0

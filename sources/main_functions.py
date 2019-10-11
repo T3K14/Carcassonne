@@ -890,7 +890,7 @@ def human_vs_ai(decorator, karteninfos=karteninfoliste, shuffle=True, startspiel
         - placing a meeple on the ort 1, which is located on the right side of the card
         - rotating the card three times to the right
         - placing the tile on the filed (0,1)
-    
+
     """
 
 
