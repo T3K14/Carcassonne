@@ -41,7 +41,7 @@ The [main_functions.py](https://github.com/T3K14/Carcassonne/blob/master/sources
 	- place the card on the filed with the coordinates **(-3, 2)**
 
 	Another example is:
-	>Bitte gib eine Aktion ein:0 4 0 n
+	>Bitte gib deine Aktion ein:0 4 0 n
 	
 	This example stands for the following action:
 		
