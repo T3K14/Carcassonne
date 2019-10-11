@@ -1,11 +1,13 @@
 
 # Carcassonne
-A version of the board game Carcassonne with Monte Carlo AIs, including UCT.
+A version of the board game Carcassonne with Monte Carlo AIs, including UCT. This Code is part of my bachelor thesis.
 
 ## How to play
 The code is written in Python 3.7 and requires the modules numpy and matplotlib.
 
 The [main_functions.py](https://github.com/T3K14/Carcassonne/blob/master/sources/main_functions.py) script contains the two main functions for simulating AI battles and for playing a game against one AI opponent.
+
+There are four AI-Players implemented. The **random_play** function is making moves at random. The **mc** function implements the simple Monte Carlo approach, the **flat_ucb** function implements a modifed MC-player that simulates games according to the UCB selection policy and the **uct** function that implements a standard UCB-player with modificated simulataion evalutaion. The functions are explained in the thesis and in the doc-strings of the functions in the [main_functions.py](https://github.com/T3K14/Carcassonne/blob/master/sources/main_functions.py) script.
 
 **How to make actions:**
 - Every Card has four edges, named 0, 1, 2 and 3, where 0 stands for the upper edge, 1 for the right one, etc. In addition every card has four corners, 4, 5, 6 and 7, where 4 stands for the upper left edge, 5 for the upper right edge, etc.
