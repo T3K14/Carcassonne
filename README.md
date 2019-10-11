@@ -27,7 +27,7 @@ There are four AI-Players implemented. The **random_play** function is making mo
 	>3 [7]  
 	>Bitte gib deine Aktion an:
 	
-	The first line shows the information about the drawn card. The first four letters, here **S, O, S, S** stand for the four edges of the card (**S** for strees, **O** for cities and **W** for fields). The fifth letter shows what is in the middle of the card (**G** for a crossing, **K** for a cloister, **O** for a bigger city and **None** for everything else). The boolean at the end of the list is True, if the city of the card owns a shield.
+	The first line shows the information about the drawn card. The first four letters, here **S, O, S, S** stand for the territory types of the four edges of the card (**S** for streets, **O** for cities and **W** for fields). The fifth letter shows what is in the middle of the card (**G** for a crossing, **K** for a cloister, **O** for a bigger city and **None** for everything else). The boolean at the end of the list is True, if the city of the card owns a shield.
 	
 	The first number in the number-lines stands for the name of the territories, the second one in the square brackets stands for the list of edges for the Orte (city) and Straßen (street), or the corners for the Wiesen (fields). 
 	
