@@ -1,6 +1,6 @@
 
 # Carcassonne
-A version of the board game Carcassonne with Monte Carlo AIs, including UCT. This Code is part of my bachelor thesis.
+A version of the board game Carcassonne with Monte Carlo AIs, including UCT. This Code is part of my [bachelor thesis](https://github.com/T3K14/Carcassonne/blob/master/bachelorarbeit.pdf).
 
 ## How to play
 The code is written in Python 3.7 and requires the modules numpy and matplotlib.
@@ -12,7 +12,7 @@ There are four AI-Players implemented. The **random_play** function is making mo
 **How to make actions:**
 - Every Card has four edges, named 0, 1, 2 and 3, where 0 stands for the upper edge, 1 for the right one, etc. In addition every card has four corners, 4, 5, 6 and 7, where 4 stands for the upper left edge, 5 for the upper right edge, etc.
 
-- For every card that is drawn by the human player, a simplified image of the card ist  drawn to the screen and an information message is printed to the Console that looks like the following example:
+- For every card that is drawn by the human player, a simplified image of the card is drawn to the screen and an information message is printed to the console that looks like the following example:
 	>Die naechste Karte ist [S, O, S, S, G, False]  
 	>Sie enthaelt folgende moegliche Meeplepositionen:  
 	>Orte:  
