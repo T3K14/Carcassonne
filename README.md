@@ -1,6 +1,6 @@
 
 # Carcassonne
-A version of the board game Carcassonne with Monte Carlo AIs, including UCT. This Code is part of my [bachelor thesis](https://github.com/T3K14/Carcassonne/blob/master/bachelorarbeit.pdf).
+A version of the board game Carcassonne with Monte Carlo AIs, including UCT. This Code is part of my [bachelor thesis](https://github.com/T3K14/Carcassonne/blob/master/Bachelorarbeit.pdf).
 
 ## How to play
 The code is written in Python 3.7 and requires the modules numpy and matplotlib.
@@ -40,7 +40,7 @@ There are four AI-Players implemented. The **random_play** function is making mo
 	This example stands for the following action:
 	- place a **meeple on the street with number 2** (the one that ends on the lower edge of the card) 
 	- rotate the card **two times** to the right
-	- place the card on the filed with the coordinates **(-3, 2)**
+	- place the card on the field with the coordinates **(-3, 2)**
 
 	Another example is:
 	>Bitte gib deine Aktion ein:0 4 0 n
